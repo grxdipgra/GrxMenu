@@ -417,18 +417,24 @@ qrc_iconos.cpp: iconos.qrc \
 		imagenes/iconos/equipos/ssh.png \
 		imagenes/iconos/equipos/escaner.png \
 		imagenes/iconos/equipos/lsblk.png \
-		imagenes/iconos/soporte/guadaltel.png \
-		imagenes/iconos/soporte/buscando.gif \
-		imagenes/iconos/soporte/portafirmas.png \
 		imagenes/iconos/soporte/aytos.png \
-		imagenes/iconos/soporte/ISL50x50.png \
-		imagenes/iconos/soporte/citrix.png \
-		imagenes/iconos/soporte/atalaya.png \
+		imagenes/iconos/soporte/portafirmas.png \
+		imagenes/iconos/soporte/escoba.svg \
+		imagenes/iconos/soporte/Desconocido_pc.png \
+		imagenes/iconos/soporte/Windows_pc.png \
+		imagenes/iconos/soporte/Printer.png \
 		imagenes/iconos/soporte/gtablon.png \
-		imagenes/iconos/soporte/moad.png \
-		imagenes/iconos/soporte/epol.png \
-		imagenes/iconos/soporte/listin.jpeg \
+		imagenes/iconos/soporte/buscando.gif \
+		imagenes/iconos/soporte/guadaltel.png \
+		imagenes/iconos/soporte/ISL50x50.png \
 		imagenes/iconos/soporte/perfilcontratante.png \
+		imagenes/iconos/soporte/moad.png \
+		imagenes/iconos/soporte/Router.png \
+		imagenes/iconos/soporte/Linux_pc.png \
+		imagenes/iconos/soporte/epol.png \
+		imagenes/iconos/soporte/atalaya.png \
+		imagenes/iconos/soporte/citrix.png \
+		imagenes/iconos/soporte/listin.jpeg \
 		imagenes/iconos/sedes/color.png \
 		imagenes/iconos/botonera/nmap.png \
 		imagenes/iconos/botonera/online-96x96.png \

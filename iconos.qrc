@@ -84,5 +84,10 @@
         <file>imagenes/iconos/equipos/glpi.png</file>
         <file>imagenes/iconos/soporte/buscando.gif</file>
         <file>imagenes/iconos/soporte/escoba.svg</file>
+        <file>imagenes/iconos/soporte/Windows_pc.png</file>
+        <file>imagenes/iconos/soporte/Router.png</file>
+        <file>imagenes/iconos/soporte/Printer.png</file>
+        <file>imagenes/iconos/soporte/Linux_pc.png</file>
+        <file>imagenes/iconos/soporte/Desconocido_pc.png</file>
     </qresource>
 </RCC>

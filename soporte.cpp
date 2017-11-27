@@ -249,36 +249,6 @@ void Soporte::on_Btn_Atalaya_clicked()
     QDesktopServices::openUrl(QUrl("http://atalaya.grx/Orion/NetPerfMon/NodeDetails.aspx?NetObject=N:"+QString::number(atalaya)));
 }
 
-/*
-    QNetworkRequest request(QUrl(QStringLiteral("http://atalaya.grx/Orion/Login.aspx?autologin=no")));
-     request.setHeader(QNetworkRequest::ContentTypeHeader,
-                       "application/x-www-form-urlencoded");
-
-     QUrlQuery query;
-     query.addQueryItem("ctl00$BodyContent$Username", "municipios");
-     query.addQueryItem("ctl00$BodyContent$Password", "CasaCuna");
-
-     QUrl post_data;
-     post_data.setQuery(query);
-
-     QNetworkAccessManager network_manager;
-     auto network_reply = network_manager.post(request,query.query().toUtf8());
-
-     QEventLoop loop;
-     connect(network_reply, SIGNAL(finished()), &loop, SLOT(quit()));
-     loop.exec();
-
-     QByteArray raw_data;
-     if(network_reply->error() == QNetworkReply::NoError){
-          raw_data = network_reply->readAll();
-     }else{
-         insertaTexto(network_reply->errorString());
-     }
-
-     insertaTexto (QTextCodec::codecForHtml(raw_data)->toUnicode(raw_data));
-
-*/
-
 
 void Soporte::resultado_html(QNetworkReply* p){
     qDebug()<< p;

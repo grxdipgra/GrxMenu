@@ -29,19 +29,19 @@ tabEscaner::tabEscaner(NMapScan *scan,QWidget *parent) : QWidget(parent)
 
        switch (nmap->what_is_int(encontrados.at(i).address.addr)) {
            case 3:
-               pixmap.load("/usr/share/grx/asistencia/imagenes/soporte/Windows_pc_35.png");
+               pixmap.load(":imagenes/iconos/soporte/Windows_pc.png");
                break;
            case 2:
-               pixmap.load("/usr/share/grx/asistencia/imagenes/soporte/Linux_pc_35.png");
+               pixmap.load(":imagenes/iconos/soporte/Linux_pc.png");
                break;
            case 0:
-               pixmap.load("/usr/share/grx/asistencia/imagenes/soporte/Desconocido_pc_35.png");
+               pixmap.load(":imagenes/iconos/soporte/Desconocido_pc.png");
                break;
            case 4:
-               pixmap.load("/usr/share/grx/asistencia/imagenes/soporte/Printer_pc_35.png");
+               pixmap.load(":imagenes/iconos/soporte/Printer_pc.png");
                break;
            case 1:
-               pixmap.load("/usr/share/grx/asistencia/imagenes/soporte/Router_35.png");
+               pixmap.load(":imagenes/iconos/soporte/Router.png");
                break;
        }
        QIcon ButtonIcon(pixmap);
