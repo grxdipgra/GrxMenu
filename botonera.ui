@@ -148,6 +148,7 @@
     <addaction name="actionNuevo_Men"/>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
+    <addaction name="actionBorrame"/>
    </widget>
    <widget class="QMenu" name="menuAplicaciones">
     <property name="title">
@@ -206,6 +207,7 @@
    <addaction name="actionAtalaya"/>
    <addaction name="actionConfigurar"/>
    <addaction name="actionSalir"/>
+   <addaction name="actionBorrame"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="font">
@@ -414,6 +416,15 @@
    </property>
    <property name="toolTip">
     <string>Atalaya</string>
+   </property>
+  </action>
+  <action name="actionBorrame">
+   <property name="icon">
+    <iconset resource="iconos.qrc">
+     <normaloff>:/imagenes/iconos/soporte/escoba.svg</normaloff>:/imagenes/iconos/soporte/escoba.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Borrame</string>
    </property>
   </action>
  </widget>

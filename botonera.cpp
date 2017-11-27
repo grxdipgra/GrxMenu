@@ -393,10 +393,6 @@ bool Botonera::barraEstado(){
     ui->statusBar->addWidget(ui->label_ip);
 }
 
-void Botonera::on_pushButton_clicked()
-{
-    cargaVariables();
-}
 
 
 void Botonera::on_actionAcerca_de_triggered()
@@ -404,4 +400,10 @@ void Botonera::on_actionAcerca_de_triggered()
     AcerdaDe *acerca = new AcerdaDe;
     acerca->show();
 
+}
+
+void Botonera::on_actionBorrame_triggered()
+{
+    Soporte *soporte = new Soporte;
+    soporte->show();
 }

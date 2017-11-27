@@ -38,7 +38,7 @@ tabEscaner::tabEscaner(NMapScan *scan,QWidget *parent) : QWidget(parent)
                pixmap.load(":imagenes/iconos/soporte/Desconocido_pc.png");
                break;
            case 4:
-               pixmap.load(":imagenes/iconos/soporte/Printer_pc.png");
+               pixmap.load(":imagenes/iconos/soporte/Printer.png");
                break;
            case 1:
                pixmap.load(":imagenes/iconos/soporte/Router.png");

@@ -44,6 +44,7 @@ public:
     QAction *actionSedes;
     QAction *actionAcerca_de;
     QAction *actionAtalaya;
+    QAction *actionBorrame;
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_5;
@@ -146,6 +147,11 @@ public:
         QIcon icon14;
         icon14.addFile(QStringLiteral(":/imagenes/iconos/botonera/atalaya.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionAtalaya->setIcon(icon14);
+        actionBorrame = new QAction(Botonera);
+        actionBorrame->setObjectName(QStringLiteral("actionBorrame"));
+        QIcon icon15;
+        icon15.addFile(QStringLiteral(":/imagenes/iconos/soporte/escoba.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        actionBorrame->setIcon(icon15);
         centralWidget = new QWidget(Botonera);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
@@ -257,6 +263,7 @@ public:
         menuNuevo->addAction(actionNuevo_Men);
         menuNuevo->addSeparator();
         menuNuevo->addAction(actionSalir);
+        menuNuevo->addAction(actionBorrame);
         menuAplicaciones->addAction(actionUsuarios);
         menuAplicaciones->addAction(actionSoporte);
         menuAplicaciones->addAction(actionCronos);
@@ -281,6 +288,7 @@ public:
         mainToolBar->addAction(actionAtalaya);
         mainToolBar->addAction(actionConfigurar);
         mainToolBar->addAction(actionSalir);
+        mainToolBar->addAction(actionBorrame);
 
         retranslateUi(Botonera);
 
@@ -347,6 +355,7 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionAtalaya->setToolTip(QApplication::translate("Botonera", "Atalaya", 0));
 #endif // QT_NO_TOOLTIP
+        actionBorrame->setText(QApplication::translate("Botonera", "Borrame", 0));
         kerberos->setText(QString());
         pb_kerberos->setText(QApplication::translate("Botonera", "Renovar", 0));
         label_DB->setText(QString());

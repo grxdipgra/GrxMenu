@@ -61,11 +61,11 @@ private slots:
 
     bool basedatos();
 
-    void on_pushButton_clicked();
-
     void on_actionAtalaya_triggered();
 
     void on_actionAcerca_de_triggered();
+
+    void on_actionBorrame_triggered();
 
 private:
     Ui::Botonera *ui;
