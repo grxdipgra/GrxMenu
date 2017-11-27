@@ -353,7 +353,7 @@ public:
         pB_gmenu->setGeometry(QRect(40, 10, 41, 41));
         pB_gmenu->setToolTipDuration(-1);
         QIcon icon;
-        icon.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/moad.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/moad.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_gmenu->setIcon(icon);
         pB_gmenu->setIconSize(QSize(30, 30));
         pB_gtablon = new QPushButton(frame_2);
@@ -361,7 +361,7 @@ public:
         pB_gtablon->setGeometry(QRect(140, 10, 41, 41));
         pB_gtablon->setToolTipDuration(-1);
         QIcon icon1;
-        icon1.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/gtablon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/gtablon.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_gtablon->setIcon(icon1);
         pB_gtablon->setIconSize(QSize(30, 30));
         pB_isl = new QPushButton(frame_2);
@@ -376,7 +376,7 @@ public:
         pB_citrix->setGeometry(QRect(340, 10, 41, 41));
         pB_citrix->setToolTipDuration(-1);
         QIcon icon3;
-        icon3.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/citrix.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/citrix.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_citrix->setIcon(icon3);
         pB_citrix->setIconSize(QSize(30, 30));
         pB_epol = new QPushButton(frame_2);
@@ -384,7 +384,7 @@ public:
         pB_epol->setGeometry(QRect(190, 10, 41, 41));
         pB_epol->setToolTipDuration(-1);
         QIcon icon4;
-        icon4.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/epol.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon4.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/epol.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_epol->setIcon(icon4);
         pB_epol->setIconSize(QSize(30, 30));
         pB_aytos = new QPushButton(frame_2);
@@ -392,7 +392,7 @@ public:
         pB_aytos->setGeometry(QRect(390, 10, 41, 41));
         pB_aytos->setToolTipDuration(-1);
         QIcon icon5;
-        icon5.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/aytos.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon5.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/aytos.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_aytos->setIcon(icon5);
         pB_aytos->setIconSize(QSize(30, 30));
         pB_portafirmas = new QPushButton(frame_2);
@@ -400,7 +400,7 @@ public:
         pB_portafirmas->setGeometry(QRect(90, 10, 41, 41));
         pB_portafirmas->setToolTipDuration(-1);
         QIcon icon6;
-        icon6.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas_50x50.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon6.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_portafirmas->setIcon(icon6);
         pB_portafirmas->setIconSize(QSize(30, 30));
         pB_listin = new QPushButton(frame_2);
@@ -408,7 +408,7 @@ public:
         pB_listin->setGeometry(QRect(490, 10, 41, 41));
         pB_listin->setToolTipDuration(-1);
         QIcon icon7;
-        icon7.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/listin.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon7.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/listin.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
         pB_listin->setIcon(icon7);
         pB_listin->setIconSize(QSize(30, 30));
         pB_perilContratante = new QPushButton(frame_2);
@@ -416,7 +416,7 @@ public:
         pB_perilContratante->setGeometry(QRect(290, 10, 41, 41));
         pB_perilContratante->setToolTipDuration(-1);
         QIcon icon8;
-        icon8.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/perfilcontratante.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon8.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/perfilcontratante.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_perilContratante->setIcon(icon8);
         pB_perilContratante->setIconSize(QSize(30, 30));
         pB_guadaltel = new QPushButton(frame_2);
@@ -424,7 +424,7 @@ public:
         pB_guadaltel->setGeometry(QRect(240, 10, 41, 41));
         pB_guadaltel->setToolTipDuration(-1);
         QIcon icon9;
-        icon9.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/iconos/guadaltel.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon9.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/soporte/guadaltel.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_guadaltel->setIcon(icon9);
         pB_guadaltel->setIconSize(QSize(30, 30));
         scrollArea = new QScrollArea(Soporte);

@@ -71,7 +71,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>4</number>
+           <number>6</number>
           </property>
           <widget class="QWidget" name="remoto">
            <attribute name="title">
@@ -125,8 +125,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../usr/share/grx/asistencia/iconos/color.png</normaloff>../../../usr/share/grx/asistencia/iconos/color.png</iconset>
+              <iconset resource="iconos.qrc">
+               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -321,8 +321,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../usr/share/grx/asistencia/iconos/color.png</normaloff>../../../usr/share/grx/asistencia/iconos/color.png</iconset>
+              <iconset resource="iconos.qrc">
+               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -403,8 +403,8 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset>
-                      <normaloff>../../../usr/share/grx/asistencia/iconos/lupa.png</normaloff>../../../usr/share/grx/asistencia/iconos/lupa.png</iconset>
+                     <iconset resource="iconos.qrc">
+                      <normaloff>:/imagenes/iconos/botonera/lupa.png</normaloff>:/imagenes/iconos/botonera/lupa.png</iconset>
                     </property>
                    </widget>
                   </item>
@@ -615,8 +615,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../usr/share/grx/asistencia/iconos/color.png</normaloff>../../../usr/share/grx/asistencia/iconos/color.png</iconset>
+              <iconset resource="iconos.qrc">
+               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -679,8 +679,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../../usr/share/grx/asistencia/iconos/color.png</normaloff>../../../usr/share/grx/asistencia/iconos/color.png</iconset>
+              <iconset resource="iconos.qrc">
+               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -851,8 +851,8 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>../../../usr/share/grx/asistencia/iconos/color.png</normaloff>../../../usr/share/grx/asistencia/iconos/color.png</iconset>
+                <iconset resource="iconos.qrc">
+                 <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -914,12 +914,18 @@
                    </item>
                    <item>
                     <widget class="QPushButton" name="Btn_lupa_2">
+                     <property name="maximumSize">
+                      <size>
+                       <width>28</width>
+                       <height>24</height>
+                      </size>
+                     </property>
                      <property name="text">
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset>
-                       <normaloff>../../../usr/share/grx/asistencia/iconos/lupa.png</normaloff>../../../usr/share/grx/asistencia/iconos/lupa.png</iconset>
+                      <iconset resource="iconos.qrc">
+                       <normaloff>:/imagenes/iconos/botonera/lupa.png</normaloff>:/imagenes/iconos/botonera/lupa.png</iconset>
                      </property>
                     </widget>
                    </item>
@@ -939,12 +945,18 @@
                    </item>
                    <item>
                     <widget class="QPushButton" name="Btn_lupa_3">
+                     <property name="maximumSize">
+                      <size>
+                       <width>28</width>
+                       <height>24</height>
+                      </size>
+                     </property>
                      <property name="text">
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset>
-                       <normaloff>../../../usr/share/grx/asistencia/iconos/lupa.png</normaloff>../../../usr/share/grx/asistencia/iconos/lupa.png</iconset>
+                      <iconset resource="iconos.qrc">
+                       <normaloff>:/imagenes/iconos/botonera/lupa.png</normaloff>:/imagenes/iconos/botonera/lupa.png</iconset>
                      </property>
                     </widget>
                    </item>
@@ -1348,11 +1360,11 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;Buenos días.&lt;br /&gt;&lt;br /&gt;Hay una linea con problemas de conexión.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;Hemos comprobado que no es problema de su red.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;Haced el favor de echarle un vistazo.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Buenos días.&lt;br /&gt;&lt;br /&gt;Hay una linea con problemas de conexión.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Hemos comprobado que no es problema de su red.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Haced el favor de echarle un vistazo.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </widget>
@@ -1549,7 +1561,9 @@ p, li { white-space: pre-wrap; }
   <tabstop>rb_freerdp</tabstop>
   <tabstop>cb_resolucion</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="iconos.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

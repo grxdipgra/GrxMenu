@@ -264,7 +264,7 @@ public:
         PB_linux->setObjectName(QStringLiteral("PB_linux"));
         PB_linux->setGeometry(QRect(600, 10, 37, 31));
         QIcon icon;
-        icon.addFile(QStringLiteral("../../../usr/share/grx/asistencia/iconos/color.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/imagenes/iconos/sedes/color.png"), QSize(), QIcon::Normal, QIcon::Off);
         PB_linux->setIcon(icon);
         PB_linux->setIconSize(QSize(25, 25));
         layoutWidget = new QWidget(fr_linux);
@@ -428,7 +428,7 @@ public:
         Btn_lupa = new QPushButton(layoutWidget1);
         Btn_lupa->setObjectName(QStringLiteral("Btn_lupa"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral("../../../usr/share/grx/asistencia/iconos/lupa.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/imagenes/iconos/botonera/lupa.png"), QSize(), QIcon::Normal, QIcon::Off);
         Btn_lupa->setIcon(icon1);
 
         horizontalLayout_5->addWidget(Btn_lupa);
@@ -705,6 +705,7 @@ public:
 
         Btn_lupa_2 = new QPushButton(fr_DB);
         Btn_lupa_2->setObjectName(QStringLiteral("Btn_lupa_2"));
+        Btn_lupa_2->setMaximumSize(QSize(28, 24));
         Btn_lupa_2->setIcon(icon1);
 
         horizontalLayout_7->addWidget(Btn_lupa_2);
@@ -722,6 +723,7 @@ public:
 
         Btn_lupa_3 = new QPushButton(fr_DB);
         Btn_lupa_3->setObjectName(QStringLiteral("Btn_lupa_3"));
+        Btn_lupa_3->setMaximumSize(QSize(28, 24));
         Btn_lupa_3->setIcon(icon1);
 
         horizontalLayout_8->addWidget(Btn_lupa_3);
@@ -1103,7 +1105,7 @@ public:
         QObject::connect(buttonBox, SIGNAL(accepted()), Configuracion, SLOT(accept()));
         QObject::connect(buttonBox, SIGNAL(rejected()), Configuracion, SLOT(reject()));
 
-        tabWidget->setCurrentIndex(4);
+        tabWidget->setCurrentIndex(6);
 
 
         QMetaObject::connectSlotsByName(Configuracion);
@@ -1250,12 +1252,12 @@ public:
         cuerpo->setHtml(QApplication::translate("Configuracion", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Sans Serif'; font-size:10pt;\">Buenos d\303\255as.<br /><br />Hay una linea con problemas de conexi\303\263n.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Sans Serif'; font-size:10pt;\">Hemos comprobado que no es problema de su red.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Sans Serif'; font-size:10p"
-                        "t;\">Haced el favor de echarle un vistazo.</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;\"><br /></p></body></html>", 0));
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Buenos d\303\255as.<br /><br />Hay una linea con problemas de conexi\303\263n.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Hemos comprobado que no es problema de su red.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Haced el favor de echarle un vistazo.</span></p>\n"
+"<p style=\"-qt-p"
+                        "aragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>", 0));
         tabWidget->setTabText(tabWidget->indexOf(correo), QApplication::translate("Configuracion", "Correo", 0));
         label_46->setText(QApplication::translate("Configuracion", "Mostrar los Botones en el men\303\272", 0));
         checkBox_Usuarios->setText(QApplication::translate("Configuracion", "Usuarios", 0));

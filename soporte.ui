@@ -503,6 +503,16 @@
    <property name="text">
     <string>Limpiar</string>
    </property>
+   <property name="icon">
+    <iconset resource="iconos.qrc">
+     <normaloff>:/imagenes/iconos/soporte/escoba.svg</normaloff>:/imagenes/iconos/soporte/escoba.svg</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
   </widget>
   <widget class="QFrame" name="frame_2">
    <property name="geometry">
@@ -545,7 +555,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/moad.png</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/moad.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/moad.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/moad.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -574,7 +584,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/gtablon.png</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/gtablon.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/gtablon.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/gtablon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -629,7 +639,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/citrix.png</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/citrix.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/citrix.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/citrix.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -658,7 +668,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/epol.png</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/epol.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/epol.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/epol.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -687,7 +697,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/aytos.png</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/aytos.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/aytos.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/aytos.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -716,7 +726,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas_50x50.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas_50x50.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -745,7 +755,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/listin.jpeg</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/listin.jpeg</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/listin.jpeg</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/listin.jpeg</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -774,7 +784,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/perfilcontratante.png</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/perfilcontratante.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/perfilcontratante.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/perfilcontratante.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -803,7 +813,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/guadaltel.png</normaloff>../../../usr/share/grx/asistencia/imagenes/iconos/guadaltel.png</iconset>
+      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/guadaltel.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/guadaltel.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -869,7 +879,9 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="iconos.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>lineEdit_ip</sender>

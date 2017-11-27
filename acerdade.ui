@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>507</width>
-    <height>355</height>
+    <height>307</height>
    </rect>
   </property>
   <property name="palette">
@@ -432,7 +432,7 @@
    <property name="geometry">
     <rect>
      <x>410</x>
-     <y>310</y>
+     <y>280</y>
      <width>80</width>
      <height>25</height>
     </rect>
@@ -447,10 +447,10 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>50</x>
      <y>40</y>
-     <width>343</width>
-     <height>37</height>
+     <width>405</width>
+     <height>38</height>
     </rect>
    </property>
    <property name="palette">
@@ -555,18 +555,21 @@
     <rect>
      <x>10</x>
      <y>120</y>
-     <width>211</width>
-     <height>201</height>
+     <width>171</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>imagenes/iconos/GNU_and_Tux.png</pixmap>
+    <pixmap resource="iconos.qrc">:/imagenes/iconos/AcercaDe/GNU_and_Tux.svg</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>229</x>
@@ -816,7 +819,9 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="iconos.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

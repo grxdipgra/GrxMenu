@@ -210,7 +210,7 @@ void Soporte::on_pushButton_4_clicked()
 }
 
 void Soporte::activa_barra_progreso(){
-    QMovie *movie = new QMovie("iconos/buscando.gif");
+    QMovie *movie = new QMovie(":imagenes/iconos/soporte/buscando.gif");
     QLabel *processLabel = new QLabel(this);
     ui->Estado->show();
     ui->Estado->setMovie(movie);
@@ -346,6 +346,6 @@ void Soporte::on_pB_listin_clicked()
 void Soporte::on_pushButton_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/glpi/front/central.php?active_entity="+QString::number(glpi)));
-    QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/glpi/front/ticket.form.php"));
+    //QDesktopServices::openUrl(QUrl("https://glpi.dipgra.es/glpi/plugins/webservices/soap.php"));
 
 }

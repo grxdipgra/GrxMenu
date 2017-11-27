@@ -34,7 +34,7 @@ public:
     QSqlTableModel *model_mancomunidad = new QSqlTableModel();
     QSqlTableModel *model_centro = new QSqlTableModel();
     QSqlTableModel *model_diafestivopoblacion = new QSqlTableModel();
-    QSqlTableModel *model_aplicaciones = new QSqlTableModel();
+    QSqlTableModel *model_aplicacion = new QSqlTableModel();
 
 private slots:
     void cabeceras();

@@ -60,7 +60,8 @@ SOURCES       = main.cpp \
 		ejecutahilo.cpp \
 		tabescaner.cpp \
 		basedatos.cpp \
-		acerdade.cpp moc_botonera.cpp \
+		acerdade.cpp qrc_iconos.cpp \
+		moc_botonera.cpp \
 		moc_configuracion.cpp \
 		moc_usuario.cpp \
 		moc_sedes.cpp \
@@ -84,6 +85,7 @@ OBJECTS       = main.o \
 		tabescaner.o \
 		basedatos.o \
 		acerdade.o \
+		qrc_iconos.o \
 		moc_botonera.o \
 		moc_configuracion.o \
 		moc_usuario.o \
@@ -255,6 +257,7 @@ Makefile: GrxMenu.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.c
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		GrxMenu.pro \
+		iconos.qrc \
 		/usr/lib/x86_64-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Gui.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Sql.prl \
@@ -324,6 +327,7 @@ Makefile: GrxMenu.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.c
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf:
 GrxMenu.pro:
+iconos.qrc:
 /usr/lib/x86_64-linux-gnu/libQt5Widgets.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Gui.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Sql.prl:
@@ -343,6 +347,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents iconos.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents botonera.h configuracion.h usuario.h nmap_xml.h sedes.h soporte.h equipos.h tunel.h ejecutahilo.h tabescaner.h basedatos.h acerdade.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp botonera.cpp configuracion.cpp usuario.cpp nmap_xml.cpp sedes.cpp soporte.cpp equipos.cpp tunel.cpp ejecutahilo.cpp tabescaner.cpp basedatos.cpp acerdade.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents botonera.ui configuracion.ui usuario.ui sedes.ui soporte.ui equipos.ui basedatos.ui acerdade.ui $(DISTDIR)/
@@ -369,8 +374,95 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_iconos.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_iconos.cpp
+qrc_iconos.cpp: iconos.qrc \
+		imagenes/iconos/equipos/hardware.png \
+		imagenes/iconos/equipos/config_pam.png \
+		imagenes/iconos/equipos/download.png \
+		imagenes/iconos/equipos/network-share-icon_35.png \
+		imagenes/iconos/equipos/vnc.jpeg \
+		imagenes/iconos/equipos/network-share-icon.png \
+		imagenes/iconos/equipos/administrador.png \
+		imagenes/iconos/equipos/update.png \
+		imagenes/iconos/equipos/cronos.png \
+		imagenes/iconos/equipos/lspci.png \
+		imagenes/iconos/equipos/procesos.png \
+		imagenes/iconos/equipos/asistencia.png \
+		imagenes/iconos/equipos/telnet.jpeg \
+		imagenes/iconos/equipos/mount.png \
+		imagenes/iconos/equipos/info_equipo.png \
+		imagenes/iconos/equipos/correo.png \
+		imagenes/iconos/equipos/carpeta_personal.png \
+		imagenes/iconos/equipos/instala.png \
+		imagenes/iconos/equipos/net.png \
+		imagenes/iconos/equipos/cups32.png \
+		imagenes/iconos/equipos/glpi.png \
+		imagenes/iconos/equipos/discos.png \
+		imagenes/iconos/equipos/web.jpeg \
+		imagenes/iconos/equipos/lscpu.png \
+		imagenes/iconos/equipos/lsmod.png \
+		imagenes/iconos/equipos/info.png \
+		imagenes/iconos/equipos/clamav.png \
+		imagenes/iconos/equipos/atalaya.png \
+		imagenes/iconos/equipos/lsusb.png \
+		imagenes/iconos/equipos/firewall.png \
+		imagenes/iconos/equipos/cifrar.png \
+		imagenes/iconos/equipos/ssh_35.png \
+		imagenes/iconos/equipos/captura.png \
+		imagenes/iconos/equipos/konekta.png \
+		imagenes/iconos/equipos/mensaje.png \
+		imagenes/iconos/equipos/conexiones_red.png \
+		imagenes/iconos/equipos/ssh.png \
+		imagenes/iconos/equipos/escaner.png \
+		imagenes/iconos/equipos/lsblk.png \
+		imagenes/iconos/soporte/guadaltel.png \
+		imagenes/iconos/soporte/buscando.gif \
+		imagenes/iconos/soporte/portafirmas.png \
+		imagenes/iconos/soporte/aytos.png \
+		imagenes/iconos/soporte/ISL50x50.png \
+		imagenes/iconos/soporte/citrix.png \
+		imagenes/iconos/soporte/atalaya.png \
+		imagenes/iconos/soporte/gtablon.png \
+		imagenes/iconos/soporte/moad.png \
+		imagenes/iconos/soporte/epol.png \
+		imagenes/iconos/soporte/listin.jpeg \
+		imagenes/iconos/soporte/perfilcontratante.png \
+		imagenes/iconos/sedes/color.png \
+		imagenes/iconos/botonera/nmap.png \
+		imagenes/iconos/botonera/online-96x96.png \
+		imagenes/iconos/botonera/color.png \
+		imagenes/iconos/botonera/ocs.png \
+		imagenes/iconos/botonera/ISL.png \
+		imagenes/iconos/botonera/sedes.png \
+		imagenes/iconos/botonera/equipos.png \
+		imagenes/iconos/botonera/listin.png \
+		imagenes/iconos/botonera/cronos.png \
+		imagenes/iconos/botonera/update.png \
+		imagenes/iconos/botonera/asistencia.png \
+		imagenes/iconos/botonera/WebMail.png \
+		imagenes/iconos/botonera/salida.png \
+		imagenes/iconos/botonera/usuario_on.png \
+		imagenes/iconos/botonera/ISL50x50.png \
+		imagenes/iconos/botonera/usuario_off.png \
+		imagenes/iconos/botonera/moad.png \
+		imagenes/iconos/botonera/Router.png \
+		imagenes/iconos/botonera/AD.png \
+		imagenes/iconos/botonera/beiro_cartera.png \
+		imagenes/iconos/botonera/Linux_pc.png \
+		imagenes/iconos/botonera/300px-Granada_-_Mapa_municipal.svg.png \
+		imagenes/iconos/botonera/lupa.png \
+		imagenes/iconos/botonera/glpi.png \
+		imagenes/iconos/botonera/usuario.png \
+		imagenes/iconos/botonera/logo.png \
+		imagenes/iconos/botonera/atalaya.png \
+		imagenes/iconos/botonera/Printer_pc.png \
+		imagenes/iconos/botonera/sql.svg \
+		imagenes/iconos/botonera/usuarios.png \
+		imagenes/iconos/AcercaDe/GNU_and_Tux.svg
+	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name iconos iconos.qrc -o qrc_iconos.cpp
+
 compiler_moc_header_make_all: moc_botonera.cpp moc_configuracion.cpp moc_usuario.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_botonera.cpp moc_configuracion.cpp moc_usuario.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp
@@ -452,7 +544,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -530,6 +622,9 @@ basedatos.o: basedatos.cpp basedatos.h \
 acerdade.o: acerdade.cpp acerdade.h \
 		ui_acerdade.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o acerdade.o acerdade.cpp
+
+qrc_iconos.o: qrc_iconos.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_iconos.o qrc_iconos.cpp
 
 moc_botonera.o: moc_botonera.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_botonera.o moc_botonera.cpp

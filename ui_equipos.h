@@ -32,8 +32,8 @@ class Ui_Equipos
 public:
     QGridLayout *gridLayout;
     QGroupBox *groupBox;
-    QGridLayout *gridLayout_2;
-    QVBoxLayout *verticalLayout_9;
+    QGridLayout *gridLayout_3;
+    QVBoxLayout *verticalLayout_10;
     QHBoxLayout *horizontalLayout_4;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout_3;
@@ -78,9 +78,19 @@ public:
     QPushButton *pushButton_13;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
+    QVBoxLayout *verticalLayout_11;
+    QPushButton *pushButton_8;
+    QPushButton *pushButton_9;
+    QPushButton *pushButton_10;
+    QPushButton *pushButton_15;
+    QVBoxLayout *verticalLayout_9;
+    QPushButton *pushButton_6;
+    QPushButton *pushButton_4;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_5;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QGridLayout *gridLayout_3;
+    QGridLayout *gridLayout_2;
     QTextEdit *textEdit;
 
     void setupUi(QWidget *Equipos)
@@ -96,10 +106,10 @@ public:
         QFont font;
         font.setPointSize(18);
         groupBox->setFont(font);
-        gridLayout_2 = new QGridLayout(groupBox);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        verticalLayout_9 = new QVBoxLayout();
-        verticalLayout_9->setObjectName(QStringLiteral("verticalLayout_9"));
+        gridLayout_3 = new QGridLayout(groupBox);
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        verticalLayout_10 = new QVBoxLayout();
+        verticalLayout_10->setObjectName(QStringLiteral("verticalLayout_10"));
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         horizontalLayout_2 = new QHBoxLayout();
@@ -221,7 +231,7 @@ public:
         horizontalLayout_4->addLayout(horizontalLayout_3);
 
 
-        verticalLayout_9->addLayout(horizontalLayout_4);
+        verticalLayout_10->addLayout(horizontalLayout_4);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
@@ -229,8 +239,9 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         pB_carpeta = new QPushButton(groupBox);
         pB_carpeta->setObjectName(QStringLiteral("pB_carpeta"));
+        pB_carpeta->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon;
-        icon.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/carpeta_personal.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/imagenes/iconos/equipos/carpeta_personal.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_carpeta->setIcon(icon);
         pB_carpeta->setIconSize(QSize(35, 35));
 
@@ -238,17 +249,19 @@ public:
 
         pB_ssh = new QPushButton(groupBox);
         pB_ssh->setObjectName(QStringLiteral("pB_ssh"));
+        pB_ssh->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/ssh.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/imagenes/iconos/equipos/ssh_35.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_ssh->setIcon(icon1);
-        pB_ssh->setIconSize(QSize(35, 35));
+        pB_ssh->setIconSize(QSize(32, 35));
 
         verticalLayout_2->addWidget(pB_ssh);
 
         pB_vnc = new QPushButton(groupBox);
         pB_vnc->setObjectName(QStringLiteral("pB_vnc"));
+        pB_vnc->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon2;
-        icon2.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/vnc.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QStringLiteral(":/imagenes/iconos/equipos/vnc.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
         pB_vnc->setIcon(icon2);
         pB_vnc->setIconSize(QSize(35, 35));
 
@@ -256,8 +269,9 @@ public:
 
         pushButton_7 = new QPushButton(groupBox);
         pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
+        pushButton_7->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon3;
-        icon3.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/update.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QStringLiteral(":/imagenes/iconos/equipos/update.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_7->setIcon(icon3);
         pushButton_7->setIconSize(QSize(35, 35));
 
@@ -270,8 +284,9 @@ public:
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         pB_CUPS = new QPushButton(groupBox);
         pB_CUPS->setObjectName(QStringLiteral("pB_CUPS"));
+        pB_CUPS->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon4;
-        icon4.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/cups32.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon4.addFile(QStringLiteral(":/imagenes/iconos/equipos/cups32.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_CUPS->setIcon(icon4);
         pB_CUPS->setIconSize(QSize(35, 35));
 
@@ -279,8 +294,9 @@ public:
 
         pB_web = new QPushButton(groupBox);
         pB_web->setObjectName(QStringLiteral("pB_web"));
+        pB_web->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon5;
-        icon5.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/web.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon5.addFile(QStringLiteral(":/imagenes/iconos/equipos/web.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
         pB_web->setIcon(icon5);
         pB_web->setIconSize(QSize(35, 35));
 
@@ -288,6 +304,7 @@ public:
 
         pB_webssl = new QPushButton(groupBox);
         pB_webssl->setObjectName(QStringLiteral("pB_webssl"));
+        pB_webssl->setStyleSheet(QStringLiteral("Text-align:left"));
         pB_webssl->setIcon(icon5);
         pB_webssl->setIconSize(QSize(35, 35));
 
@@ -295,8 +312,9 @@ public:
 
         pB_telnet = new QPushButton(groupBox);
         pB_telnet->setObjectName(QStringLiteral("pB_telnet"));
+        pB_telnet->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon6;
-        icon6.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/telnet.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon6.addFile(QStringLiteral(":/imagenes/iconos/equipos/telnet.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
         pB_telnet->setIcon(icon6);
         pB_telnet->setIconSize(QSize(35, 35));
 
@@ -309,8 +327,9 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         pB_systemconfig = new QPushButton(groupBox);
         pB_systemconfig->setObjectName(QStringLiteral("pB_systemconfig"));
+        pB_systemconfig->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon7;
-        icon7.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/hardware.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon7.addFile(QStringLiteral(":/imagenes/iconos/equipos/config_pam.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_systemconfig->setIcon(icon7);
         pB_systemconfig->setIconSize(QSize(35, 35));
 
@@ -318,8 +337,9 @@ public:
 
         pB_networkManager = new QPushButton(groupBox);
         pB_networkManager->setObjectName(QStringLiteral("pB_networkManager"));
+        pB_networkManager->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon8;
-        icon8.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/net.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon8.addFile(QStringLiteral(":/imagenes/iconos/equipos/net.png"), QSize(), QIcon::Normal, QIcon::Off);
         pB_networkManager->setIcon(icon8);
         pB_networkManager->setIconSize(QSize(35, 35));
 
@@ -327,8 +347,9 @@ public:
 
         pushButton_12 = new QPushButton(groupBox);
         pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
+        pushButton_12->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon9;
-        icon9.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/procesos.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon9.addFile(QStringLiteral(":/imagenes/iconos/equipos/procesos.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_12->setIcon(icon9);
         pushButton_12->setIconSize(QSize(35, 35));
 
@@ -336,8 +357,9 @@ public:
 
         pushButton_11 = new QPushButton(groupBox);
         pushButton_11->setObjectName(QStringLiteral("pushButton_11"));
+        pushButton_11->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon10;
-        icon10.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/usuarios/usuarios_35.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon10.addFile(QStringLiteral(":/imagenes/iconos/equipos/asistencia.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_11->setIcon(icon10);
         pushButton_11->setIconSize(QSize(35, 35));
 
@@ -350,8 +372,9 @@ public:
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
         pushButton_14 = new QPushButton(groupBox);
         pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
+        pushButton_14->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon11;
-        icon11.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/discos.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon11.addFile(QStringLiteral(":/imagenes/iconos/equipos/discos.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_14->setIcon(icon11);
         pushButton_14->setIconSize(QSize(35, 35));
 
@@ -359,8 +382,9 @@ public:
 
         pushButton_13 = new QPushButton(groupBox);
         pushButton_13->setObjectName(QStringLiteral("pushButton_13"));
+        pushButton_13->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon12;
-        icon12.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/info_equipo.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon12.addFile(QStringLiteral(":/imagenes/iconos/equipos/lspci.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_13->setIcon(icon12);
         pushButton_13->setIconSize(QSize(35, 35));
 
@@ -368,8 +392,9 @@ public:
 
         pushButton = new QPushButton(groupBox);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon13;
-        icon13.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/instala.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon13.addFile(QStringLiteral(":/imagenes/iconos/equipos/instala.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton->setIcon(icon13);
         pushButton->setIconSize(QSize(35, 35));
 
@@ -377,8 +402,17 @@ public:
 
         pushButton_2 = new QPushButton(groupBox);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
+        pushButton_2->setSizePolicy(sizePolicy);
+        QFont font1;
+        font1.setStyleStrategy(QFont::PreferDefault);
+        pushButton_2->setFont(font1);
+        pushButton_2->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon14;
-        icon14.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/konekta.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon14.addFile(QStringLiteral(":/imagenes/iconos/equipos/konekta.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_2->setIcon(icon14);
         pushButton_2->setIconSize(QSize(35, 35));
 
@@ -387,11 +421,89 @@ public:
 
         horizontalLayout->addLayout(verticalLayout_8);
 
+        verticalLayout_11 = new QVBoxLayout();
+        verticalLayout_11->setObjectName(QStringLiteral("verticalLayout_11"));
+        pushButton_8 = new QPushButton(groupBox);
+        pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
+        pushButton_8->setStyleSheet(QStringLiteral("Text-align:left"));
+        QIcon icon15;
+        icon15.addFile(QStringLiteral(":/imagenes/iconos/equipos/glpi.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_8->setIcon(icon15);
+        pushButton_8->setIconSize(QSize(35, 35));
 
-        verticalLayout_9->addLayout(horizontalLayout);
+        verticalLayout_11->addWidget(pushButton_8);
+
+        pushButton_9 = new QPushButton(groupBox);
+        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
+        pushButton_9->setStyleSheet(QStringLiteral("Text-align:left"));
+        pushButton_9->setIcon(icon15);
+        pushButton_9->setIconSize(QSize(35, 35));
+
+        verticalLayout_11->addWidget(pushButton_9);
+
+        pushButton_10 = new QPushButton(groupBox);
+        pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
+        pushButton_10->setStyleSheet(QStringLiteral("Text-align:left"));
+        pushButton_10->setIcon(icon15);
+        pushButton_10->setIconSize(QSize(35, 35));
+
+        verticalLayout_11->addWidget(pushButton_10);
+
+        pushButton_15 = new QPushButton(groupBox);
+        pushButton_15->setObjectName(QStringLiteral("pushButton_15"));
+        pushButton_15->setStyleSheet(QStringLiteral("Text-align:left"));
+        pushButton_15->setIcon(icon15);
+        pushButton_15->setIconSize(QSize(35, 35));
+
+        verticalLayout_11->addWidget(pushButton_15);
 
 
-        gridLayout_2->addLayout(verticalLayout_9, 0, 0, 1, 1);
+        horizontalLayout->addLayout(verticalLayout_11);
+
+        verticalLayout_9 = new QVBoxLayout();
+        verticalLayout_9->setObjectName(QStringLiteral("verticalLayout_9"));
+        pushButton_6 = new QPushButton(groupBox);
+        pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
+        pushButton_6->setStyleSheet(QStringLiteral("Text-align:left"));
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/imagenes/iconos/equipos/atalaya.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_6->setIcon(icon16);
+        pushButton_6->setIconSize(QSize(35, 35));
+
+        verticalLayout_9->addWidget(pushButton_6);
+
+        pushButton_4 = new QPushButton(groupBox);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setStyleSheet(QStringLiteral("Text-align:left"));
+        pushButton_4->setIcon(icon16);
+        pushButton_4->setIconSize(QSize(35, 35));
+
+        verticalLayout_9->addWidget(pushButton_4);
+
+        pushButton_3 = new QPushButton(groupBox);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setStyleSheet(QStringLiteral("Text-align:left"));
+        pushButton_3->setIcon(icon16);
+        pushButton_3->setIconSize(QSize(35, 35));
+
+        verticalLayout_9->addWidget(pushButton_3);
+
+        pushButton_5 = new QPushButton(groupBox);
+        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+        pushButton_5->setStyleSheet(QStringLiteral("Text-align:left"));
+        pushButton_5->setIcon(icon16);
+        pushButton_5->setIconSize(QSize(35, 35));
+
+        verticalLayout_9->addWidget(pushButton_5);
+
+
+        horizontalLayout->addLayout(verticalLayout_9);
+
+
+        verticalLayout_10->addLayout(horizontalLayout);
+
+
+        gridLayout_3->addLayout(verticalLayout_10, 0, 0, 1, 1);
 
 
         gridLayout->addWidget(groupBox, 1, 0, 1, 1);
@@ -406,14 +518,16 @@ public:
         tabWidget->setProperty("tabletTracking", QVariant(false));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
-        gridLayout_3 = new QGridLayout(tab);
-        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        gridLayout_2 = new QGridLayout(tab);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         textEdit = new QTextEdit(tab);
         textEdit->setObjectName(QStringLiteral("textEdit"));
 
-        gridLayout_3->addWidget(textEdit, 0, 0, 1, 1);
+        gridLayout_2->addWidget(textEdit, 0, 0, 1, 1);
 
-        tabWidget->addTab(tab, icon6, QString());
+        QIcon icon17;
+        icon17.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/telnet.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(tab, icon17, QString());
 
         gridLayout->addWidget(tabWidget, 2, 0, 1, 1);
 
@@ -454,6 +568,14 @@ public:
         pushButton_13->setText(QApplication::translate("Equipos", "Equipo", 0));
         pushButton->setText(QApplication::translate("Equipos", "Instala", 0));
         pushButton_2->setText(QApplication::translate("Equipos", "Konekta", 0));
+        pushButton_8->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_9->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_10->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_15->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_6->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_4->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_3->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_5->setText(QApplication::translate("Equipos", "PushButton", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Equipos", "Consola", 0));
     } // retranslateUi
 

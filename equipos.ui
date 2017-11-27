@@ -27,9 +27,9 @@
      <property name="title">
       <string>Información del Equipo</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout_9">
+       <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
@@ -176,12 +176,15 @@
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <widget class="QPushButton" name="pB_carpeta">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Carpeta</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/carpeta_personal.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/carpeta_personal.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/carpeta_personal.png</normaloff>:/imagenes/iconos/equipos/carpeta_personal.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -193,16 +196,19 @@
             </item>
             <item>
              <widget class="QPushButton" name="pB_ssh">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>ssh</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/ssh.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/ssh.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/ssh_35.png</normaloff>:/imagenes/iconos/equipos/ssh_35.png</iconset>
               </property>
               <property name="iconSize">
                <size>
-                <width>35</width>
+                <width>32</width>
                 <height>35</height>
                </size>
               </property>
@@ -210,12 +216,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pB_vnc">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>VNC</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/vnc.jpeg</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/vnc.jpeg</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/vnc.jpeg</normaloff>:/imagenes/iconos/equipos/vnc.jpeg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -227,12 +236,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_7">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Update</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/update.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/update.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/update.png</normaloff>:/imagenes/iconos/equipos/update.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -248,12 +260,15 @@
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
              <widget class="QPushButton" name="pB_CUPS">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>CUPS</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/cups32.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/cups32.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/cups32.png</normaloff>:/imagenes/iconos/equipos/cups32.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -265,12 +280,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pB_web">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>web</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/web.jpeg</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/web.jpeg</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/web.jpeg</normaloff>:/imagenes/iconos/equipos/web.jpeg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -282,12 +300,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pB_webssl">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>web-ssl</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/web.jpeg</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/web.jpeg</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/web.jpeg</normaloff>:/imagenes/iconos/equipos/web.jpeg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -299,12 +320,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pB_telnet">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Telnet</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/telnet.jpeg</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/telnet.jpeg</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/telnet.jpeg</normaloff>:/imagenes/iconos/equipos/telnet.jpeg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -320,12 +344,15 @@
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
              <widget class="QPushButton" name="pB_systemconfig">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>systemconfig</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/hardware.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/hardware.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/config_pam.png</normaloff>:/imagenes/iconos/equipos/config_pam.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -337,12 +364,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pB_networkManager">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>netmanager</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/net.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/net.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/net.png</normaloff>:/imagenes/iconos/equipos/net.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -354,12 +384,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_12">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Procesos</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/procesos.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/procesos.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/procesos.png</normaloff>:/imagenes/iconos/equipos/procesos.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -371,12 +404,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_11">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Usuarios</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/usuarios/usuarios_35.png</normaloff>../../../usr/share/grx/asistencia/imagenes/usuarios/usuarios_35.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/asistencia.png</normaloff>:/imagenes/iconos/equipos/asistencia.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -392,12 +428,15 @@
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
              <widget class="QPushButton" name="pushButton_14">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Discos</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/discos.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/discos.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/discos.png</normaloff>:/imagenes/iconos/equipos/discos.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -409,12 +448,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_13">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Equipo</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/info_equipo.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/info_equipo.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/lspci.png</normaloff>:/imagenes/iconos/equipos/lspci.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -426,12 +468,15 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Instala</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/instala.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/instala.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/instala.png</normaloff>:/imagenes/iconos/equipos/instala.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -443,12 +488,194 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <stylestrategy>PreferDefault</stylestrategy>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
               <property name="text">
                <string>Konekta</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/konekta.png</normaloff>../../../usr/share/grx/asistencia/imagenes/equipos/konekta.png</iconset>
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/konekta.png</normaloff>:/imagenes/iconos/equipos/konekta.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <item>
+             <widget class="QPushButton" name="pushButton_8">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/glpi.png</normaloff>:/imagenes/iconos/equipos/glpi.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_9">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/glpi.png</normaloff>:/imagenes/iconos/equipos/glpi.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_10">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/glpi.png</normaloff>:/imagenes/iconos/equipos/glpi.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_15">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/glpi.png</normaloff>:/imagenes/iconos/equipos/glpi.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QPushButton" name="pushButton_6">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/atalaya.png</normaloff>:/imagenes/iconos/equipos/atalaya.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_4">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/atalaya.png</normaloff>:/imagenes/iconos/equipos/atalaya.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_3">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/atalaya.png</normaloff>:/imagenes/iconos/equipos/atalaya.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_5">
+              <property name="styleSheet">
+               <string notr="true">Text-align:left</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+              <property name="icon">
+               <iconset resource="iconos.qrc">
+                <normaloff>:/imagenes/iconos/equipos/atalaya.png</normaloff>:/imagenes/iconos/equipos/atalaya.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -501,7 +728,7 @@
       <attribute name="title">
        <string>Consola</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_3">
+      <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <widget class="QTextEdit" name="textEdit"/>
        </item>
@@ -511,6 +738,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="iconos.qrc"/>
+ </resources>
  <connections/>
 </ui>
