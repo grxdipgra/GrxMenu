@@ -12,7 +12,7 @@
 #include <QDesktopServices>
 #include "configuracion.h"
 #include <QFileInfo>
-
+#include "mame.h"
 
 bool fileExists(QString path) {
     QFileInfo check_file(path);
@@ -406,4 +406,10 @@ void Botonera::on_actionBorrame_triggered()
 {
     Soporte *soporte = new Soporte;
     soporte->show();
+}
+
+void Botonera::on_actionMame_triggered()
+{
+    Mame *juego = new Mame;
+    juego->show();
 }

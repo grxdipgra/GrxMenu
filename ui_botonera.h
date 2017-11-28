@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'botonera.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.1
+** Created by: Qt User Interface Compiler version 5.9.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -45,6 +45,7 @@ public:
     QAction *actionAcerca_de;
     QAction *actionAtalaya;
     QAction *actionBorrame;
+    QAction *actionMame;
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_5;
@@ -69,7 +70,7 @@ public:
     {
         if (Botonera->objectName().isEmpty())
             Botonera->setObjectName(QStringLiteral("Botonera"));
-        Botonera->resize(1091, 412);
+        Botonera->resize(1128, 412);
         actionUsuarios = new QAction(Botonera);
         actionUsuarios->setObjectName(QStringLiteral("actionUsuarios"));
         actionUsuarios->setEnabled(true);
@@ -152,6 +153,11 @@ public:
         QIcon icon15;
         icon15.addFile(QStringLiteral(":/imagenes/iconos/soporte/escoba.svg"), QSize(), QIcon::Normal, QIcon::Off);
         actionBorrame->setIcon(icon15);
+        actionMame = new QAction(Botonera);
+        actionMame->setObjectName(QStringLiteral("actionMame"));
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/imagenes/iconos/botonera/mame.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionMame->setIcon(icon16);
         centralWidget = new QWidget(Botonera);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
@@ -236,7 +242,7 @@ public:
         Botonera->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Botonera);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1091, 19));
+        menuBar->setGeometry(QRect(0, 0, 1128, 22));
         menuNuevo = new QMenu(menuBar);
         menuNuevo->setObjectName(QStringLiteral("menuNuevo"));
         menuAplicaciones = new QMenu(menuBar);
@@ -275,6 +281,7 @@ public:
         menuAplicaciones->addAction(actionISL);
         menuAplicaciones->addAction(actionConfigurar);
         menuAcerca_de->addAction(actionAcerca_de);
+        menuAcerca_de->addAction(actionMame);
         mainToolBar->addAction(actionUsuarios);
         mainToolBar->addAction(actionSoporte);
         mainToolBar->addAction(actionSedes);
@@ -297,74 +304,93 @@ public:
 
     void retranslateUi(QMainWindow *Botonera)
     {
-        Botonera->setWindowTitle(QApplication::translate("Botonera", "Menu Principal", 0));
-        actionUsuarios->setText(QApplication::translate("Botonera", "&Usuarios", 0));
+        Botonera->setWindowTitle(QApplication::translate("Botonera", "Menu Principal", Q_NULLPTR));
+        actionUsuarios->setText(QApplication::translate("Botonera", "&Usuarios", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionUsuarios->setToolTip(QApplication::translate("Botonera", "Usuarios", 0));
+        actionUsuarios->setToolTip(QApplication::translate("Botonera", "Usuarios", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionUsuarios->setShortcut(QApplication::translate("Botonera", "Ctrl+F1", 0));
-        actionCronos->setText(QApplication::translate("Botonera", "&Cronos", 0));
+#ifndef QT_NO_SHORTCUT
+        actionUsuarios->setShortcut(QApplication::translate("Botonera", "Ctrl+F1", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionCronos->setText(QApplication::translate("Botonera", "&Cronos", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionCronos->setToolTip(QApplication::translate("Botonera", "Cronos", 0));
+        actionCronos->setToolTip(QApplication::translate("Botonera", "Cronos", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionCronos->setShortcut(QApplication::translate("Botonera", "Ctrl+F2", 0));
-        actionWebmail->setText(QApplication::translate("Botonera", "&Webmail", 0));
+#ifndef QT_NO_SHORTCUT
+        actionCronos->setShortcut(QApplication::translate("Botonera", "Ctrl+F2", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionWebmail->setText(QApplication::translate("Botonera", "&Webmail", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionWebmail->setToolTip(QApplication::translate("Botonera", "Webmail", 0));
+        actionWebmail->setToolTip(QApplication::translate("Botonera", "Webmail", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionWebmail->setShortcut(QApplication::translate("Botonera", "Ctrl+F3", 0));
-        actionBeiro->setText(QApplication::translate("Botonera", "&Beiro", 0));
+#ifndef QT_NO_SHORTCUT
+        actionWebmail->setShortcut(QApplication::translate("Botonera", "Ctrl+F3", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionBeiro->setText(QApplication::translate("Botonera", "&Beiro", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionBeiro->setToolTip(QApplication::translate("Botonera", "Beiro", 0));
+        actionBeiro->setToolTip(QApplication::translate("Botonera", "Beiro", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionBeiro->setShortcut(QApplication::translate("Botonera", "Ctrl+F4", 0));
-        actionGlpi->setText(QApplication::translate("Botonera", "&Glpi", 0));
+#ifndef QT_NO_SHORTCUT
+        actionBeiro->setShortcut(QApplication::translate("Botonera", "Ctrl+F4", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionGlpi->setText(QApplication::translate("Botonera", "&Glpi", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionGlpi->setToolTip(QApplication::translate("Botonera", "Glpi", 0));
+        actionGlpi->setToolTip(QApplication::translate("Botonera", "Glpi", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionGlpi->setShortcut(QApplication::translate("Botonera", "Ctrl+F5", 0));
-        actionOcs->setText(QApplication::translate("Botonera", "&Ocs", 0));
+#ifndef QT_NO_SHORTCUT
+        actionGlpi->setShortcut(QApplication::translate("Botonera", "Ctrl+F5", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionOcs->setText(QApplication::translate("Botonera", "&Ocs", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionOcs->setToolTip(QApplication::translate("Botonera", "Ocs", 0));
+        actionOcs->setToolTip(QApplication::translate("Botonera", "Ocs", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionOcs->setShortcut(QApplication::translate("Botonera", "Ctrl+F6", 0));
-        actionActiveDirectory->setText(QApplication::translate("Botonera", "&activeDirectory", 0));
+#ifndef QT_NO_SHORTCUT
+        actionOcs->setShortcut(QApplication::translate("Botonera", "Ctrl+F6", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionActiveDirectory->setText(QApplication::translate("Botonera", "&activeDirectory", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionActiveDirectory->setToolTip(QApplication::translate("Botonera", "Active Directory", 0));
+        actionActiveDirectory->setToolTip(QApplication::translate("Botonera", "Active Directory", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionActiveDirectory->setShortcut(QApplication::translate("Botonera", "Ctrl+F7", 0));
-        actionSalir->setText(QApplication::translate("Botonera", "&Salir", 0));
+#ifndef QT_NO_SHORTCUT
+        actionActiveDirectory->setShortcut(QApplication::translate("Botonera", "Ctrl+F7", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionSalir->setText(QApplication::translate("Botonera", "&Salir", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionSalir->setToolTip(QApplication::translate("Botonera", "Salir", 0));
+        actionSalir->setToolTip(QApplication::translate("Botonera", "Salir", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionSalir->setShortcut(QApplication::translate("Botonera", "Ctrl+F8", 0));
-        actionNuevo_Men->setText(QApplication::translate("Botonera", "&Nueva Botonera", 0));
-        actionISL->setText(QApplication::translate("Botonera", "&ISL", 0));
+#ifndef QT_NO_SHORTCUT
+        actionSalir->setShortcut(QApplication::translate("Botonera", "Ctrl+F8", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionNuevo_Men->setText(QApplication::translate("Botonera", "&Nueva Botonera", Q_NULLPTR));
+        actionISL->setText(QApplication::translate("Botonera", "&ISL", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionISL->setToolTip(QApplication::translate("Botonera", "ISLlight", 0));
+        actionISL->setToolTip(QApplication::translate("Botonera", "ISLlight", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionISL->setShortcut(QApplication::translate("Botonera", "Ctrl+9", 0));
-        actionConfigurar->setText(QApplication::translate("Botonera", "Co&nfigurar", 0));
-        actionSoporte->setText(QApplication::translate("Botonera", "&Soporte", 0));
+#ifndef QT_NO_SHORTCUT
+        actionISL->setShortcut(QApplication::translate("Botonera", "Ctrl+9", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionConfigurar->setText(QApplication::translate("Botonera", "Co&nfigurar", Q_NULLPTR));
+        actionSoporte->setText(QApplication::translate("Botonera", "&Soporte", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionSoporte->setToolTip(QApplication::translate("Botonera", "Soporte", 0));
+        actionSoporte->setToolTip(QApplication::translate("Botonera", "Soporte", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionSedes->setText(QApplication::translate("Botonera", "Sedes", 0));
-        actionAcerca_de->setText(QApplication::translate("Botonera", "&Acerca de ...", 0));
-        actionAtalaya->setText(QApplication::translate("Botonera", "Atalaya", 0));
+        actionSedes->setText(QApplication::translate("Botonera", "Sedes", Q_NULLPTR));
+        actionAcerca_de->setText(QApplication::translate("Botonera", "&Acerca de ...", Q_NULLPTR));
+        actionAtalaya->setText(QApplication::translate("Botonera", "Atalaya", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionAtalaya->setToolTip(QApplication::translate("Botonera", "Atalaya", 0));
+        actionAtalaya->setToolTip(QApplication::translate("Botonera", "Atalaya", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionBorrame->setText(QApplication::translate("Botonera", "Borrame", 0));
+        actionBorrame->setText(QApplication::translate("Botonera", "Borrame", Q_NULLPTR));
+        actionMame->setText(QApplication::translate("Botonera", "Mame", Q_NULLPTR));
         kerberos->setText(QString());
-        pb_kerberos->setText(QApplication::translate("Botonera", "Renovar", 0));
+        pb_kerberos->setText(QApplication::translate("Botonera", "Renovar", Q_NULLPTR));
         label_DB->setText(QString());
-        pb_reconectaDB->setText(QApplication::translate("Botonera", "Conecta DB", 0));
+        pb_reconectaDB->setText(QApplication::translate("Botonera", "Conecta DB", Q_NULLPTR));
         label_username->setText(QString());
         label_ip->setText(QString());
-        menuNuevo->setTitle(QApplication::translate("Botonera", "Archi&vo", 0));
-        menuAplicaciones->setTitle(QApplication::translate("Botonera", "Ap&licaciones", 0));
-        menuAcerca_de->setTitle(QApplication::translate("Botonera", "A&yuda", 0));
+        menuNuevo->setTitle(QApplication::translate("Botonera", "Archi&vo", Q_NULLPTR));
+        menuAplicaciones->setTitle(QApplication::translate("Botonera", "Ap&licaciones", Q_NULLPTR));
+        menuAcerca_de->setTitle(QApplication::translate("Botonera", "A&yuda", Q_NULLPTR));
     } // retranslateUi
 
 };

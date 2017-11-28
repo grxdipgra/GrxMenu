@@ -25,6 +25,7 @@ SOURCES += main.cpp \
     tabescaner.cpp \
     basedatos.cpp \
     acerdade.cpp \
+    mame.cpp
 
 
 
@@ -42,6 +43,7 @@ HEADERS  += \
     tabescaner.h \
     basedatos.h \
     acerdade.h \
+    mame.h
 
 
 
@@ -53,7 +55,8 @@ FORMS    += \
     soporte.ui \
     equipos.ui \
     basedatos.ui \
-    acerdade.ui
+    acerdade.ui \
+    mame.ui
 
 
 LIBS += -lssh2

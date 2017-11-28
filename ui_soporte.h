@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'soporte.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.1
+** Created by: Qt User Interface Compiler version 5.9.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -71,7 +71,7 @@ public:
     QPushButton *Btn_Incidencia;
     QPushButton *Btn_Mtr;
     QPushButton *Btn_Atalaya;
-    QPushButton *pushButton;
+    QPushButton *Btn_Glpi;
     QLabel *Estado;
     QPushButton *Btn_Limpiar;
     QFrame *frame_2;
@@ -330,11 +330,11 @@ public:
 
         horizontalLayout_2->addWidget(Btn_Atalaya);
 
-        pushButton = new QPushButton(layoutWidget1);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setMinimumSize(QSize(0, 40));
+        Btn_Glpi = new QPushButton(layoutWidget1);
+        Btn_Glpi->setObjectName(QStringLiteral("Btn_Glpi"));
+        Btn_Glpi->setMinimumSize(QSize(0, 40));
 
-        horizontalLayout_2->addWidget(pushButton);
+        horizontalLayout_2->addWidget(Btn_Glpi);
 
         Estado = new QLabel(Soporte);
         Estado->setObjectName(QStringLiteral("Estado"));
@@ -472,68 +472,68 @@ public:
 
     void retranslateUi(QDialog *Soporte)
     {
-        Soporte->setWindowTitle(QApplication::translate("Soporte", "Soporte", 0));
-        label_2->setText(QApplication::translate("Soporte", "Sede", 0));
-        label->setText(QApplication::translate("Soporte", "Ip/red ", 0));
-        label_3->setText(QApplication::translate("Soporte", "Tel\303\251fono", 0));
-        label_4->setText(QApplication::translate("Soporte", "Extensi\303\263n", 0));
-        label_5->setText(QApplication::translate("Soporte", "Direcci\303\263n", 0));
-        label_6->setText(QApplication::translate("Soporte", "N\303\272mero", 0));
-        label_7->setText(QApplication::translate("Soporte", "ADSL", 0));
-        label_8->setText(QApplication::translate("Soporte", "N\302\272Adm", 0));
-        label_9->setText(QApplication::translate("Soporte", "Centro", 0));
-        label_10->setText(QApplication::translate("Soporte", "Tel\303\251fono", 0));
-        label_11->setText(QApplication::translate("Soporte", "Servicio", 0));
-        label_12->setText(QApplication::translate("Soporte", "Caudal", 0));
-        Btn_Buscar->setText(QApplication::translate("Soporte", "Escanear", 0));
-        Btn_Ping->setText(QApplication::translate("Soporte", "Ping", 0));
-        Btn_Incidencia->setText(QApplication::translate("Soporte", "Incidencia", 0));
-        Btn_Mtr->setText(QApplication::translate("Soporte", "mtr", 0));
-        Btn_Atalaya->setText(QApplication::translate("Soporte", "SolarWinds", 0));
-        pushButton->setText(QApplication::translate("Soporte", "GLPI", 0));
+        Soporte->setWindowTitle(QApplication::translate("Soporte", "Soporte", Q_NULLPTR));
+        label_2->setText(QApplication::translate("Soporte", "Sede", Q_NULLPTR));
+        label->setText(QApplication::translate("Soporte", "Ip/red ", Q_NULLPTR));
+        label_3->setText(QApplication::translate("Soporte", "Tel\303\251fono", Q_NULLPTR));
+        label_4->setText(QApplication::translate("Soporte", "Extensi\303\263n", Q_NULLPTR));
+        label_5->setText(QApplication::translate("Soporte", "Direcci\303\263n", Q_NULLPTR));
+        label_6->setText(QApplication::translate("Soporte", "N\303\272mero", Q_NULLPTR));
+        label_7->setText(QApplication::translate("Soporte", "ADSL", Q_NULLPTR));
+        label_8->setText(QApplication::translate("Soporte", "N\302\272Adm", Q_NULLPTR));
+        label_9->setText(QApplication::translate("Soporte", "Centro", Q_NULLPTR));
+        label_10->setText(QApplication::translate("Soporte", "Tel\303\251fono", Q_NULLPTR));
+        label_11->setText(QApplication::translate("Soporte", "Servicio", Q_NULLPTR));
+        label_12->setText(QApplication::translate("Soporte", "Caudal", Q_NULLPTR));
+        Btn_Buscar->setText(QApplication::translate("Soporte", "Escanear", Q_NULLPTR));
+        Btn_Ping->setText(QApplication::translate("Soporte", "Ping", Q_NULLPTR));
+        Btn_Incidencia->setText(QApplication::translate("Soporte", "Incidencia", Q_NULLPTR));
+        Btn_Mtr->setText(QApplication::translate("Soporte", "mtr", Q_NULLPTR));
+        Btn_Atalaya->setText(QApplication::translate("Soporte", "SolarWinds", Q_NULLPTR));
+        Btn_Glpi->setText(QApplication::translate("Soporte", "GLPI", Q_NULLPTR));
         Estado->setText(QString());
-        Btn_Limpiar->setText(QApplication::translate("Soporte", "Limpiar", 0));
+        Btn_Limpiar->setText(QApplication::translate("Soporte", "Limpiar", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        pB_gmenu->setToolTip(QApplication::translate("Soporte", "MOAD", 0));
+        pB_gmenu->setToolTip(QApplication::translate("Soporte", "MOAD", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_gmenu->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_gtablon->setToolTip(QApplication::translate("Soporte", "GTabl\303\263n", 0));
+        pB_gtablon->setToolTip(QApplication::translate("Soporte", "GTabl\303\263n", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_gtablon->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_isl->setToolTip(QApplication::translate("Soporte", "ISLOnline", 0));
+        pB_isl->setToolTip(QApplication::translate("Soporte", "ISLOnline", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_isl->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_citrix->setToolTip(QApplication::translate("Soporte", "Citrix", 0));
+        pB_citrix->setToolTip(QApplication::translate("Soporte", "Citrix", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_citrix->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_epol->setToolTip(QApplication::translate("Soporte", "EPol", 0));
+        pB_epol->setToolTip(QApplication::translate("Soporte", "EPol", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_epol->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_aytos->setToolTip(QApplication::translate("Soporte", "Incidencias Sede", 0));
+        pB_aytos->setToolTip(QApplication::translate("Soporte", "Incidencias Sede", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_aytos->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_portafirmas->setToolTip(QApplication::translate("Soporte", "Portafirmas", 0));
+        pB_portafirmas->setToolTip(QApplication::translate("Soporte", "Portafirmas", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_portafirmas->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_listin->setToolTip(QApplication::translate("Soporte", "Listin Telef\303\263nico", 0));
+        pB_listin->setToolTip(QApplication::translate("Soporte", "Listin Telef\303\263nico", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_listin->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_perilContratante->setToolTip(QApplication::translate("Soporte", "Portal del Contratante", 0));
+        pB_perilContratante->setToolTip(QApplication::translate("Soporte", "Portal del Contratante", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_perilContratante->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        pB_guadaltel->setToolTip(QApplication::translate("Soporte", "Redmine", 0));
+        pB_guadaltel->setToolTip(QApplication::translate("Soporte", "Redmine", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         pB_guadaltel->setText(QString());
-        tabWidget->setTabText(tabWidget->indexOf(consola), QApplication::translate("Soporte", "Consola", 0));
+        tabWidget->setTabText(tabWidget->indexOf(consola), QApplication::translate("Soporte", "Consola", Q_NULLPTR));
     } // retranslateUi
 
 };

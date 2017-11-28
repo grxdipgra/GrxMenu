@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1091</width>
+    <width>1128</width>
     <height>412</height>
    </rect>
   </property>
@@ -137,8 +137,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1091</width>
-     <height>19</height>
+     <width>1128</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuNuevo">
@@ -170,6 +170,7 @@
      <string>A&amp;yuda</string>
     </property>
     <addaction name="actionAcerca_de"/>
+    <addaction name="actionMame"/>
    </widget>
    <addaction name="menuNuevo"/>
    <addaction name="menuAplicaciones"/>
@@ -425,6 +426,15 @@
    </property>
    <property name="text">
     <string>Borrame</string>
+   </property>
+  </action>
+  <action name="actionMame">
+   <property name="icon">
+    <iconset resource="iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/mame.png</normaloff>:/imagenes/iconos/botonera/mame.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mame</string>
    </property>
   </action>
  </widget>

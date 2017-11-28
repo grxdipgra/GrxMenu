@@ -156,7 +156,7 @@ void Soporte::on_Btn_Buscar_clicked()
 void Soporte::ejecuta_nmap()
 {
     QThread *hilo =new QThread();
-    ejecutaHilo *hebra = new ejecutaHilo(ui->lineEdit_ip->text(),"-vvv -p22,80,8080,9100,443,139");
+    ejecutaHilo *hebra = new ejecutaHilo(ui->lineEdit_ip->text(),"-vvv -p23,22,80,8080,9100,443,139");
     ui->TextoSalida->appendPlainText("Realizando escaneo para la ip:  "+ui->lineEdit_ip->text());
     hebra->moveToThread(hilo);
     qRegisterMetaType<QList<NMapScan>>("QList<NMapScan>");
@@ -313,9 +313,8 @@ void Soporte::on_pB_listin_clicked()
     QDesktopServices::openUrl(QUrl("http://www.dipgra.es/listin", QUrl::TolerantMode));
 }
 
-void Soporte::on_pushButton_clicked()
+void Soporte::on_Btn_Glpi_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/glpi/front/central.php?active_entity="+QString::number(glpi)));
+    //QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/glpi/front/central.php?active_entity="+QString::number(glpi)));
     //QDesktopServices::openUrl(QUrl("https://glpi.dipgra.es/glpi/plugins/webservices/soap.php"));
-
 }

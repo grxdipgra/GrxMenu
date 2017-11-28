@@ -42,6 +42,11 @@ private slots:
 
     void on_pushButton_12_clicked();
 
+    void botonesActivos(QString puertos);
+
+    void desactivaBotones();
+    void on_pB_update_clicked();
+
 private:
     Ui::Equipos *ui;
     QString ip;

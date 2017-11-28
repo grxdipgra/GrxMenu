@@ -32,6 +32,7 @@ Equipos::Equipos(Host *host, QWidget *parent) :
     ip=host->address.addr;
     QString puertos_abiertos= host_ports_open_string(host);
     ui->setupUi(this);
+    botonesActivos(puertos_abiertos);
     ui->lineEdit_ip->setText(ip);
     ui->lineEdit_puertos->setText(puertos_abiertos);
     ui->lineEdit_puertosBuscados->setText(QString::number(host->ports.port.count())+": "+host_ports_find(host));
@@ -56,6 +57,54 @@ QList <QString> Equipos::host_ports_open(Host *host){
            lista.append(host->ports.port.at(i).portid);
     return lista;
 }
+
+void Equipos::desactivaBotones(){
+    ui->pB_carpeta->setEnabled(false);
+    ui->pB_CUPS->setEnabled(false);
+    ui->pB_discos->setEnabled(false);
+    ui->pB_equipo->setEnabled(false);
+    ui->pB_instala->setEnabled(false);
+    ui->pB_networkManager->setEnabled(false);
+    ui->pB_ssh->setEnabled(false);
+    ui->pB_systemconfig->setEnabled(false);
+    ui->pB_telnet->setEnabled(false);
+    ui->pB_web->setEnabled(false);
+    ui->pB_webssl->setEnabled(false);
+    ui->pB_konekta->setEnabled(false);
+    ui->pB_vnc->setEnabled(false);
+    ui->pB_update->setEnabled(false);
+    ui->pB_usuarios->setEnabled(false);
+    ui->pB_procesos->setEnabled(false);
+}
+
+
+void Equipos::botonesActivos(QString puertos){
+    QStringList lista = puertos.split(" ");
+    desactivaBotones();
+    for (int i=0;i<lista.length();i++)
+        if ((lista[i]=="22")||(lista[i]=="8080")){
+             ui->pB_ssh->setEnabled(true);
+             ui->pB_carpeta->setEnabled(true);
+             ui->pB_CUPS->setEnabled(true);
+             ui->pB_networkManager->setEnabled(true);
+             ui->pB_vnc->setEnabled(true);
+             ui->pB_systemconfig->setEnabled(true);
+             ui->pB_instala->setEnabled(true);
+             ui->pB_equipo->setEnabled(true);
+             ui->pB_discos->setEnabled(true);
+             ui->pB_procesos->setEnabled(true);
+
+        }else if (lista[i]=="80"){
+             ui->pB_web->setEnabled(true);
+        }else if (lista[i]=="443"){
+             ui->pB_webssl->setEnabled(true);
+        }else if (lista[i]=="23"){
+            ui->pB_telnet->setEnabled(true);
+       }
+
+}
+
+
 
 /****************host_ports_open_int****************************
  * Devuelve los puerto abiertos del host pasado por parametro
@@ -100,7 +149,7 @@ void Equipos::on_pB_webssl_clicked()
 void Equipos::on_pB_telnet_clicked()
 {
     QProcess process;
-    process.startDetached("xterm -e telnet "+ip);
+    process.startDetached("x-terminal-emulator -e telnet "+ip);
 }
 
 void Equipos::on_pB_ssh_clicked()
@@ -162,4 +211,9 @@ void Equipos::on_pushButton_12_clicked()
     Configuracion config;
     QProcess process;
     process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_tecnico()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/lxtask ");
+}
+
+void Equipos::on_pB_update_clicked()
+{
+
 }

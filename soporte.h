@@ -79,8 +79,7 @@ private slots:
 
    void on_pB_listin_clicked();
 
-
-   void on_pushButton_clicked();
+   void on_Btn_Glpi_clicked();
 
 private:
     Ui::Soporte *ui;

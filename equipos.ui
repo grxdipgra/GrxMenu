@@ -235,7 +235,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_7">
+             <widget class="QPushButton" name="pB_update">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
@@ -383,7 +383,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_12">
+             <widget class="QPushButton" name="pB_procesos">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
@@ -403,7 +403,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_11">
+             <widget class="QPushButton" name="pB_usuarios">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
@@ -427,7 +427,7 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
-             <widget class="QPushButton" name="pushButton_14">
+             <widget class="QPushButton" name="pB_discos">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
@@ -447,7 +447,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_13">
+             <widget class="QPushButton" name="pB_equipo">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
@@ -467,7 +467,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="pB_instala">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
@@ -487,7 +487,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="pB_konekta">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -696,6 +696,9 @@
    </item>
    <item row="2" column="0">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
      </property>
@@ -715,9 +718,6 @@
       <bool>false</bool>
      </property>
      <property name="tabBarAutoHide">
-      <bool>false</bool>
-     </property>
-     <property name="tabletTracking" stdset="0">
       <bool>false</bool>
      </property>
      <widget class="QWidget" name="tab">

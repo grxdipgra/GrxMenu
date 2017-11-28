@@ -67,6 +67,8 @@ private slots:
 
     void on_actionBorrame_triggered();
 
+    void on_actionMame_triggered();
+
 private:
     Ui::Botonera *ui;
 
