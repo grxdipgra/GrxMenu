@@ -219,7 +219,13 @@ void Equipos::on_pB_update_clicked()
 
 void Equipos::on_pB_creaIncidencia_clicked()
 {
-
+/*const QString endPoint = QLatin1String("http://192.168.1.138/glpi/plugins/webservices/soap.php");
+const QString messageNamespace =  QLatin1String("http://192.168.1.138/glpi/plugins/webservices/");
+KDSoapClientInterface client(endPoint,messageNamespace);
+KDSoapMessage message;
+message.addArgument (QLatin1String("glpi.listUser"),23);
+KDSoapMessage response = client.call(QLatin1String("glpi.listUser"),message);
+*/
 }
 
 void Equipos::on_pB_ISL_clicked()

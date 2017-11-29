@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'usuario.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.1
+** Created by: Qt User Interface Compiler version 5.9.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -255,22 +255,22 @@ public:
 
     void retranslateUi(QDialog *Usuario)
     {
-        Usuario->setWindowTitle(QApplication::translate("Usuario", "Administraci\303\263n de Usuarios", 0));
-        label->setText(QApplication::translate("Usuario", "Usuario", 0));
-        label_2->setText(QApplication::translate("Usuario", "Nombre", 0));
-        label_3->setText(QApplication::translate("Usuario", "Correo", 0));
-        label_4->setText(QApplication::translate("Usuario", "Estado", 0));
-        label_5->setText(QApplication::translate("Usuario", "Tel\303\251fono", 0));
-        label_6->setText(QApplication::translate("Usuario", "Creada", 0));
-        label_7->setText(QApplication::translate("Usuario", "Caduca", 0));
-        label_8->setText(QApplication::translate("Usuario", "N\302\272 Accesos al sistema", 0));
-        label_9->setText(QApplication::translate("Usuario", "Ultimo Logon", 0));
-        label_10->setText(QApplication::translate("Usuario", "Ult. Cambio de Clave", 0));
-        label_11->setText(QApplication::translate("Usuario", "Ultima Modificaci\303\263n", 0));
-        label_12->setText(QApplication::translate("Usuario", "N\303\272mero de intentos", 0));
-        label_13->setText(QApplication::translate("Usuario", "La Clave Caduca en", 0));
-        label_14->setText(QApplication::translate("Usuario", "F. Creaci\303\263n de Correo", 0));
-        pushButton->setText(QApplication::translate("Usuario", "Buscar", 0));
+        Usuario->setWindowTitle(QApplication::translate("Usuario", "Administraci\303\263n de Usuarios", Q_NULLPTR));
+        label->setText(QApplication::translate("Usuario", "Usuario", Q_NULLPTR));
+        label_2->setText(QApplication::translate("Usuario", "Nombre", Q_NULLPTR));
+        label_3->setText(QApplication::translate("Usuario", "Correo", Q_NULLPTR));
+        label_4->setText(QApplication::translate("Usuario", "Estado", Q_NULLPTR));
+        label_5->setText(QApplication::translate("Usuario", "Tel\303\251fono", Q_NULLPTR));
+        label_6->setText(QApplication::translate("Usuario", "Creada", Q_NULLPTR));
+        label_7->setText(QApplication::translate("Usuario", "Caduca", Q_NULLPTR));
+        label_8->setText(QApplication::translate("Usuario", "N\302\272 Accesos al sistema", Q_NULLPTR));
+        label_9->setText(QApplication::translate("Usuario", "Ultimo Logon", Q_NULLPTR));
+        label_10->setText(QApplication::translate("Usuario", "Ult. Cambio de Clave", Q_NULLPTR));
+        label_11->setText(QApplication::translate("Usuario", "Ultima Modificaci\303\263n", Q_NULLPTR));
+        label_12->setText(QApplication::translate("Usuario", "N\303\272mero de intentos", Q_NULLPTR));
+        label_13->setText(QApplication::translate("Usuario", "La Clave Caduca en", Q_NULLPTR));
+        label_14->setText(QApplication::translate("Usuario", "F. Creaci\303\263n de Correo", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("Usuario", "Buscar", Q_NULLPTR));
     } // retranslateUi
 
 };

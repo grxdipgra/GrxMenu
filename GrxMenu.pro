@@ -58,7 +58,7 @@ FORMS    += \
     acerdade.ui \
     mame.ui
 
-
+INCLUDEPATH +=/lib
 LIBS += -lssh2
 
 RESOURCES += \

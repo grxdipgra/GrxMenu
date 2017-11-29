@@ -3,6 +3,18 @@
 #include "nmap_xml.h"
 #include <QWidget>
 
+/*
+ * #include "KDSoapClient/KDSoapJob.h"
+#include "KDSoapClient/KDSoap.h"
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include "KDSoapClient/KDSoapClientInterface.h"
+#include "KDSoapClient/KDSoapMessage.h"
+#include "KDSoapClient/KDSoapValue.h"
+#include "KDSoapClient/KDSoapPendingCallWatcher.h"
+#include "KDSoapClient/KDSoapNamespaceManager.h"
+#include "KDSoapClient/KDSoapGlobal.h"
+*/
 namespace Ui {
 class Equipos;
 }

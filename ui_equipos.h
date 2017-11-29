@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'equipos.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.1
+** Created by: Qt User Interface Compiler version 5.9.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -544,41 +544,41 @@ public:
 
     void retranslateUi(QWidget *Equipos)
     {
-        Equipos->setWindowTitle(QApplication::translate("Equipos", "Equipos", 0));
-        groupBox->setTitle(QApplication::translate("Equipos", "Informaci\303\263n del Equipo", 0));
-        label_ip->setText(QApplication::translate("Equipos", "IP", 0));
-        label_tipo->setText(QApplication::translate("Equipos", "Tipo", 0));
-        label_puertos->setText(QApplication::translate("Equipos", "Puertos abiertos", 0));
-        label_4->setText(QApplication::translate("Equipos", "Puertos buscados", 0));
-        label_hostname->setText(QApplication::translate("Equipos", "Hostname", 0));
-        label_status->setText(QApplication::translate("Equipos", "Status", 0));
-        label_8->setText(QApplication::translate("Equipos", "TextLabel", 0));
-        label_9->setText(QApplication::translate("Equipos", "TextLabel", 0));
-        pB_carpeta->setText(QApplication::translate("Equipos", "Carpeta", 0));
-        pB_ssh->setText(QApplication::translate("Equipos", "ssh", 0));
-        pB_vnc->setText(QApplication::translate("Equipos", "VNC", 0));
-        pB_update->setText(QApplication::translate("Equipos", "Update", 0));
-        pB_CUPS->setText(QApplication::translate("Equipos", "CUPS", 0));
-        pB_web->setText(QApplication::translate("Equipos", "web", 0));
-        pB_webssl->setText(QApplication::translate("Equipos", "web-ssl", 0));
-        pB_telnet->setText(QApplication::translate("Equipos", "Telnet", 0));
-        pB_systemconfig->setText(QApplication::translate("Equipos", "systemconfig", 0));
-        pB_networkManager->setText(QApplication::translate("Equipos", "netmanager", 0));
-        pB_procesos->setText(QApplication::translate("Equipos", "Procesos", 0));
-        pB_usuarios->setText(QApplication::translate("Equipos", "Usuarios", 0));
-        pB_discos->setText(QApplication::translate("Equipos", "Discos", 0));
-        pB_equipo->setText(QApplication::translate("Equipos", "Equipo", 0));
-        pB_instala->setText(QApplication::translate("Equipos", "Instala", 0));
-        pB_konekta->setText(QApplication::translate("Equipos", "Konekta", 0));
-        pB_creaIncidencia->setText(QApplication::translate("Equipos", "Crear Incidencia", 0));
-        pB_infoEquipo->setText(QApplication::translate("Equipos", "Info del Equipo", 0));
-        pB_incidenciasAbiertas->setText(QApplication::translate("Equipos", "Incid. abiertas", 0));
-        pB_ISL->setText(QApplication::translate("Equipos", "ISL", 0));
-        pushButton_6->setText(QApplication::translate("Equipos", "PushButton", 0));
-        pushButton_4->setText(QApplication::translate("Equipos", "PushButton", 0));
-        pushButton_3->setText(QApplication::translate("Equipos", "PushButton", 0));
-        pushButton_5->setText(QApplication::translate("Equipos", "PushButton", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Equipos", "Consola", 0));
+        Equipos->setWindowTitle(QApplication::translate("Equipos", "Equipos", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("Equipos", "Informaci\303\263n del Equipo", Q_NULLPTR));
+        label_ip->setText(QApplication::translate("Equipos", "IP", Q_NULLPTR));
+        label_tipo->setText(QApplication::translate("Equipos", "Tipo", Q_NULLPTR));
+        label_puertos->setText(QApplication::translate("Equipos", "Puertos abiertos", Q_NULLPTR));
+        label_4->setText(QApplication::translate("Equipos", "Puertos buscados", Q_NULLPTR));
+        label_hostname->setText(QApplication::translate("Equipos", "Hostname", Q_NULLPTR));
+        label_status->setText(QApplication::translate("Equipos", "Status", Q_NULLPTR));
+        label_8->setText(QApplication::translate("Equipos", "TextLabel", Q_NULLPTR));
+        label_9->setText(QApplication::translate("Equipos", "TextLabel", Q_NULLPTR));
+        pB_carpeta->setText(QApplication::translate("Equipos", "Carpeta", Q_NULLPTR));
+        pB_ssh->setText(QApplication::translate("Equipos", "ssh", Q_NULLPTR));
+        pB_vnc->setText(QApplication::translate("Equipos", "VNC", Q_NULLPTR));
+        pB_update->setText(QApplication::translate("Equipos", "Update", Q_NULLPTR));
+        pB_CUPS->setText(QApplication::translate("Equipos", "CUPS", Q_NULLPTR));
+        pB_web->setText(QApplication::translate("Equipos", "web", Q_NULLPTR));
+        pB_webssl->setText(QApplication::translate("Equipos", "web-ssl", Q_NULLPTR));
+        pB_telnet->setText(QApplication::translate("Equipos", "Telnet", Q_NULLPTR));
+        pB_systemconfig->setText(QApplication::translate("Equipos", "systemconfig", Q_NULLPTR));
+        pB_networkManager->setText(QApplication::translate("Equipos", "netmanager", Q_NULLPTR));
+        pB_procesos->setText(QApplication::translate("Equipos", "Procesos", Q_NULLPTR));
+        pB_usuarios->setText(QApplication::translate("Equipos", "Usuarios", Q_NULLPTR));
+        pB_discos->setText(QApplication::translate("Equipos", "Discos", Q_NULLPTR));
+        pB_equipo->setText(QApplication::translate("Equipos", "Equipo", Q_NULLPTR));
+        pB_instala->setText(QApplication::translate("Equipos", "Instala", Q_NULLPTR));
+        pB_konekta->setText(QApplication::translate("Equipos", "Konekta", Q_NULLPTR));
+        pB_creaIncidencia->setText(QApplication::translate("Equipos", "Crear Incidencia", Q_NULLPTR));
+        pB_infoEquipo->setText(QApplication::translate("Equipos", "Info del Equipo", Q_NULLPTR));
+        pB_incidenciasAbiertas->setText(QApplication::translate("Equipos", "Incid. abiertas", Q_NULLPTR));
+        pB_ISL->setText(QApplication::translate("Equipos", "ISL", Q_NULLPTR));
+        pushButton_6->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
+        pushButton_5->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Equipos", "Consola", Q_NULLPTR));
     } // retranslateUi
 
 };
