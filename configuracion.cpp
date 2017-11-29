@@ -22,8 +22,20 @@ Configuracion::Configuracion(QWidget *parent) :
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
     ui->servidor->setValidator(ipValidator);
 
+    //Vamos a poner en el constructor la máscara para validar los puertos para ssh
+    //ponemos 15 puertos como maximo
+    QString puertoIN = "(?:[0-5]?[0-9]?[0-9]?[0-9]?[0-9])";
+    QRegExp puertoRegex ("^" + puertoIN+ "\\," + puertoIN+ "\\," + puertoIN
+                     + "\\," + puertoIN+ "\\," + puertoIN+ "\\," + puertoIN
+                     + "\\," + puertoIN+ "\\," + puertoIN+ "\\," + puertoIN
+                     + "\\," + puertoIN+ "\\," + puertoIN+ "\\," + puertoIN
+                     + "\\," + puertoIN+ "\\," + puertoIN+ "\\," + puertoIN + "$");
+    QRegExpValidator *puertoValidator = new QRegExpValidator(puertoRegex, this);
+    ui->lineEdit_puertos->setValidator(puertoValidator);
+
+
     //Vamos a poner en el constructor la máscara para validar el puerto introducido
-    QString puerto = "(?:[0-6]?[0-9]?[0-9]?[0-9]?[0-9])";
+    QString puerto = "(?:[0-5]?[0-9]?[0-9]?[0-9]?[0-9])";
     QRegExp ipRegex2 ("^" + puerto+ "$");
     QRegExpValidator *ipValidator2 = new QRegExpValidator(ipRegex2, this);
     ui->puerto->setValidator(ipValidator2);
@@ -65,7 +77,7 @@ void Configuracion::valoresPorDefecto(){
     ClaveSSH = "0";
     PuertoRemotoSSH = 22;
     PuertoLocalSSH = "0";
-    ISL = "/opt/ISL...";
+    ISL = "/opt/ISLOnline/ISLLight/ISLLight";
     Atalaya = "https://atalaya.grx";
     UsarUsuarios = "True";
     UsarSoporte = "True";
@@ -94,6 +106,14 @@ void Configuracion::valoresPorDefecto(){
     Para = "Pon aqui los destinatarios";
     Asunto = "Pon aqui el asunto";
     Cuerpo = "Escribe aqui el cuerpo del mensaje.";
+
+    PuertosBuscados_ssh="true";
+    PuertosBuscados_portPrinter="true";
+    PuertosBuscados_netbios="true";
+    PuertosBuscados_telnet="true";
+    PuertosBuscados_webssl="true";
+    PuertosBuscados_web="true";
+    PuertosBuscados_lineEdit="";
 
     carga_editLine();
 }
@@ -286,10 +306,99 @@ bool Configuracion::solo_aytos(){
 return false;
 }
 
+bool Configuracion::puertoSSH(){
+    if (PuertosBuscados_ssh =="True")
+        return true;
+return false;
+}
+
+bool Configuracion::puertoTelnet(){
+    if (PuertosBuscados_telnet =="True")
+        return true;
+return false;
+}
+
+bool Configuracion::puertoWeb(){
+    if (PuertosBuscados_web =="True")
+        return true;
+return false;
+}
+
+bool Configuracion::puertoWebssl(){
+    if (PuertosBuscados_webssl =="True")
+        return true;
+return false;
+}
+
+bool Configuracion::puertoPortPrinter(){
+    if (PuertosBuscados_portPrinter =="True")
+        return true;
+return false;
+}
+
+bool Configuracion::puertoNetbios(){
+    if (PuertosBuscados_netbios =="True")
+        return true;
+return false;
+}
+
+QString  Configuracion::cual_es_lineEditSSH(){
+    return PuertosBuscados_lineEdit;
+}
+
+
 
 QString  Configuracion::cual_es_resolucion(){
       return Resolucion;
 }
+
+
+QString Configuracion::puertos_buscados(){
+    QString tmp="";
+    if (ui->checkBox_SSH->isChecked()){
+        tmp.append("22");
+    }
+
+    if (ui->checkBox_telnet->isChecked()){
+        if (!tmp.isEmpty())
+               tmp.append(",");
+
+        tmp.append("23");
+    }
+
+    if (ui->checkBox_portPrinter ->isChecked()){
+        if (!tmp.isEmpty())
+               tmp.append(",");
+
+        tmp.append("9100");
+    }
+
+    if (ui->checkBox_web->isChecked()){
+        if (!tmp.isEmpty())
+               tmp.append(",");
+
+        tmp.append("80");
+    }
+
+    if (ui->checkBox_webssl->isChecked()){
+        if (!tmp.isEmpty())
+               tmp.append(",");
+        tmp.append("443");
+    }
+
+    if (ui->checkBox_netbios->isChecked()){
+        if (!tmp.isEmpty())
+               tmp.append(",");
+        tmp.append("139");
+    }
+    if (!ui->lineEdit_puertos->text().isEmpty())
+        if (!tmp.isEmpty())
+           tmp.append(",");
+        tmp.append(ui->lineEdit_puertos->text());
+return tmp;
+}
+
+
 void Configuracion::carga_configuracion_color(){
 
     ui->fr_linux->setStyleSheet("background-color:"+Fr_linux+";");
@@ -367,6 +476,13 @@ void Configuracion::carga_configuracion()
     Fr_TS = s.value("Configuracion/fr_TS").toString();
     Fr_rutas = s.value("Configuracion/fr_rutas").toString();
 
+    PuertosBuscados_ssh = s.value("Configuracion/PuertosBuscados_ssh").toString();
+    PuertosBuscados_telnet = s.value("Configuracion/PuertosBuscados_telnet").toString();
+    PuertosBuscados_web = s.value("Configuracion/PuertosBuscados_web").toString();
+    PuertosBuscados_webssl = s.value("Configuracion/PuertosBuscados_webssl").toString();
+    PuertosBuscados_portPrinter = s.value("Configuracion/PuertosBuscados_portPrinter").toString();
+    PuertosBuscados_netbios = s.value("Configuracion/PuertosBuscados_netbios").toString();
+    PuertosBuscados_lineEdit = s.value("Configuracion/PuertosBuscados_lineEdit").toString();
     carga_editLine();
 
 }
@@ -391,79 +507,26 @@ void Configuracion::carga_editLine(){
         deshabilitaProxyChains();
     }
 
-    if (usuarios_up()){
-        ui->checkBox_Usuarios->setChecked(true);
-    }
-    else{
-        ui->checkBox_Usuarios->setChecked(false);
-    }
-    if (soporte_up()){
-        ui->checkBox_Soporte->setChecked(true);
-    }
-    else{
-        ui->checkBox_Soporte->setChecked(false);
-    }
-    if (sedes_up()){
-        ui->checkBox_Sedes->setChecked(true);
-    }
-    else{
-        ui->checkBox_Sedes->setChecked(false);
-    }
-    if (cronos_up()){
-        ui->checkBox_Cronos->setChecked(true);
-    }
-    else{
-        ui->checkBox_Cronos->setChecked(false);
-    }
-    if (webmail_up()){
-        ui->checkBox_Webmail->setChecked(true);
-    }
-    else{
-        ui->checkBox_Webmail->setChecked(false);
-    }
-    if (beiro_up()){
-        ui->checkBox_Beiro->setChecked(true);
-    }
-    else{
-        ui->checkBox_Beiro->setChecked(false);
-    }
-    if (glpi_up()){
-        ui->checkBox_GLPI->setChecked(true);
-    }
-    else{
-        ui->checkBox_GLPI->setChecked(false);
-    }
-    if (ocs_up()){
-        ui->checkBox_OCS->setChecked(true);
-    }
-    else{
-        ui->checkBox_OCS->setChecked(false);
-    }
-    if (ts_up()){
-        ui->checkBox_TS->setChecked(true);
-    }
-    else{
-        ui->checkBox_TS->setChecked(false);
-    }
-    if (isl_up()){
-        ui->checkBox_ISL->setChecked(true);
-    }
-    else{
-        ui->checkBox_ISL->setChecked(false);
-    }
-    if (atalaya_up()){
-        ui->checkBox_Atalaya->setChecked(true);
-    }
-    else{
-        ui->checkBox_Atalaya->setChecked(false);
-    }
+    ui->checkBox_Usuarios->setChecked(usuarios_up());
+    ui->checkBox_Soporte->setChecked(soporte_up());
+    ui->checkBox_Sedes->setChecked(sedes_up());
+    ui->checkBox_Cronos->setChecked(cronos_up());
+    ui->checkBox_Webmail->setChecked(webmail_up());
+    ui->checkBox_Beiro->setChecked(beiro_up());
+    ui->checkBox_GLPI->setChecked(glpi_up());
+    ui->checkBox_OCS->setChecked(ocs_up());
+    ui->checkBox_TS->setChecked(ts_up());
+    ui->checkBox_ISL->setChecked(isl_up());
+    ui->checkBox_Atalaya->setChecked(atalaya_up());
+    ui->checkBox_soloAytos->setChecked(solo_aytos());
 
-    if (solo_aytos()){
-        ui->checkBox_soloAytos->setChecked(true);
-    }
-    else{
-        ui->checkBox_soloAytos->setChecked(false);
-    }
+    ui->checkBox_SSH->setChecked(puertoSSH());
+    ui->checkBox_telnet->setChecked(puertoTelnet());
+    ui->checkBox_web->setChecked(puertoWeb());
+    ui->checkBox_webssl->setChecked(puertoWebssl());
+    ui->checkBox_portPrinter->setChecked(puertoPortPrinter());
+    ui->checkBox_netbios->setChecked(puertoNetbios());
+
     ui->tecnico->setText(Tecnico);
     ui->clave->setText(Clave);
     ui->servidor->setText(ServidorAD);
@@ -497,6 +560,7 @@ void Configuracion::carga_editLine(){
     ui->cuerpo->setText(Cuerpo);
     ui->atalaya->setText(Atalaya);
     ui->proxychains->setText(ProxyChains);
+    ui->lineEdit_puertos->setText(PuertosBuscados_lineEdit);
 }
 
 
@@ -568,6 +632,7 @@ void Configuracion::on_buttonBox_accepted()
     s.setValue("Configuracion/fr_DB",Fr_DB);
     s.setValue("Configuracion/fr_TS",Fr_TS);
     s.setValue("Configuracion/fr_rutas",Fr_rutas);
+    s.setValue("Configuracion/PuertosBuscados_lineEdit",ui->lineEdit_puertos->text());
 
     s.setValue("Configuracion/Para",ui->para->text());
     s.setValue("Configuracion/Asunto",ui->asunto->text());
@@ -654,6 +719,47 @@ void Configuracion::on_buttonBox_accepted()
         s.setValue("Configuracion/Rdesktop","True");
     else
         s.setValue("Configuracion/Rdesktop","False");
+
+
+
+
+
+    if (ui->checkBox_SSH->isChecked())
+        s.setValue("Configuracion/PuertosBuscados_ssh","True");
+    else
+        s.setValue("Configuracion/PuertosBuscados_ssh","False");
+
+    if (ui->checkBox_telnet->isChecked())
+        s.setValue("Configuracion/PuertosBuscados_telnet","True");
+    else
+        s.setValue("Configuracion/PuertosBuscados_telnet","False");
+
+    if (ui->checkBox_web->isChecked())
+        s.setValue("Configuracion/PuertosBuscados_web","True");
+    else
+        s.setValue("Configuracion/PuertosBuscados_web","False");
+
+    if (ui->checkBox_webssl->isChecked())
+        s.setValue("Configuracion/PuertosBuscados_webssl","True");
+    else
+        s.setValue("Configuracion/PuertosBuscados_webssl","False");
+
+    if (ui->checkBox_portPrinter->isChecked())
+        s.setValue("Configuracion/PuertosBuscados_portPrinter","True");
+    else
+        s.setValue("Configuracion/PuertosBuscados_portPrinter","False");
+
+    if (ui->checkBox_netbios->isChecked())
+        s.setValue("Configuracion/PuertosBuscados_netbios","True");
+    else
+        s.setValue("Configuracion/PuertosBuscados_netbios","False");
+
+
+
+
+
+
+
 }
 void Configuracion::on_Btn_Kerberos_clicked()
 {
@@ -757,4 +863,9 @@ void Configuracion::on_buttonBox_clicked(QAbstractButton *button)
     if (button==ui->buttonBox->button(QDialogButtonBox::RestoreDefaults))
         valoresPorDefecto();
 
+}
+
+void Configuracion::on_pushButton_clicked()
+{
+    ui->label_ssh->setText(puertos_buscados());
 }

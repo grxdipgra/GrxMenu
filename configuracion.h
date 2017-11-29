@@ -47,6 +47,9 @@ public:
     QString cual_es_clave_cifrado();
     QString cual_es_clave_remoto();
     QString cual_es_proxychains();
+
+    QString puertos_buscados();
+
     bool es_rdesktop();
     bool es_usarSSH();
     bool es_usarproxy_chains();
@@ -62,7 +65,13 @@ public:
     bool isl_up();
     bool atalaya_up();
     bool solo_aytos();
-
+    bool puertoSSH();
+    bool puertoTelnet();
+    bool puertoWeb();
+    bool puertoWebssl();
+    bool puertoPortPrinter();
+    bool puertoNetbios();
+    QString cual_es_lineEditSSH();
     QString cual_es_rdesktop();
     QString cual_es_resolucion();
     QString cual_es_keyfile_privada();
@@ -119,6 +128,8 @@ private slots:
     void on_checkBox_proxychains_toggled(bool checked);
 
     void on_buttonBox_clicked(QAbstractButton *button);
+
+    void on_pushButton_clicked();
 
 private:
 
@@ -177,6 +188,15 @@ private:
     QString UsarProxyChains;
     QString ProxyChains;
     QString SoloAytos;
+
+    QString PuertosBuscados_ssh;
+    QString PuertosBuscados_telnet;
+    QString PuertosBuscados_web;
+    QString PuertosBuscados_webssl;
+    QString PuertosBuscados_portPrinter;
+    QString PuertosBuscados_netbios;
+    QString PuertosBuscados_lineEdit;
+
 
     Ui::Configuracion *ui;
 };

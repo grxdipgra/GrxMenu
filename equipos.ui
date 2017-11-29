@@ -522,12 +522,12 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_11">
             <item>
-             <widget class="QPushButton" name="pushButton_8">
+             <widget class="QPushButton" name="pB_creaIncidencia">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
               <property name="text">
-               <string>PushButton</string>
+               <string>Crear Incidencia</string>
               </property>
               <property name="icon">
                <iconset resource="iconos.qrc">
@@ -542,12 +542,12 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_9">
+             <widget class="QPushButton" name="pB_infoEquipo">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
               <property name="text">
-               <string>PushButton</string>
+               <string>Info del Equipo</string>
               </property>
               <property name="icon">
                <iconset resource="iconos.qrc">
@@ -562,12 +562,12 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_10">
+             <widget class="QPushButton" name="pB_incidenciasAbiertas">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
               <property name="text">
-               <string>PushButton</string>
+               <string>Incid. abiertas</string>
               </property>
               <property name="icon">
                <iconset resource="iconos.qrc">
@@ -582,16 +582,16 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_15">
+             <widget class="QPushButton" name="pB_ISL">
               <property name="styleSheet">
                <string notr="true">Text-align:left</string>
               </property>
               <property name="text">
-               <string>PushButton</string>
+               <string>ISL</string>
               </property>
               <property name="icon">
                <iconset resource="iconos.qrc">
-                <normaloff>:/imagenes/iconos/equipos/glpi.png</normaloff>:/imagenes/iconos/equipos/glpi.png</iconset>
+                <normaloff>:/imagenes/iconos/botonera/ISL50x50.png</normaloff>:/imagenes/iconos/botonera/ISL50x50.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -696,9 +696,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QTabWidget" name="tabWidget">
-     <property name="tabletTracking">
-      <bool>false</bool>
-     </property>
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
      </property>
@@ -719,6 +716,9 @@
      </property>
      <property name="tabBarAutoHide">
       <bool>false</bool>
+     </property>
+     <property name="tabletTracking" stdset="0">
+      <bool>true</bool>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="icon">

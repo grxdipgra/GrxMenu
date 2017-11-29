@@ -47,6 +47,10 @@ private slots:
     void desactivaBotones();
     void on_pB_update_clicked();
 
+    void on_pB_creaIncidencia_clicked();
+
+    void on_pB_ISL_clicked();
+
 private:
     Ui::Equipos *ui;
     QString ip;

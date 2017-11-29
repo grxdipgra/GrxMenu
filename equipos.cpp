@@ -199,11 +199,10 @@ void Equipos::on_pB_vnc_clicked()
     QString puerto = QString::number(puerto_libre());
 
     ssh.startDetached("ssh -t -p "+config.cual_es_puerto()+" -L "+puerto+":localhost:5900 "+config.cual_es_usuario_remoto()+"@"+ip+" /usr/bin/remoto.sh");
-    //ssh.startDetached("ssh -t -p 22 -L 30000:localhost:5900 alberto@10.100.251.30 /usr/bin/remoto.sh");
     espera.start("sleep 1");
     espera.waitForFinished();
     vnc.startDetached("/usr/bin/remoto-cli.sh "+puerto);
-    //vnc.startDetached("/usr/bin/remoto-cli.sh 30000");
+
 }
 
 void Equipos::on_pushButton_12_clicked()
@@ -216,4 +215,20 @@ void Equipos::on_pushButton_12_clicked()
 void Equipos::on_pB_update_clicked()
 {
 
+}
+
+void Equipos::on_pB_creaIncidencia_clicked()
+{
+
+}
+
+void Equipos::on_pB_ISL_clicked()
+{
+    Configuracion *configuracion = new Configuracion;
+    QProcess process;
+    if (configuracion->es_usarproxy_chains())
+        process.startDetached(configuracion->cual_es_proxychains(), QStringList() << configuracion->cual_es_isl());
+    else
+        process.startDetached(configuracion->cual_es_isl());
+    delete configuracion;
 }

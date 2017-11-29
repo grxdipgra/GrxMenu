@@ -119,7 +119,6 @@ void Soporte::on_cb_sede_activated(const QString &nombre)
             consultar_poblacion.bindValue(":idPoblacion", consultar.value(1).toString());
             if (consultar_poblacion.exec() and consultar_poblacion.first()){
                 idMunicipio = consultar_poblacion.value(1).toString();
-                //ui->lineEdit_mapa->setText(consultar_poblacion.value(3).toString());
 
                 consultar_municipio.prepare(QString("select * from municipio where id = :idMunicipio"));
                 consultar_municipio.bindValue(":idMunicipio",idMunicipio);
@@ -155,8 +154,9 @@ void Soporte::on_Btn_Buscar_clicked()
 
 void Soporte::ejecuta_nmap()
 {
+    Configuracion configuracion;
     QThread *hilo =new QThread();
-    ejecutaHilo *hebra = new ejecutaHilo(ui->lineEdit_ip->text(),"-vvv -p23,22,80,8080,9100,443,139");
+    ejecutaHilo *hebra = new ejecutaHilo(ui->lineEdit_ip->text(),"-vvv -p"+configuracion.puertos_buscados());
     ui->TextoSalida->appendPlainText("Realizando escaneo para la ip:  "+ui->lineEdit_ip->text());
     hebra->moveToThread(hilo);
     qRegisterMetaType<QList<NMapScan>>("QList<NMapScan>");

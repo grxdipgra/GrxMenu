@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'equipos.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.1
+** Created by: Qt User Interface Compiler version 5.6.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -79,10 +79,10 @@ public:
     QPushButton *pB_instala;
     QPushButton *pB_konekta;
     QVBoxLayout *verticalLayout_11;
-    QPushButton *pushButton_8;
-    QPushButton *pushButton_9;
-    QPushButton *pushButton_10;
-    QPushButton *pushButton_15;
+    QPushButton *pB_creaIncidencia;
+    QPushButton *pB_infoEquipo;
+    QPushButton *pB_incidenciasAbiertas;
+    QPushButton *pB_ISL;
     QVBoxLayout *verticalLayout_9;
     QPushButton *pushButton_6;
     QPushButton *pushButton_4;
@@ -423,39 +423,41 @@ public:
 
         verticalLayout_11 = new QVBoxLayout();
         verticalLayout_11->setObjectName(QStringLiteral("verticalLayout_11"));
-        pushButton_8 = new QPushButton(groupBox);
-        pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
-        pushButton_8->setStyleSheet(QStringLiteral("Text-align:left"));
+        pB_creaIncidencia = new QPushButton(groupBox);
+        pB_creaIncidencia->setObjectName(QStringLiteral("pB_creaIncidencia"));
+        pB_creaIncidencia->setStyleSheet(QStringLiteral("Text-align:left"));
         QIcon icon15;
         icon15.addFile(QStringLiteral(":/imagenes/iconos/equipos/glpi.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton_8->setIcon(icon15);
-        pushButton_8->setIconSize(QSize(35, 35));
+        pB_creaIncidencia->setIcon(icon15);
+        pB_creaIncidencia->setIconSize(QSize(35, 35));
 
-        verticalLayout_11->addWidget(pushButton_8);
+        verticalLayout_11->addWidget(pB_creaIncidencia);
 
-        pushButton_9 = new QPushButton(groupBox);
-        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
-        pushButton_9->setStyleSheet(QStringLiteral("Text-align:left"));
-        pushButton_9->setIcon(icon15);
-        pushButton_9->setIconSize(QSize(35, 35));
+        pB_infoEquipo = new QPushButton(groupBox);
+        pB_infoEquipo->setObjectName(QStringLiteral("pB_infoEquipo"));
+        pB_infoEquipo->setStyleSheet(QStringLiteral("Text-align:left"));
+        pB_infoEquipo->setIcon(icon15);
+        pB_infoEquipo->setIconSize(QSize(35, 35));
 
-        verticalLayout_11->addWidget(pushButton_9);
+        verticalLayout_11->addWidget(pB_infoEquipo);
 
-        pushButton_10 = new QPushButton(groupBox);
-        pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
-        pushButton_10->setStyleSheet(QStringLiteral("Text-align:left"));
-        pushButton_10->setIcon(icon15);
-        pushButton_10->setIconSize(QSize(35, 35));
+        pB_incidenciasAbiertas = new QPushButton(groupBox);
+        pB_incidenciasAbiertas->setObjectName(QStringLiteral("pB_incidenciasAbiertas"));
+        pB_incidenciasAbiertas->setStyleSheet(QStringLiteral("Text-align:left"));
+        pB_incidenciasAbiertas->setIcon(icon15);
+        pB_incidenciasAbiertas->setIconSize(QSize(35, 35));
 
-        verticalLayout_11->addWidget(pushButton_10);
+        verticalLayout_11->addWidget(pB_incidenciasAbiertas);
 
-        pushButton_15 = new QPushButton(groupBox);
-        pushButton_15->setObjectName(QStringLiteral("pushButton_15"));
-        pushButton_15->setStyleSheet(QStringLiteral("Text-align:left"));
-        pushButton_15->setIcon(icon15);
-        pushButton_15->setIconSize(QSize(35, 35));
+        pB_ISL = new QPushButton(groupBox);
+        pB_ISL->setObjectName(QStringLiteral("pB_ISL"));
+        pB_ISL->setStyleSheet(QStringLiteral("Text-align:left"));
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/imagenes/iconos/botonera/ISL50x50.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pB_ISL->setIcon(icon16);
+        pB_ISL->setIconSize(QSize(35, 35));
 
-        verticalLayout_11->addWidget(pushButton_15);
+        verticalLayout_11->addWidget(pB_ISL);
 
 
         horizontalLayout->addLayout(verticalLayout_11);
@@ -465,9 +467,9 @@ public:
         pushButton_6 = new QPushButton(groupBox);
         pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
         pushButton_6->setStyleSheet(QStringLiteral("Text-align:left"));
-        QIcon icon16;
-        icon16.addFile(QStringLiteral(":/imagenes/iconos/equipos/atalaya.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton_6->setIcon(icon16);
+        QIcon icon17;
+        icon17.addFile(QStringLiteral(":/imagenes/iconos/equipos/atalaya.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_6->setIcon(icon17);
         pushButton_6->setIconSize(QSize(35, 35));
 
         verticalLayout_9->addWidget(pushButton_6);
@@ -475,7 +477,7 @@ public:
         pushButton_4 = new QPushButton(groupBox);
         pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
         pushButton_4->setStyleSheet(QStringLiteral("Text-align:left"));
-        pushButton_4->setIcon(icon16);
+        pushButton_4->setIcon(icon17);
         pushButton_4->setIconSize(QSize(35, 35));
 
         verticalLayout_9->addWidget(pushButton_4);
@@ -483,7 +485,7 @@ public:
         pushButton_3 = new QPushButton(groupBox);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
         pushButton_3->setStyleSheet(QStringLiteral("Text-align:left"));
-        pushButton_3->setIcon(icon16);
+        pushButton_3->setIcon(icon17);
         pushButton_3->setIconSize(QSize(35, 35));
 
         verticalLayout_9->addWidget(pushButton_3);
@@ -491,7 +493,7 @@ public:
         pushButton_5 = new QPushButton(groupBox);
         pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
         pushButton_5->setStyleSheet(QStringLiteral("Text-align:left"));
-        pushButton_5->setIcon(icon16);
+        pushButton_5->setIcon(icon17);
         pushButton_5->setIconSize(QSize(35, 35));
 
         verticalLayout_9->addWidget(pushButton_5);
@@ -510,12 +512,12 @@ public:
 
         tabWidget = new QTabWidget(Equipos);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setTabletTracking(false);
         tabWidget->setTabPosition(QTabWidget::North);
         tabWidget->setTabShape(QTabWidget::Rounded);
         tabWidget->setIconSize(QSize(30, 30));
         tabWidget->setTabsClosable(false);
         tabWidget->setTabBarAutoHide(false);
+        tabWidget->setProperty("tabletTracking", QVariant(true));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         gridLayout_2 = new QGridLayout(tab);
@@ -525,9 +527,9 @@ public:
 
         gridLayout_2->addWidget(textEdit, 0, 0, 1, 1);
 
-        QIcon icon17;
-        icon17.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/telnet.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
-        tabWidget->addTab(tab, icon17, QString());
+        QIcon icon18;
+        icon18.addFile(QStringLiteral("../../../usr/share/grx/asistencia/imagenes/equipos/telnet.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(tab, icon18, QString());
 
         gridLayout->addWidget(tabWidget, 2, 0, 1, 1);
 
@@ -542,41 +544,41 @@ public:
 
     void retranslateUi(QWidget *Equipos)
     {
-        Equipos->setWindowTitle(QApplication::translate("Equipos", "Equipos", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("Equipos", "Informaci\303\263n del Equipo", Q_NULLPTR));
-        label_ip->setText(QApplication::translate("Equipos", "IP", Q_NULLPTR));
-        label_tipo->setText(QApplication::translate("Equipos", "Tipo", Q_NULLPTR));
-        label_puertos->setText(QApplication::translate("Equipos", "Puertos abiertos", Q_NULLPTR));
-        label_4->setText(QApplication::translate("Equipos", "Puertos buscados", Q_NULLPTR));
-        label_hostname->setText(QApplication::translate("Equipos", "Hostname", Q_NULLPTR));
-        label_status->setText(QApplication::translate("Equipos", "Status", Q_NULLPTR));
-        label_8->setText(QApplication::translate("Equipos", "TextLabel", Q_NULLPTR));
-        label_9->setText(QApplication::translate("Equipos", "TextLabel", Q_NULLPTR));
-        pB_carpeta->setText(QApplication::translate("Equipos", "Carpeta", Q_NULLPTR));
-        pB_ssh->setText(QApplication::translate("Equipos", "ssh", Q_NULLPTR));
-        pB_vnc->setText(QApplication::translate("Equipos", "VNC", Q_NULLPTR));
-        pB_update->setText(QApplication::translate("Equipos", "Update", Q_NULLPTR));
-        pB_CUPS->setText(QApplication::translate("Equipos", "CUPS", Q_NULLPTR));
-        pB_web->setText(QApplication::translate("Equipos", "web", Q_NULLPTR));
-        pB_webssl->setText(QApplication::translate("Equipos", "web-ssl", Q_NULLPTR));
-        pB_telnet->setText(QApplication::translate("Equipos", "Telnet", Q_NULLPTR));
-        pB_systemconfig->setText(QApplication::translate("Equipos", "systemconfig", Q_NULLPTR));
-        pB_networkManager->setText(QApplication::translate("Equipos", "netmanager", Q_NULLPTR));
-        pB_procesos->setText(QApplication::translate("Equipos", "Procesos", Q_NULLPTR));
-        pB_usuarios->setText(QApplication::translate("Equipos", "Usuarios", Q_NULLPTR));
-        pB_discos->setText(QApplication::translate("Equipos", "Discos", Q_NULLPTR));
-        pB_equipo->setText(QApplication::translate("Equipos", "Equipo", Q_NULLPTR));
-        pB_instala->setText(QApplication::translate("Equipos", "Instala", Q_NULLPTR));
-        pB_konekta->setText(QApplication::translate("Equipos", "Konekta", Q_NULLPTR));
-        pushButton_8->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        pushButton_9->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        pushButton_10->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        pushButton_15->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        pushButton_6->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        pushButton_4->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        pushButton_5->setText(QApplication::translate("Equipos", "PushButton", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Equipos", "Consola", Q_NULLPTR));
+        Equipos->setWindowTitle(QApplication::translate("Equipos", "Equipos", 0));
+        groupBox->setTitle(QApplication::translate("Equipos", "Informaci\303\263n del Equipo", 0));
+        label_ip->setText(QApplication::translate("Equipos", "IP", 0));
+        label_tipo->setText(QApplication::translate("Equipos", "Tipo", 0));
+        label_puertos->setText(QApplication::translate("Equipos", "Puertos abiertos", 0));
+        label_4->setText(QApplication::translate("Equipos", "Puertos buscados", 0));
+        label_hostname->setText(QApplication::translate("Equipos", "Hostname", 0));
+        label_status->setText(QApplication::translate("Equipos", "Status", 0));
+        label_8->setText(QApplication::translate("Equipos", "TextLabel", 0));
+        label_9->setText(QApplication::translate("Equipos", "TextLabel", 0));
+        pB_carpeta->setText(QApplication::translate("Equipos", "Carpeta", 0));
+        pB_ssh->setText(QApplication::translate("Equipos", "ssh", 0));
+        pB_vnc->setText(QApplication::translate("Equipos", "VNC", 0));
+        pB_update->setText(QApplication::translate("Equipos", "Update", 0));
+        pB_CUPS->setText(QApplication::translate("Equipos", "CUPS", 0));
+        pB_web->setText(QApplication::translate("Equipos", "web", 0));
+        pB_webssl->setText(QApplication::translate("Equipos", "web-ssl", 0));
+        pB_telnet->setText(QApplication::translate("Equipos", "Telnet", 0));
+        pB_systemconfig->setText(QApplication::translate("Equipos", "systemconfig", 0));
+        pB_networkManager->setText(QApplication::translate("Equipos", "netmanager", 0));
+        pB_procesos->setText(QApplication::translate("Equipos", "Procesos", 0));
+        pB_usuarios->setText(QApplication::translate("Equipos", "Usuarios", 0));
+        pB_discos->setText(QApplication::translate("Equipos", "Discos", 0));
+        pB_equipo->setText(QApplication::translate("Equipos", "Equipo", 0));
+        pB_instala->setText(QApplication::translate("Equipos", "Instala", 0));
+        pB_konekta->setText(QApplication::translate("Equipos", "Konekta", 0));
+        pB_creaIncidencia->setText(QApplication::translate("Equipos", "Crear Incidencia", 0));
+        pB_infoEquipo->setText(QApplication::translate("Equipos", "Info del Equipo", 0));
+        pB_incidenciasAbiertas->setText(QApplication::translate("Equipos", "Incid. abiertas", 0));
+        pB_ISL->setText(QApplication::translate("Equipos", "ISL", 0));
+        pushButton_6->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_4->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_3->setText(QApplication::translate("Equipos", "PushButton", 0));
+        pushButton_5->setText(QApplication::translate("Equipos", "PushButton", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Equipos", "Consola", 0));
     } // retranslateUi
 
 };
