@@ -21,7 +21,7 @@ class Soporte : public QDialog
 public:
     explicit Soporte(QWidget *parent = 0);
     ~Soporte();
-
+    QSqlQueryModel *model = new QSqlQueryModel();
 private slots:
     void on_lineEdit_ip_textChanged(const QString &arg1);
 
@@ -84,6 +84,7 @@ private slots:
    void mascaraIP();
 
    void cargaSedes();
+
 private:
     Ui::Soporte *ui;
     QSqlDatabase db;

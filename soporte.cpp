@@ -10,7 +10,7 @@
 #include <QDesktopServices>
 #include "configuracion.h"
 #include "tabescaner.h"
-#include <QDebug>
+#include "qdebug.h"
 #include <QByteArray>
 #include <QEventLoop>
 #include <QNetworkReply>
@@ -33,7 +33,7 @@ Soporte::Soporte(QWidget *parent) :
 
 void Soporte::cargaSedes(){
     //Cargamos las sedes en el combobox
-       QSqlQueryModel *model = new QSqlQueryModel();
+       //QSqlQueryModel *model = new QSqlQueryModel();
        QString sql;
        sql = "select NOMBRE,ipLinea from nodo";
        QSqlQuery* query = new QSqlQuery(db);
@@ -76,16 +76,44 @@ int Soporte::valida_ip(){
     {
         return true;
     }
-    else
-        return false;
+
+return false;
 }
 
 void Soporte::on_lineEdit_ip_textChanged(const QString &arg1)
 {
+ /*   QSqlQuery query = model -> query();
+    int i;
+    QStringList tmp;
+    QString pueblo;
+    if (ui->lineEdit_ip->text().count(QLatin1Char('.')) >=2){
+        tmp = ui->lineEdit_ip->text().split(".");
+        pueblo = tmp[2];
+        if (!pueblo.isEmpty()){
+            ui->cb_sede->setModelColumn(0);
+            ui->Estado->setText(query.value(1).toString());
+            i = ui->cb_sede->findText(ui->lineEdit_ip->text());
+           //ui->Estado->setText(QString::number(i));
+              //  ui->cb_sede->setCurrentIndex(ui->cb_sede->findText(ui->lineEdit_ip->text()));
+             //   ui->lineEdit_ip->setStyleSheet("color:yellow");
+           ui->cb_sede->setModelColumn(0);
+           query.
+         }
+
+    }
+*/
+
     if(valida_ip())
         ui->lineEdit_ip->setStyleSheet("color:black");
     else
         ui->lineEdit_ip->setStyleSheet("color:red");
+
+
+
+
+
+
+
 }
 
 void Soporte::on_cb_sede_activated(const QString &nombre)
@@ -112,17 +140,19 @@ void Soporte::on_cb_sede_activated(const QString &nombre)
             ui->lineEdit_n_adm->setText(consultar.value(20).toString());
             ui->lineEdit_direccion->setText(consultar.value(5).toString());
             ui->lineEdit_numero->setText(consultar.value(6).toString());
-
             ui->lineEdit_servicio->setText(consultar.value(23).toString());
             ui->lineEdit_caudal->setText(consultar.value(24).toString());
             ui->lineEdit_extension->setText(consultar.value(15).toString());
+
             consultar_telefono.prepare(QString("select * from telefononodo where idNodo =:idNodo"));
             consultar_telefono.bindValue(":idNodo",idNodo);
+
             if (consultar_telefono.exec() and consultar_telefono.first()){
                 ui->lineEdit_telefono->setText(consultar_telefono.value(1).toString());
             }
             consultar_poblacion.prepare(QString("select * from poblacion where id =:idPoblacion"));
             consultar_poblacion.bindValue(":idPoblacion", consultar.value(1).toString());
+
             if (consultar_poblacion.exec() and consultar_poblacion.first()){
                 idMunicipio = consultar_poblacion.value(1).toString();
 
@@ -134,15 +164,16 @@ void Soporte::on_cb_sede_activated(const QString &nombre)
             }
             consultar_aplicaciones.prepare(QString("select * from aplicacion where idNodo =:idNodo"));
             consultar_aplicaciones.bindValue(":idNodo", idNodo);
+
             if (consultar_aplicaciones.exec())
                     if (consultar_aplicaciones.first()){
-
                         atalaya = consultar_aplicaciones.value(1).toInt();
                         glpi = consultar_aplicaciones.value(2).toInt();
                         ocs = consultar_aplicaciones.value(3).toInt();
                     }
             consultar_centro.prepare(QString("select * from centro where id =:idCentro"));
             consultar_centro.bindValue(":idCentro", consultar.value(2).toString());
+
             if (consultar_centro.exec() and consultar_centro.first()){
                 idCentro = consultar_centro.value(1).toString();
                 ui->lineEdit_centro->setText(consultar_centro.value(1).toString());
@@ -324,3 +355,4 @@ void Soporte::on_Btn_Glpi_clicked()
     //QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/glpi/front/central.php?active_entity="+QString::number(glpi)));
     //QDesktopServices::openUrl(QUrl("https://glpi.dipgra.es/glpi/plugins/webservices/soap.php"));
 }
+

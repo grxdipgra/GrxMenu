@@ -2,7 +2,6 @@
 #include "ui_sedes.h"
 #include <QSqlQuery>
 #include <QHostAddress>
-//#include <QAbstractItemModel>
 #include <QDesktopServices>
 #include "qdebug.h"
 #include "basedatos.h"
