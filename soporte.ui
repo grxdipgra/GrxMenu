@@ -554,8 +554,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/moad.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/moad.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/moad.png</normaloff>:/imagenes/iconos/soporte/moad.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -583,8 +583,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/gtablon.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/gtablon.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/gtablon.png</normaloff>:/imagenes/iconos/soporte/gtablon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -609,8 +609,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/ISL50x50.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/ISL50x50.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/ISL50x50.png</normaloff>:/imagenes/iconos/soporte/ISL50x50.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -638,8 +638,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/citrix.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/citrix.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/citrix.png</normaloff>:/imagenes/iconos/soporte/citrix.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -667,8 +667,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/epol.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/epol.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/epol.png</normaloff>:/imagenes/iconos/soporte/epol.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -696,8 +696,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/aytos.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/aytos.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/aytos.png</normaloff>:/imagenes/iconos/soporte/aytos.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -725,8 +725,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/portafirmas.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/portafirmas.png</normaloff>:/imagenes/iconos/soporte/portafirmas.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -783,8 +783,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/perfilcontratante.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/perfilcontratante.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/perfilcontratante.png</normaloff>:/imagenes/iconos/soporte/perfilcontratante.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -812,8 +812,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/guadaltel.png</normaloff>../../../usr/share/grx/asistencia/imagenes/soporte/guadaltel.png</iconset>
+     <iconset resource="iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/guadaltel.png</normaloff>:/imagenes/iconos/soporte/guadaltel.png</iconset>
     </property>
     <property name="iconSize">
      <size>

@@ -123,6 +123,8 @@ class Sedes : public QWidget {
 
     private slots:
 
+        void mascaraIP();
+
         void activa_botones();
 
         void cargaCombo();

@@ -81,6 +81,9 @@ private slots:
 
    void on_Btn_Glpi_clicked();
 
+   void mascaraIP();
+
+   void cargaSedes();
 private:
     Ui::Soporte *ui;
     QSqlDatabase db;

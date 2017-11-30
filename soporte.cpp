@@ -10,7 +10,6 @@
 #include <QDesktopServices>
 #include "configuracion.h"
 #include "tabescaner.h"
-
 #include <QDebug>
 #include <QByteArray>
 #include <QEventLoop>
@@ -24,41 +23,41 @@ Soporte::Soporte(QWidget *parent) :
     ui(new Ui::Soporte)
 {
     ui->setupUi(this);
-    //Vamos a poner en el constructor la máscara para validar la ip introducida
 
-    ui->tabWidget->setMovable(false);
+    ui->tabWidget->setMovable(false); //Evitamos que se puedan quitar los tab
+    ui->tabWidget->setTabsClosable(true); //Ponemos un icono de cierre en los tab
+    mascaraIP(); //Ponemos las máscaras a las ip introducidas
+    cargaSedes(); //Cargamos las sedes en el combobox
 
+}
+
+void Soporte::cargaSedes(){
+    //Cargamos las sedes en el combobox
+       QSqlQueryModel *model = new QSqlQueryModel();
+       QString sql;
+       sql = "select NOMBRE,ipLinea from nodo";
+       QSqlQuery* query = new QSqlQuery(db);
+       query->prepare(sql);
+       if(!query->exec()){
+           qDebug() <<"Error en la consulta: "<< query->lastError();
+       }else{
+           qDebug() <<"Consulta realizada con exito: "<<query->lastQuery();
+           model->setQuery(*query);
+           ui->cb_sede->setModel(model);
+           on_cb_sede_activated(ui->cb_sede->itemText(0));
+       }
+}
+
+void Soporte::mascaraIP(){
+
+    QString ipRangeUltimo = "(?:[0-1]?[0-9]?[0-9]?[*]\\d{0}|2[0-4][0-9]|25[0-5])";
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     QRegExp ipRegex ("^" + ipRange
                      + "\\." + ipRange
                      + "\\." + ipRange
-                     + "\\." + ipRange + "$");
+                     + "\\." + ipRangeUltimo + "$");
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
     ui->lineEdit_ip->setValidator(ipValidator);
-
-    ui->tabWidget->setTabsClosable(true);
-    //Buscamos el terminal por defecto
-   /* QProcess *ter=new QProcess();
-    ter->start("gsettings get org.gnome.desktop.default-applications.terminal exec");
-    ter->waitForFinished(-1);
-    terminal=ter->readAllStandardOutput();
-   */
-
- //Cargamos las sedes en el combobox
-    QSqlQueryModel *model = new QSqlQueryModel();
-    QString sql;
-    sql = "select NOMBRE,ipLinea from nodo";
-    QSqlQuery* query = new QSqlQuery(db);
-    query->prepare(sql);
-    if(!query->exec()){
-        qDebug() <<"Error en la consulta: "<< query->lastError();
-    }else{
-        qDebug() <<"Consulta realizada con exito: "<<query->lastQuery();
-        model->setQuery(*query);
-        ui->cb_sede->setModel(model);
-        on_cb_sede_activated(ui->cb_sede->itemText(0));
-    }
-
 }
 
 Soporte::~Soporte()
@@ -67,11 +66,18 @@ Soporte::~Soporte()
 }
 
 int Soporte::valida_ip(){
-QHostAddress myIP;
-if( myIP.setAddress(ui->lineEdit_ip->text())&& (ui->lineEdit_ip->text().count(QLatin1Char('.'))==3))
-   return true;
-else
-   return false;
+    QHostAddress myIP;
+    QChar asterisco = QLatin1Char ('*');
+    QChar punto = QLatin1Char('.');
+    if (( (ui->lineEdit_ip->text().at(ui->lineEdit_ip->text().count()-1)) == asterisco) && (ui->lineEdit_ip->text().at(ui->lineEdit_ip->text().count()-2))==punto)
+        return true;
+
+    if( myIP.setAddress(ui->lineEdit_ip->text())&& (ui->lineEdit_ip->text().count(punto)==3))
+    {
+        return true;
+    }
+    else
+        return false;
 }
 
 void Soporte::on_lineEdit_ip_textChanged(const QString &arg1)
@@ -182,7 +188,7 @@ void Soporte::resultados(QList<NMapScan> res){
 
 void Soporte::Ping()
 {
- ui->TextoSalida->appendPlainText(ping->readAllStandardOutput());
+    ui->TextoSalida->appendPlainText(ping->readAllStandardOutput());
 }
 
 void Soporte::on_Btn_Ping_clicked()
@@ -233,15 +239,15 @@ void Soporte::on_Btn_Limpiar_clicked()
 }
 
 void Soporte::on_Btn_Incidencia_clicked(){
-Configuracion *configuracion = new Configuracion;
-QString para,asunto,cuerpo;
-para= configuracion->cual_es_para();
-asunto= configuracion->cual_es_asunto().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
+    Configuracion *configuracion = new Configuracion;
+    QString para,asunto,cuerpo;
+    para= configuracion->cual_es_para();
+    asunto= configuracion->cual_es_asunto().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
                                             ,ui->lineEdit_ip->text(),ui->lineEdit_servicio->text(),ui->lineEdit_caudal->text(),ui->lineEdit_numero->text());
-cuerpo= configuracion->cual_es_cuerpo().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
+    cuerpo= configuracion->cual_es_cuerpo().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
                                             ,ui->lineEdit_ip->text(),ui->lineEdit_servicio->text(),ui->lineEdit_caudal->text(),ui->lineEdit_numero->text());
 
-QDesktopServices::openUrl(QUrl("mailto:"+para+"?subject="+asunto+"&body="+cuerpo, QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("mailto:"+para+"?subject="+asunto+"&body="+cuerpo, QUrl::TolerantMode));
 }
 
 void Soporte::on_Btn_Atalaya_clicked()

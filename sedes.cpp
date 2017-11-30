@@ -14,7 +14,7 @@ Sedes::Sedes(QWidget *parent) :
 {
     id_nodo = 0;
     ui -> setupUi(this);
-
+    mascaraIP();
     cargaCombo(); //Cargamos las sedes en los combobox
     checkBox_Enabled(false);
 }
@@ -24,6 +24,16 @@ Sedes::~Sedes() {
     delete ui;
 }
 
+void Sedes::mascaraIP(){
+
+    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
+    QRegExp ipRegex ("^" + ipRange
+                     + "\\." + ipRange
+                     + "\\." + ipRange
+                     + "\\." + ipRange + "$");
+    QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
+    ui->comboBox_IP->setValidator(ipValidator);
+}
 
 bool Sedes::existeFichero(QString path) {
     QFileInfo check_file(path);
