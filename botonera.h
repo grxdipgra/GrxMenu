@@ -10,6 +10,7 @@
 #include <QtSql/QSqlDatabase>
 #include "acerdade.h"
 
+
 namespace Ui {
 class Botonera;
 }
@@ -25,6 +26,11 @@ public:
     QString path,home,user,GrxMenu;
 
 private slots:
+
+    void ctxMenu(const QPoint &pos);
+
+    void test_slot();
+
     void on_actionUsuarios_triggered();
 
     void on_actionSalir_triggered();
@@ -51,7 +57,7 @@ private slots:
 
     bool cargaVariables();
 
-    bool muestraBotones();
+    void muestraBotones();
 
     bool creaConexion();
 

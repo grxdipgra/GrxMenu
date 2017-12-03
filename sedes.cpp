@@ -16,6 +16,7 @@ Sedes::Sedes(QWidget *parent) :
     mascaraIP();
     cargaCombo(); //Cargamos las sedes en los combobox
     checkBox_Enabled(false);
+    ui->tabWidget->hide();
 }
 
 
@@ -35,10 +36,10 @@ void Sedes::mascaraIP(){
 }
 
 bool Sedes::existeFichero(QString path) {
+    //Comprueba si existe y si es un fichero
     QFileInfo check_file(path);
-    bool existe_fichero = (check_file.exists() && check_file.isFile());
+    return (check_file.exists() && check_file.isFile());
 
-    return existe_fichero;
 }
 
 
@@ -467,8 +468,7 @@ void Sedes::on_comboBox_NODO_activated(const QString &nombre) {
 
 
 void Sedes::on_pB_Edicion_clicked() {
-    BaseDatos *basedatos = new BaseDatos;
-    basedatos -> show();
+
 }
 
 
@@ -543,4 +543,23 @@ void Sedes::on_pB_googleMaps_clicked() {
 
 void Sedes::on_pB_wikipedia_clicked() {
     QDesktopServices::openUrl(QUrl("https://es.wikipedia.org/wiki/" + ui -> comboBox_NODO -> currentText() + "_(Granada)"));
+}
+
+
+void Sedes::on_pB_Edicion_toggled(bool checked)
+{
+    /* BaseDatos *basedatos = new BaseDatos;
+     basedatos -> show();
+     */
+    if (checked){
+         ui->tabWidget->show();
+        ui->frame->hide();
+
+    }
+    else{
+
+        ui->tabWidget->hide();
+         ui->frame->show();
+    }
+
 }

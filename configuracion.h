@@ -72,7 +72,7 @@ public:
     bool puertoPortPrinter();
     bool puertoNetbios();
     QString cual_es_lineEditSSH();
-    QString cual_es_rdesktop();
+    bool cual_es_rdesktop();
     QString cual_es_resolucion();
     QString cual_es_keyfile_privada();
     QString cual_es_keyfile_publica();
@@ -81,9 +81,28 @@ public:
     QString cual_es_asunto();
     QString cual_es_cuerpo();
 
+    QString  cual_es_servidor_ldap();
+    QString  cual_es_puerto_ldap();
+    QString  cual_es_usuario_ldap();
+    QString  cual_es_clave_ldap();
+
+
     ~Configuracion();
 
 private slots:
+
+
+    void ctxMenu(const QPoint &pos);
+
+    void help();
+
+    void color_widget(QObject *sender);
+
+    void mascara_ip();
+
+    void mascara_puertos_nmap();
+
+    void mascara_puerto_remoto();
 
     void on_buttonBox_accepted();
 
@@ -92,6 +111,8 @@ private slots:
     void carga_configuracion();
 
     void carga_configuracion_color();
+
+    void change_color(QWidget *objeto);
 
     void on_PB_linux_clicked();
 
@@ -131,6 +152,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
 
     QString home_usuario;
@@ -153,18 +176,19 @@ private:
     QString UserName;
     QString PuertoDB;
     QString PasswordDB;
-    QString UsarSSH;
-    QString UsarUsuarios;
-    QString UsarSoporte;
-    QString UsarSedes;
-    QString UsarCronos;
-    QString UsarWebmail;
-    QString UsarBeiro;
-    QString UsarGlpi;
-    QString UsarOCS;
-    QString UsarTS;
-    QString UsarISL;
-    QString UsarAtalaya;
+    bool UsarSSH;
+    //QString UsarUsuarios;
+    bool UsarUsuarios;
+    bool UsarSoporte;
+    bool UsarSedes;
+    bool UsarCronos;
+    bool UsarWebmail;
+    bool UsarBeiro;
+    bool UsarGlpi;
+    bool UsarOCS;
+    bool UsarTS;
+    bool UsarISL;
+    bool UsarAtalaya;
     QString ServidorSSH;
     QString UsuarioSSH;
     QString ClaveSSH;
@@ -173,7 +197,7 @@ private:
     QString Password;
     QString ClaveCifrado;
     QString ClaveRemoto;
-    QString Rdesktop;
+    bool Rdesktop;
     QString Resolucion;
     QString Fr_linux;
     QString Fr_rutas;
@@ -185,17 +209,23 @@ private:
     QString Para;
     QString Asunto;
     QString Cuerpo;
-    QString UsarProxyChains;
+    bool UsarProxyChains;
     QString ProxyChains;
-    QString SoloAytos;
+    bool SoloAytos;
 
-    QString PuertosBuscados_ssh;
-    QString PuertosBuscados_telnet;
-    QString PuertosBuscados_web;
-    QString PuertosBuscados_webssl;
-    QString PuertosBuscados_portPrinter;
-    QString PuertosBuscados_netbios;
+    bool PuertosBuscados_ssh;
+    bool PuertosBuscados_telnet;
+    bool PuertosBuscados_web;
+    bool PuertosBuscados_webssl;
+    bool PuertosBuscados_portPrinter;
+    bool PuertosBuscados_netbios;
     QString PuertosBuscados_lineEdit;
+
+    QString Servidor_ldap;
+    QString Puerto_ldap;
+    QString Usuario_ldap;
+    QString Clave_ldap;
+
 
 
     Ui::Configuracion *ui;

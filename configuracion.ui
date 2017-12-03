@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>839</width>
-    <height>628</height>
+    <width>780</width>
+    <height>642</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>0</y>
      <width>761</width>
-     <height>621</height>
+     <height>631</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -40,7 +40,7 @@
       <x>0</x>
       <y>0</y>
       <width>759</width>
-      <height>619</height>
+      <height>629</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -55,7 +55,14 @@
         <string>Configuración</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="0">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Tablas de la Base de Datos</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
          <widget class="QDialogButtonBox" name="buttonBox">
           <property name="toolTip">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;dd&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -68,10 +75,10 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>7</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="remoto">
            <attribute name="title">
@@ -82,8 +89,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>661</width>
-              <height>451</height>
+              <width>711</width>
+              <height>251</height>
              </rect>
             </property>
             <property name="frameShape">
@@ -92,178 +99,166 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <widget class="QLabel" name="label_34">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>30</y>
-               <width>471</width>
-               <height>19</height>
-              </rect>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Configuración de acceso remoto a los equipos Linux</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="PB_linux">
-             <property name="geometry">
-              <rect>
-               <x>600</x>
-               <y>10</y>
-               <width>37</width>
-               <height>31</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="iconos.qrc">
-               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>25</width>
-               <height>25</height>
-              </size>
-             </property>
-            </widget>
-            <widget class="QWidget" name="layoutWidget">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>60</y>
-               <width>631</width>
-               <height>248</height>
-              </rect>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_2">
-                <property name="spacing">
-                 <number>1</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Técnico</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_2">
-                  <property name="text">
-                   <string>Clave</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>Usuario Remoto</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>Puerto</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Password</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>Clave Cifrado</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_6">
-                  <property name="text">
-                   <string>Clave Remoto</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout">
-                <property name="spacing">
-                 <number>1</number>
-                </property>
-                <item>
-                 <widget class="QLineEdit" name="tecnico">
-                  <property name="toolTip">
-                   <string>Nombre de usuario del técnico en el dominio (si_manolito)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="clave">
-                  <property name="toolTip">
-                   <string>Clave del técnico en el dominio</string>
-                  </property>
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="usuario_remoto"/>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="puerto">
-                  <property name="toolTip">
-                   <string>Puerto de acceso ssh en los equipos linux</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="password">
-                  <property name="toolTip">
-                   <string>Clave del usuario administrador de los equipos linux</string>
-                  </property>
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="clave_cifrado">
-                  <property name="toolTip">
-                   <string>Clave del cifrado en los equipos</string>
-                  </property>
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="clave_remoto">
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_34">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Configuración de acceso remoto a los equipos Linux</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="PB_linux">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="iconos.qrc">
+                 <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <property name="spacing">
+                  <number>1</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="text">
+                    <string>Técnico</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>Clave</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label">
+                   <property name="text">
+                    <string>Usuario Remoto</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_8">
+                   <property name="text">
+                    <string>Puerto</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="text">
+                    <string>Password</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="text">
+                    <string>Clave Cifrado</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>Clave Remoto</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout">
+                 <property name="spacing">
+                  <number>1</number>
+                 </property>
+                 <item>
+                  <widget class="QLineEdit" name="tecnico">
+                   <property name="toolTip">
+                    <string>Nombre de usuario del técnico en el dominio (si_manolito)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="clave">
+                   <property name="toolTip">
+                    <string>Clave del técnico en el dominio</string>
+                   </property>
+                   <property name="echoMode">
+                    <enum>QLineEdit::Password</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="usuario_remoto"/>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="puerto">
+                   <property name="toolTip">
+                    <string>Puerto de acceso ssh en los equipos linux</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="password">
+                   <property name="toolTip">
+                    <string>Clave del usuario administrador de los equipos linux</string>
+                   </property>
+                   <property name="echoMode">
+                    <enum>QLineEdit::Password</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="clave_cifrado">
+                   <property name="toolTip">
+                    <string>Clave del cifrado en los equipos</string>
+                   </property>
+                   <property name="echoMode">
+                    <enum>QLineEdit::Password</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="clave_remoto">
+                   <property name="echoMode">
+                    <enum>QLineEdit::Password</enum>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
            </widget>
           </widget>
           <widget class="QWidget" name="rutas">
@@ -275,8 +270,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>661</width>
-              <height>451</height>
+              <width>711</width>
+              <height>291</height>
              </rect>
             </property>
             <property name="frameShape">
@@ -285,253 +280,241 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <widget class="QLabel" name="lb_rutas">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>30</y>
-               <width>211</width>
-               <height>19</height>
-              </rect>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Configuración de Rutas</string>
-             </property>
-             <property name="textInteractionFlags">
-              <set>Qt::LinksAccessibleByMouse</set>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="PB_rutas">
-             <property name="geometry">
-              <rect>
-               <x>600</x>
-               <y>10</y>
-               <width>37</width>
-               <height>31</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="iconos.qrc">
-               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>25</width>
-               <height>25</height>
-              </size>
-             </property>
-            </widget>
-            <widget class="QWidget" name="layoutWidget">
-             <property name="geometry">
-              <rect>
-               <x>12</x>
-               <y>60</y>
-               <width>631</width>
-               <height>297</height>
-              </rect>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_5">
-              <property name="spacing">
-               <number>1</number>
-              </property>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <item>
-                 <widget class="QLabel" name="label_15">
-                  <property name="text">
-                   <string>Ruta a CorreoWeb      </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="correoweb">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_12">
-                <item>
-                 <widget class="QLabel" name="label_14">
-                  <property name="text">
-                   <string>Ruta a Cronos              </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="cronos">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_13">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_5">
-                  <item>
-                   <widget class="QLabel" name="label_10">
-                    <property name="text">
-                     <string>Ruta a ISLOnLine</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="Btn_lupa">
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="iconos.qrc">
-                      <normaloff>:/imagenes/iconos/botonera/lupa.png</normaloff>:/imagenes/iconos/botonera/lupa.png</iconset>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="ISL">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_14">
-                <item>
-                 <widget class="QCheckBox" name="checkBox_proxychains">
-                  <property name="text">
-                   <string>Usar proxychains</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="proxychains">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_15">
-                <item>
-                 <widget class="QLabel" name="label_12">
-                  <property name="text">
-                   <string>Ruta a GLPI                  </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="GLPI">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_16">
-                <item>
-                 <widget class="QLabel" name="label_13">
-                  <property name="text">
-                   <string>Ruta a OCS                   </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="OCS">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Usuario administrador de los equipos linux</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_17">
-                <item>
-                 <widget class="QLabel" name="label_18">
-                  <property name="text">
-                   <string>Ruta a Beiro.grx         </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="beiro">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_18">
-                <item>
-                 <widget class="QLabel" name="label_45">
-                  <property name="text">
-                   <string>Atalaya - SolarWinds</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="atalaya">
-                  <property name="maximumSize">
-                   <size>
-                    <width>420</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="0">
+              <widget class="QLabel" name="lb_rutas">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Configuración de Rutas</string>
+               </property>
+               <property name="textInteractionFlags">
+                <set>Qt::LinksAccessibleByMouse</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="PB_rutas">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="iconos.qrc">
+                 <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <property name="spacing">
+                <number>1</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QLabel" name="label_15">
+                   <property name="text">
+                    <string>Ruta a CorreoWeb      </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="correoweb">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                 <item>
+                  <widget class="QLabel" name="label_14">
+                   <property name="text">
+                    <string>Ruta a Cronos              </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="cronos">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <item>
+                    <widget class="QLabel" name="label_10">
+                     <property name="text">
+                      <string>Ruta a ISLOnLine</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="Btn_lupa">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="iconos.qrc">
+                       <normaloff>:/imagenes/iconos/botonera/lupa.png</normaloff>:/imagenes/iconos/botonera/lupa.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="ISL">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_proxychains">
+                   <property name="text">
+                    <string>Usar proxychains</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="proxychains">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                 <item>
+                  <widget class="QLabel" name="label_12">
+                   <property name="text">
+                    <string>Ruta a GLPI                  </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="GLPI">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <item>
+                  <widget class="QLabel" name="label_13">
+                   <property name="text">
+                    <string>Ruta a OCS                   </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="OCS">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Usuario administrador de los equipos linux</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_17">
+                 <item>
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>Ruta a Beiro.grx         </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="beiro">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_18">
+                 <item>
+                  <widget class="QLabel" name="label_45">
+                   <property name="text">
+                    <string>Atalaya - SolarWinds</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="atalaya">
+                   <property name="maximumSize">
+                    <size>
+                     <width>420</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
            </widget>
           </widget>
           <widget class="QWidget" name="kerberos">
@@ -541,10 +524,10 @@
            <widget class="QFrame" name="fr_kerberos">
             <property name="geometry">
              <rect>
-              <x>20</x>
-              <y>20</y>
-              <width>541</width>
-              <height>71</height>
+              <x>0</x>
+              <y>0</y>
+              <width>711</width>
+              <height>121</height>
              </rect>
             </property>
             <property name="frameShape">
@@ -553,78 +536,66 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <widget class="QWidget" name="layoutWidget">
-             <property name="geometry">
-              <rect>
-               <x>20</x>
-               <y>30</y>
-               <width>511</width>
-               <height>38</height>
-              </rect>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>Actualizar ticket Kerberos</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="Btn_Kerberos">
-                <property name="toolTip">
-                 <string>Renueva el token de kerberos</string>
-                </property>
-                <property name="text">
-                 <string>KeyAD</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QLabel" name="label_29">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>5</y>
-               <width>349</width>
-               <height>21</height>
-              </rect>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Configuración de Kerberos</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="PB_kerberos">
-             <property name="geometry">
-              <rect>
-               <x>500</x>
-               <y>5</y>
-               <width>31</width>
-               <height>21</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="iconos.qrc">
-               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>25</width>
-               <height>25</height>
-              </size>
-             </property>
-            </widget>
+            <layout class="QGridLayout" name="gridLayout_9">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_29">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Configuración de Kerberos</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="PB_kerberos">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="iconos.qrc">
+                 <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <item>
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>Actualizar ticket Kerberos</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="Btn_Kerberos">
+                 <property name="toolTip">
+                  <string>Renueva el token de kerberos</string>
+                 </property>
+                 <property name="text">
+                  <string>KeyAD</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
            </widget>
           </widget>
           <widget class="QWidget" name="TS">
@@ -636,8 +607,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>651</width>
-              <height>451</height>
+              <width>711</width>
+              <height>461</height>
              </rect>
             </property>
             <property name="frameShape">
@@ -646,183 +617,165 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <widget class="QLabel" name="label_16">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>20</y>
-               <width>255</width>
-               <height>19</height>
-              </rect>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Configuración de Terminal Server</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="PB_TS">
-             <property name="geometry">
-              <rect>
-               <x>600</x>
-               <y>10</y>
-               <width>37</width>
-               <height>31</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="iconos.qrc">
-               <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>25</width>
-               <height>25</height>
-              </size>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_17">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>247</y>
-               <width>16</width>
-               <height>17</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-            <widget class="QWidget" name="layoutWidget">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>47</y>
-               <width>631</width>
-               <height>201</height>
-              </rect>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <item>
-               <layout class="QGridLayout" name="gridLayout">
-                <item row="0" column="0">
-                 <layout class="QVBoxLayout" name="verticalLayout_3">
-                  <item>
-                   <widget class="QLabel" name="label_7">
-                    <property name="text">
-                     <string>Servidor AD</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_22">
-                    <property name="text">
-                     <string>Usuario</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_23">
-                    <property name="text">
-                     <string>Clave</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="0" column="1">
-                 <layout class="QVBoxLayout" name="verticalLayout_4">
-                  <item>
-                   <widget class="QLineEdit" name="servidor">
-                    <property name="toolTip">
-                     <string>IP del servidor terminal server donde nos queremos conectar</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="usuario_ad">
-                    <property name="toolTip">
-                     <string>Nombre de usuario del técnico en el dominio (si_manolito)</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="clave_ad">
-                    <property name="toolTip">
-                     <string>Clave del técnico en el dominio</string>
-                    </property>
-                    <property name="echoMode">
-                     <enum>QLineEdit::Password</enum>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <item>
-                 <widget class="QRadioButton" name="rb_rdesktop">
-                  <property name="acceptDrops">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolTip">
-                   <string>Elegir freerdp para acceder al servidor AD</string>
-                  </property>
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>rdes&amp;ktop</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="rb_freerdp">
-                  <property name="toolTip">
-                   <string>Elegir freerdp para acceder al servidor AD</string>
-                  </property>
-                  <property name="text">
-                   <string>f&amp;reerdp</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="cb_resolucion">
-                  <property name="toolTip">
-                   <string>Resolución de pantalla del servidor AD</string>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>1920x1080</string>
+            <layout class="QGridLayout" name="gridLayout_10">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_16">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Configuración de Terminal Server</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="PB_TS">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="iconos.qrc">
+                 <normaloff>:/imagenes/iconos/sedes/color.png</normaloff>:/imagenes/iconos/sedes/color.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <layout class="QGridLayout" name="gridLayout">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_3">
+                   <item>
+                    <widget class="QLabel" name="label_7">
+                     <property name="text">
+                      <string>Servidor AD</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_22">
+                     <property name="text">
+                      <string>Usuario</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_23">
+                     <property name="text">
+                      <string>Clave</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="1">
+                  <layout class="QVBoxLayout" name="verticalLayout_4">
+                   <item>
+                    <widget class="QLineEdit" name="servidor">
+                     <property name="toolTip">
+                      <string>IP del servidor terminal server donde nos queremos conectar</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="usuario_ad">
+                     <property name="toolTip">
+                      <string>Nombre de usuario del técnico en el dominio (si_manolito)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="clave_ad">
+                     <property name="toolTip">
+                      <string>Clave del técnico en el dominio</string>
+                     </property>
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QRadioButton" name="rb_rdesktop">
+                   <property name="acceptDrops">
+                    <bool>true</bool>
                    </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>1024x740</string>
+                   <property name="toolTip">
+                    <string>Elegir freerdp para acceder al servidor AD</string>
                    </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>800x600</string>
+                   <property name="autoFillBackground">
+                    <bool>false</bool>
                    </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
+                   <property name="text">
+                    <string>rdes&amp;ktop</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="rb_freerdp">
+                   <property name="toolTip">
+                    <string>Elegir freerdp para acceder al servidor AD</string>
+                   </property>
+                   <property name="text">
+                    <string>f&amp;reerdp</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="cb_resolucion">
+                   <property name="toolTip">
+                    <string>Resolución de pantalla del servidor AD</string>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>1920x1080</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>1024x740</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>800x600</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <widget class="QLabel" name="label_17">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </widget>
           <widget class="QWidget" name="DB">
@@ -834,8 +787,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>641</width>
-              <height>421</height>
+              <width>711</width>
+              <height>431</height>
              </rect>
             </property>
             <property name="frameShape">
@@ -847,6 +800,12 @@
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="1">
               <widget class="QPushButton" name="PB_DB">
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -1116,7 +1075,7 @@
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>430</y>
+              <y>440</y>
               <width>147</width>
               <height>23</height>
              </rect>
@@ -1133,239 +1092,227 @@
            <attribute name="title">
             <string>Correo</string>
            </attribute>
-           <widget class="QFrame" name="fr_leyenda">
+           <widget class="QWidget" name="">
             <property name="geometry">
              <rect>
               <x>0</x>
               <y>10</y>
-              <width>651</width>
-              <height>59</height>
+              <width>711</width>
+              <height>461</height>
              </rect>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_18">
+            <layout class="QVBoxLayout" name="verticalLayout_20">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_10">
-               <property name="spacing">
-                <number>1</number>
+              <widget class="QFrame" name="fr_leyenda">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
-               <item>
-                <widget class="QLabel" name="label_42">
-                 <property name="font">
-                  <font>
-                   <pointsize>15</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Leyenda</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_13">
-                 <property name="spacing">
-                  <number>1</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_33">
-                   <property name="text">
-                    <string>%1 - Municipio</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_35">
-                   <property name="text">
-                    <string>%2 - Dirección</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_14">
-                 <property name="spacing">
-                  <number>1</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_36">
-                   <property name="text">
-                    <string>%3 - ADSL</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_37">
-                   <property name="text">
-                    <string>%4 - Nº Admin.</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_15">
-                 <property name="spacing">
-                  <number>1</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_38">
-                   <property name="text">
-                    <string>%5 - IP</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_39">
-                   <property name="text">
-                    <string>%6 - Servicio</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_16">
-                 <property name="spacing">
-                  <number>1</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_40">
-                   <property name="text">
-                    <string>%7 - Caudal</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_41">
-                   <property name="text">
-                    <string>%8 - NºSerie</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_18">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_10">
+                  <property name="spacing">
+                   <number>1</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_42">
+                    <property name="font">
+                     <font>
+                      <pointsize>15</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Leyenda</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <property name="spacing">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_33">
+                      <property name="text">
+                       <string>%1 - Municipio</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_35">
+                      <property name="text">
+                       <string>%2 - Dirección</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_14">
+                    <property name="spacing">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_36">
+                      <property name="text">
+                       <string>%3 - ADSL</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_37">
+                      <property name="text">
+                       <string>%4 - Nº Admin.</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <property name="spacing">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_38">
+                      <property name="text">
+                       <string>%5 - IP</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_39">
+                      <property name="text">
+                       <string>%6 - Servicio</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                    <property name="spacing">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_40">
+                      <property name="text">
+                       <string>%7 - Caudal</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_41">
+                      <property name="text">
+                       <string>%8 - NºSerie</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
              </item>
-            </layout>
-           </widget>
-           <widget class="QFrame" name="fr_para">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>70</y>
-              <width>651</width>
-              <height>81</height>
-             </rect>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <widget class="QWidget" name="layoutWidget">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>0</y>
-               <width>641</width>
-               <height>74</height>
-              </rect>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <property name="spacing">
-               <number>1</number>
-              </property>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_12">
-                <property name="spacing">
-                 <number>1</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_43">
-                  <property name="font">
-                   <font>
-                    <family>Ubuntu Condensed</family>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
+             <item>
+              <widget class="QFrame" name="fr_para">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_11">
+                <item row="0" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <property name="spacing">
+                   <number>1</number>
                   </property>
-                  <property name="text">
-                   <string>Para:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_44">
-                  <property name="font">
-                   <font>
-                    <family>Ubuntu Condensed</family>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Asunto:</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_17">
-                <property name="spacing">
-                 <number>1</number>
-                </property>
-                <item>
-                 <widget class="QLineEdit" name="para">
-                  <property name="text">
-                   <string>&lt;ie2.cg22@telefonica.com&gt;&lt;op.cg22@telefonica.com&gt;&lt;marialeticia.larapalomino@telefonica.com&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="asunto">
-                  <property name="text">
-                   <string>Problemas de conexión en %1</string>
-                  </property>
-                 </widget>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_12">
+                    <property name="spacing">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_43">
+                      <property name="font">
+                       <font>
+                        <family>Ubuntu Condensed</family>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Para:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_44">
+                      <property name="font">
+                       <font>
+                        <family>Ubuntu Condensed</family>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Asunto:</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_17">
+                    <property name="spacing">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <widget class="QLineEdit" name="para">
+                      <property name="text">
+                       <string>&lt;ie2.cg22@telefonica.com&gt;&lt;op.cg22@telefonica.com&gt;&lt;marialeticia.larapalomino@telefonica.com&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="asunto">
+                      <property name="text">
+                       <string>Problemas de conexión en %1</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </item>
                </layout>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-           <widget class="QTextEdit" name="cuerpo">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>160</y>
-              <width>651</width>
-              <height>291</height>
-             </rect>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%1 - Municipio&lt;/p&gt;&lt;p&gt;%2 - Dirección&lt;/p&gt;&lt;p&gt;%3 - ADSL&lt;/p&gt;&lt;p&gt;%4 - Número Administrativo&lt;/p&gt;&lt;p&gt;%5 - IP&lt;/p&gt;&lt;p&gt;%6 - Servicio&lt;/p&gt;&lt;p&gt;%7 - Caudal&lt;/p&gt;&lt;p&gt;%8 - NºSerie&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="statusTip">
-             <string>66</string>
-            </property>
-            <property name="html">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="cuerpo">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%1 - Municipio&lt;/p&gt;&lt;p&gt;%2 - Dirección&lt;/p&gt;&lt;p&gt;%3 - ADSL&lt;/p&gt;&lt;p&gt;%4 - Número Administrativo&lt;/p&gt;&lt;p&gt;%5 - IP&lt;/p&gt;&lt;p&gt;%6 - Servicio&lt;/p&gt;&lt;p&gt;%7 - Caudal&lt;/p&gt;&lt;p&gt;%8 - NºSerie&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="statusTip">
+                <string>66</string>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Buenos días.&lt;br /&gt;&lt;br /&gt;Hay una linea con problemas de conexión.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Hemos comprobado que no es problema de su red.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Haced el favor de echarle un vistazo.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;Buenos días.&lt;br /&gt;&lt;br /&gt;Hay una linea con problemas de conexión.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;Hemos comprobado que no es problema de su red.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;Haced el favor de echarle un vistazo.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </widget>
           <widget class="QWidget" name="menu">
@@ -1674,6 +1621,71 @@ p, li { white-space: pre-wrap; }
              </layout>
             </item>
            </layout>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>ldap</string>
+           </attribute>
+           <widget class="QWidget" name="">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>701</width>
+              <height>171</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_12">
+             <item row="0" column="0">
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <item>
+                <widget class="QLabel" name="label_51">
+                 <property name="text">
+                  <string>Servidor ldap</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_52">
+                 <property name="text">
+                  <string>Puerto</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_53">
+                 <property name="text">
+                  <string>Usuario del Dominio</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_54">
+                 <property name="text">
+                  <string>Clave </string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="1">
+              <layout class="QVBoxLayout" name="verticalLayout_22">
+               <item>
+                <widget class="QLineEdit" name="lineEdit_ldap_servidorLdap"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_ldap_puerto"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_ldap_usuarioDominio"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_ldap_clave"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </widget>
         </item>

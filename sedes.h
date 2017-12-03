@@ -181,7 +181,9 @@ class Sedes : public QWidget {
 
         void on_pB_wikipedia_clicked();
 
-    private:
+        void on_pB_Edicion_toggled(bool checked);
+
+private:
         Ui::Sedes *ui;
         QString modelo_router;
         QString municipio_nombreID;

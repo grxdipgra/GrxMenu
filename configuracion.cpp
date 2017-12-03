@@ -7,21 +7,68 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QSqlQueryModel>
-
+#include "basedatos.h"
+#include <QMenu>
 Configuracion::Configuracion(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Configuracion)
 {
     ui->setupUi(this);
-    //Vamos a poner en el constructor la máscara para validar la ip introducida
-    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
-    QRegExp ipRegex ("^" + ipRange
-                     + "\\." + ipRange
-                     + "\\." + ipRange
-                     + "\\." + ipRange + "$");
-    QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
-    ui->servidor->setValidator(ipValidator);
 
+    //Vamos a poner en el constructor la máscara para validar la ip introducida
+    mascara_ip();
+
+    //Vamos a poner en el constructor la máscara para validar los puertos para ssh
+    mascara_puertos_nmap();
+
+    //Vamos a poner en el constructor la máscara para validar el puerto para acceso remoto
+    mascara_puerto_remoto();
+
+    //Cargamos todos los valores guardados en el archivo de configuracion
+    carga_configuracion();
+
+    //Si le tenemos puestos colores los cargamos
+    carga_configuracion_color();
+
+
+    ui->pushButton_2->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->Btn_Kerberos->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->pushButton_2, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
+    connect(ui->Btn_Kerberos, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
+
+}
+
+void Configuracion::help(){
+    qDebug()<< "ayuda";
+}
+
+
+void Configuracion::color_widget(QObject * sender){
+    change_color(sender);
+}
+
+
+void Configuracion::ctxMenu(const QPoint &pos) {
+    QMenu *menu = new QMenu;
+    menu->addAction(tr("Color"), this, SLOT(color_widget(sender())));
+    menu->addAction(tr("Ayuda"), this, SLOT(help()));
+    menu->exec(this->mapToGlobal(pos));
+}
+
+Configuracion::~Configuracion()
+{
+    delete ui;
+}
+
+void Configuracion::mascara_puerto_remoto(){
+    //Vamos a poner en el constructor la máscara para validar el puerto para acceso remoto
+    QString puerto = "(?:[0-5]?[0-9]?[0-9]?[0-9]?[0-9])";
+    QRegExp ipRegex2 ("^" + puerto+ "$");
+    QRegExpValidator *ipValidator2 = new QRegExpValidator(ipRegex2, this);
+    ui->puerto->setValidator(ipValidator2);
+}
+
+void Configuracion::mascara_puertos_nmap(){
     //Vamos a poner en el constructor la máscara para validar los puertos para ssh
     //ponemos 15 puertos como maximo, si quieres poner mas copia y pega + "\\," + puertoIN+
     QString puertoIN = "(?:[0-5]?[0-9]?[0-9]?[0-9]?[0-9])";
@@ -33,22 +80,19 @@ Configuracion::Configuracion(QWidget *parent) :
     QRegExpValidator *puertoValidator = new QRegExpValidator(puertoRegex, this);
     ui->lineEdit_puertos->setValidator(puertoValidator);
 
-    //Vamos a poner en el constructor la máscara para validar el puerto introducido
-    QString puerto = "(?:[0-5]?[0-9]?[0-9]?[0-9]?[0-9])";
-    QRegExp ipRegex2 ("^" + puerto+ "$");
-    QRegExpValidator *ipValidator2 = new QRegExpValidator(ipRegex2, this);
-    ui->puerto->setValidator(ipValidator2);
-    carga_configuracion();
-    carga_configuracion_color();
 
+}
 
-    ui->lb_rutas->setText("<a href=\"/\">Configuración de Rutas</a>");
+void Configuracion::mascara_ip(){
+    //Máscara para validar la ip introducida
+    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
+    QRegExp ipRegex ("^" + ipRange
+                     + "\\." + ipRange
+                     + "\\." + ipRange
+                     + "\\." + ipRange + "$");
+    QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
+    ui->servidor->setValidator(ipValidator);
 
-    }
-
-Configuracion::~Configuracion()
-{
-    delete ui;
 }
 
 void Configuracion::valoresPorDefecto(){
@@ -75,7 +119,7 @@ void Configuracion::valoresPorDefecto(){
     UsuarioSSH =  "gorgojo";
     ClaveSSH = "0";
     PuertoRemotoSSH = 22;
-    PuertoLocalSSH = "0";
+    PuertoLocalSSH = "3306";
     ISL = "/opt/ISLOnline/ISLLight/ISLLight";
     Atalaya = "https://atalaya.grx";
     UsarUsuarios = "true";
@@ -89,7 +133,7 @@ void Configuracion::valoresPorDefecto(){
     UsarTS = "true";
     UsarISL = "true";
     UsarAtalaya = "true";
-    SoloAytos = "true";
+    SoloAytos = "false";
     OCS = "https://incidencias.dipgra.es/ocsreport";
     GLPI = "https://incidencias.dipgra.es/glpi";
     Beiro = "http://beiro.grx:55555/portal";
@@ -114,104 +158,155 @@ void Configuracion::valoresPorDefecto(){
     PuertosBuscados_web="true";
     PuertosBuscados_lineEdit="";
 
+    Servidor_ldap="10.1.1.50";
+    Puerto_ldap="389";
+    Usuario_ldap=name;
+    Clave_ldap="password";
+
+
     carga_editLine();
+}
+
+QString  Configuracion::cual_es_servidor_ldap(){
+    return Servidor_ldap;
+}
+
+QString  Configuracion::cual_es_puerto_ldap(){
+    return Puerto_ldap;
+}
+
+QString  Configuracion::cual_es_usuario_ldap(){
+    return Usuario_ldap;
+}
+
+QString  Configuracion::cual_es_clave_ldap(){
+    return Clave_ldap;
 }
 
 QString  Configuracion::cual_es_home(){
     return home_usuario;
 }
+
 QString  Configuracion::cual_es_ini(){
     return home_usuario+".grxconf.ini";
 }
+
 QString  Configuracion::cual_es_tecnico(){
     return Tecnico;
 }
+
 QString  Configuracion::cual_es_clave(){
     return Clave;
 }
+
 QString  Configuracion::cual_es_servidorAD(){
     return ServidorAD;
 }
+
 QString  Configuracion::cual_es_claveAD(){
     return ClaveAD;
 }
+
 QString  Configuracion::cual_es_usuarioAD(){
     return UsuarioAD;
 }
+
 QString  Configuracion::cual_es_beiro(){
     return Beiro;
 }
+
 QString  Configuracion::cual_es_DataBaseName(){
     return DataBaseName;
 }
+
 QString  Configuracion::cual_es_hostnameDB(){
     return HostName;
 }
+
 QString  Configuracion::cual_es_PuertoDB(){
     return PuertoDB;
 }
+
 QString  Configuracion::cual_es_usernameDB(){
     return UserName;
 }
+
 QString  Configuracion::cual_es_passwordDB(){
     return PasswordDB;
 }
+
 QString  Configuracion::cual_es_usuario_remoto(){
     return UsuarioRemoto;
 }
+
 QString  Configuracion::cual_es_puerto(){
     return Puerto;
 }
+
 QString  Configuracion::cual_es_servidorSSH(){
     return ServidorSSH;
 }
+
 QString  Configuracion::cual_es_usuarioSSH(){
     return UsuarioSSH;
 }
+
 QString  Configuracion::cual_es_password_ssh(){
     return ClaveSSH;
 }
+
 int  Configuracion::cual_es_puerto_remoto_ssh(){
     return PuertoRemotoSSH;
 }
+
 int  Configuracion::cual_es_puerto_local_ssh(){
     return PuertoLocalSSH;
 }
+
 QString  Configuracion::cual_es_isl(){
     return ISL;
 }
+
 QString  Configuracion::cual_es_cronos(){
     return Cronos;
 }
+
 QString  Configuracion::cual_es_correo(){
     return Correo;
 }
+
 QString  Configuracion::cual_es_glpi(){
     return GLPI;
 }
+
 QString  Configuracion::cual_es_ocs(){
     return OCS;
 }
+
 QString  Configuracion::cual_es_atalaya(){
     return Atalaya;
 }
+
 QString  Configuracion::cual_es_clave_cifrado(){
     return ClaveCifrado;
 }
+
 QString  Configuracion::cual_es_clave_remoto(){
      return ClaveRemoto;
 }
-QString  Configuracion::cual_es_rdesktop(){
+
+bool  Configuracion::cual_es_rdesktop(){
     return Rdesktop;
 }
+
 bool Configuracion::es_rdesktop(){
-    if (Rdesktop =="true")
-          return true;
-return false;
+    return Rdesktop;
 }
+
 QString  Configuracion::cual_es_keyfile_privada(){
     return KeyFile_privada;
 }
+
 QString  Configuracion::cual_es_keyfile_publica(){
     return KeyFile_publica;
 }
@@ -219,9 +314,11 @@ QString  Configuracion::cual_es_keyfile_publica(){
 QString  Configuracion::cual_es_para(){
     return Para;
 }
+
 QString  Configuracion::cual_es_asunto(){
     return Asunto;
 }
+
 QString  Configuracion::cual_es_cuerpo(){
     return Cuerpo;
 }
@@ -231,129 +328,92 @@ QString Configuracion::cual_es_proxychains(){
 }
 
 bool Configuracion::es_usarproxy_chains(){
-    if (UsarProxyChains =="true")
-        return true;
-return false;
+    return UsarProxyChains;
 }
 
 bool Configuracion::es_usarSSH(){
-      if (UsarSSH =="true")
-          return true;
-return false;
+    return UsarSSH;
 }
 
 bool Configuracion::usuarios_up(){
-      if (UsarUsuarios =="true")
-          return true;
-return false;
+    return  UsarUsuarios;
 }
 
 bool Configuracion::soporte_up(){
-      if (UsarSoporte =="true")
-          return true;
-return false;
+    return UsarSoporte;
 }
 
-
 bool Configuracion::sedes_up(){
-      if (UsarSedes =="true")
-          return true;
-return false;
+    return UsarSedes;
 }
 
 bool Configuracion::cronos_up(){
-      if (UsarCronos =="true")
-          return true;
-return false;
+    return UsarCronos;
 }
+
 bool Configuracion::webmail_up(){
-      if (UsarWebmail =="true")
-          return true;
-return false;
+    return UsarWebmail;
 }
+
 bool Configuracion::beiro_up(){
-      if (UsarBeiro =="true")
-          return true;
-return false;
+    return UsarBeiro;
 }
+
 bool Configuracion::glpi_up(){
-      if (UsarGlpi =="true")
-          return true;
-return false;
+    return UsarGlpi;
 }
+
 bool Configuracion::ocs_up(){
-      if (UsarOCS =="true")
-          return true;
-return false;
+    return UsarOCS;
 }
+
 bool Configuracion::ts_up(){
-      if (UsarTS =="true")
-          return true;
-return false;
+    return UsarTS;
 }
+
 bool Configuracion::isl_up(){
-      if (UsarISL =="true")
-          return true;
-return false;
+    return UsarISL;
 }
+
 bool Configuracion::atalaya_up(){
-      if (UsarAtalaya =="true")
-          return true;
-return false;
+    return UsarAtalaya;
 }
 
 bool Configuracion::solo_aytos(){
-    if (SoloAytos =="true")
-        return true;
-return false;
+    return SoloAytos;
 }
 
 bool Configuracion::puertoSSH(){
-    if (PuertosBuscados_ssh =="true")
-        return true;
-return false;
+    return PuertosBuscados_ssh;
 }
 
 bool Configuracion::puertoTelnet(){
-    if (PuertosBuscados_telnet =="true")
-        return true;
-return false;
+    return PuertosBuscados_telnet;
 }
 
 bool Configuracion::puertoWeb(){
-    if (PuertosBuscados_web =="true")
-        return true;
-return false;
+    return PuertosBuscados_web;
 }
 
 bool Configuracion::puertoWebssl(){
-    if (PuertosBuscados_webssl =="true")
-        return true;
-return false;
+    return PuertosBuscados_webssl;
 }
 
 bool Configuracion::puertoPortPrinter(){
-    if (PuertosBuscados_portPrinter =="true")
-        return true;
-return false;
+    return PuertosBuscados_portPrinter;
 }
 
 bool Configuracion::puertoNetbios(){
-    if (PuertosBuscados_netbios =="true")
-        return true;
-return false;
+    return PuertosBuscados_netbios;
 }
 
 QString  Configuracion::cual_es_lineEditSSH(){
     return PuertosBuscados_lineEdit;
 }
 
-
-
 QString  Configuracion::cual_es_resolucion(){
-      return Resolucion;
+    return Resolucion;
 }
-
 
 QString Configuracion::puertos_buscados(){
     QString tmp="";
@@ -400,7 +460,6 @@ QString Configuracion::puertos_buscados(){
 return tmp;
 }
 
-
 void Configuracion::carga_configuracion_color(){
 
     ui->fr_linux->setStyleSheet("background-color:"+Fr_linux+";");
@@ -426,8 +485,8 @@ void Configuracion::carga_configuracion()
     PuertoDB = s.value("Configuracion/PuertoDB").toString();
     UserName = s.value("Configuracion/UserName").toString();
     PasswordDB = s.value("Configuracion/PasswordDB").toString();
-    UsarSSH = s.value("Configuracion/UsarSSH").toString();
-    UsarProxyChains = s.value("Configuracion/UsarProxyChains").toString();
+    UsarSSH = s.value("Configuracion/UsarSSH").toBool();
+    UsarProxyChains = s.value("Configuracion/UsarProxyChains").toBool();
     ProxyChains = s.value("Configuracion/ProxyChains").toString();
     ServidorSSH = s.value("Configuracion/ServidorSSH").toString();
     UsuarioSSH =  s.value("Configuracion/UsuarioSSH").toString();
@@ -436,18 +495,18 @@ void Configuracion::carga_configuracion()
     PuertoLocalSSH = s.value("Configuracion/PuertoLocalSSH").toInt();
     ISL = s.value("Configuracion/ISL").toString();
     Atalaya = s.value("Configuracion/Atalaya").toString();
-    UsarUsuarios = s.value("Configuracion/UsarUsuarios").toString();
-    UsarSoporte = s.value("Configuracion/UsarSoporte").toString();
-    UsarSedes = s.value("Configuracion/UsarSedes").toString();
-    UsarCronos = s.value("Configuracion/UsarCronos").toString();
-    UsarWebmail = s.value("Configuracion/UsarWebmail").toString();
-    UsarBeiro = s.value("Configuracion/UsarBeiro").toString();
-    UsarGlpi = s.value("Configuracion/UsarGLPI").toString();
-    UsarOCS = s.value("Configuracion/UsarOCS").toString();
-    UsarTS = s.value("Configuracion/UsarTS").toString();
-    UsarISL = s.value("Configuracion/UsarISL").toString();
-    UsarAtalaya = s.value("Configuracion/UsarAtalaya").toString();
-    SoloAytos = s.value("Configuracion/SoloAytos").toString();
+    UsarUsuarios = s.value("Configuracion/UsarUsuarios").toBool();
+    UsarSoporte = s.value("Configuracion/UsarSoporte").toBool();
+    UsarSedes = s.value("Configuracion/UsarSedes").toBool();
+    UsarCronos = s.value("Configuracion/UsarCronos").toBool();
+    UsarWebmail = s.value("Configuracion/UsarWebmail").toBool();
+    UsarBeiro = s.value("Configuracion/UsarBeiro").toBool();
+    UsarGlpi = s.value("Configuracion/UsarGLPI").toBool();
+    UsarOCS = s.value("Configuracion/UsarOCS").toBool();
+    UsarTS = s.value("Configuracion/UsarTS").toBool();
+    UsarISL = s.value("Configuracion/UsarISL").toBool();
+    UsarAtalaya = s.value("Configuracion/UsarAtalaya").toBool();
+    SoloAytos = s.value("Configuracion/SoloAytos").toBool();
     OCS = s.value("Configuracion/OCS").toString();
     GLPI = s.value("Configuracion/GLPI").toString();
     Beiro = s.value("Configuracion/Beiro").toString();
@@ -458,7 +517,7 @@ void Configuracion::carga_configuracion()
     Password = s.value("Configuracion/Password").toString();
     ClaveCifrado = s.value("Configuracion/ClaveCifrado").toString();
     ClaveRemoto = s.value("Configuracion/ClaveRemoto").toString();
-    Rdesktop = s.value("Configuracion/Rdesktop").toString();
+    Rdesktop = s.value("Configuracion/Rdesktop").toBool();
     Resolucion = s.value("Configuracion/Resolucion").toString();
     //Correo de incidencias
     Para = s.value("Configuracion/Para").toString();
@@ -473,18 +532,20 @@ void Configuracion::carga_configuracion()
     Fr_TS = s.value("Configuracion/fr_TS").toString();
     Fr_rutas = s.value("Configuracion/fr_rutas").toString();
     //Busqueda por ssh
-    PuertosBuscados_ssh = s.value("Configuracion/PuertosBuscados_ssh").toString();
-    PuertosBuscados_telnet = s.value("Configuracion/PuertosBuscados_telnet").toString();
-    PuertosBuscados_web = s.value("Configuracion/PuertosBuscados_web").toString();
-    PuertosBuscados_webssl = s.value("Configuracion/PuertosBuscados_webssl").toString();
-    PuertosBuscados_portPrinter = s.value("Configuracion/PuertosBuscados_portPrinter").toString();
-    PuertosBuscados_netbios = s.value("Configuracion/PuertosBuscados_netbios").toString();
+    PuertosBuscados_ssh = s.value("Configuracion/PuertosBuscados_ssh").toBool();
+    PuertosBuscados_telnet = s.value("Configuracion/PuertosBuscados_telnet").toBool();
+    PuertosBuscados_web = s.value("Configuracion/PuertosBuscados_web").toBool();
+    PuertosBuscados_webssl = s.value("Configuracion/PuertosBuscados_webssl").toBool();
+    PuertosBuscados_portPrinter = s.value("Configuracion/PuertosBuscados_portPrinter").toBool();
+    PuertosBuscados_netbios = s.value("Configuracion/PuertosBuscados_netbios").toBool();
     PuertosBuscados_lineEdit = s.value("Configuracion/PuertosBuscados_lineEdit").toString();
 
     carga_editLine();
 
 }
 
+//Este metodo carga todos los valores de los editline guardados en el archivo de configuracion
+// $HOME/.grxconfig
 void Configuracion::carga_editLine(){
 
     if (es_rdesktop())
@@ -561,9 +622,6 @@ void Configuracion::carga_editLine(){
     ui->lineEdit_puertos->setText(PuertosBuscados_lineEdit);
 }
 
-
-
-
 void Configuracion::habilitaProxyChains(){
     ui->proxychains->setEnabled(true);
 }
@@ -581,6 +639,7 @@ void Configuracion::habilitaSSH(){
     ui->puerto_Remoto_ssh->setEnabled(true);
 
 }
+
 void Configuracion::deshabilitaSSH(){
     ui->keyfile_privada->setEnabled(false);
     ui->keyfile_publica->setEnabled(false);
@@ -589,6 +648,7 @@ void Configuracion::deshabilitaSSH(){
     ui->clave_ssh_BD->setEnabled(false);
     ui->puerto_Remoto_ssh->setEnabled(false);
 }
+
 void Configuracion::on_buttonBox_accepted()
 {
     //Usamos Qsettings para guardar los valores de las variables en un archivo .ini
@@ -657,12 +717,13 @@ void Configuracion::on_buttonBox_accepted()
 
 
 }
+
 void Configuracion::on_Btn_Kerberos_clicked()
 {
     QProcess process;
     process.startDetached("wbinfo -K", QStringList() << ui->tecnico->text());
-
 }
+
 void Configuracion::on_PB_linux_clicked()
 {
     QColor color = QColorDialog::getColor(Qt::blue, this );
@@ -672,6 +733,7 @@ void Configuracion::on_PB_linux_clicked()
           ui->fr_linux->setStyleSheet("background-color:"+Fr_linux+";");
         }
 }
+
 void Configuracion::on_PB_rutas_clicked()
 {
     QColor color = QColorDialog::getColor(Qt::blue, this );
@@ -681,6 +743,7 @@ void Configuracion::on_PB_rutas_clicked()
           ui->fr_rutas->setStyleSheet("background-color:"+Fr_rutas+";");
         }
 }
+
 void Configuracion::on_PB_TS_clicked()
 {
     QColor color = QColorDialog::getColor(Qt::blue, this );
@@ -690,15 +753,31 @@ void Configuracion::on_PB_TS_clicked()
           ui->fr_TS->setStyleSheet("background-color:"+Fr_TS+";");
         }
 }
+
+void Configuracion::change_color(QWidget *objeto){
+    QString tmp_color;
+    QColor color = QColorDialog::getColor(Qt::blue, this );
+        if( color.isValid() )
+        {
+          tmp_color = color.name();
+          objeto->setStyleSheet("background-color:"+tmp_color+";");
+        }
+
+}
+
 void Configuracion::on_PB_DB_clicked()
 {
+ /*
     QColor color = QColorDialog::getColor(Qt::blue, this );
         if( color.isValid() )
         {
           Fr_DB = color.name();
           ui->fr_DB->setStyleSheet("background-color:"+Fr_DB+";");
         }
+ */
+    change_color(ui->clave_ssh_BD);
 }
+
 void Configuracion::on_PB_kerberos_clicked()
 {
     QColor color = QColorDialog::getColor(Qt::blue, this );
@@ -764,4 +843,10 @@ void Configuracion::on_buttonBox_clicked(QAbstractButton *button)
 void Configuracion::on_pushButton_clicked()
 {
     ui->label_ssh->setText(puertos_buscados());
+}
+
+void Configuracion::on_pushButton_2_clicked()
+{
+    BaseDatos *basedatos = new BaseDatos;
+    basedatos->show();
 }

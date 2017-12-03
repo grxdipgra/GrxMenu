@@ -38,7 +38,7 @@ DISTNAME      = GrxMenu1.0.0
 DISTDIR = /home/alberto/GrxMenu/.tmp/GrxMenu1.0.0
 LINK          = g++
 LFLAGS        = -fpermissive -Wl,-O1
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lssh2 -lQt5Widgets -lQt5Gui -lQt5Sql -lQt5Network -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lssh2 -lldap -lQt5Widgets -lQt5Gui -lQt5Sql -lQt5Network -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,7 +53,6 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		botonera.cpp \
 		configuracion.cpp \
-		usuario.cpp \
 		nmap_xml.cpp \
 		sedes.cpp \
 		soporte.cpp \
@@ -63,10 +62,10 @@ SOURCES       = main.cpp \
 		tabescaner.cpp \
 		basedatos.cpp \
 		acerdade.cpp \
-		mame.cpp qrc_iconos.cpp \
+		mame.cpp \
+		usuarios/form_usuarios.cpp qrc_iconos.cpp \
 		moc_botonera.cpp \
 		moc_configuracion.cpp \
-		moc_usuario.cpp \
 		moc_sedes.cpp \
 		moc_soporte.cpp \
 		moc_equipos.cpp \
@@ -75,11 +74,11 @@ SOURCES       = main.cpp \
 		moc_tabescaner.cpp \
 		moc_basedatos.cpp \
 		moc_acerdade.cpp \
-		moc_mame.cpp
+		moc_mame.cpp \
+		moc_form_usuarios.cpp
 OBJECTS       = main.o \
 		botonera.o \
 		configuracion.o \
-		usuario.o \
 		nmap_xml.o \
 		sedes.o \
 		soporte.o \
@@ -90,10 +89,10 @@ OBJECTS       = main.o \
 		basedatos.o \
 		acerdade.o \
 		mame.o \
+		form_usuarios.o \
 		qrc_iconos.o \
 		moc_botonera.o \
 		moc_configuracion.o \
-		moc_usuario.o \
 		moc_sedes.o \
 		moc_soporte.o \
 		moc_equipos.o \
@@ -102,7 +101,8 @@ OBJECTS       = main.o \
 		moc_tabescaner.o \
 		moc_basedatos.o \
 		moc_acerdade.o \
-		moc_mame.o
+		moc_mame.o \
+		moc_form_usuarios.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -195,7 +195,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		GrxMenu.pro botonera.h \
 		configuracion.h \
-		usuario.h \
 		nmap_xml.h \
 		sedes.h \
 		soporte.h \
@@ -205,10 +204,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		tabescaner.h \
 		basedatos.h \
 		acerdade.h \
-		mame.h main.cpp \
+		mame.h \
+		usuarios/form_usuarios.h \
+		usuarios/ldap.h main.cpp \
 		botonera.cpp \
 		configuracion.cpp \
-		usuario.cpp \
 		nmap_xml.cpp \
 		sedes.cpp \
 		soporte.cpp \
@@ -218,7 +218,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		tabescaner.cpp \
 		basedatos.cpp \
 		acerdade.cpp \
-		mame.cpp
+		mame.cpp \
+		usuarios/form_usuarios.cpp
 QMAKE_TARGET  = GrxMenu
 DESTDIR       = 
 TARGET        = GrxMenu
@@ -227,7 +228,7 @@ TARGET        = GrxMenu
 first: all
 ####### Build rules
 
-$(TARGET): ui_botonera.h ui_configuracion.h ui_usuario.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h $(OBJECTS)  
+$(TARGET): ui_botonera.h ui_configuracion.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h ui_form_usuarios.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: GrxMenu.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -441,9 +442,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents iconos.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents botonera.h configuracion.h usuario.h nmap_xml.h sedes.h soporte.h equipos.h tunel.h ejecutahilo.h tabescaner.h basedatos.h acerdade.h mame.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp botonera.cpp configuracion.cpp usuario.cpp nmap_xml.cpp sedes.cpp soporte.cpp equipos.cpp tunel.cpp ejecutahilo.cpp tabescaner.cpp basedatos.cpp acerdade.cpp mame.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents botonera.ui configuracion.ui usuario.ui sedes.ui soporte.ui equipos.ui basedatos.ui acerdade.ui mame.ui $(DISTDIR)/
+	$(COPY_FILE) --parents botonera.h configuracion.h nmap_xml.h sedes.h soporte.h equipos.h tunel.h ejecutahilo.h tabescaner.h basedatos.h acerdade.h mame.h usuarios/form_usuarios.h usuarios/ldap.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp botonera.cpp configuracion.cpp nmap_xml.cpp sedes.cpp soporte.cpp equipos.cpp tunel.cpp ejecutahilo.cpp tabescaner.cpp basedatos.cpp acerdade.cpp mame.cpp usuarios/form_usuarios.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents botonera.ui configuracion.ui sedes.ui soporte.ui equipos.ui basedatos.ui acerdade.ui mame.ui usuarios/form_usuarios.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -570,9 +571,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -fpermissive -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_botonera.cpp moc_configuracion.cpp moc_usuario.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp
+compiler_moc_header_make_all: moc_botonera.cpp moc_configuracion.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp moc_form_usuarios.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_botonera.cpp moc_configuracion.cpp moc_usuario.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp
+	-$(DEL_FILE) moc_botonera.cpp moc_configuracion.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp moc_form_usuarios.cpp
 moc_botonera.cpp: configuracion.h \
 		acerdade.h \
 		botonera.h \
@@ -584,11 +585,6 @@ moc_configuracion.cpp: configuracion.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include configuracion.h -o moc_configuracion.cpp
-
-moc_usuario.cpp: usuario.h \
-		moc_predefs.h \
-		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include usuario.h -o moc_usuario.cpp
 
 moc_sedes.cpp: nmap_xml.h \
 		configuracion.h \
@@ -643,11 +639,16 @@ moc_mame.cpp: mame.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mame.h -o moc_mame.cpp
 
+moc_form_usuarios.cpp: usuarios/form_usuarios.h \
+		moc_predefs.h \
+		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include usuarios/form_usuarios.h -o moc_form_usuarios.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_botonera.h ui_configuracion.h ui_usuario.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h
+compiler_uic_make_all: ui_botonera.h ui_configuracion.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h ui_form_usuarios.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_botonera.h ui_configuracion.h ui_usuario.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h
+	-$(DEL_FILE) ui_botonera.h ui_configuracion.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h ui_form_usuarios.h
 ui_botonera.h: botonera.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic botonera.ui -o ui_botonera.h
@@ -655,10 +656,6 @@ ui_botonera.h: botonera.ui \
 ui_configuracion.h: configuracion.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic configuracion.ui -o ui_configuracion.h
-
-ui_usuario.h: usuario.ui \
-		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic usuario.ui -o ui_usuario.h
 
 ui_sedes.h: sedes.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
@@ -684,6 +681,10 @@ ui_mame.h: mame.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic mame.ui -o ui_mame.h
 
+ui_form_usuarios.h: usuarios/form_usuarios.ui \
+		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic usuarios/form_usuarios.ui -o ui_form_usuarios.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -705,23 +706,19 @@ botonera.o: botonera.cpp botonera.h \
 		configuracion.h \
 		acerdade.h \
 		ui_botonera.h \
-		usuario.h \
 		soporte.h \
 		nmap_xml.h \
 		sedes.h \
 		equipos.h \
 		tunel.h \
 		libssh2_config.h \
-		mame.h
+		mame.h \
+		usuarios/form_usuarios.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o botonera.o botonera.cpp
 
 configuracion.o: configuracion.cpp configuracion.h \
 		ui_configuracion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o configuracion.o configuracion.cpp
-
-usuario.o: usuario.cpp usuario.h \
-		ui_usuario.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o usuario.o usuario.cpp
 
 nmap_xml.o: nmap_xml.cpp nmap_xml.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmap_xml.o nmap_xml.cpp
@@ -774,6 +771,10 @@ mame.o: mame.cpp mame.h \
 		ui_mame.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mame.o mame.cpp
 
+form_usuarios.o: usuarios/form_usuarios.cpp usuarios/form_usuarios.h \
+		ui_form_usuarios.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o form_usuarios.o usuarios/form_usuarios.cpp
+
 qrc_iconos.o: qrc_iconos.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_iconos.o qrc_iconos.cpp
 
@@ -782,9 +783,6 @@ moc_botonera.o: moc_botonera.cpp
 
 moc_configuracion.o: moc_configuracion.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_configuracion.o moc_configuracion.cpp
-
-moc_usuario.o: moc_usuario.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_usuario.o moc_usuario.cpp
 
 moc_sedes.o: moc_sedes.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sedes.o moc_sedes.cpp
@@ -812,6 +810,9 @@ moc_acerdade.o: moc_acerdade.cpp
 
 moc_mame.o: moc_mame.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mame.o moc_mame.cpp
+
+moc_form_usuarios.o: moc_form_usuarios.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_form_usuarios.o moc_form_usuarios.cpp
 
 ####### Install
 

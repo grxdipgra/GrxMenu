@@ -1,6 +1,5 @@
 #include "botonera.h"
 #include "ui_botonera.h"
-#include "usuario.h"
 #include "soporte.h"
 #include "sedes.h"
 #include "configuracion.h"
@@ -13,17 +12,17 @@
 #include "configuracion.h"
 #include <QFileInfo>
 #include "mame.h"
+#include "usuarios/form_usuarios.h"
+#include "basedatos.h"
 
+// Esta funcion comprueba que exista y no sea un directorio
+// el archivo pasado por parametro
 bool fileExists(QString path) {
     QFileInfo check_file(path);
-    // comprueba que exista y no sea un directorio
-    if (check_file.exists() && check_file.isFile()) {
-        return true;
-    } else {
-        return false;
-    }
+    return (check_file.exists() && check_file.isFile());
 }
 
+// En este struct vamos a guardar los datos de conexion ssh y DB
 struct variables{
     QString keyfile1;
     QString keyfile2;
@@ -42,6 +41,7 @@ struct variables{
     bool usar_ssh;
 }datos;
 
+//Constructor
 Botonera::Botonera(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Botonera)
@@ -51,6 +51,10 @@ Botonera::Botonera(QWidget *parent) :
     muestraBotones();
     cargaVariables();
     barraEstado();
+
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
+
 }
 
 Botonera::~Botonera()
@@ -58,10 +62,19 @@ Botonera::~Botonera()
     delete ui;
 }
 
+void Botonera::test_slot(){
+    qDebug()<<"Prueba";
+}
+void Botonera::ctxMenu(const QPoint &pos) {
+    QMenu *menu = new QMenu;
+    menu->addAction(tr("Test Item"), this, SLOT(test_slot()));
+    menu->exec(this->mapToGlobal(pos));
+}
+
 void Botonera::on_actionUsuarios_triggered()
 {
-  //  form_usuarios *usuarios = new form_usuarios();
-  //  usuarios->show();
+    form_usuarios *usuarios = new form_usuarios();
+    usuarios->show();
 }
 
 void Botonera::on_actionSalir_triggered()
@@ -152,6 +165,8 @@ void Botonera::on_actionSoporte_triggered()
     soporte->show();
 }
 
+// Esta funcion busca un puerto tcp libre en el sistema
+// Devuelve -1 si no ha podido encontrarlo
 unsigned int puerto_libre(){
     QTcpServer server;
     if(server.listen(QHostAddress::Any, 0))
@@ -211,74 +226,23 @@ bool Botonera::creaConexion()
     return true;
 }
 
-bool Botonera::muestraBotones(){
+void Botonera::muestraBotones(){
 
     Configuracion *configuracion = new Configuracion;
 
-
-    if (!configuracion->usuarios_up())
-               ui->mainToolBar->actions().at(0)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(0)->setVisible(true);
-
-    if (!configuracion->soporte_up())
-               ui->mainToolBar->actions().at(1)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(1)->setVisible(true);
-
-
-    if (!configuracion->sedes_up())
-               ui->mainToolBar->actions().at(2)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(2)->setVisible(true);
-
-    if (!configuracion->cronos_up())
-               ui->mainToolBar->actions().at(3)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(3)->setVisible(true);
-
-    if (!configuracion->webmail_up())
-               ui->mainToolBar->actions().at(4)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(4)->setVisible(true);
-
-    if (!configuracion->beiro_up())
-               ui->mainToolBar->actions().at(5)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(5)->setVisible(true);
-
-    if (!configuracion->glpi_up())
-               ui->mainToolBar->actions().at(6)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(6)->setVisible(true);
-
-    if (!configuracion->ocs_up())
-               ui->mainToolBar->actions().at(7)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(7)->setVisible(true);
-
-    if (!configuracion->ts_up())
-               ui->mainToolBar->actions().at(8)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(8)->setVisible(true);
-
-
-    if (!configuracion->isl_up())
-               ui->mainToolBar->actions().at(9)->setVisible(false);
-    else
-               ui->mainToolBar->actions().at(9)->setVisible(true);
-
-     if (!configuracion->atalaya_up())
-               ui->mainToolBar->actions().at(10)->setVisible(false);
-     else
-               ui->mainToolBar->actions().at(10)->setVisible(true);
-
-
-
-        //QToolBar::actions().at(3)->setVisible(false);
+    ui->mainToolBar->actions().at(0)->setVisible(configuracion->usuarios_up());
+    ui->mainToolBar->actions().at(1)->setVisible(configuracion->soporte_up());
+    ui->mainToolBar->actions().at(2)->setVisible(configuracion->sedes_up());
+    ui->mainToolBar->actions().at(3)->setVisible(configuracion->cronos_up());
+    ui->mainToolBar->actions().at(4)->setVisible(configuracion->webmail_up());
+    ui->mainToolBar->actions().at(5)->setVisible(configuracion->beiro_up());
+    ui->mainToolBar->actions().at(6)->setVisible(configuracion->glpi_up());
+    ui->mainToolBar->actions().at(7)->setVisible(configuracion->ocs_up());
+    ui->mainToolBar->actions().at(8)->setVisible(configuracion->ts_up());
+    ui->mainToolBar->actions().at(9)->setVisible(configuracion->isl_up());
+    ui->mainToolBar->actions().at(10)->setVisible(configuracion->atalaya_up());
     ui->mainToolBar->repaint();
     ui->mainToolBar->show();
-return true;
 }
 
 bool Botonera::cargaVariables(){

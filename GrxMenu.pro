@@ -15,7 +15,6 @@ QMAKE_LFLAGS = -fpermissive
 SOURCES += main.cpp \
     botonera.cpp \
     configuracion.cpp \
-    usuario.cpp \
     nmap_xml.cpp \
     sedes.cpp \
     soporte.cpp \
@@ -25,15 +24,12 @@ SOURCES += main.cpp \
     tabescaner.cpp \
     basedatos.cpp \
     acerdade.cpp \
-    mame.cpp
-
-
-
+    mame.cpp \
+    usuarios/form_usuarios.cpp
 
 HEADERS  += \
     botonera.h \
     configuracion.h \
-    usuario.h \
     nmap_xml.h \
     sedes.h \
     soporte.h \
@@ -43,23 +39,23 @@ HEADERS  += \
     tabescaner.h \
     basedatos.h \
     acerdade.h \
-    mame.h
-
-
+    mame.h \
+    usuarios/form_usuarios.h \
+    usuarios/ldap.h
 
 FORMS    += \
     botonera.ui \
     configuracion.ui \
-    usuario.ui \
     sedes.ui \
     soporte.ui \
     equipos.ui \
     basedatos.ui \
     acerdade.ui \
-    mame.ui
+    mame.ui \
+    usuarios/form_usuarios.ui
 
 INCLUDEPATH +=/lib
-LIBS += -lssh2
+LIBS += -lssh2 -lldap
 
 RESOURCES += \
     iconos.qrc

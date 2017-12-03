@@ -318,17 +318,17 @@ void BaseDatos::inicia() {
 void BaseDatos::on_pB_sql_clicked() {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery* query_consulta = new QSqlQuery(db);
-    QString sql_consulta = ui -> comboBox_consulta -> currentText();
+    QString sql_consulta = ui->comboBox_consulta -> currentText();
     query_consulta -> prepare(sql_consulta);
 
     if (!query_consulta -> exec()) {
         QMessageBox::critical(this, "Sql Error", "Error en la consulta: \n" + query_consulta -> lastError().text(), QMessageBox::Ok);
     }
     else {
-        model_consulta -> setQuery(*query_consulta);
-        ui -> tableView_consulta -> setModel(model_consulta);
-        ui -> tableView_consulta -> resizeColumnsToContents();
-        ui -> tableView_consulta -> resizeRowsToContents();
+        model_consulta->setQuery(*query_consulta);
+        ui->tableView_consulta->setModel(model_consulta);
+        ui->tableView_consulta->resizeColumnsToContents();
+        ui->tableView_consulta->resizeRowsToContents();
     }
 }
 
@@ -353,10 +353,10 @@ void BaseDatos::on_comboBox_consulta_activated(const QString &arg1) {
             QMessageBox::critical(this, "Sql Error", "Error en la consulta: \n" + query_consulta -> lastError().text(), QMessageBox::Ok);
         }
         else {
-            model_consulta -> setQuery(*query_consulta);
-            ui -> tableView_consulta -> setModel(model_consulta);
-            ui -> tableView_consulta -> resizeColumnsToContents();
-            ui -> tableView_consulta -> resizeRowsToContents();
+            model_consulta->setQuery(*query_consulta);
+            ui->tableView_consulta->setModel(model_consulta);
+            ui->tableView_consulta->resizeColumnsToContents();
+            ui->tableView_consulta->resizeRowsToContents();
         }
      }
 }
