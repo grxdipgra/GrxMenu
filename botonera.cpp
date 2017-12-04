@@ -15,8 +15,9 @@
 #include "usuarios/form_usuarios.h"
 #include "basedatos.h"
 
-// Esta funcion comprueba que exista y no sea un directorio
-// el archivo pasado por parametro
+// Esta funcion comprueba que el archivo pasado por parametro
+// exista y no sea un directorio
+
 bool fileExists(QString path) {
     QFileInfo check_file(path);
     return (check_file.exists() && check_file.isFile());
@@ -132,7 +133,7 @@ void Botonera::on_actionISL_triggered()
 {
     Configuracion *configuracion = new Configuracion;
     QProcess process;
-    if (configuracion->es_usarproxy_chains())
+    if (configuracion->usarproxy_chains())
         process.startDetached(configuracion->cual_es_proxychains(), QStringList() << configuracion->cual_es_isl());
     else
         process.startDetached(configuracion->cual_es_isl());
@@ -266,7 +267,7 @@ bool Botonera::cargaVariables(){
     datos.hostname_DB=configuracion->cual_es_hostnameDB();
     datos.local_listenip="127.0.0.1";
 
-     if (configuracion->es_usarSSH()){
+     if (configuracion->usarSSH()){
          datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
          datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
      }
@@ -281,7 +282,7 @@ bool Botonera::cargaVariables(){
     if (datos.remote_port!=0){
         nmap->nmap_run_scan(QString::number(datos.remote_port),datos.server_ip);
         if (nmap->nmap_is_open_port(datos.server_ip, QString::number(datos.remote_port))){
-        if (configuracion->es_usarSSH()){ //Tenemos seleccionado usar tunel ssh
+        if (configuracion->usarSSH()){ //Tenemos seleccionado usar tunel ssh
                 datos.local_listenport=puerto_libre();
                 datos.usar_ssh=true;
                 db.setPort(datos.local_listenport);

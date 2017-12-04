@@ -1,12 +1,15 @@
 ﻿#include "form_usuarios.h"
 #include "ui_form_usuarios.h"
+//para los msgbox:
 #include <QMessageBox>
+//para operar con comando de consola
 #include <QProcess>
 #include <QDebug>
 #include <QTextStream>
 #include <QFile>
 #include <QDateTime>
 
+#include "configuracion.h"
 #include <ldif.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,15 +33,18 @@ char* convierte(QString dato){
 }
 
 void conecta_oldap() {
+    Configuracion *configuracion = new Configuracion;
     int  result;
+
     QString Qstr;
+
     int  auth_method    = LDAP_AUTH_SIMPLE;
     int  ldap_version   = LDAP_VERSION3;
     result = ldap_set_option(ldap, LDAP_OPT_PROTOCOL_VERSION, &ldap_version);
-    const char *ldap_host     = "10.1.1.50";
-    int   ldap_port     = 389;
-    const char *ldap_dn       = "pepe";
-    const char *ldap_pw       = "password";
+    const char *ldap_host     = convierte(configuracion->cual_es_servidor_ldap());
+    int   ldap_port     = configuracion->cual_es_puerto_ldap();
+    const char *ldap_dn       = convierte(configuracion->cual_es_usuario_ldap());
+    const char *ldap_pw       = convierte(configuracion->cual_es_clave_ldap());
 
      /* First, we print out an informational message. */
      //printf( "Connecting to host %s at port %d...\n\n", ldap_host, ldap_port );
@@ -74,11 +80,11 @@ void conecta_oldap() {
 
      if ( result != LDAP_SUCCESS ) {
        fprintf(stderr, "ldap_simple_bind_s: %s\n", ldap_err2string(result));
-       exit(EXIT_FAILURE);
+       //exit(EXIT_FAILURE);
      } else {
        printf("LDAP connection successful.\n");
      }
-
+    delete configuracion;
 }
 
 void desconecta_oldap(){
@@ -161,7 +167,7 @@ form_usuarios::form_usuarios(QWidget *parent) :
     BerElement *ber;
     // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
     int  num_entradas  = 0;
-    // dn guarda el DN name string de los objetos devueltos por la consulta
+    // dn guarda el DN name string the los objetos devueltos por la consulta
     char *dn            = "";
     // atributo guarda el nombre de los atributos de los objetos devueltos
     char *atributo     = "";
@@ -192,12 +198,20 @@ form_usuarios::form_usuarios(QWidget *parent) :
     QStringList OU;
 
      int  i = 0;
-
-     OU<<"OU=Recursos Centros Externos,DC=grx";
-     OU<<"OU=Recursos Perrera,DC=grx";
-     OU<<"OU=Recursos CIE,DC=grx";
-     OU<<"OU=Recursos Drogas San Juan De Dios,DC=grx";
-
+     Configuracion * configuracion=new Configuracion;
+     if (configuracion->usar_ou_externos())
+         OU<<"OU=Recursos Centros Externos,DC=grx";
+     if (configuracion->usar_ou_perrera())
+        OU<<"OU=Recursos Perrera,DC=grx";
+     if (configuracion->usar_ou_cie())
+        OU<<"OU=Recursos CIE,DC=grx";
+     if (configuracion->usar_ou_cpd())
+        OU<<"OU=Recursos Drogas San Juan De Dios,DC=grx";
+     if (configuracion->usar_ou_ayuntamientos())
+        OU<<"OU=Ayuntamientos,DC=grx";
+     if (!configuracion->lineEdit_OU_vacio())
+        OU << convierte(configuracion->lineEdit_OU_datos());
+     delete configuracion;
      //recorremos todo OU
      foreach (const QString &qstr, OU) {
 
@@ -281,320 +295,45 @@ form_usuarios::~form_usuarios()
     delete ui;
 }
 
-
 void form_usuarios::on_form_usuarios_destroyed()
 {
+
     desconecta_oldap();
+
 }
 
 
 
 void form_usuarios::on_comboBox_usuarios_activated(const QString &arg1)
 {
-    QDateTime fecha;
-    QString temp, temp2, basedn1;
-
-    ui->text_cambio_clave->clear();
-    ui->text_clave_caduca->clear();
-    ui->text_correo->clear();
-    ui->text_creada->clear();
-    ui->text_cuenta_caduca->clear();
-    ui->text_estado->clear();
-    ui->text_fecha_correo->clear();
-    ui->text_intentos->clear();
-    ui->text_logon->clear();
-    ui->text_modif_cuenta->clear();
-    ui->text_telefono->clear();
-    ui->text_ulti_login->clear();
-    ui->label_descripcion->clear();
-
-    // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-    LDAPMessage *resul_consul, *entry;
-    BerElement *ber;
-    // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
-    int  num_entradas  = 0;
-    // dn guarda el DN name string the los objetos devueltos por la consulta
-    char *dn            = "";
-    // atributo guarda el nombre de los atributos de los objetos devueltos
-    char *atributo     = "";
-    // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
-    char **values;
-    char *attrs[]       = {NULL};
-    // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-
-    //conecta_oldap();
-
-    int  i = 0;
 
     QString Qstr=("(&(objectClass=user)(sAMAccountName=" + ui->comboBox_usuarios->currentText() + "))");
 
     //obtenemos la base_dn del usuario:
-
     QString basedn = usuario_basedn[ui->comboBox_usuarios->currentIndex()];
-    //eliminamos la parte del usuario y nos quedamos con la cadena (OU=xxx, DC=xxx)
-    basedn=basedn.remove(0,basedn.indexOf("$")+1);
-    ui->label_16->setText(basedn);
 
-    resul_consul=consulta_oldap(convierte(Qstr), attrs, 0, basedn.toLocal8Bit(),LDAP_SCOPE_SUBTREE);//attrs LDAP_SCOPE_CHILDREN
-
-     // recorremos todos los objetos (entry) devueltos por la consulta
-     // cada entry tiene atributos
-     for ( entry = ldap_first_entry(ldap, resul_consul); entry != NULL; entry = ldap_next_entry(ldap, entry))
-     {
-
-       // Imprimimos la cadena DN del objeto
-       dn = ldap_get_dn(ldap, entry);
-       //printf("Found Object: %s\n", dn);
-
-       // recorremos todos los atributos de cada entry
-       for ( atributo = ldap_first_attribute(ldap, entry, &ber);atributo != NULL;
-             atributo = ldap_next_attribute(ldap, entry, ber))
-       {
-
-         // Nombre y apellidos
-         if (QString::fromStdString(atributo)=="cn"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-                 //ldap_sort_values(ldap,values,LDAP_SORT_AV_CMP_PROC("a","x"));
-               // recorremos todos los valores devueltos por este atributo
-               for (i = 0; values[i] != NULL; i++) {
-                    ui->comboBox_nombres->setCurrentText(QString::fromStdString(values[i]).toUpper());
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // Descripcion
-         if (QString::fromStdString(atributo)=="description"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                    ui->label_descripcion->setText(QString::fromStdString(values[i]));
-               }
-               ldap_value_free(values);
-             }
-             else {
-                ui->label_descripcion->clear();
-             }
-         }
-
-         // Telefono
-         if (QString::fromStdString(atributo)=="telephoneNumber"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                    ui->text_telefono->setText(QString::fromStdString(values[i]));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // Correo
-         if (QString::fromStdString(atributo)=="mail"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                    ui->text_correo->setText(QString::fromStdString(values[i]));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // Ultimo logon
-         if (QString::fromStdString(atributo)=="lastLogon"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   if (QString::fromStdString(values[i]).trimmed()!="0"){
-                       //fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
-                       ui->text_ulti_login->setText(fecha.toString("dd-MM-yyyy hh:mm"));
-                   }
-                   else
-                       ui->text_ulti_login->setText("NUNCA");
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // la cuenta caduca
-         if (QString::fromStdString(atributo)=="accountExpires"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   if (QString::fromStdString(values[i]).toLongLong()==9223372036854775807 || QString::fromStdString(values[i]).trimmed()=="0")
-                        ui->text_cuenta_caduca->setText("No Caduca");
-                   else {
-                      // fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
-                       ui->text_cuenta_caduca->setText(fecha.toString("dd-MM-yyyy hh:mm"));
-                   }
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // Estado
-         if (QString::fromStdString(atributo)=="lockoutTime"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   if (QString::fromStdString(values[i])=="0"){
-                       ui->text_estado->setText("Activa");
-                       ui->text_estado->setStyleSheet("color: rgb(11, 97, 29)");
-                   }
-                   else{
-                       ui->text_estado->setText("Bloqueada");
-                       ui->text_estado->setStyleSheet("color: rgb(164, 0, 0)");
-                   }
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // Numero de logon
-         if (QString::fromStdString(atributo)=="logonCount"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                    ui->text_logon->setText(QString::fromStdString(values[i]));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // cuando se creo la cuenta
-         if (QString::fromStdString(atributo)=="whenCreated"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   ui->text_creada->setText(QString::fromStdString(values[i]).mid(6,2)+"-"+QString::fromStdString(values[i]).mid(4,2)+"-"+QString::fromStdString(values[i]).mid(0,4));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         //cuando se modifico por ultima vez la cuenta
-         if (QString::fromStdString(atributo)=="whenChanged"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   ui->text_modif_cuenta->setText(QString::fromStdString(values[i]).mid(6,2)+"-"+QString::fromStdString(values[i]).mid(4,2)+"-"+QString::fromStdString(values[i]).mid(0,4));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         // cuando se creo la cuenta de correo
-         if (QString::fromStdString(atributo)=="msExchWhenMailboxCreated"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   ui->text_fecha_correo->setText(QString::fromStdString(values[i]).mid(6,2)+"-"+QString::fromStdString(values[i]).mid(4,2)+"-"+QString::fromStdString(values[i]).mid(0,4));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         //NO FUNCIONA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         // Ultimo cambio de contraseña
-         if (QString::fromStdString(atributo)=="PwdLastSet"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   temp=QString::fromStdString(values[i]);//para usarlo luego
-                   //qDebug() << QString::fromStdString(values[i]);
-                   //fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
-                   ui->text_cambio_clave->setText(fecha.toString("dd-MM-yyyy  hh:mm"));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-         //Intentos fallidos de contraseña
-         if (QString::fromStdString(atributo)=="badPwdCount"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-                   ui->text_intentos->setText(QString::fromStdString(values[i]));
-               }
-               ldap_value_free(values);
-             }
-         }
-
-
-         if (QString::fromStdString(atributo)=="userAccountControl"){
-             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-               for (i = 0; values[i] != NULL; i++) {
-
-                   if (QString::fromStdString(values[i])=="66048" || QString::fromStdString(values[i])=="1114624") {
-                      qDebug()<<QString::fromStdString(values[i]).trimmed();
-                       ui->text_clave_caduca->setText("No caduca");
-                   }
-                   else{
-
-                       // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-                       LDAPMessage *resul_consul1, *entry1;
-                       BerElement *ber1;
-                       // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
-                       int  num_entradas1  = 0;
-                       // dn guarda el DN name string the los objetos devueltos por la consulta
-                       char *dn1            = "";
-                       // atributo guarda el nombre de los atributos de los objetos devueltos
-                       char *atributo1     = "";
-                       // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
-                       char **values1;
-                       char *attrs1[]= {"maxPwdAge", NULL};
-                       // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-
-                       QString Qstr="(&(objectClass=domain))";
-                       //QString Qstr="*";
-                       basedn1="DC=grx";
-                       resul_consul1=consulta_oldap(convierte(Qstr), attrs1, 0, basedn1.toLocal8Bit(),LDAP_SCOPE_BASE);
-                       entry1 = ldap_first_entry(ldap, resul_consul1);
-                       dn1 = ldap_get_dn(ldap, entry1);
-                       atributo1 = ldap_first_attribute(ldap, entry1, &ber1);
-                       if ((values1 = ldap_get_values(ldap, entry1, atributo1)) != NULL) {
-
-                            temp2=QString::fromStdString(values1[0]);
-                            //qDebug() << temp2;
-                            //qDebug() << temp;
-                           temp2=QString::number(temp.toLongLong()-temp2.toLongLong());
-
-                           //qDebug() << temp2;
-
-                           //fecha.setSecsSinceEpoch((temp2.toLongLong()/10000000)-11644473600);
-                           //NO FUNCIONA !!!!!!!!!!!!!!!!!!!!!
-                           //ui->text_clave_caduca->setText(fecha.toString("dd-MM-yyyy  hh:mm"));
-
-
-                           /*pos1=salida1.indexOf("maxPwdAge:")+11;
-                           pos2=salida1.indexOf("\n",pos1);
-                           usuario=salida1.mid(pos1,pos2-pos1).trimmed();
-                           //qDebug() << usuario;
-                           usuario=QString::number(temp.toLongLong()-usuario.toLongLong());
-                           fecha.setSecsSinceEpoch((usuario.toLongLong()/10000000)-11644473600);
-                           ui->text_clave_caduca->setText(fecha.toString("dd-MM-yyyy  hh:mm"));*/
-
-
-                           //ui->text_clave_caduca->setText(QString::fromStdString(values1[0]));
-                       }
-
-                       ldap_value_free(values1);
-                       ldap_memfree(dn1);
-                       ldap_msgfree(resul_consul1);
-
-                   }
-
-               }
-               ldap_value_free(values);
-             }
-         }
-
-       }
-
-       ldap_memfree(dn);
-     }
-
-     ldap_msgfree(resul_consul);
-
-
-
-
+    rellena(Qstr, basedn);
 }
 
 
 void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
 {
 
+    QString Qstr=("(&(objectClass=user)(cn=" + ui->comboBox_nombres->currentText() + "))");
+
+    //obtenemos la base_dn del usuario:
+    QString basedn = usuario_basedn2[ui->comboBox_nombres->currentIndex()];
+
+    rellena(Qstr, basedn);
+
+}
+
+// Procedimiento para rellenar los campos del formulario
+void form_usuarios::rellena(QString consulta, QString base_DN) {
 
     QDateTime fecha;
-    QString temp, temp2, basedn1;
+    QString temp, basedn1;
+    QString pwdLastSet,userAccountControl;
 
     ui->text_cambio_clave->clear();
     ui->text_clave_caduca->clear();
@@ -628,14 +367,18 @@ void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
 
     int  i = 0;
 
-    QString Qstr=("(&(objectClass=user)(cn=" + ui->comboBox_nombres->currentText() + "))");
+    //************************************************************************************************************************
+
+    QString Qstr=consulta;
 
     //obtenemos la base_dn del usuario:
+    QString basedn = base_DN;
 
-    QString basedn = usuario_basedn2[ui->comboBox_nombres->currentIndex()];
+    //************************************************************************************************************************
+
     //eliminamos la parte del usuario y nos quedamos con la cadena (OU=xxx, DC=xxx)
     basedn=basedn.remove(0,basedn.indexOf("$")+1);
-    ui->label_16->setText(basedn);
+    ui->groupBox_descripcion->setTitle(basedn);
 
     resul_consul=consulta_oldap(convierte(Qstr), attrs, 0, basedn.toLocal8Bit(),LDAP_SCOPE_SUBTREE);//attrs LDAP_SCOPE_CHILDREN
 
@@ -703,7 +446,7 @@ void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
              if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
                for (i = 0; values[i] != NULL; i++) {
                    if (QString::fromStdString(values[i]).trimmed()!="0"){
-                       //fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
+       //--------------  fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
                        ui->text_ulti_login->setText(fecha.toString("dd-MM-yyyy hh:mm"));
                    }
                    else
@@ -720,7 +463,7 @@ void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
                    if (QString::fromStdString(values[i]).toLongLong()==9223372036854775807 || QString::fromStdString(values[i]).trimmed()=="0")
                         ui->text_cuenta_caduca->setText("No Caduca");
                    else {
-                       //fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
+    //------------------ fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
                        ui->text_cuenta_caduca->setText(fecha.toString("dd-MM-yyyy hh:mm"));
                    }
                }
@@ -785,14 +528,12 @@ void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
              }
          }
 
-         //NO FUNCIONA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          // Ultimo cambio de contraseña
-         if (QString::fromStdString(atributo)=="PwdLastSet"){
+         if (QString::fromStdString(atributo)=="pwdLastSet"){
              if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
                for (i = 0; values[i] != NULL; i++) {
-                   temp=QString::fromStdString(values[i]);//para usarlo luego
-                   //qDebug() << QString::fromStdString(values[i]);
-                   //fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
+                   pwdLastSet=QString::fromStdString(values[i]);//para usarlo luego
+   //----------  fecha.setSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000000)-11644473600);
                    ui->text_cambio_clave->setText(fecha.toString("dd-MM-yyyy  hh:mm"));
                }
                ldap_value_free(values);
@@ -815,62 +556,10 @@ void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
                for (i = 0; values[i] != NULL; i++) {
 
                    if (QString::fromStdString(values[i])=="66048" || QString::fromStdString(values[i])=="1114624") {
-                      qDebug()<<QString::fromStdString(values[i]).trimmed();
                        ui->text_clave_caduca->setText("No caduca");
                    }
                    else{
-
-                       // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-                       LDAPMessage *resul_consul1, *entry1;
-                       BerElement *ber1;
-                       // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
-                       int  num_entradas1  = 0;
-                       // dn guarda el DN name string the los objetos devueltos por la consulta
-                       char *dn1            = "";
-                       // atributo guarda el nombre de los atributos de los objetos devueltos
-                       char *atributo1     = "";
-                       // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
-                       char **values1;
-                       char *attrs1[]= {"maxPwdAge", NULL};
-                       // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-
-                       QString Qstr="(&(objectClass=domain))";
-                       //QString Qstr="*";
-                       basedn1="DC=grx";
-                       resul_consul1=consulta_oldap(convierte(Qstr), attrs1, 0, basedn1.toLocal8Bit(),LDAP_SCOPE_BASE);
-                       entry1 = ldap_first_entry(ldap, resul_consul1);
-                       dn1 = ldap_get_dn(ldap, entry1);
-                       atributo1 = ldap_first_attribute(ldap, entry1, &ber1);
-                       if ((values1 = ldap_get_values(ldap, entry1, atributo1)) != NULL) {
-
-                            temp2=QString::fromStdString(values1[0]);
-                            //qDebug() << temp2;
-                            //qDebug() << temp;
-                           temp2=QString::number(temp.toLongLong()-temp2.toLongLong());
-
-                           //qDebug() << temp2;
-
-                           //fecha.setSecsSinceEpoch((temp2.toLongLong()/10000000)-11644473600);
-                           //NO FUNCIONA !!!!!!!!!!!!!!!!!!!!!
-                           //ui->text_clave_caduca->setText(fecha.toString("dd-MM-yyyy  hh:mm"));
-
-
-                           /*pos1=salida1.indexOf("maxPwdAge:")+11;
-                           pos2=salida1.indexOf("\n",pos1);
-                           usuario=salida1.mid(pos1,pos2-pos1).trimmed();
-                           //qDebug() << usuario;
-                           usuario=QString::number(temp.toLongLong()-usuario.toLongLong());
-                           fecha.setSecsSinceEpoch((usuario.toLongLong()/10000000)-11644473600);
-                           ui->text_clave_caduca->setText(fecha.toString("dd-MM-yyyy  hh:mm"));*/
-
-
-                           //ui->text_clave_caduca->setText(QString::fromStdString(values1[0]));
-                       }
-
-                       ldap_value_free(values1);
-                       ldap_memfree(dn1);
-                       ldap_msgfree(resul_consul1);
-
+                       userAccountControl="0";//para usarlo luego
                    }
 
                }
@@ -883,9 +572,43 @@ void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
        ldap_memfree(dn);
      }
 
-     ldap_msgfree(resul_consul);
+     // si la clave caduca rellenamos el campo CLAVE CADUCA
+     // no se puede poner dentro del for que recorre los atributos porque pwdLastSet
+     // se resuelve despues de userAccountControl y no funciona
+     if (userAccountControl=="0") {
 
+         // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
+         LDAPMessage *resul_consul1, *entry1;
+         BerElement *ber1;
+         // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
+         int  num_entradas1  = 0;
+         // dn guarda el DN name string the los objetos devueltos por la consulta
+         char *dn1            = "";
+         // atributo guarda el nombre de los atributos de los objetos devueltos
+         char *atributo1     = "";
+         // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
+         char **values1;
+         char *attrs1[]= {"maxPwdAge", NULL};
+         // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
 
+         QString Qstr="(&(objectClass=domain))";
+         basedn1="DC=grx";
+         resul_consul1=consulta_oldap(convierte(Qstr), attrs1, 0, basedn1.toLocal8Bit(),LDAP_SCOPE_BASE);
+         entry1 = ldap_first_entry(ldap, resul_consul1);
+         dn1 = ldap_get_dn(ldap, entry1);
+         atributo1 = ldap_first_attribute(ldap, entry1, &ber1);
+         if ((values1 = ldap_get_values(ldap, entry1, atributo1)) != NULL) {
+             temp=QString::fromStdString(values1[0]);
+             temp=QString::number(pwdLastSet.toLongLong()-temp.toLongLong());
+  //------------           fecha.setSecsSinceEpoch((temp.toLongLong()/10000000)-11644473600);
+             ui->text_clave_caduca->setText(fecha.toString("dd-MM-yyyy  hh:mm"));
+         }
 
+         ldap_value_free(values1);
+         ldap_memfree(dn1);
+         ldap_msgfree(resul_consul1);
+    }
+
+    ldap_msgfree(resul_consul);
 
 }

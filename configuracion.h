@@ -51,8 +51,8 @@ public:
     QString puertos_buscados();
 
     bool es_rdesktop();
-    bool es_usarSSH();
-    bool es_usarproxy_chains();
+    bool usarSSH();
+    bool usarproxy_chains();
     bool usuarios_up();
     bool soporte_up();
     bool sedes_up();
@@ -81,12 +81,19 @@ public:
     QString cual_es_asunto();
     QString cual_es_cuerpo();
 
+    //Ldap
     QString  cual_es_servidor_ldap();
-    QString  cual_es_puerto_ldap();
+    int  cual_es_puerto_ldap();
     QString  cual_es_usuario_ldap();
     QString  cual_es_clave_ldap();
 
-
+    bool usar_ou_externos();
+    bool usar_ou_perrera();
+    bool usar_ou_cie();
+    bool usar_ou_cpd();
+    bool usar_ou_ayuntamientos();
+    bool lineEdit_OU_vacio();
+    QString lineEdit_OU_datos();
     ~Configuracion();
 
 private slots:
@@ -221,8 +228,19 @@ private:
     bool PuertosBuscados_netbios;
     QString PuertosBuscados_lineEdit;
 
+    bool UsarOuExternos;
+    bool UsarOuPerrera;
+    bool UsarOuCie;
+    bool UsarOuCpd;
+    bool UsarOuAyuntamientos;
+    QString lineEdit_OU;
+
+
+
+
+
     QString Servidor_ldap;
-    QString Puerto_ldap;
+    int Puerto_ldap;
     QString Usuario_ldap;
     QString Clave_ldap;
 

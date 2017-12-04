@@ -50,7 +50,7 @@ void Configuracion::color_widget(QObject * sender){
 
 void Configuracion::ctxMenu(const QPoint &pos) {
     QMenu *menu = new QMenu;
-    menu->addAction(tr("Color"), this, SLOT(color_widget(sender())));
+    menu->addAction(tr("Color"), this, SLOT(color_widget(&sender())));
     menu->addAction(tr("Ayuda"), this, SLOT(help()));
     menu->exec(this->mapToGlobal(pos));
 }
@@ -62,10 +62,13 @@ Configuracion::~Configuracion()
 
 void Configuracion::mascara_puerto_remoto(){
     //Vamos a poner en el constructor la máscara para validar el puerto para acceso remoto
+    //y para el puerto de ldap
     QString puerto = "(?:[0-5]?[0-9]?[0-9]?[0-9]?[0-9])";
     QRegExp ipRegex2 ("^" + puerto+ "$");
     QRegExpValidator *ipValidator2 = new QRegExpValidator(ipRegex2, this);
     ui->puerto->setValidator(ipValidator2);
+    ui->lineEdit_ldap_puerto->setValidator(ipValidator2);
+
 }
 
 void Configuracion::mascara_puertos_nmap(){
@@ -134,6 +137,13 @@ void Configuracion::valoresPorDefecto(){
     UsarISL = "true";
     UsarAtalaya = "true";
     SoloAytos = "false";
+
+    UsarOuExternos = "true";
+    UsarOuPerrera  = "true";
+    UsarOuCie  = "true";
+    UsarOuCpd  = "true";
+    UsarOuAyuntamientos  = "true";
+
     OCS = "https://incidencias.dipgra.es/ocsreport";
     GLPI = "https://incidencias.dipgra.es/glpi";
     Beiro = "http://beiro.grx:55555/portal";
@@ -159,7 +169,7 @@ void Configuracion::valoresPorDefecto(){
     PuertosBuscados_lineEdit="";
 
     Servidor_ldap="10.1.1.50";
-    Puerto_ldap="389";
+    Puerto_ldap=389;
     Usuario_ldap=name;
     Clave_ldap="password";
 
@@ -171,7 +181,7 @@ QString  Configuracion::cual_es_servidor_ldap(){
     return Servidor_ldap;
 }
 
-QString  Configuracion::cual_es_puerto_ldap(){
+int  Configuracion::cual_es_puerto_ldap(){
     return Puerto_ldap;
 }
 
@@ -327,13 +337,42 @@ QString Configuracion::cual_es_proxychains(){
     return ProxyChains;
 }
 
-bool Configuracion::es_usarproxy_chains(){
+bool Configuracion::usarproxy_chains(){
     return UsarProxyChains;
 }
 
-bool Configuracion::es_usarSSH(){
+bool Configuracion::usarSSH(){
     return UsarSSH;
 }
+
+bool Configuracion::usar_ou_externos(){
+    return UsarOuExternos;
+}
+
+bool Configuracion::usar_ou_perrera(){
+    return UsarOuPerrera;
+}
+
+bool Configuracion::usar_ou_cie(){
+    return UsarOuCie;
+}
+
+bool Configuracion::usar_ou_cpd(){
+    return UsarOuCpd;
+}
+
+bool Configuracion::usar_ou_ayuntamientos(){
+    return UsarOuAyuntamientos;
+}
+
+bool Configuracion::lineEdit_OU_vacio(){
+    return ui->lineEdit_OU->text().isEmpty();
+}
+
+QString Configuracion::lineEdit_OU_datos(){
+    return ui->lineEdit_OU->text();
+}
+
 
 bool Configuracion::usuarios_up(){
     return  UsarUsuarios;
@@ -539,6 +578,18 @@ void Configuracion::carga_configuracion()
     PuertosBuscados_portPrinter = s.value("Configuracion/PuertosBuscados_portPrinter").toBool();
     PuertosBuscados_netbios = s.value("Configuracion/PuertosBuscados_netbios").toBool();
     PuertosBuscados_lineEdit = s.value("Configuracion/PuertosBuscados_lineEdit").toString();
+    //LDAP
+    Servidor_ldap = s.value("Configuracion/Servidor_ldap").toString();
+    Puerto_ldap = s.value("Configuracion/Puerto_ldap").toInt();
+    Usuario_ldap = s.value("Configuracion/Usuario_ldap").toString();
+    Clave_ldap = s.value("Configuracion/Clave_ldap").toString();
+
+    UsarOuExternos = s.value("Configuracion/UsarOuExternos").toBool();
+    UsarOuPerrera = s.value("Configuracion/UsarOuPerrera").toBool();
+    UsarOuCie = s.value("Configuracion/UsarOuCie").toBool();
+    UsarOuCpd = s.value("Configuracion/UsarOuCpd").toBool();
+    UsarOuAyuntamientos = s.value("Configuracion/UsarOuAyuntamientos").toBool();
+    lineEdit_OU = s.value("Configuracion/lineEdit_OU").toString();
 
     carga_editLine();
 
@@ -553,11 +604,11 @@ void Configuracion::carga_editLine(){
     else
         ui->rb_freerdp->setChecked(true);
 
-    if (es_usarSSH()){
+    if (usarSSH()){
         ui->checkBox_ssh->setChecked(true);
         habilitaSSH();
     }
-    if (es_usarproxy_chains()){
+    if (usarproxy_chains()){
         ui->checkBox_proxychains->setChecked(true);
         habilitaProxyChains();
     }
@@ -585,6 +636,14 @@ void Configuracion::carga_editLine(){
     ui->checkBox_webssl->setChecked(puertoWebssl());
     ui->checkBox_portPrinter->setChecked(puertoPortPrinter());
     ui->checkBox_netbios->setChecked(puertoNetbios());
+
+    ui->checkBox_recursos_externos->setChecked(UsarOuExternos);
+    ui->checkBox_recursos_perrera->setChecked(UsarOuPerrera);
+    ui->checkBox_cie->setChecked(UsarOuCie);
+    ui->checkBox_CPD->setChecked(UsarOuCpd);
+    ui->checkBox_ayuntamientos->setChecked(UsarOuAyuntamientos);
+    ui->lineEdit_OU->setText(lineEdit_OU);
+
 
     ui->tecnico->setText(Tecnico);
     ui->clave->setText(Clave);
@@ -620,6 +679,10 @@ void Configuracion::carga_editLine(){
     ui->atalaya->setText(Atalaya);
     ui->proxychains->setText(ProxyChains);
     ui->lineEdit_puertos->setText(PuertosBuscados_lineEdit);
+    ui->lineEdit_ldap_servidorLdap->setText(Servidor_ldap);
+    ui->lineEdit_ldap_puerto->setText(QString::number(Puerto_ldap));
+    ui->lineEdit_ldap_usuarioDominio->setText(Usuario_ldap);
+    ui->lineEdit_ldap_clave->setText(Clave_ldap);
 }
 
 void Configuracion::habilitaProxyChains(){
@@ -708,12 +771,25 @@ void Configuracion::on_buttonBox_accepted()
     s.setValue("Configuracion/UsarAtalaya",ui->checkBox_Atalaya->isChecked());
     s.setValue("Configuracion/SoloAytos",ui->checkBox_soloAytos->isChecked());
     s.setValue("Configuracion/Rdesktop",ui->rb_rdesktop->isChecked());
+
     s.setValue("Configuracion/PuertosBuscados_ssh",ui->checkBox_SSH->isChecked());
     s.setValue("Configuracion/PuertosBuscados_telnet",ui->checkBox_telnet->isChecked());
     s.setValue("Configuracion/PuertosBuscados_web",ui->checkBox_web->isChecked());
     s.setValue("Configuracion/PuertosBuscados_webssl",ui->checkBox_webssl->isChecked());
     s.setValue("Configuracion/PuertosBuscados_portPrinter",ui->checkBox_portPrinter->isChecked());
     s.setValue("Configuracion/PuertosBuscados_netbios",ui->checkBox_netbios->isChecked());
+
+    s.setValue("Configuracion/Servidor_ldap", ui->lineEdit_ldap_servidorLdap->text());
+    s.setValue("Configuracion/Puerto_ldap", ui->lineEdit_ldap_puerto->text());
+    s.setValue("Configuracion/Usuario_ldap", ui->lineEdit_ldap_usuarioDominio->text());
+    s.setValue("Configuracion/Clave_ldap", ui->lineEdit_ldap_clave->text());
+
+    s.setValue("Configuracion/UsarOuExternos",ui->checkBox_recursos_externos->isChecked());
+    s.setValue("Configuracion/UsarOuPerrera",ui->checkBox_recursos_perrera->isChecked());
+    s.setValue("Configuracion/UsarOuCie",ui->checkBox_cie->isChecked());
+    s.setValue("Configuracion/UsarOuCpd",ui->checkBox_CPD->isChecked());
+    s.setValue("Configuracion/UsarOuAyuntamientos",ui->checkBox_ayuntamientos->isChecked());
+    s.setValue("Configuracion/lineEdit_OU",ui->lineEdit_OU->text());
 
 
 }
@@ -767,16 +843,14 @@ void Configuracion::change_color(QWidget *objeto){
 
 void Configuracion::on_PB_DB_clicked()
 {
- /*
+
     QColor color = QColorDialog::getColor(Qt::blue, this );
         if( color.isValid() )
         {
           Fr_DB = color.name();
           ui->fr_DB->setStyleSheet("background-color:"+Fr_DB+";");
         }
- */
-    change_color(ui->clave_ssh_BD);
-}
+ }
 
 void Configuracion::on_PB_kerberos_clicked()
 {

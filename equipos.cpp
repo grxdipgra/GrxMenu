@@ -232,7 +232,7 @@ void Equipos::on_pB_ISL_clicked()
 {
     Configuracion *configuracion = new Configuracion;
     QProcess process;
-    if (configuracion->es_usarproxy_chains())
+    if (configuracion->usarproxy_chains())
         process.startDetached(configuracion->cual_es_proxychains(), QStringList() << configuracion->cual_es_isl());
     else
         process.startDetached(configuracion->cual_es_isl());

@@ -467,11 +467,6 @@ void Sedes::on_comboBox_NODO_activated(const QString &nombre) {
 }
 
 
-void Sedes::on_pB_Edicion_clicked() {
-
-}
-
-
 void Sedes::on_pB_portalTransparencia_clicked() {
     QDesktopServices::openUrl(QUrl(ui -> lineEdit_portal_transparencia -> text(), QUrl::TolerantMode));
 }
@@ -548,18 +543,19 @@ void Sedes::on_pB_wikipedia_clicked() {
 
 void Sedes::on_pB_Edicion_toggled(bool checked)
 {
-    /* BaseDatos *basedatos = new BaseDatos;
-     basedatos -> show();
-     */
-    if (checked){
-         ui->tabWidget->show();
-        ui->frame->hide();
 
+    if (checked){
+        ui->frame->hide();
+        ui->tabWidget->show();
     }
     else{
-
-        ui->tabWidget->hide();
+         ui->tabWidget->hide();
          ui->frame->show();
     }
+
+}
+
+void Sedes::on_pB_Edicion_clicked()
+{
 
 }

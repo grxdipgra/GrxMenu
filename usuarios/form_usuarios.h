@@ -20,6 +20,8 @@ public:
 
 private slots:
 
+    void rellena(QString consulta, QString base_DN);
+
     void on_comboBox_usuarios_activated(const QString &arg1);
 
     void on_form_usuarios_destroyed();
