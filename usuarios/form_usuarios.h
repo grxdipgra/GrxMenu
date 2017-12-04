@@ -28,6 +28,8 @@ private slots:
 
     void on_comboBox_nombres_activated(const QString &arg1);
 
+    void on_boton_desbloquear_clicked();
+
 private:
     Ui::form_usuarios *ui;
 

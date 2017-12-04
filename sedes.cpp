@@ -549,8 +549,8 @@ void Sedes::on_pB_Edicion_toggled(bool checked)
         ui->tabWidget->show();
     }
     else{
-         ui->tabWidget->hide();
-         ui->frame->show();
+        ui->tabWidget->hide();
+        ui->frame->show();
     }
 
 }

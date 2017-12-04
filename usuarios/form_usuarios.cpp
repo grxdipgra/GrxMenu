@@ -21,6 +21,7 @@ LDAP *ldap;
 // para acelerar la busqueda a la hora de consultar los datos del usuario
 QStringList usuario_basedn;
 QStringList usuario_basedn2;
+QString DN; //guardamos la cadena dn del objeto actual
 
 
 //convierte QString a char *
@@ -389,6 +390,7 @@ void form_usuarios::rellena(QString consulta, QString base_DN) {
 
        // Imprimimos la cadena DN del objeto
        dn = ldap_get_dn(ldap, entry);
+       DN=QString::fromStdString(dn);//para usarlo luego
        //printf("Found Object: %s\n", dn);
 
        // recorremos todos los atributos de cada entry
@@ -396,13 +398,25 @@ void form_usuarios::rellena(QString consulta, QString base_DN) {
              atributo = ldap_next_attribute(ldap, entry, ber))
        {
 
-         // Nombre y apellidos
+         //usuario
          if (QString::fromStdString(atributo)=="sAMAccountName"){
              if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
                  //ldap_sort_values(ldap,values,LDAP_SORT_AV_CMP_PROC("a","x"));
                // recorremos todos los valores devueltos por este atributo
                for (i = 0; values[i] != NULL; i++) {
                     ui->comboBox_usuarios->setCurrentText(QString::fromStdString(values[i]).toUpper());
+               }
+               ldap_value_free(values);
+             }
+         }
+
+         // Nombre y apellidos
+         if (QString::fromStdString(atributo)=="cn"){
+             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                 //ldap_sort_values(ldap,values,LDAP_SORT_AV_CMP_PROC("a","x"));
+               // recorremos todos los valores devueltos por este atributo
+               for (i = 0; values[i] != NULL; i++) {
+                    ui->comboBox_nombres->setCurrentText(QString::fromStdString(values[i]).toUpper());
                }
                ldap_value_free(values);
              }
@@ -611,4 +625,28 @@ void form_usuarios::rellena(QString consulta, QString base_DN) {
 
     ldap_msgfree(resul_consul);
 
+}
+
+void form_usuarios::on_boton_desbloquear_clicked()
+{
+    LDAPMod attribute1;
+
+    char *modificaciones_values[] = { "0", NULL };
+    attribute1.mod_type = "lockoutTime";
+    attribute1.mod_op = LDAP_MOD_REPLACE;
+    attribute1.mod_values = modificaciones_values;
+
+    LDAPMod *mods[2];
+    mods[0]=&attribute1;
+    mods[1]=NULL;
+
+    int result=  ldap_modify_ext_s( ldap, convierte(DN), mods,NULL,NULL);
+
+    if ( result == LDAP_SUCCESS )
+        printf("\n\tModified %s's attributes.\n", convierte(DN));
+    else {
+        printf("\n\tFailed to modify %s's attributes. ldap_modify_ext_s: %s.\n",
+                                                  convierte(DN), ldap_err2string(result));
+        //return ();
+    }
 }
