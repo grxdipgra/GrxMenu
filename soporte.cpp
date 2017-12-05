@@ -69,12 +69,11 @@ int Soporte::valida_ip(){
     QHostAddress myIP;
     QChar asterisco = QLatin1Char ('*');
     QChar punto = QLatin1Char('.');
-    if (( (ui->lineEdit_ip->text().at(ui->lineEdit_ip->text().count()-1)) == asterisco) && (ui->lineEdit_ip->text().at(ui->lineEdit_ip->text().count()-2))==punto)
-        return true;
-
-    if( myIP.setAddress(ui->lineEdit_ip->text())&& (ui->lineEdit_ip->text().count(punto)==3))
-    {
-        return true;
+    if (!ui->lineEdit_ip->text().isEmpty()){
+        if (( (ui->lineEdit_ip->text().at(ui->lineEdit_ip->text().count()-1)) == asterisco) && (ui->lineEdit_ip->text().at(ui->lineEdit_ip->text().count()-2))==punto)
+            return true;
+        if( myIP.setAddress(ui->lineEdit_ip->text())&& (ui->lineEdit_ip->text().count(punto)==3))
+                return true;
     }
 
 return false;
@@ -82,27 +81,6 @@ return false;
 
 void Soporte::on_lineEdit_ip_textChanged(const QString &arg1)
 {
- /*   QSqlQuery query = model -> query();
-    int i;
-    QStringList tmp;
-    QString pueblo;
-    if (ui->lineEdit_ip->text().count(QLatin1Char('.')) >=2){
-        tmp = ui->lineEdit_ip->text().split(".");
-        pueblo = tmp[2];
-        if (!pueblo.isEmpty()){
-            ui->cb_sede->setModelColumn(0);
-            ui->Estado->setText(query.value(1).toString());
-            i = ui->cb_sede->findText(ui->lineEdit_ip->text());
-           //ui->Estado->setText(QString::number(i));
-              //  ui->cb_sede->setCurrentIndex(ui->cb_sede->findText(ui->lineEdit_ip->text()));
-             //   ui->lineEdit_ip->setStyleSheet("color:yellow");
-           ui->cb_sede->setModelColumn(0);
-           query.
-         }
-
-    }
-*/
-
     if(valida_ip())
         ui->lineEdit_ip->setStyleSheet("color:black");
     else
@@ -279,11 +257,9 @@ void Soporte::on_Btn_Atalaya_clicked()
     QDesktopServices::openUrl(QUrl("http://atalaya.grx/Orion/NetPerfMon/NodeDetails.aspx?NetObject=N:"+QString::number(atalaya)));
 }
 
-
 void Soporte::resultado_html(QNetworkReply* p){
     qDebug()<< p;
 }
-
 
 void Soporte::insertaTexto(QString texto){
 

@@ -1,31 +1,9 @@
 ﻿#include "form_usuarios.h"
-#include "ui_form_usuarios.h"
-//para los msgbox:
-#include <QMessageBox>
-//para operar con comando de consola
-#include <QProcess>
-#include <QDebug>
-#include <QTextStream>
-#include <QFile>
-#include <QDateTime>
 
-#include "configuracion.h"
-#include <ldif.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-LDAP *ldap;
-
-// aqui guardamos el par usuario basedn separado por $ para que podamos saber en que UO está el usuario
-// y no tengamos que buscar en el dominio grx entero
-// para acelerar la busqueda a la hora de consultar los datos del usuario
-QStringList usuario_basedn;
-QStringList usuario_basedn2;
-QString DN; //guardamos la cadena dn del objeto actual
-
+ LDAP *ldap;
 
 //convierte QString a char *
-char* convierte(QString dato){
+char* form_usuarios::convierte(QString dato){
     char* cstr;
     std::string fname = dato.toStdString();
     cstr = new char [fname.size()+1];
@@ -33,10 +11,142 @@ char* convierte(QString dato){
     return cstr;
 }
 
-void conecta_oldap() {
+form_usuarios::form_usuarios(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::form_usuarios)
+{
+    ui->setupUi(this);
+
+
+    // rellenamos el combobox con todos los usuarios del dominio de las OU que se usan
+
+    // variables para CONSULTA LDAP --------------------------------------------------------------------------
+    LDAPMessage *resul_consul, *entry;
+    BerElement *ber;
+    // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
+    int  num_entradas  = 0;
+    // dn guarda el DN name string the los objetos devueltos por la consulta
+    char *dn            = "";
+    // atributo guarda el nombre de los atributos de los objetos devueltos
+    char *atributo     = "";
+    // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
+    char **values;
+    char *attrs[]       = {NULL};
+    // variables para CONSULTA LDAP --------------------------------------------------------------------------
+
+
+    if (conecta_oldap()){
+
+        // lo usamos para ir guardando los resultados de las consultas, ordenarlo y luego se lo pasamos al combo
+        QStringList a;
+        QStringList b;
+
+        if (carga_OU()){ //Si hay unidades organizativas realizamos las búsquedas
+        int i=0;
+        //recorremos todo OU
+        foreach (const QString &qstr, OU) {
+
+            resul_consul=consulta_oldap("(&(!(objectclass=computer))(objectClass=user))", attrs, 0, qstr.toLocal8Bit(),LDAP_SCOPE_SUBTREE);
+
+            // Devuelve el numero de objetos encontrados durante la busqueda
+            num_entradas = ldap_count_entries(ldap, resul_consul);
+            if ( num_entradas == 0 ) {
+               QMessageBox::critical(this, "Ldap Error", "LDAP no ha devuelto ningun resultado\nRevise la configuracion de ldap", QMessageBox::Ok);
+            }
+            else {
+               printf("LDAP search returned %d objects.\n", num_entradas);
+
+
+                // recorremos todos los objetos (entry) devueltos por la consulta
+                // cada entry tiene atributos
+                for ( entry = ldap_first_entry(ldap, resul_consul); entry != NULL; entry = ldap_next_entry(ldap, entry))
+                {
+
+                    // Imprimimos la cadena DN del objeto
+                    dn = ldap_get_dn(ldap, entry);
+                    //printf("Found Object: %s\n", dn);
+
+                    // recorremos todos los atributos de cada entry
+                    for ( atributo = ldap_first_attribute(ldap, entry, &ber);atributo != NULL;
+                         atributo = ldap_next_attribute(ldap, entry, ber))
+                    {
+
+                        if (QString::fromStdString(atributo)=="sAMAccountName"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorreomos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    a<<QString::fromStdString(values[i]).toUpper();
+                                    //en usuario_basedn guardamos usuario$base_dn para consultar el dn (UO y dominio) del usuario en memoria
+                                    usuario_basedn<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="cn"){
+                 if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                     //ldap_sort_values(ldap,values,LDAP_SORT_AV_CMP_PROC("a","x"));
+                   // recorreomos todos los valores devueltos por este atributo
+                   for (i = 0; values[i] != NULL; i++) {
+                        b<<QString::fromStdString(values[i]).toUpper();
+                        usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                     // print each value of a attribute here
+                     //printf("%s: %s\n", atributo, values[i] );
+                   }
+                   ldap_value_free(values);
+                 }
+              }
+                    }
+                    ldap_memfree(dn);
+                }
+                ldap_msgfree(resul_consul);
+            }
+        }
+
+        //ordenamos la lista
+        qSort(usuario_basedn);//ordenamos el QStringList
+        qSort(a);//ordenamos el QStringList
+        ui->comboBox_usuarios->addItems(a);//insertamos los datos
+
+        qSort(usuario_basedn2);//ordenamos el QStringList
+        qSort(b);//ordenamos el QStringList
+        ui->comboBox_nombres->addItems(b);//insertamos los datos
+
+    }
+    }
+}
+
+form_usuarios::~form_usuarios()
+{
+    delete ui;
+    desconecta_oldap();
+}
+
+bool form_usuarios::carga_OU(){
+
+     Configuracion * configuracion=new Configuracion;
+     if (configuracion->usar_ou_externos())
+         OU<<"OU=Recursos Centros Externos,DC=grx";
+     if (configuracion->usar_ou_perrera())
+        OU<<"OU=Recursos Perrera,DC=grx";
+     if (configuracion->usar_ou_cie())
+        OU<<"OU=Recursos CIE,DC=grx";
+     if (configuracion->usar_ou_cpd())
+        OU<<"OU=Recursos Drogas San Juan De Dios,DC=grx";
+     if (configuracion->usar_ou_ayuntamientos())
+        OU<<"OU=Ayuntamientos,DC=grx";
+     if (!configuracion->lineEdit_OU_vacio())
+        OU << convierte(configuracion->lineEdit_OU_datos());
+     delete configuracion;
+
+     if (OU.isEmpty())
+         return false;
+return true;
+}
+
+bool form_usuarios::conecta_oldap() {
     Configuracion *configuracion = new Configuracion;
     int  result;
-
     QString Qstr;
 
     int  auth_method    = LDAP_AUTH_SIMPLE;
@@ -47,83 +157,68 @@ void conecta_oldap() {
     const char *ldap_dn       = convierte(configuracion->cual_es_usuario_ldap());
     const char *ldap_pw       = convierte(configuracion->cual_es_clave_ldap());
 
-     /* First, we print out an informational message. */
-     //printf( "Connecting to host %s at port %d...\n\n", ldap_host, ldap_port );
+    delete configuracion;
 
-     // STEP 1: Establecer la conexión LDAP y fijar preferencias de la sesión ***************************************
+    // STEP 1: Establecer la conexión LDAP y fijar preferencias de la sesión ***************************************
      Qstr="ldap://" + QString::fromStdString(ldap_host) + ":" + QString::number(ldap_port);
      if(ldap_initialize(&ldap, Qstr.toLocal8Bit()))
      {
-        fprintf(stderr, "ldap_initialize...error: %s\n", ldap_err2string(result));
-        exit( EXIT_FAILURE );
+     ui->label_estado->setText(QString ("No ha sido posible conectarse al servidor %1 en el puerto %2...revise la configuración").arg(ldap_host).arg(ldap_port));
+     return false;
      }
-        printf("LDAP initialized\n");
+     ui->label_estado->setText(QString ("Conectado al servidor %1 en el puerto %2...").arg(ldap_host).arg(ldap_port));
 
      //FIN ldap_initialize ******************************************************************************************
 
      result = ldap_set_option(ldap, LDAP_OPT_PROTOCOL_VERSION, &ldap_version);
 
      if ( result != LDAP_OPT_SUCCESS ) {
-         ldap_perror(ldap, "ldap_set_option failed!");
-         exit(EXIT_FAILURE);
-     } else {
-       printf("Set LDAPv3 client version.\n");
+         ui->label_estado->setText(QString ("No ha sido posible conectarse al servidor %1 en el puerto %2...revise la configuración").arg(ldap_host).arg(ldap_port));
+         return false;
+     }
+     else {
+         ui->label_estado->setText(QString ("Conectado al servidor %1 en el puerto %2 version del cliente LDAPv3 ").arg(ldap_host).arg(ldap_port));
      }
 
-     //fijamos maximo numero de resultados devueltos
-     int max_result=999;
      result = ldap_set_option(ldap, LDAP_OPT_SIZELIMIT, &max_result );
 
      /* STEP 2: Autentificamos al usuario en el servidor *************************************************************/
      result = ldap_simple_bind_s(ldap, ldap_dn, ldap_pw );
-     result = ldap_simple_bind_s(ldap, ldap_dn, ldap_pw );
-     //FIN ldap_simple_bind_s ****************************************************************************************
 
      if ( result != LDAP_SUCCESS ) {
-       fprintf(stderr, "ldap_simple_bind_s: %s\n", ldap_err2string(result));
-       //exit(EXIT_FAILURE);
-     } else {
-       printf("LDAP connection successful.\n");
+         ui->label_estado->setStyleSheet("background-color:yellow");
+         ui->label_estado->setText(QString ("No ha sido posible conectarse al servidor %1 en el puerto %2  Error:%3").arg(ldap_host).arg(ldap_port).arg(ldap_err2string(result)));
+         return false;
      }
-    delete configuracion;
+     else {
+         ui->label_estado->setText(QString ("Conectado al servidor %1 en el puerto %2 version del cliente LDAPv3 ").arg(ldap_host).arg(ldap_port));
+     }
+return true;
 }
 
-void desconecta_oldap(){
+void form_usuarios::desconecta_oldap(){
 
     ldap_unbind(ldap);
 }
 
-int num_entradas_oldap(LDAPMessage *resul_consul){
+int form_usuarios::num_entradas_oldap(LDAPMessage *resul_consul){
 
     // Devuelve el numero de objetos encontrados durante la busqueda
     int num_entradas = ldap_count_entries(ldap, resul_consul);
     if ( num_entradas == 0 ) {
-      fprintf(stderr, "LDAP search did not return any data.\n");
-      //exit(EXIT_FAILURE);
-      BerElement *ber;
-    } else {
-      printf("LDAP search returned %d objects.\n", num_entradas);
+        ui->label_estado->setText(QString ("La consulta ldap no ha devuelto ningun resultado"));
+    }
+    else {
+        ui->label_estado->setText(QString ("La consulta ldap ha devuelto %1 resultados").arg(num_entradas));
     }
 
     return(num_entradas);
 
 }
 
+LDAPMessage * form_usuarios::consulta_oldap(char *filtro, char *attrs[], int attrsonly, const char * base_dn, int scope){
 
-
-LDAPMessage * consulta_oldap(char *filtro, char *attrs[], int attrsonly, const char * base_dn, int scope){
-
-    //const char *base_dn       = "OU=SI - NUEVAS TECNOLOGIAS (SISTEMAS DE INFORMACION),OU=Recursos Perrera,DC=grx";
-    //const char *base_dn       = "OU=Recursos Centros Externos,DC=grx";
-    //const char *base_dn       = "DC=grx";
-
-    int  result;
-
-    LDAPMessage *answer;
-
-    // The search scope must be either LDAP_SCOPE_BASE, LDAP_SCOPE_SUBTREE or LDAP_SCOPE_ONELEVEL
-    //int  scope          = LDAP_SCOPE_SUBTREE;
-
+    /*
     //*******************************************************************************************************************
     // El filtro de busqueda, "(objectClass=*)" devuelve todos los objetos. /
     // Windows puede devolver 1000 objetos en una busqueda. Si se sebrepasa devuelve "Size limit exceeded"
@@ -139,171 +234,17 @@ LDAPMessage * consulta_oldap(char *filtro, char *attrs[], int attrsonly, const c
 
     // Devolver solo nombres de atributos (1), o devolver nombre y valores (0)
     //int  attrsonly      = 0;
+    */
+    int  result;
+    LDAPMessage *answer;
 
-    //*******************************************************************************************************************
-    /* STEP 3: Hacemos la busqueda LDAP*/
-    result = ldap_search_s(ldap, base_dn, scope, filtro,
-                           attrs, attrsonly, &answer);
+    result = ldap_search_s(ldap, base_dn, scope, filtro, attrs, attrsonly, &answer);
     if ( result != LDAP_SUCCESS ) {
-      fprintf(stderr, "ldap_search_s: %s\n", ldap_err2string(result));
-      //exit(EXIT_FAILURE);
-    } else {
-      printf("LDAP search successful.\n");
+        ui->label_estado->setText(QString ("No ha sido posible realizar la consulta ldap Error:%1").arg(ldap_err2string(result)));
     }
-    //*******************************************************************************************************************
+
     return (answer);
 }
-
-
-form_usuarios::form_usuarios(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::form_usuarios)
-{
-    ui->setupUi(this);
-
-    // rellenamos el combobox con todos los usuarios del dominio de las OU que se usan
-
-    // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-    LDAPMessage *resul_consul, *entry;
-    BerElement *ber;
-    // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
-    int  num_entradas  = 0;
-    // dn guarda el DN name string the los objetos devueltos por la consulta
-    char *dn            = "";
-    // atributo guarda el nombre de los atributos de los objetos devueltos
-    char *atributo     = "";
-    // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
-    char **values;
-    char *attrs[]       = {NULL};
-    // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
-
-    conecta_oldap();
-
-    /*//recorremos las unidades organizativas que vamos a cargar
-    resul_consul=consulta_oldap("(&(objectClass=organizationalUnit)(name=recursos*))", attrs, 0, "DC=grx");
-    //entry = ldap_first_entry(ldap, resul_consul);
-    QMessageBox msgBox;
-    //msgBox.setText(QString::fromStdString(ldap_get_dn(ldap, entry)));
-    msgBox.setText(QString::number(ldap_count_entries(ldap, resul_consul)));
-    msgBox.exec();*/
-
-    //QString Qstr;
-    //Qstr=("(&(objectClass=user)(sAMAccountName=" + ui->comboBox_usuarios->currentText() + "*))");
-    //resul_consul=consulta_oldap(convierte(Qstr), attrs, 0);
-    //resul_consul=consulta_oldap("(&(!(objectclass=computer))(objectClass=user)(|(sAMAccountName=ab_*)(|(sAMAccountName=ab_*)(|(sAMAccountName=si_*)(sAMAccountName=ss_*)))))", attrs, 0);
-
-    // lo usamos para ir guardando los resultados de las consultas, ordenarlo y luego se lo pasamos al combo
-    QStringList a;
-    QStringList b;
-    // lista de Unidades Organizativas que se van a ir consultando
-    QStringList OU;
-
-     int  i = 0;
-     Configuracion * configuracion=new Configuracion;
-     if (configuracion->usar_ou_externos())
-         OU<<"OU=Recursos Centros Externos,DC=grx";
-     if (configuracion->usar_ou_perrera())
-        OU<<"OU=Recursos Perrera,DC=grx";
-     if (configuracion->usar_ou_cie())
-        OU<<"OU=Recursos CIE,DC=grx";
-     if (configuracion->usar_ou_cpd())
-        OU<<"OU=Recursos Drogas San Juan De Dios,DC=grx";
-     if (configuracion->usar_ou_ayuntamientos())
-        OU<<"OU=Ayuntamientos,DC=grx";
-     if (!configuracion->lineEdit_OU_vacio())
-        OU << convierte(configuracion->lineEdit_OU_datos());
-     delete configuracion;
-     //recorremos todo OU
-     foreach (const QString &qstr, OU) {
-
-         resul_consul=consulta_oldap("(&(!(objectclass=computer))(objectClass=user))", attrs, 0, qstr.toLocal8Bit(),LDAP_SCOPE_SUBTREE);
-
-         // Devuelve el numero de objetos encontrados durante la busqueda
-         num_entradas = ldap_count_entries(ldap, resul_consul);
-         if ( num_entradas == 0 ) {
-           fprintf(stderr, "LDAP search did not return any data.\n");
-           //exit(EXIT_FAILURE);
-         } else {
-           printf("LDAP search returned %d objects.\n", num_entradas);
-         }
-
-         // recorremos todos los objetos (entry) devueltos por la consulta
-         // cada entry tiene atributos
-         for ( entry = ldap_first_entry(ldap, resul_consul); entry != NULL; entry = ldap_next_entry(ldap, entry))
-         {
-
-           // Imprimimos la cadena DN del objeto
-           dn = ldap_get_dn(ldap, entry);
-           //printf("Found Object: %s\n", dn);
-
-           // recorremos todos los atributos de cada entry
-           for ( atributo = ldap_first_attribute(ldap, entry, &ber);atributo != NULL;
-                 atributo = ldap_next_attribute(ldap, entry, ber))
-           {
-
-             // Imprimimos el nombre del atributo
-             //printf("Found Attribute: %s\n", atributo);
-             if (QString::fromStdString(atributo)=="sAMAccountName"){
-                 if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-                     //ldap_sort_values(ldap,values,LDAP_SORT_AV_CMP_PROC("a","x"));
-                   // recorreomos todos los valores devueltos por este atributo
-                   for (i = 0; values[i] != NULL; i++) {
-                        a<<QString::fromStdString(values[i]).toUpper();
-                        //en usuario_basedn guardamos usuario$base_dn para consultar el dn (UO y dominio) del usuario en memoria
-                        usuario_basedn<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
-                     // print each value of a attribute here
-                     //printf("%s: %s\n", atributo, values[i] );
-                   }
-                   ldap_value_free(values);
-                 }
-              }
-             if (QString::fromStdString(atributo)=="cn"){
-                 if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-                     //ldap_sort_values(ldap,values,LDAP_SORT_AV_CMP_PROC("a","x"));
-                   // recorreomos todos los valores devueltos por este atributo
-                   for (i = 0; values[i] != NULL; i++) {
-                        b<<QString::fromStdString(values[i]).toUpper();
-                        usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
-                     // print each value of a attribute here
-                     //printf("%s: %s\n", atributo, values[i] );
-                   }
-                   ldap_value_free(values);
-                 }
-              }
-           }
-           ldap_memfree(dn);
-         }
-
-         ldap_msgfree(resul_consul);
-    }
-
-    //ordenamos la lista
-     qSort(usuario_basedn);//ordenamos el QStringList
-     qSort(a);//ordenamos el QStringList
-     ui->comboBox_usuarios->addItems(a);//insertamos los datos
-
-     qSort(usuario_basedn2);//ordenamos el QStringList
-     qSort(b);//ordenamos el QStringList
-     ui->comboBox_nombres->addItems(b);//insertamos los datos
-    //desconecta_oldap();
-
-
-}
-
-
-form_usuarios::~form_usuarios()
-{
-    delete ui;
-}
-
-void form_usuarios::on_form_usuarios_destroyed()
-{
-
-    desconecta_oldap();
-
-}
-
-
 
 void form_usuarios::on_comboBox_usuarios_activated(const QString &arg1)
 {
@@ -315,7 +256,6 @@ void form_usuarios::on_comboBox_usuarios_activated(const QString &arg1)
 
     rellena(Qstr, basedn);
 }
-
 
 void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
 {
@@ -329,12 +269,7 @@ void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
 
 }
 
-// Procedimiento para rellenar los campos del formulario
-void form_usuarios::rellena(QString consulta, QString base_DN) {
-
-    QDateTime fecha;
-    QString temp, basedn1;
-    QString pwdLastSet,userAccountControl;
+void form_usuarios::clear_text(){
 
     ui->text_cambio_clave->clear();
     ui->text_clave_caduca->clear();
@@ -350,6 +285,17 @@ void form_usuarios::rellena(QString consulta, QString base_DN) {
     ui->text_ulti_login->clear();
     ui->label_descripcion->clear();
 
+
+}
+
+// Procedimiento para rellenar los campos del formulario
+void form_usuarios::rellena(QString consulta, QString base_DN) {
+
+    QDateTime fecha;
+    QString temp, basedn1;
+    QString pwdLastSet,userAccountControl;
+
+
     // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
     LDAPMessage *resul_consul, *entry;
     BerElement *ber;
@@ -364,9 +310,10 @@ void form_usuarios::rellena(QString consulta, QString base_DN) {
     char *attrs[]       = {NULL};
     // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
 
-    //conecta_oldap();
-
     int  i = 0;
+
+    clear_text();//Limpiamos los lineEdit
+
 
     //************************************************************************************************************************
 

@@ -389,7 +389,7 @@ correo</string>
     </layout>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="label_15">
+    <widget class="QLabel" name="label_estado">
      <property name="text">
       <string>Estado</string>
      </property>

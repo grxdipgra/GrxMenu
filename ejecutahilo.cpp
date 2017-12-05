@@ -12,7 +12,7 @@ void ejecutaHilo::ejecuta() {
     QList<NMapScan> resultado; //El resultado lo vamos a devolver en un QList
 
     int i=ip.length()-1;
-    if (ip.at(i)=='0'){ //Si el ultimo numero de la ip despues del punto es un cero
+    if (ip.at(i)=='0'){ //Si el ultimo numero de la ip despues del ultimo punto es un cero
         ip.chop(1);//ponemos un asterisco
         ip.append('*');
     }

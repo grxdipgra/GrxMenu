@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QObject>
 #include "nmap_xml.h"
+
 class ejecutaHilo : public QThread
 {
 Q_OBJECT
