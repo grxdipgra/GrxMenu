@@ -63,7 +63,8 @@ SOURCES       = main.cpp \
 		basedatos.cpp \
 		acerdade.cpp \
 		mame.cpp \
-		usuarios/form_usuarios.cpp qrc_iconos.cpp \
+		usuarios/form_usuarios.cpp \
+		hilousuarios.cpp qrc_iconos.cpp \
 		moc_botonera.cpp \
 		moc_configuracion.cpp \
 		moc_sedes.cpp \
@@ -90,6 +91,7 @@ OBJECTS       = main.o \
 		acerdade.o \
 		mame.o \
 		form_usuarios.o \
+		hilousuarios.o \
 		qrc_iconos.o \
 		moc_botonera.o \
 		moc_configuracion.o \
@@ -206,7 +208,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		acerdade.h \
 		mame.h \
 		usuarios/form_usuarios.h \
-		usuarios/ldap.h main.cpp \
+		usuarios/ldap.h \
+		hilousuarios.h main.cpp \
 		botonera.cpp \
 		configuracion.cpp \
 		nmap_xml.cpp \
@@ -219,7 +222,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		basedatos.cpp \
 		acerdade.cpp \
 		mame.cpp \
-		usuarios/form_usuarios.cpp
+		usuarios/form_usuarios.cpp \
+		hilousuarios.cpp
 QMAKE_TARGET  = GrxMenu
 DESTDIR       = 
 TARGET        = GrxMenu
@@ -442,8 +446,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents iconos.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents botonera.h configuracion.h nmap_xml.h sedes.h soporte.h equipos.h tunel.h ejecutahilo.h tabescaner.h basedatos.h acerdade.h mame.h usuarios/form_usuarios.h usuarios/ldap.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp botonera.cpp configuracion.cpp nmap_xml.cpp sedes.cpp soporte.cpp equipos.cpp tunel.cpp ejecutahilo.cpp tabescaner.cpp basedatos.cpp acerdade.cpp mame.cpp usuarios/form_usuarios.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents botonera.h configuracion.h nmap_xml.h sedes.h soporte.h equipos.h tunel.h ejecutahilo.h tabescaner.h basedatos.h acerdade.h mame.h usuarios/form_usuarios.h usuarios/ldap.h hilousuarios.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp botonera.cpp configuracion.cpp nmap_xml.cpp sedes.cpp soporte.cpp equipos.cpp tunel.cpp ejecutahilo.cpp tabescaner.cpp basedatos.cpp acerdade.cpp mame.cpp usuarios/form_usuarios.cpp hilousuarios.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents botonera.ui configuracion.ui sedes.ui soporte.ui equipos.ui basedatos.ui acerdade.ui mame.ui usuarios/form_usuarios.ui $(DISTDIR)/
 
 
@@ -713,11 +717,13 @@ botonera.o: botonera.cpp botonera.h \
 		tunel.h \
 		libssh2_config.h \
 		mame.h \
-		usuarios/form_usuarios.h
+		usuarios/form_usuarios.h \
+		basedatos.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o botonera.o botonera.cpp
 
 configuracion.o: configuracion.cpp configuracion.h \
-		ui_configuracion.h
+		ui_configuracion.h \
+		basedatos.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o configuracion.o configuracion.cpp
 
 nmap_xml.o: nmap_xml.cpp nmap_xml.h
@@ -772,8 +778,13 @@ mame.o: mame.cpp mame.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mame.o mame.cpp
 
 form_usuarios.o: usuarios/form_usuarios.cpp usuarios/form_usuarios.h \
-		ui_form_usuarios.h
+		ui_form_usuarios.h \
+		configuracion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o form_usuarios.o usuarios/form_usuarios.cpp
+
+hilousuarios.o: hilousuarios.cpp hilousuarios.h \
+		usuarios/form_usuarios.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hilousuarios.o hilousuarios.cpp
 
 qrc_iconos.o: qrc_iconos.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_iconos.o qrc_iconos.cpp

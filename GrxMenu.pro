@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     basedatos.cpp \
     acerdade.cpp \
     mame.cpp \
-    usuarios/form_usuarios.cpp
+    usuarios/form_usuarios.cpp \
+    hilousuarios.cpp
 
 HEADERS  += \
     botonera.h \
@@ -41,7 +42,8 @@ HEADERS  += \
     acerdade.h \
     mame.h \
     usuarios/form_usuarios.h \
-    usuarios/ldap.h
+    usuarios/ldap.h \
+    hilousuarios.h
 
 FORMS    += \
     botonera.ui \

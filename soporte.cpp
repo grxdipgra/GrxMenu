@@ -107,13 +107,6 @@ void Soporte::on_lineEdit_ip_textChanged(const QString &arg1)
         ui->lineEdit_ip->setStyleSheet("color:black");
     else
         ui->lineEdit_ip->setStyleSheet("color:red");
-
-
-
-
-
-
-
 }
 
 void Soporte::on_cb_sede_activated(const QString &nombre)

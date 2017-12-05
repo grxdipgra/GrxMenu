@@ -61,7 +61,7 @@ private slots:
 
     bool creaConexion();
 
-    bool barraEstado();
+    void barraEstado();
 
     char* convierte(QString dato);
 
@@ -70,8 +70,6 @@ private slots:
     void on_actionAtalaya_triggered();
 
     void on_actionAcerca_de_triggered();
-
-    void on_actionBorrame_triggered();
 
     void on_actionMame_triggered();
 

@@ -52,7 +52,7 @@ Botonera::Botonera(QWidget *parent) :
     muestraBotones();
     cargaVariables();
     barraEstado();
-
+// popup en construccion
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
 
@@ -63,10 +63,10 @@ Botonera::~Botonera()
     delete ui;
 }
 
-void Botonera::test_slot(){
+void Botonera::test_slot(){ //popup
     qDebug()<<"Prueba";
 }
-void Botonera::ctxMenu(const QPoint &pos) {
+void Botonera::ctxMenu(const QPoint &pos) { //popup
     QMenu *menu = new QMenu;
     menu->addAction(tr("Test Item"), this, SLOT(test_slot()));
     menu->exec(this->mapToGlobal(pos));
@@ -186,16 +186,17 @@ bool Botonera::basedatos(){
         ui->label_DB->setText("Cerrado");
         ui->actionSedes->setDisabled(true);
         ui->actionSoporte->setDisabled(true);
-        return false;
-    }else
+    }else{
         ui->label_DB->setText("Conectada");
         ui->actionSedes->setEnabled(true);
         ui->actionSoporte->setEnabled(true);
+        return true;
+    }
 
-    return true;
+return false;
 }
 
-char* Botonera::convierte(QString dato){
+char* Botonera::convierte(QString dato){ //metodo auxiliar que convierte QString a char* para las funciones de C
     char* cstr;
     std::string fname = dato.toStdString();
     cstr = new char [fname.size()+1];
@@ -242,7 +243,6 @@ void Botonera::muestraBotones(){
     ui->mainToolBar->actions().at(8)->setVisible(configuracion->ts_up());
     ui->mainToolBar->actions().at(9)->setVisible(configuracion->isl_up());
     ui->mainToolBar->actions().at(10)->setVisible(configuracion->atalaya_up());
-    ui->mainToolBar->repaint();
     ui->mainToolBar->show();
 }
 
@@ -332,7 +332,7 @@ delete nmap;
 return true;
 }
 
-bool Botonera::barraEstado(){
+void Botonera::barraEstado(){
     QString name = qgetenv("USER");
     if (name.isEmpty())
         name = qgetenv("USERNAME");
@@ -346,7 +346,6 @@ bool Botonera::barraEstado(){
     KB->font().setBold(false);
     DB->font().setBold(false);
 
-
     ui->statusBar->addWidget(bienvenido);
     ui->statusBar->addWidget(nombre);
     ui->statusBar->addWidget(KB);
@@ -358,19 +357,10 @@ bool Botonera::barraEstado(){
     ui->statusBar->addWidget(ui->label_ip);
 }
 
-
-
 void Botonera::on_actionAcerca_de_triggered()
 {
     AcerdaDe *acerca = new AcerdaDe;
     acerca->show();
-
-}
-
-void Botonera::on_actionBorrame_triggered()
-{
-    Soporte *soporte = new Soporte;
-    soporte->show();
 }
 
 void Botonera::on_actionMame_triggered()
