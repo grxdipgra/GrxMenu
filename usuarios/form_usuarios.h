@@ -6,7 +6,7 @@
 #define LDAP_DEPRECATED 1     // se usan las funciones antiguas de ldap
 #include <ldap.h>
 
-#include "ui_form_usuarios.h"
+
 #include <QMessageBox>
 #include <QProcess>
 #include <QDebug>
@@ -14,11 +14,12 @@
 #include <QFile>
 #include <QDateTime>
 
-#include "configuracion.h"
 #include <ldif.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "ui_form_usuarios.h"
+#include "configuracion/configuracion.h"
 
 namespace Ui {
 class form_usuarios;

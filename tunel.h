@@ -1,12 +1,13 @@
 #ifndef SSH_H
 #define SSH_H
 #include <QTcpServer>
-#include "configuracion.h"
 #include <QProcess>
 #include "tunel.h"
 #include <QtDebug>
 #include "qthread.h"
 #include <QMessageBox>
+
+#include "configuracion/configuracion.h"
 
 extern "C"
 {

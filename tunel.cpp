@@ -27,20 +27,20 @@ void Tunel::crea_conexion(){
              //QMessageBox::warning(this,"Error ", "¡ATENCION!\nNo he podido crear el socket\nCompruebe que tiene acceso a la red y al puerto ssh\no que la ip del servidor es correcta\n",QMessageBox::Ok);
              qDebug()<<"por aqui";
          else{
-             fprintf (stderr, "SI he podido crear un socket (%d)\n");
+             fprintf (stderr, "He podido crear un socket \n");
              if (this->crea_sesion())
-                 fprintf (stderr, "No he podido crear un socket (%d)\n");
+                 fprintf (stderr, "No he podido crear un socket \n");
              else{
-                 fprintf (stderr, "SI he podido mostrar el fingerprint (%d)\n");
+                 fprintf (stderr, "He podido mostrar el fingerprint \n");
                  if (this->muestra_fingerprint())
-                    fprintf (stderr, "No he podido mostrar el fingerprint (%d)\n");
+                    fprintf (stderr, "No he podido mostrar el fingerprint \n");
                     else
                         if (this->autenticacion())
-                            fprintf (stderr, "No he podido autenticarme (%d)\n");
+                            fprintf (stderr, "No he podido autenticarme \n");
                         else{
                             printf("He podido autenticarme\n");
                              if (this->escucha())
-                                 fprintf (stderr, "No he podido ejecutar escucha (%d)\n");
+                                 fprintf (stderr, "No he podido ejecutar escucha \n");
                         }
                     }
 

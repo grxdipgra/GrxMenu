@@ -5,10 +5,12 @@
 #include <QSqlQueryModel>
 #include <QTcpServer>
 #include <QMessageBox>
-#include "botonera.h"
-#include "configuracion.h"
-#include "tunel.h"
 #include "qthread.h"
+
+#include "botonera/botonera.h"
+#include "configuracion/configuracion.h"
+#include "tunel.h"
+
 
 int main(int argc, char *argv[])
 {

@@ -38,7 +38,7 @@ DISTNAME      = GrxMenu1.0.0
 DISTDIR = /home/alberto/GrxMenu/.tmp/GrxMenu1.0.0
 LINK          = g++
 LFLAGS        = -fpermissive -Wl,-O1
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lssh2 -lldap -lQt5Widgets -lQt5Gui -lQt5Sql -lQt5Network -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lssh2 -lldap -lgsoap -lQt5Widgets -lQt5Gui -lQt5Sql -lQt5Network -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -51,20 +51,22 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		botonera.cpp \
-		configuracion.cpp \
-		nmap_xml.cpp \
-		sedes.cpp \
-		soporte.cpp \
-		equipos.cpp \
+		botonera/botonera.cpp \
+		configuracion/configuracion.cpp \
+		soporte/nmap_xml.cpp \
+		sedes/sedes.cpp \
+		soporte/soporte.cpp \
+		soporte/equipos.cpp \
 		tunel.cpp \
-		ejecutahilo.cpp \
-		tabescaner.cpp \
-		basedatos.cpp \
-		acerdade.cpp \
-		mame.cpp \
+		soporte/ejecutahilo.cpp \
+		soporte/tabescaner.cpp \
+		basedatos/basedatos.cpp \
+		acercade/acerdade.cpp \
+		mame/mame.cpp \
+		usuarios/hilousuarios.cpp \
 		usuarios/form_usuarios.cpp \
-		hilousuarios.cpp qrc_iconos.cpp \
+		soap/soapC.cpp \
+		soap/soapGlpiBindingProxy.cpp qrc_iconos.cpp \
 		moc_botonera.cpp \
 		moc_configuracion.cpp \
 		moc_sedes.cpp \
@@ -76,6 +78,7 @@ SOURCES       = main.cpp \
 		moc_basedatos.cpp \
 		moc_acerdade.cpp \
 		moc_mame.cpp \
+		moc_hilousuarios.cpp \
 		moc_form_usuarios.cpp
 OBJECTS       = main.o \
 		botonera.o \
@@ -90,8 +93,10 @@ OBJECTS       = main.o \
 		basedatos.o \
 		acerdade.o \
 		mame.o \
-		form_usuarios.o \
 		hilousuarios.o \
+		form_usuarios.o \
+		soapC.o \
+		soapGlpiBindingProxy.o \
 		qrc_iconos.o \
 		moc_botonera.o \
 		moc_configuracion.o \
@@ -104,6 +109,7 @@ OBJECTS       = main.o \
 		moc_basedatos.o \
 		moc_acerdade.o \
 		moc_mame.o \
+		moc_hilousuarios.o \
 		moc_form_usuarios.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -195,35 +201,40 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		GrxMenu.pro botonera.h \
-		configuracion.h \
-		nmap_xml.h \
-		sedes.h \
-		soporte.h \
-		equipos.h \
+		GrxMenu.pro botonera/botonera.h \
+		configuracion/configuracion.h \
+		soporte/nmap_xml.h \
+		sedes/sedes.h \
+		soporte/soporte.h \
+		soporte/equipos.h \
 		tunel.h \
-		ejecutahilo.h \
-		tabescaner.h \
-		basedatos.h \
-		acerdade.h \
-		mame.h \
+		soporte/ejecutahilo.h \
+		soporte/tabescaner.h \
+		basedatos/basedatos.h \
+		acercade/acerdade.h \
+		mame/mame.h \
+		usuarios/hilousuarios.h \
 		usuarios/form_usuarios.h \
 		usuarios/ldap.h \
-		hilousuarios.h main.cpp \
-		botonera.cpp \
-		configuracion.cpp \
-		nmap_xml.cpp \
-		sedes.cpp \
-		soporte.cpp \
-		equipos.cpp \
+		soap/soapH.h \
+		soap/soapStub.h \
+		soap/soapGlpiBindingProxy.h main.cpp \
+		botonera/botonera.cpp \
+		configuracion/configuracion.cpp \
+		soporte/nmap_xml.cpp \
+		sedes/sedes.cpp \
+		soporte/soporte.cpp \
+		soporte/equipos.cpp \
 		tunel.cpp \
-		ejecutahilo.cpp \
-		tabescaner.cpp \
-		basedatos.cpp \
-		acerdade.cpp \
-		mame.cpp \
+		soporte/ejecutahilo.cpp \
+		soporte/tabescaner.cpp \
+		basedatos/basedatos.cpp \
+		acercade/acerdade.cpp \
+		mame/mame.cpp \
+		usuarios/hilousuarios.cpp \
 		usuarios/form_usuarios.cpp \
-		hilousuarios.cpp
+		soap/soapC.cpp \
+		soap/soapGlpiBindingProxy.cpp
 QMAKE_TARGET  = GrxMenu
 DESTDIR       = 
 TARGET        = GrxMenu
@@ -446,9 +457,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents iconos.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents botonera.h configuracion.h nmap_xml.h sedes.h soporte.h equipos.h tunel.h ejecutahilo.h tabescaner.h basedatos.h acerdade.h mame.h usuarios/form_usuarios.h usuarios/ldap.h hilousuarios.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp botonera.cpp configuracion.cpp nmap_xml.cpp sedes.cpp soporte.cpp equipos.cpp tunel.cpp ejecutahilo.cpp tabescaner.cpp basedatos.cpp acerdade.cpp mame.cpp usuarios/form_usuarios.cpp hilousuarios.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents botonera.ui configuracion.ui sedes.ui soporte.ui equipos.ui basedatos.ui acerdade.ui mame.ui usuarios/form_usuarios.ui $(DISTDIR)/
+	$(COPY_FILE) --parents botonera/botonera.h configuracion/configuracion.h soporte/nmap_xml.h sedes/sedes.h soporte/soporte.h soporte/equipos.h tunel.h soporte/ejecutahilo.h soporte/tabescaner.h basedatos/basedatos.h acercade/acerdade.h mame/mame.h usuarios/hilousuarios.h usuarios/form_usuarios.h usuarios/ldap.h soap/soapH.h soap/soapStub.h soap/soapGlpiBindingProxy.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp botonera/botonera.cpp configuracion/configuracion.cpp soporte/nmap_xml.cpp sedes/sedes.cpp soporte/soporte.cpp soporte/equipos.cpp tunel.cpp soporte/ejecutahilo.cpp soporte/tabescaner.cpp basedatos/basedatos.cpp acercade/acerdade.cpp mame/mame.cpp usuarios/hilousuarios.cpp usuarios/form_usuarios.cpp soap/soapC.cpp soap/soapGlpiBindingProxy.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents botonera/botonera.ui configuracion/configuracion.ui sedes/sedes.ui soporte/soporte.ui soporte/equipos.ui basedatos/basedatos.ui acercade/acerdade.ui mame/mame.ui usuarios/form_usuarios.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -575,75 +586,85 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -fpermissive -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_botonera.cpp moc_configuracion.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp moc_form_usuarios.cpp
+compiler_moc_header_make_all: moc_botonera.cpp moc_configuracion.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp moc_hilousuarios.cpp moc_form_usuarios.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_botonera.cpp moc_configuracion.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp moc_form_usuarios.cpp
-moc_botonera.cpp: configuracion.h \
-		acerdade.h \
-		botonera.h \
+	-$(DEL_FILE) moc_botonera.cpp moc_configuracion.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp moc_hilousuarios.cpp moc_form_usuarios.cpp
+moc_botonera.cpp: configuracion/configuracion.h \
+		acercade/acerdade.h \
+		botonera/botonera.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include botonera.h -o moc_botonera.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include botonera/botonera.h -o moc_botonera.cpp
 
-moc_configuracion.cpp: configuracion.h \
+moc_configuracion.cpp: configuracion/configuracion.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include configuracion.h -o moc_configuracion.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include configuracion/configuracion.h -o moc_configuracion.cpp
 
-moc_sedes.cpp: nmap_xml.h \
-		configuracion.h \
-		sedes.h \
+moc_sedes.cpp: soporte/nmap_xml.h \
+		configuracion/configuracion.h \
+		sedes/sedes.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include sedes.h -o moc_sedes.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include sedes/sedes.h -o moc_sedes.cpp
 
-moc_soporte.cpp: nmap_xml.h \
-		soporte.h \
+moc_soporte.cpp: soporte/nmap_xml.h \
+		soporte/soporte.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include soporte.h -o moc_soporte.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include soporte/soporte.h -o moc_soporte.cpp
 
-moc_equipos.cpp: nmap_xml.h \
-		equipos.h \
+moc_equipos.cpp: soporte/nmap_xml.h \
+		soporte/equipos.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include equipos.h -o moc_equipos.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include soporte/equipos.h -o moc_equipos.cpp
 
-moc_tunel.cpp: configuracion.h \
+moc_tunel.cpp: configuracion/configuracion.h \
 		libssh2_config.h \
 		tunel.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include tunel.h -o moc_tunel.cpp
 
-moc_ejecutahilo.cpp: nmap_xml.h \
-		ejecutahilo.h \
+moc_ejecutahilo.cpp: soporte/nmap_xml.h \
+		soporte/ejecutahilo.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ejecutahilo.h -o moc_ejecutahilo.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include soporte/ejecutahilo.h -o moc_ejecutahilo.cpp
 
-moc_tabescaner.cpp: nmap_xml.h \
-		tabescaner.h \
+moc_tabescaner.cpp: soporte/nmap_xml.h \
+		soporte/tabescaner.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include tabescaner.h -o moc_tabescaner.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include soporte/tabescaner.h -o moc_tabescaner.cpp
 
-moc_basedatos.cpp: basedatos.h \
+moc_basedatos.cpp: basedatos/basedatos.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include basedatos.h -o moc_basedatos.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include basedatos/basedatos.h -o moc_basedatos.cpp
 
-moc_acerdade.cpp: acerdade.h \
+moc_acerdade.cpp: acercade/acerdade.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include acerdade.h -o moc_acerdade.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include acercade/acerdade.h -o moc_acerdade.cpp
 
-moc_mame.cpp: mame.h \
+moc_mame.cpp: mame/mame.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mame.h -o moc_mame.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mame/mame.h -o moc_mame.cpp
 
-moc_form_usuarios.cpp: usuarios/form_usuarios.h \
+moc_hilousuarios.cpp: usuarios/form_usuarios.h \
+		ui_form_usuarios.h \
+		configuracion/configuracion.h \
+		usuarios/hilousuarios.h \
+		moc_predefs.h \
+		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include usuarios/hilousuarios.h -o moc_hilousuarios.cpp
+
+moc_form_usuarios.cpp: ui_form_usuarios.h \
+		configuracion/configuracion.h \
+		usuarios/form_usuarios.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include usuarios/form_usuarios.h -o moc_form_usuarios.cpp
@@ -653,37 +674,37 @@ compiler_moc_source_clean:
 compiler_uic_make_all: ui_botonera.h ui_configuracion.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h ui_form_usuarios.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_botonera.h ui_configuracion.h ui_sedes.h ui_soporte.h ui_equipos.h ui_basedatos.h ui_acerdade.h ui_mame.h ui_form_usuarios.h
-ui_botonera.h: botonera.ui \
+ui_botonera.h: botonera/botonera.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic botonera.ui -o ui_botonera.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic botonera/botonera.ui -o ui_botonera.h
 
-ui_configuracion.h: configuracion.ui \
+ui_configuracion.h: configuracion/configuracion.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic configuracion.ui -o ui_configuracion.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic configuracion/configuracion.ui -o ui_configuracion.h
 
-ui_sedes.h: sedes.ui \
+ui_sedes.h: sedes/sedes.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic sedes.ui -o ui_sedes.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic sedes/sedes.ui -o ui_sedes.h
 
-ui_soporte.h: soporte.ui \
+ui_soporte.h: soporte/soporte.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic soporte.ui -o ui_soporte.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic soporte/soporte.ui -o ui_soporte.h
 
-ui_equipos.h: equipos.ui \
+ui_equipos.h: soporte/equipos.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic equipos.ui -o ui_equipos.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic soporte/equipos.ui -o ui_equipos.h
 
-ui_basedatos.h: basedatos.ui \
+ui_basedatos.h: basedatos/basedatos.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic basedatos.ui -o ui_basedatos.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic basedatos/basedatos.ui -o ui_basedatos.h
 
-ui_acerdade.h: acerdade.ui \
+ui_acerdade.h: acercade/acerdade.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic acerdade.ui -o ui_acerdade.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic acercade/acerdade.ui -o ui_acerdade.h
 
-ui_mame.h: mame.ui \
+ui_mame.h: mame/mame.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic mame.ui -o ui_mame.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic mame/mame.ui -o ui_mame.h
 
 ui_form_usuarios.h: usuarios/form_usuarios.ui \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
@@ -699,92 +720,104 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: main.cpp botonera.h \
-		configuracion.h \
-		acerdade.h \
+main.o: main.cpp botonera/botonera.h \
+		configuracion/configuracion.h \
+		acercade/acerdade.h \
 		tunel.h \
 		libssh2_config.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-botonera.o: botonera.cpp botonera.h \
-		configuracion.h \
-		acerdade.h \
+botonera.o: botonera/botonera.cpp botonera/botonera.h \
+		configuracion/configuracion.h \
+		acercade/acerdade.h \
 		ui_botonera.h \
-		soporte.h \
-		nmap_xml.h \
-		sedes.h \
-		equipos.h \
+		soporte/soporte.h \
+		soporte/nmap_xml.h \
+		sedes/sedes.h \
+		soporte/equipos.h \
 		tunel.h \
 		libssh2_config.h \
-		mame.h \
+		mame/mame.h \
 		usuarios/form_usuarios.h \
-		basedatos.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o botonera.o botonera.cpp
+		ui_form_usuarios.h \
+		basedatos/basedatos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o botonera.o botonera/botonera.cpp
 
-configuracion.o: configuracion.cpp configuracion.h \
+configuracion.o: configuracion/configuracion.cpp configuracion/configuracion.h \
 		ui_configuracion.h \
-		basedatos.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o configuracion.o configuracion.cpp
+		basedatos/basedatos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o configuracion.o configuracion/configuracion.cpp
 
-nmap_xml.o: nmap_xml.cpp nmap_xml.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmap_xml.o nmap_xml.cpp
+nmap_xml.o: soporte/nmap_xml.cpp soporte/nmap_xml.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmap_xml.o soporte/nmap_xml.cpp
 
-sedes.o: sedes.cpp sedes.h \
-		nmap_xml.h \
-		configuracion.h \
+sedes.o: sedes/sedes.cpp sedes/sedes.h \
+		soporte/nmap_xml.h \
+		configuracion/configuracion.h \
 		ui_sedes.h \
-		basedatos.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sedes.o sedes.cpp
+		basedatos/basedatos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sedes.o sedes/sedes.cpp
 
-soporte.o: soporte.cpp soporte.h \
-		nmap_xml.h \
+soporte.o: soporte/soporte.cpp soporte/soporte.h \
+		soporte/nmap_xml.h \
 		ui_soporte.h \
-		equipos.h \
-		ejecutahilo.h \
-		configuracion.h \
-		tabescaner.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o soporte.o soporte.cpp
+		soporte/equipos.h \
+		soporte/tabescaner.h \
+		configuracion/configuracion.h \
+		soporte/ejecutahilo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o soporte.o soporte/soporte.cpp
 
-equipos.o: equipos.cpp equipos.h \
-		nmap_xml.h \
+equipos.o: soporte/equipos.cpp soporte/equipos.h \
+		soporte/nmap_xml.h \
 		ui_equipos.h \
-		configuracion.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o equipos.o equipos.cpp
+		configuracion/configuracion.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o equipos.o soporte/equipos.cpp
 
 tunel.o: tunel.cpp tunel.h \
-		configuracion.h \
+		configuracion/configuracion.h \
 		libssh2_config.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tunel.o tunel.cpp
 
-ejecutahilo.o: ejecutahilo.cpp ejecutahilo.h \
-		nmap_xml.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ejecutahilo.o ejecutahilo.cpp
+ejecutahilo.o: soporte/ejecutahilo.cpp soporte/ejecutahilo.h \
+		soporte/nmap_xml.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ejecutahilo.o soporte/ejecutahilo.cpp
 
-tabescaner.o: tabescaner.cpp tabescaner.h \
-		nmap_xml.h \
-		equipos.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tabescaner.o tabescaner.cpp
+tabescaner.o: soporte/tabescaner.cpp soporte/tabescaner.h \
+		soporte/nmap_xml.h \
+		soporte/equipos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tabescaner.o soporte/tabescaner.cpp
 
-basedatos.o: basedatos.cpp basedatos.h \
+basedatos.o: basedatos/basedatos.cpp basedatos/basedatos.h \
 		ui_basedatos.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o basedatos.o basedatos.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o basedatos.o basedatos/basedatos.cpp
 
-acerdade.o: acerdade.cpp acerdade.h \
+acerdade.o: acercade/acerdade.cpp acercade/acerdade.h \
 		ui_acerdade.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o acerdade.o acerdade.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o acerdade.o acercade/acerdade.cpp
 
-mame.o: mame.cpp mame.h \
+mame.o: mame/mame.cpp mame/mame.h \
 		ui_mame.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mame.o mame.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mame.o mame/mame.cpp
+
+hilousuarios.o: usuarios/hilousuarios.cpp usuarios/hilousuarios.h \
+		usuarios/form_usuarios.h \
+		ui_form_usuarios.h \
+		configuracion/configuracion.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hilousuarios.o usuarios/hilousuarios.cpp
 
 form_usuarios.o: usuarios/form_usuarios.cpp usuarios/form_usuarios.h \
 		ui_form_usuarios.h \
-		configuracion.h
+		configuracion/configuracion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o form_usuarios.o usuarios/form_usuarios.cpp
 
-hilousuarios.o: hilousuarios.cpp hilousuarios.h \
-		usuarios/form_usuarios.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hilousuarios.o hilousuarios.cpp
+soapC.o: soap/soapC.cpp soap/soapH.h \
+		soap/soapStub.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o soapC.o soap/soapC.cpp
+
+soapGlpiBindingProxy.o: soap/soapGlpiBindingProxy.cpp soap/soapGlpiBindingProxy.h \
+		soap/soapH.h \
+		soap/soapStub.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o soapGlpiBindingProxy.o soap/soapGlpiBindingProxy.cpp
 
 qrc_iconos.o: qrc_iconos.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_iconos.o qrc_iconos.cpp
@@ -821,6 +854,9 @@ moc_acerdade.o: moc_acerdade.cpp
 
 moc_mame.o: moc_mame.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mame.o moc_mame.cpp
+
+moc_hilousuarios.o: moc_hilousuarios.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_hilousuarios.o moc_hilousuarios.cpp
 
 moc_form_usuarios.o: moc_form_usuarios.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_form_usuarios.o moc_form_usuarios.cpp

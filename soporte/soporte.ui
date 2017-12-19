@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Soporte</class>
+ <widget class="QDialog" name="Soporte">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>841</width>
+    <height>804</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Soporte</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">color= red;</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>821</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="Base">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+      <colorrole role="Window">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>210</red>
+         <green>239</green>
+         <blue>228</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="Base">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>255</red>
+         <green>255</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+      <colorrole role="Window">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>210</red>
+         <green>239</green>
+         <blue>228</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="Base">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>210</red>
+         <green>239</green>
+         <blue>228</blue>
+        </color>
+       </brush>
+      </colorrole>
+      <colorrole role="Window">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>210</red>
+         <green>239</green>
+         <blue>228</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="lineWidth">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>785</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>2</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Sede</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Ip/red </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Teléfono</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Extensión</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Dirección</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Número</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QComboBox" name="cb_sede">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_ip">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_telefono">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_extension">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_direccion">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_numero">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>ADSL</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>NºAdm</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Centro</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Teléfono</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Servicio</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Caudal</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_adsl">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_n_adm">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_centro">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_telefono_centro">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_servicio">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_caudal">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>325</y>
+     <width>517</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QPushButton" name="Btn_Buscar">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Escanear</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Ping">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Ping</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Incidencia">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Incidencia</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Mtr">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>mtr</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Atalaya">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>SolarWinds</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Glpi">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>GLPI</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="Estado">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>330</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Btn_Limpiar">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>334</y>
+     <width>80</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Limpiar</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/soporte/escoba.svg</normaloff>:/imagenes/iconos/soporte/escoba.svg</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>10</y>
+     <width>571</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>570</width>
+     <height>61</height>
+    </size>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="pB_gmenu">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>MOAD</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/moad.png</normaloff>:/imagenes/iconos/soporte/moad.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_gtablon">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>GTablón</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/gtablon.png</normaloff>:/imagenes/iconos/soporte/gtablon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_isl">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>ISLOnline</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/ISL50x50.png</normaloff>:/imagenes/iconos/soporte/ISL50x50.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_citrix">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Citrix</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/citrix.png</normaloff>:/imagenes/iconos/soporte/citrix.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_epol">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>EPol</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/epol.png</normaloff>:/imagenes/iconos/soporte/epol.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_aytos">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Incidencias Sede</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/aytos.png</normaloff>:/imagenes/iconos/soporte/aytos.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_portafirmas">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Portafirmas</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/portafirmas.png</normaloff>:/imagenes/iconos/soporte/portafirmas.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_listin">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Listin Telefónico</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/listin.jpeg</normaloff>:/imagenes/iconos/soporte/listin.jpeg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_perilContratante">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Portal del Contratante</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/perfilcontratante.png</normaloff>:/imagenes/iconos/soporte/perfilcontratante.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pB_guadaltel">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Redmine</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/guadaltel.png</normaloff>:/imagenes/iconos/soporte/guadaltel.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QScrollArea" name="scrollArea">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>380</y>
+     <width>811</width>
+     <height>421</height>
+    </rect>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>809</width>
+      <height>419</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="styleSheet">
+        <string notr="true">color=blue</string>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="consola">
+        <attribute name="title">
+         <string>Consola</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QPlainTextEdit" name="TextoSalida">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color=blue</string>
+           </property>
+           <property name="readOnly">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../iconos.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>lineEdit_ip</sender>
+   <signal>returnPressed()</signal>
+   <receiver>Btn_Buscar</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>66</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

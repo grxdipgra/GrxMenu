@@ -13,51 +13,57 @@ QMAKE_CFLAGS = -fpermissive
 QMAKE_CXXFLAGS = -fpermissive
 QMAKE_LFLAGS = -fpermissive
 SOURCES += main.cpp \
-    botonera.cpp \
-    configuracion.cpp \
-    nmap_xml.cpp \
-    sedes.cpp \
-    soporte.cpp \
-    equipos.cpp \
+    botonera/botonera.cpp \
+    configuracion/configuracion.cpp \
+    soporte/nmap_xml.cpp \
+    sedes/sedes.cpp \
+    soporte/soporte.cpp \
+    soporte/equipos.cpp \
     tunel.cpp \
-    ejecutahilo.cpp \
-    tabescaner.cpp \
-    basedatos.cpp \
-    acerdade.cpp \
-    mame.cpp \
-    hilousuarios.cpp \
-    usuarios/form_usuarios.cpp
+    soporte/ejecutahilo.cpp \
+    soporte/tabescaner.cpp \
+    basedatos/basedatos.cpp \
+    acercade/acerdade.cpp \
+    mame/mame.cpp \
+    usuarios/hilousuarios.cpp \
+    usuarios/form_usuarios.cpp \
+    soap/soapC.cpp \
+    soap/soapGlpiBindingProxy.cpp
 
 HEADERS  += \
-    botonera.h \
-    configuracion.h \
-    nmap_xml.h \
-    sedes.h \
-    soporte.h \
-    equipos.h \
+    botonera/botonera.h \
+    configuracion/configuracion.h \
+    soporte/nmap_xml.h \
+    sedes/sedes.h \
+    soporte/soporte.h \
+    soporte/equipos.h \
     tunel.h \
-    ejecutahilo.h \
-    tabescaner.h \
-    basedatos.h \
-    acerdade.h \
-    mame.h \
-    hilousuarios.h \
+    soporte/ejecutahilo.h \
+    soporte/tabescaner.h \
+    basedatos/basedatos.h \
+    acercade/acerdade.h \
+    mame/mame.h \
+    usuarios/hilousuarios.h \
     usuarios/form_usuarios.h \
-    usuarios/ldap.h
+    usuarios/ldap.h \
+    soap/soapH.h \
+    soap/soapStub.h \
+    soap/soapGlpiBindingProxy.h
+
 
 FORMS    += \
-    botonera.ui \
-    configuracion.ui \
-    sedes.ui \
-    soporte.ui \
-    equipos.ui \
-    basedatos.ui \
-    acerdade.ui \
-    mame.ui \
+    botonera/botonera.ui \
+    configuracion/configuracion.ui \
+    sedes/sedes.ui \
+    soporte/soporte.ui \
+    soporte/equipos.ui \
+    basedatos/basedatos.ui \
+    acercade/acerdade.ui \
+    mame/mame.ui \
     usuarios/form_usuarios.ui
 
 INCLUDEPATH +=/lib
-LIBS += -lssh2 -lldap
+LIBS += -lssh2 -lldap  -lgsoap
 
 RESOURCES += \
     iconos.qrc

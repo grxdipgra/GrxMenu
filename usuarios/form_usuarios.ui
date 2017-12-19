@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>939</width>
-    <height>568</height>
+    <width>855</width>
+    <height>328</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>855</width>
+    <height>328</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Usuarios de Active Directory</string>
@@ -106,7 +112,7 @@ p, li { white-space: pre-wrap; }
             <widget class="QLineEdit" name="text_correo">
              <property name="minimumSize">
               <size>
-               <width>281</width>
+               <width>275</width>
                <height>0</height>
               </size>
              </property>
