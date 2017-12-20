@@ -136,6 +136,7 @@ void Sedes::clear_comboBox() {
     ui->comboBox_mancomunidad->clear();
     ui->comboBox_mancomunidad_2->clear();
     ui->comboBox_telefonos->clear();
+    ui->comboBox_telefonos_2->clear();
 }
 
 
@@ -229,6 +230,7 @@ void Sedes::consultaNodo(const QString &nombre) {
         ui->lineEdit_nodo_latitud->setText(consultar_nodo.value(NUM_COL_NODO_LATITUD).toString());
         ui->lineEdit_nodo_longitud->setText(consultar_nodo.value(NUM_COL_NODO_LONGITUD).toString());
         ui->lineEdit_extension->setText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString());
+        ui->lineEdit_extension_2->setText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString());
         ui->lineEdit_extension2->setText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString());
         ui->lineEdit_fax->setText(consultar_nodo.value(NUM_COL_NODO_FAX).toString());
         ui->lineEdit_fax_2->setText(consultar_nodo.value(NUM_COL_NODO_FAX).toString());
@@ -257,7 +259,7 @@ void Sedes::consultaNodo(const QString &nombre) {
         consultaPrograma(id_nodo, anio_programa);
 
         // Cargar teléfonos del nodo
-        ui->comboBox_telefonos->clear();
+
         consultar_telefono.prepare(QString("SELECT * FROM telefononodo WHERE idNodo =:idNodo"));
         consultar_telefono.bindValue(":idNodo", id_nodo);
 
