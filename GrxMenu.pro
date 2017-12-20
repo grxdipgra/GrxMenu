@@ -26,9 +26,7 @@ SOURCES += main.cpp \
     acercade/acerdade.cpp \
     mame/mame.cpp \
     usuarios/hilousuarios.cpp \
-    usuarios/form_usuarios.cpp \
-    soap/soapC.cpp \
-    soap/soapGlpiBindingProxy.cpp
+    usuarios/form_usuarios.cpp
 
 HEADERS  += \
     botonera/botonera.h \
@@ -45,11 +43,7 @@ HEADERS  += \
     mame/mame.h \
     usuarios/hilousuarios.h \
     usuarios/form_usuarios.h \
-    usuarios/ldap.h \
-    soap/soapH.h \
-    soap/soapStub.h \
-    soap/soapGlpiBindingProxy.h
-
+    usuarios/ldap.h
 
 FORMS    += \
     botonera/botonera.ui \
@@ -63,7 +57,7 @@ FORMS    += \
     usuarios/form_usuarios.ui
 
 INCLUDEPATH +=/lib
-LIBS += -lssh2 -lldap  -lgsoap
+LIBS += -lssh2 -lldap
 
 RESOURCES += \
     iconos.qrc

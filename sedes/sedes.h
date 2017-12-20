@@ -157,8 +157,6 @@ class Sedes : public QWidget {
 
         void on_comboBox_IP_activated(const QString &arg1);
 
-        void on_pB_Edicion_clicked();
-
         void on_pB_googleMaps_clicked();
 
         void on_pB_municipio_bandera_clicked();
@@ -183,7 +181,21 @@ class Sedes : public QWidget {
 
         void on_pB_wikipedia_clicked();
 
-        void on_pB_Edicion_toggled(bool checked);
+        void on_pB_escudo_2_clicked();
+
+        void on_pB_bandera_2_clicked();
+
+        void on_pB_wikipedia_2_clicked();
+
+        void on_pB_web_clicked();
+
+        void on_pB_sede_2_clicked();
+
+        void on_pB_tablon_2_clicked();
+
+        void on_pB_portalTransparencia_2_clicked();
+
+        void on_pB_mapa_2_clicked();
 
 private:
         Ui::Sedes *ui;
