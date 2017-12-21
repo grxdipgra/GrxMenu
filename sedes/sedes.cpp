@@ -206,7 +206,7 @@ void Sedes::consultaNodo(const QString &nombre) {
         clean_checkbox();
         clear_comboBox();
 
-        id_nodo = consultar_nodo.value(NUM_COL_NODO_IDPOBLACION).toInt();
+        id_nodo = consultar_nodo.value(NUM_COL_NODO_ID).toInt();
         anio_programa = ui->comboBox_anio->currentText();
 
         // Cargar datos del nodo seleccionado
@@ -291,13 +291,11 @@ void Sedes::consultaNodo(const QString &nombre) {
 
                 if (!consultar_poblacion.value(NUM_COL_POBLACION_IDELA).isNull()) { //Comprueba si es una ELA
                     idEla = consultar_poblacion.value(NUM_COL_POBLACION_IDMUNICIPIO).toString();
-                    qDebug() << idEla;
                     consultar_ela.prepare(QString("SELECT nombre FROM municipio WHERE id = :idEla"));
                     consultar_ela.bindValue(":idEla", idEla);
 
                     if ((consultar_ela.exec()) && (consultar_ela.first())) {
                         nombreEla = consultar_ela.value(0).toString();
-                        qDebug() << nombreEla;
                     }
                 }
 
