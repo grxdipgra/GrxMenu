@@ -2,10 +2,8 @@
 #include <QHostAddress>
 #include <QDesktopServices>
 #include "qdebug.h"
-
 #include "sedes.h"
 #include "ui_sedes.h"
-
 #include "basedatos/basedatos.h"
 
 
@@ -766,14 +764,16 @@ void Sedes::on_comboBox_TLF_activated(const QString &arg1)
 {
     QSqlQuery query = model->query();
     QSqlQuery query_tlf = model_tlf->query();
-    QString valor = query_tlf.value(0).toString();
-    ui->comboBox_TLF->setModelColumn(0);
-    ui->comboBox_TLF->setCurrentIndex(ui->comboBox_TLF->findText(arg1));
-    ui->comboBox_TLF->setModelColumn(1);
+    QString  valor = query_tlf.value(0).toString();
 
-    consultaNodo(ui->comboBox_TLF->currentText()); //query.value(0).toString() contiene el nombre de la consulta actual
+    query.first();
+    while (query.next()) {
+            if ( query.value(4).toString() == valor ){
+                consultaNodo(query.value(0).toString()); //query.value(0).toString() contiene el nombre de la consulta actual
+                ui->comboBox_NODO->setCurrentIndex(ui->comboBox_NODO->findText(query.value(0).toString()));
+                continue;
 
 
-
-
+            }
+        }
 }
