@@ -12,7 +12,7 @@
 Sedes::Sedes(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Sedes)
-{
+{ //Constructor
     id_nodo = 0;
     ui->setupUi(this);
     mascaraIP();
@@ -25,6 +25,7 @@ Sedes::~Sedes() {
     delete ui;
 }
 
+
 void Sedes::mascaraIP(){
 
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
@@ -35,6 +36,7 @@ void Sedes::mascaraIP(){
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
     ui->comboBox_IP->setValidator(ipValidator);
 }
+
 
 bool Sedes::existeFichero(QString path) {
     //Comprueba si existe y si es un fichero
@@ -130,7 +132,6 @@ void Sedes::clean_checkbox() {
 }
 
 
-
 void Sedes::clear_comboBox() {
     ui->comboBox_IP->clear();
     ui->comboBox_mancomunidad->clear();
@@ -176,6 +177,8 @@ void Sedes::cargaCombo() {
     }
     else {
         model_tlf->setQuery(*query_tlf);
+        ui->comboBox_TLF->setModel(model_tlf);
+        ui->comboBox_TLF->setModelColumn(1);
     }
 
     delete query;
@@ -216,7 +219,6 @@ void Sedes::consultaNodo(const QString &nombre) {
         ui->lineEdit_direccion_2->setText(consultar_nodo.value(NUM_COL_NODO_NOMBREDIRECCION).toString());
         ui->lineEdit_numero->setText(consultar_nodo.value(NUM_COL_NODO_NUMERODIRECCION).toString());
         ui->lineEdit_numero_2->setText(consultar_nodo.value(NUM_COL_NODO_NUMERODIRECCION).toString());
-
         ui->lineEdit_letra->setText(consultar_nodo.value(NUM_COL_NODO_LETRADIRECCION).toString());
         ui->lineEdit_letra_2->setText(consultar_nodo.value(NUM_COL_NODO_LETRADIRECCION).toString());
         ui->lineEdit_piso->setText(consultar_nodo.value(NUM_COL_NODO_PISODIRECCION).toString());
@@ -266,8 +268,8 @@ void Sedes::consultaNodo(const QString &nombre) {
 
         if (consultar_telefono.exec()) {
             if (consultar_telefono.first()) {
-                ui->lineEdit_TLF->setText(consultar_telefono.value(NUM_COL_TELEFONO_TELEFONO).toString());
-
+                //ui->lineEdit_TLF->setText(consultar_telefono.value(NUM_COL_TELEFONO_TELEFONO).toString());
+                ui->comboBox_TLF->setCurrentIndex(ui->comboBox_TLF->findText(consultar_telefono.value(NUM_COL_TELEFONO_TELEFONO).toString()));
                 do{
                     ui->comboBox_telefonos->addItem(consultar_telefono.value(NUM_COL_TELEFONO_TELEFONO).toString());
                     ui->comboBox_telefonos_2->addItem(consultar_telefono.value(NUM_COL_TELEFONO_TELEFONO).toString());
@@ -325,7 +327,7 @@ void Sedes::consultaNodo(const QString &nombre) {
                         ui->lineEdit_cif->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
                         ui->lineEdit_cif_2->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
                         ui->lineEdit_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
-                        ui->lineEdit_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
+                        ui->lineEdit_dir3_2->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
                         ui->lineEdit_ine->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGOINE).toString());
                         ui->lineEdit_ine_2->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGOINE).toString());
                         ui->lineEdit_habitantes->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_NUMEROHABITANTES).toString());
@@ -344,13 +346,14 @@ void Sedes::consultaNodo(const QString &nombre) {
                         ui->lineEdit_tablon_2->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_URLTABLON).toString());
                         ui->lineEdit_portal_transparencia_2->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_URLPORTALTRANSPARENCIA).toString());
 
-                        carga_imagenes(municipio_nombreID, ui->lineEdit_linea_equipamiento->text()); //carga las imagenes de router, banderas, escudo , etc...
-
                         // Obtener nombre de la comarca del municipio
                         consultaComarca(id_comarca);
 
                         // Obtener mancomunidades del municipio
                         consultaMancomunidades(id_municipio);
+
+                        carga_imagenes(municipio_nombreID, ui->lineEdit_linea_equipamiento->text()); //carga las imagenes de router, banderas, escudo , etc...
+
                     }
                     else {
                         insertaTexto("Datos vacios en la consulta de municipio " + consultar_nodo.value(NUM_COL_NODO_NOMBRE).toString());
@@ -517,6 +520,10 @@ void Sedes::carga_imagenes(QString municipio_nombreID, QString modelo_router) {
     QString ruta_imagen_escudo          = QString(RUTA_IMAGENES) + "escudos/" + municipio_nombreID + ".svg";
     QString ruta_imagen_escudo_no       = QString(RUTA_IMAGENES) + "escudos/0_constitucional.svg";
     QString ruta_imagen_mapa            = QString(RUTA_IMAGENES) + "mapas/" + municipio_nombreID + ".png";
+    QString ruta_imagen_mancomunidad    = QString(RUTA_IMAGENES) + "mancomunidades/" + ui->comboBox_mancomunidad_2->currentText().toLower().replace(" ","_") + ".png";
+    QString ruta_imagen_mancomunidad_no = QString(RUTA_IMAGENES) + "mancomunidades/mancomunidad_no.png";
+    QString ruta_imagen_comarca         = QString(RUTA_IMAGENES) + "comarcas/" + ui->lineEdit_comarca_2->text().toLower().replace(" ","_") + ".png";
+    QString ruta_imagen_comarca_no      = QString(RUTA_IMAGENES) + "comarcas/comarca_no.png";
     QString ruta_imagen_router          = QString(RUTA_IMAGENES) + "routers/" + modelo_router + ".jpg";
 
     // Establecer imagen de la bandera
@@ -539,7 +546,18 @@ void Sedes::carga_imagenes(QString municipio_nombreID, QString modelo_router) {
     // Establecer imagen del router
     QIcon icon_router = QIcon(ruta_imagen_router);
     ui->pB_linea_router->setIcon(icon_router);
-    ui->pB_router->setIcon(icon_router);}
+    ui->pB_router->setIcon(icon_router);
+
+    // Establecer imagen de la mancomunidad
+    QIcon icon_mancomunidad = existeFichero(ruta_imagen_mancomunidad) ? QIcon(ruta_imagen_mancomunidad) : QIcon(ruta_imagen_mancomunidad_no);
+    ui->pB_mancomunidad->setIcon(icon_mancomunidad);
+
+
+    // Establecer imagen del comarca
+    QIcon icon_comarca = existeFichero(ruta_imagen_comarca) ? QIcon(ruta_imagen_comarca) : QIcon(ruta_imagen_comarca_no);
+    ui->pB_comarca->setIcon(icon_comarca);
+
+}
 
 
 void Sedes::insertaTexto(QString texto) {
@@ -701,4 +719,61 @@ void Sedes::on_pB_portalTransparencia_2_clicked()
 void Sedes::on_pB_mapa_2_clicked()
 {
     QDesktopServices::openUrl(QUrl("file:" + QString(RUTA_IMAGENES) + "mapas/" + municipio_nombreID + ".png"));
+}
+
+void Sedes::on_comboBox_anio_2_activated(const QString &arg1)
+{
+    consultaPrograma(id_nodo, arg1);
+}
+
+void Sedes::on_comboBox_mancomunidad_2_activated(const QString &arg1)
+{
+
+    QString ruta_imagen_mancomunidad    = QString(RUTA_IMAGENES) + "mancomunidades/" + arg1.toLower().replace(" ","_") + ".png";
+    QString ruta_imagen_mancomunidad_no = QString(RUTA_IMAGENES) + "mancomunidades/mancomunidad_no.png";
+
+    // Establecer imagen de la mancomunidad
+    QIcon icon_mancomunidad = existeFichero(ruta_imagen_mancomunidad) ? QIcon(ruta_imagen_mancomunidad) : QIcon(ruta_imagen_mancomunidad_no);
+    ui->pB_mancomunidad->setIcon(icon_mancomunidad);
+
+}
+
+void Sedes::on_pB_mancomunidad_clicked()
+{
+    QString ruta_mancomunidad = QString(RUTA_IMAGENES) + "mancomunidades/" + ui->comboBox_mancomunidad_2->currentText().toLower().replace(" ","_") + ".png";
+
+    if (existeFichero(ruta_mancomunidad)) {
+        QDesktopServices::openUrl(QUrl(ruta_mancomunidad, QUrl::TolerantMode));
+    }
+    else {
+        QDesktopServices::openUrl(QUrl(QString(RUTA_IMAGENES) + "mancomunidades/mancomunidad_no.png", QUrl::TolerantMode));
+    }
+}
+
+void Sedes::on_pB_comarca_clicked()
+{
+    QString ruta_comarca = QString(RUTA_IMAGENES) + "comarcas/" + ui->lineEdit_comarca_2->text().toLower().replace(" ","_") + ".png";
+
+    if (existeFichero(ruta_comarca)) {
+        QDesktopServices::openUrl(QUrl(ruta_comarca, QUrl::TolerantMode));
+    }
+    else {
+        QDesktopServices::openUrl(QUrl(QString(RUTA_IMAGENES) + "comarcas/comarca_no.png", QUrl::TolerantMode));
+    }
+}
+
+void Sedes::on_comboBox_TLF_activated(const QString &arg1)
+{
+    QSqlQuery query = model->query();
+    QSqlQuery query_tlf = model_tlf->query();
+    QString valor = query_tlf.value(0).toString();
+    ui->comboBox_TLF->setModelColumn(0);
+    ui->comboBox_TLF->setCurrentIndex(ui->comboBox_TLF->findText(arg1));
+    ui->comboBox_TLF->setModelColumn(1);
+
+    consultaNodo(ui->comboBox_TLF->currentText()); //query.value(0).toString() contiene el nombre de la consulta actual
+
+
+
+
 }

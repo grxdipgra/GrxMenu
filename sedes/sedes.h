@@ -197,6 +197,16 @@ class Sedes : public QWidget {
 
         void on_pB_mapa_2_clicked();
 
+        void on_comboBox_anio_2_activated(const QString &arg1);
+
+        void on_comboBox_mancomunidad_2_activated(const QString &arg1);
+
+        void on_pB_mancomunidad_clicked();
+
+        void on_pB_comarca_clicked();
+
+        void on_comboBox_TLF_activated(const QString &arg1);
+
 private:
         Ui::Sedes *ui;
         QString modelo_router;
