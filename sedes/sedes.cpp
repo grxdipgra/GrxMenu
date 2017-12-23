@@ -149,12 +149,14 @@ void Sedes::cargaCombo() {
 
     if (configuracion->solo_aytos()) {
         sql = "SELECT nombre,ipLinea,codigoPostal,extension,id FROM nodo WHERE esAyuntamiento=1 ORDER BY nombre";
+        sql_tlf = "SELECT idNodo,telefono FROM nodo N, telefononodo T WHERE N.id=T.idNodo AND esAyuntamiento=1";
+
     }
     else {
         sql = "SELECT nombre,ipLinea,codigoPostal,extension,id FROM nodo ORDER BY nombre";
+        sql_tlf = "SELECT * FROM telefononodo";
     }
 
-    sql_tlf = "SELECT * FROM telefononodo";
     query->prepare(sql);
     query_tlf->prepare(sql_tlf);
 
@@ -168,6 +170,8 @@ void Sedes::cargaCombo() {
         ui->comboBox_NODO->setModel(model);
         on_comboBox_NODO_activated(ui->comboBox_NODO->itemText(0));
         ui->comboBox_NODO->setFocus();
+        ui->comboBox_extension->setModel(model);
+        ui->comboBox_extension->setModelColumn(3);
     }
 
     if (!query_tlf->exec()) {
@@ -231,7 +235,7 @@ void Sedes::consultaNodo(const QString &nombre) {
         ui->lineEdit_nodo_longitud->setText(consultar_nodo.value(NUM_COL_NODO_LONGITUD).toString());
         ui->lineEdit_extension->setText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString());
         ui->lineEdit_extension_2->setText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString());
-        ui->lineEdit_extension2->setText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString());
+       // ui->lineEdit_extension2->setText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString());
         ui->lineEdit_fax->setText(consultar_nodo.value(NUM_COL_NODO_FAX).toString());
         ui->lineEdit_fax_2->setText(consultar_nodo.value(NUM_COL_NODO_FAX).toString());
         ui->lineEdit_nodo_web->setText(consultar_nodo.value(NUM_COL_NODO_WEB).toString());
@@ -252,6 +256,8 @@ void Sedes::consultaNodo(const QString &nombre) {
         ui->lineEdit_equipamiento->setText(consultar_nodo.value(NUM_COL_NODO_EQUIPAMIENTO).toString());
         ui->lineEdit_linea_numero_serie->setText(consultar_nodo.value(NUM_COL_NODO_NUMEROSERIEROUTER).toString());
         ui->lineEdit_numeroSerieRouter->setText(consultar_nodo.value(NUM_COL_NODO_NUMEROSERIEROUTER).toString());
+
+        ui->comboBox_extension->setCurrentIndex(ui->comboBox_extension->findText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString()));
 
         modelo_router = consultar_nodo.value(NUM_COL_NODO_EQUIPAMIENTO).toString();
 
@@ -573,10 +579,11 @@ void Sedes::on_comboBox_anio_activated(const QString &arg1) {
 void Sedes::on_comboBox_IP_activated(const QString &ip) {
     QHostAddress myIP;
     QSqlQuery query = model->query();
+    QString nombre = query.value(0).toString();
 
     if (myIP.setAddress(ip)) {
-        consultaNodo(query.value(0).toString()); //query.value(0).toString() contiene el nombre de la consulta actual
-        ui->comboBox_NODO->setCurrentIndex(ui->comboBox_NODO->findText(query.value(0).toString()));
+        consultaNodo(nombre); //query.value(0).toString() contiene el nombre de la consulta actual
+        ui->comboBox_NODO->setCurrentIndex(ui->comboBox_NODO->findText(nombre));
     }
     else {
         insertaTexto("IP (" + ip + ") no valida");
@@ -586,8 +593,10 @@ void Sedes::on_comboBox_IP_activated(const QString &ip) {
 
 void Sedes::on_comboBox_NODO_activated(const QString &nombre) {
     QSqlQuery query = model->query();
+    QString ip = query.value(1).toString();
+
     consultaNodo(nombre);
-    ui->comboBox_IP->setCurrentIndex(ui->comboBox_IP->findText(query.value(1).toString()));
+    ui->comboBox_IP->setCurrentIndex(ui->comboBox_IP->findText(ip));
 }
 
 
@@ -764,16 +773,38 @@ void Sedes::on_comboBox_TLF_activated(const QString &arg1)
 {
     QSqlQuery query = model->query();
     QSqlQuery query_tlf = model_tlf->query();
-    QString  valor = query_tlf.value(0).toString();
+    QString  indice_tlf = query_tlf.value(0).toString();
+    QString  nombre_ayto = query.value(0).toString();
+    QString  ip = query.value(1).toString();
 
     query.first();
     while (query.next()) {
-            if ( query.value(4).toString() == valor ){
-                consultaNodo(query.value(0).toString()); //query.value(0).toString() contiene el nombre de la consulta actual
-                ui->comboBox_NODO->setCurrentIndex(ui->comboBox_NODO->findText(query.value(0).toString()));
-                continue;
-
-
+            if (( query.value(4).toString() == indice_tlf )&&(nombre_ayto!=query.value(0).toString())){
+                nombre_ayto = query.value(0).toString();
+                ip = query.value(1).toString();
+                consultaNodo(nombre_ayto); //query.value(0).toString() contiene el nombre del ayto de la consulta actual
+                ui->comboBox_NODO->setCurrentIndex(ui->comboBox_NODO->findText(nombre_ayto));
+                ui->comboBox_IP->setCurrentIndex(ui->comboBox_IP->findText(ip));
+                return;
+            }else{
+                    if (( query.value(4).toString() == indice_tlf )&&(nombre_ayto==query.value(0).toString()))
+                    {
+                        return;
+                    }
             }
-        }
+    }
+}
+
+
+void Sedes::on_comboBox_extension_activated(const QString &arg1)
+{
+    QSqlQuery query = model->query();
+    QString id = query.value(0).toString();
+    QString nombre = query.value(1).toString();
+    if (!arg1.isEmpty()) {
+        consultaNodo(id); //query.value(0).toString() contiene el nombre de la consulta actual
+        ui->comboBox_NODO->setCurrentIndex(ui->comboBox_NODO->findText(id));
+        ui->comboBox_IP->setCurrentIndex(ui->comboBox_IP->findText(nombre));
+    }
+
 }

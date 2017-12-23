@@ -207,6 +207,8 @@ class Sedes : public QWidget {
 
         void on_comboBox_TLF_activated(const QString &arg1);
 
+        void on_comboBox_extension_activated(const QString &arg1);
+
 private:
         Ui::Sedes *ui;
         QString modelo_router;

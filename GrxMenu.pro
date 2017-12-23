@@ -8,7 +8,7 @@ QT       += core gui  widgets sql network
 
 TARGET = GrxMenu
 TEMPLATE = app
-CONFIG += c++11 static
+CONFIG += c++11
 QMAKE_CFLAGS = -fpermissive
 QMAKE_CXXFLAGS = -fpermissive
 QMAKE_LFLAGS = -fpermissive
