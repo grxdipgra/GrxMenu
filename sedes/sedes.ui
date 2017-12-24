@@ -19,7 +19,7 @@
   <property name="statusTip">
    <string/>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -4098,6 +4098,12 @@ p, li { white-space: pre-wrap; }
                  </item>
                  <item>
                   <widget class="QFrame" name="frame_router">
+                   <property name="maximumSize">
+                    <size>
+                     <width>241</width>
+                     <height>105</height>
+                    </size>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>

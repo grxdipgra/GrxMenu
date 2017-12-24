@@ -64,7 +64,8 @@ SOURCES       = main.cpp \
 		acercade/acerdade.cpp \
 		mame/mame.cpp \
 		usuarios/hilousuarios.cpp \
-		usuarios/form_usuarios.cpp qrc_iconos.cpp \
+		usuarios/form_usuarios.cpp \
+		simplecrypt.cpp qrc_iconos.cpp \
 		moc_botonera.cpp \
 		moc_configuracion.cpp \
 		moc_sedes.cpp \
@@ -93,6 +94,7 @@ OBJECTS       = main.o \
 		mame.o \
 		hilousuarios.o \
 		form_usuarios.o \
+		simplecrypt.o \
 		qrc_iconos.o \
 		moc_botonera.o \
 		moc_configuracion.o \
@@ -211,7 +213,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		mame/mame.h \
 		usuarios/hilousuarios.h \
 		usuarios/form_usuarios.h \
-		usuarios/ldap.h main.cpp \
+		usuarios/ldap.h \
+		simplecrypt.h main.cpp \
 		botonera/botonera.cpp \
 		configuracion/configuracion.cpp \
 		soporte/nmap_xml.cpp \
@@ -225,7 +228,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		acercade/acerdade.cpp \
 		mame/mame.cpp \
 		usuarios/hilousuarios.cpp \
-		usuarios/form_usuarios.cpp
+		usuarios/form_usuarios.cpp \
+		simplecrypt.cpp
 QMAKE_TARGET  = GrxMenu
 DESTDIR       = 
 TARGET        = GrxMenu
@@ -448,8 +452,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents iconos.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents botonera/botonera.h configuracion/configuracion.h soporte/nmap_xml.h sedes/sedes.h soporte/soporte.h soporte/equipos.h tunel.h soporte/ejecutahilo.h soporte/tabescaner.h basedatos/basedatos.h acercade/acerdade.h mame/mame.h usuarios/hilousuarios.h usuarios/form_usuarios.h usuarios/ldap.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp botonera/botonera.cpp configuracion/configuracion.cpp soporte/nmap_xml.cpp sedes/sedes.cpp soporte/soporte.cpp soporte/equipos.cpp tunel.cpp soporte/ejecutahilo.cpp soporte/tabescaner.cpp basedatos/basedatos.cpp acercade/acerdade.cpp mame/mame.cpp usuarios/hilousuarios.cpp usuarios/form_usuarios.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents botonera/botonera.h configuracion/configuracion.h soporte/nmap_xml.h sedes/sedes.h soporte/soporte.h soporte/equipos.h tunel.h soporte/ejecutahilo.h soporte/tabescaner.h basedatos/basedatos.h acercade/acerdade.h mame/mame.h usuarios/hilousuarios.h usuarios/form_usuarios.h usuarios/ldap.h simplecrypt.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp botonera/botonera.cpp configuracion/configuracion.cpp soporte/nmap_xml.cpp sedes/sedes.cpp soporte/soporte.cpp soporte/equipos.cpp tunel.cpp soporte/ejecutahilo.cpp soporte/tabescaner.cpp basedatos/basedatos.cpp acercade/acerdade.cpp mame/mame.cpp usuarios/hilousuarios.cpp usuarios/form_usuarios.cpp simplecrypt.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents botonera/botonera.ui configuracion/configuracion.ui sedes/sedes.ui soporte/soporte.ui soporte/equipos.ui basedatos/basedatos.ui acercade/acerdade.ui mame/mame.ui usuarios/form_usuarios.ui $(DISTDIR)/
 
 
@@ -581,19 +585,22 @@ compiler_moc_header_make_all: moc_botonera.cpp moc_configuracion.cpp moc_sedes.c
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_botonera.cpp moc_configuracion.cpp moc_sedes.cpp moc_soporte.cpp moc_equipos.cpp moc_tunel.cpp moc_ejecutahilo.cpp moc_tabescaner.cpp moc_basedatos.cpp moc_acerdade.cpp moc_mame.cpp moc_hilousuarios.cpp moc_form_usuarios.cpp
 moc_botonera.cpp: configuracion/configuracion.h \
+		simplecrypt.h \
 		acercade/acerdade.h \
 		botonera/botonera.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include botonera/botonera.h -o moc_botonera.cpp
 
-moc_configuracion.cpp: configuracion/configuracion.h \
+moc_configuracion.cpp: simplecrypt.h \
+		configuracion/configuracion.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include configuracion/configuracion.h -o moc_configuracion.cpp
 
 moc_sedes.cpp: soporte/nmap_xml.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		sedes/sedes.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
@@ -612,6 +619,7 @@ moc_equipos.cpp: soporte/nmap_xml.h \
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alberto/GrxMenu -I/lib -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include soporte/equipos.h -o moc_equipos.cpp
 
 moc_tunel.cpp: configuracion/configuracion.h \
+		simplecrypt.h \
 		libssh2_config.h \
 		tunel.h \
 		moc_predefs.h \
@@ -649,6 +657,7 @@ moc_hilousuarios.cpp: usuarios/form_usuarios.h \
 		ldap.h \
 		ui_form_usuarios.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		usuarios/hilousuarios.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
@@ -657,6 +666,7 @@ moc_hilousuarios.cpp: usuarios/form_usuarios.h \
 moc_form_usuarios.cpp: ldap.h \
 		ui_form_usuarios.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		usuarios/form_usuarios.h \
 		moc_predefs.h \
 		/usr/lib/x86_64-linux-gnu/qt5/bin/moc
@@ -715,6 +725,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 main.o: main.cpp botonera/botonera.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		acercade/acerdade.h \
 		tunel.h \
 		libssh2_config.h
@@ -722,6 +733,7 @@ main.o: main.cpp botonera/botonera.h \
 
 botonera.o: botonera/botonera.cpp botonera/botonera.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		acercade/acerdade.h \
 		ui_botonera.h \
 		soporte/soporte.h \
@@ -738,6 +750,7 @@ botonera.o: botonera/botonera.cpp botonera/botonera.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o botonera.o botonera/botonera.cpp
 
 configuracion.o: configuracion/configuracion.cpp configuracion/configuracion.h \
+		simplecrypt.h \
 		ui_configuracion.h \
 		basedatos/basedatos.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o configuracion.o configuracion/configuracion.cpp
@@ -748,6 +761,7 @@ nmap_xml.o: soporte/nmap_xml.cpp soporte/nmap_xml.h
 sedes.o: sedes/sedes.cpp sedes/sedes.h \
 		soporte/nmap_xml.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		ui_sedes.h \
 		basedatos/basedatos.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sedes.o sedes/sedes.cpp
@@ -758,17 +772,20 @@ soporte.o: soporte/soporte.cpp soporte/soporte.h \
 		soporte/equipos.h \
 		soporte/tabescaner.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		soporte/ejecutahilo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o soporte.o soporte/soporte.cpp
 
 equipos.o: soporte/equipos.cpp soporte/equipos.h \
 		soporte/nmap_xml.h \
 		ui_equipos.h \
-		configuracion/configuracion.h
+		configuracion/configuracion.h \
+		simplecrypt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o equipos.o soporte/equipos.cpp
 
 tunel.o: tunel.cpp tunel.h \
 		configuracion/configuracion.h \
+		simplecrypt.h \
 		libssh2_config.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tunel.o tunel.cpp
 
@@ -797,14 +814,19 @@ hilousuarios.o: usuarios/hilousuarios.cpp usuarios/hilousuarios.h \
 		usuarios/form_usuarios.h \
 		ldap.h \
 		ui_form_usuarios.h \
-		configuracion/configuracion.h
+		configuracion/configuracion.h \
+		simplecrypt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hilousuarios.o usuarios/hilousuarios.cpp
 
 form_usuarios.o: usuarios/form_usuarios.cpp usuarios/form_usuarios.h \
 		ldap.h \
 		ui_form_usuarios.h \
-		configuracion/configuracion.h
+		configuracion/configuracion.h \
+		simplecrypt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o form_usuarios.o usuarios/form_usuarios.cpp
+
+simplecrypt.o: simplecrypt.cpp simplecrypt.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simplecrypt.o simplecrypt.cpp
 
 qrc_iconos.o: qrc_iconos.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_iconos.o qrc_iconos.cpp

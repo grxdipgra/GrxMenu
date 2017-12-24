@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     acercade/acerdade.cpp \
     mame/mame.cpp \
     usuarios/hilousuarios.cpp \
-    usuarios/form_usuarios.cpp
+    usuarios/form_usuarios.cpp \
+    simplecrypt.cpp
 
 HEADERS  += \
     botonera/botonera.h \
@@ -43,7 +44,8 @@ HEADERS  += \
     mame/mame.h \
     usuarios/hilousuarios.h \
     usuarios/form_usuarios.h \
-    usuarios/ldap.h
+    usuarios/ldap.h \
+    simplecrypt.h
 
 FORMS    += \
     botonera/botonera.ui \

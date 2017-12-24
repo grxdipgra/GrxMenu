@@ -32,9 +32,10 @@ Configuracion::Configuracion(QWidget *parent) :
     carga_configuracion_color();
 
 
-    ui->pushButton_2->setContextMenuPolicy(Qt::CustomContextMenu);
-    ui->Btn_Kerberos->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->pushButton_2, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
+    //Esto es para crear menus de boton secundario
+    ui->pB_tablasDB->setContextMenuPolicy(Qt::CustomContextMenu); //popup_menu boton secundario para tablas
+    ui->Btn_Kerberos->setContextMenuPolicy(Qt::CustomContextMenu);//popup_menu boton secundario para kerberos
+    connect(ui->pB_tablasDB, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
     connect(ui->Btn_Kerberos, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
 
 }
@@ -43,15 +44,13 @@ void Configuracion::help(){
     qDebug()<< "ayuda";
 }
 
-
 void Configuracion::color_widget(QObject * sender){
     change_color(sender);
 }
 
-
 void Configuracion::ctxMenu(const QPoint &pos) {
     QMenu *menu = new QMenu;
-    menu->addAction(tr("Color"), this, SLOT(color_widget(&sender())));
+    menu->addAction(tr("Color"), this, SLOT(Configuracion::color_widget(sender())));
     menu->addAction(tr("Ayuda"), this, SLOT(help()));
     menu->exec(this->mapToGlobal(pos));
 }
@@ -516,21 +515,22 @@ void Configuracion::carga_configuracion()
     home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grxconf.ini", QSettings::IniFormat);
     Tecnico = s.value("Configuracion/Tecnico").toString();
-    Clave = s.value("Configuracion/Clave").toString();
+    //Clave = s.value("Configuracion/Clave").toString());
+    Clave = cifra->decryptToString( s.value("Configuracion/Clave").toString());
     ServidorAD = s.value("Configuracion/ServidorAD").toString();
     UsuarioAD = s.value("Configuracion/UsuarioAD").toString();
-    ClaveAD = s.value("Configuracion/ClaveAD").toString();
+    ClaveAD = cifra->decryptToString( s.value("Configuracion/ClaveAD").toString());
     DataBaseName = s.value("Configuracion/DataBaseName").toString();
     HostName = s.value("Configuracion/HostName").toString();
     PuertoDB = s.value("Configuracion/PuertoDB").toString();
     UserName = s.value("Configuracion/UserName").toString();
-    PasswordDB = s.value("Configuracion/PasswordDB").toString();
+    PasswordDB =  cifra->decryptToString(s.value("Configuracion/PasswordDB").toString());
     UsarSSH = s.value("Configuracion/UsarSSH").toBool();
     UsarProxyChains = s.value("Configuracion/UsarProxyChains").toBool();
     ProxyChains = s.value("Configuracion/ProxyChains").toString();
     ServidorSSH = s.value("Configuracion/ServidorSSH").toString();
     UsuarioSSH =  s.value("Configuracion/UsuarioSSH").toString();
-    ClaveSSH = s.value("Configuracion/ClaveSSH").toString();
+    ClaveSSH = cifra->decryptToString(s.value("Configuracion/ClaveSSH").toString());
     PuertoRemotoSSH = s.value("Configuracion/PuertoRemotoSSH").toInt();
     PuertoLocalSSH = s.value("Configuracion/PuertoLocalSSH").toInt();
     ISL = s.value("Configuracion/ISL").toString();
@@ -554,9 +554,9 @@ void Configuracion::carga_configuracion()
     UsuarioRemoto = s.value("Configuracion/UsuarioRemoto").toString();
     Puerto = s.value("Configuracion/Puerto").toString();
     Correo = s.value("Configuracion/Correo").toString();
-    Password = s.value("Configuracion/Password").toString();
-    ClaveCifrado = s.value("Configuracion/ClaveCifrado").toString();
-    ClaveRemoto = s.value("Configuracion/ClaveRemoto").toString();
+    Password = cifra->decryptToString(s.value("Configuracion/Password").toString());
+    ClaveCifrado = cifra->decryptToString(s.value("Configuracion/ClaveCifrado").toString());
+    ClaveRemoto =cifra->decryptToString( s.value("Configuracion/ClaveRemoto").toString());
     Rdesktop = s.value("Configuracion/Rdesktop").toBool();
     Resolucion = s.value("Configuracion/Resolucion").toString();
     //Correo de incidencias
@@ -583,7 +583,7 @@ void Configuracion::carga_configuracion()
     Servidor_ldap = s.value("Configuracion/Servidor_ldap").toString();
     Puerto_ldap = s.value("Configuracion/Puerto_ldap").toInt();
     Usuario_ldap = s.value("Configuracion/Usuario_ldap").toString();
-    Clave_ldap = s.value("Configuracion/Clave_ldap").toString();
+    Clave_ldap = cifra->decryptToString(s.value("Configuracion/Clave_ldap").toString());
 
     UsarOuExternos = s.value("Configuracion/UsarOuExternos").toBool();
     UsarOuPerrera = s.value("Configuracion/UsarOuPerrera").toBool();
@@ -719,10 +719,10 @@ void Configuracion::on_buttonBox_accepted()
     QString home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grxconf.ini", QSettings::IniFormat);
     s.setValue("Configuracion/Tecnico", ui->tecnico->text());
-    s.setValue("Configuracion/Clave", ui->clave->text());
+    s.setValue("Configuracion/Clave", cifra->encryptToString(ui->clave->text()));
     s.setValue("Configuracion/ServidorAD", ui->servidor->text());
     s.setValue("Configuracion/UsuarioAD", ui->usuario_ad->text());
-    s.setValue("Configuracion/ClaveAD", ui->clave_ad->text());
+    s.setValue("Configuracion/ClaveAD", cifra->encryptToString(ui->clave_ad->text()));
     s.setValue("Configuracion/UsuarioRemoto",ui->usuario_remoto->text());
     s.setValue("Configuracion/Puerto", ui->puerto->text());
     s.setValue("Configuracion/Correo", ui->correoweb->text());
@@ -731,11 +731,11 @@ void Configuracion::on_buttonBox_accepted()
     s.setValue("Configuracion/DataBaseName",ui->DataBaseName->text());
     s.setValue("Configuracion/HostName", ui->servidor_DB->text());
     s.setValue("Configuracion/UserName", ui->Usuario_DB->text());
-    s.setValue("Configuracion/PasswordDB", ui->password_DB->text());
+    s.setValue("Configuracion/PasswordDB", cifra->encryptToString(ui->password_DB->text()));
     s.setValue("Configuracion/PuertoDB", ui->puerto_DB->text());
     s.setValue("Configuracion/ServidorSSH", ui->servidor_SSH->text());
     s.setValue("Configuracion/UsuarioSSH", ui->usuario_ssh_BD->text());
-    s.setValue("Configuracion/ClaveSSH", ui->clave_ssh_BD->text());
+    s.setValue("Configuracion/ClaveSSH", cifra->encryptToString(ui->clave_ssh_BD->text()));
     s.setValue("Configuracion/PuertoRemotoSSH", ui->puerto_Remoto_ssh->text());
     s.setValue("Configuracion/KeyFile_privada", ui->keyfile_privada->text());
     s.setValue("Configuracion/KeyFile_publica", ui->keyfile_publica->text());
@@ -744,9 +744,9 @@ void Configuracion::on_buttonBox_accepted()
     s.setValue("Configuracion/GLPI", ui->GLPI->text());
     s.setValue("Configuracion/Beiro", ui->beiro->text());
     s.setValue("Configuracion/Cronos", ui->cronos->text());
-    s.setValue("Configuracion/Password", ui->password->text());
-    s.setValue("Configuracion/ClaveCifrado",ui->clave_cifrado->text());
-    s.setValue("Configuracion/ClaveRemoto",ui->clave_remoto->text());
+    s.setValue("Configuracion/Password", cifra->encryptToString(ui->password->text()));
+    s.setValue("Configuracion/ClaveCifrado",cifra->encryptToString(ui->clave_cifrado->text()));
+    s.setValue("Configuracion/ClaveRemoto",cifra->encryptToString(ui->clave_remoto->text()));
     s.setValue("Configuracion/Resolucion",ui->cb_resolucion->currentText());
     s.setValue("Configuracion/fr_linux",Fr_linux);
     s.setValue("Configuracion/fr_kerberos",Fr_kerberos);
@@ -772,19 +772,16 @@ void Configuracion::on_buttonBox_accepted()
     s.setValue("Configuracion/UsarAtalaya",ui->checkBox_Atalaya->isChecked());
     s.setValue("Configuracion/SoloAytos",ui->checkBox_soloAytos->isChecked());
     s.setValue("Configuracion/Rdesktop",ui->rb_rdesktop->isChecked());
-
     s.setValue("Configuracion/PuertosBuscados_ssh",ui->checkBox_SSH->isChecked());
     s.setValue("Configuracion/PuertosBuscados_telnet",ui->checkBox_telnet->isChecked());
     s.setValue("Configuracion/PuertosBuscados_web",ui->checkBox_web->isChecked());
     s.setValue("Configuracion/PuertosBuscados_webssl",ui->checkBox_webssl->isChecked());
     s.setValue("Configuracion/PuertosBuscados_portPrinter",ui->checkBox_portPrinter->isChecked());
     s.setValue("Configuracion/PuertosBuscados_netbios",ui->checkBox_netbios->isChecked());
-
     s.setValue("Configuracion/Servidor_ldap", ui->lineEdit_ldap_servidorLdap->text());
     s.setValue("Configuracion/Puerto_ldap", ui->lineEdit_ldap_puerto->text());
     s.setValue("Configuracion/Usuario_ldap", ui->lineEdit_ldap_usuarioDominio->text());
-    s.setValue("Configuracion/Clave_ldap", ui->lineEdit_ldap_clave->text());
-
+    s.setValue("Configuracion/Clave_ldap", cifra->encryptToString(ui->lineEdit_ldap_clave->text()));
     s.setValue("Configuracion/UsarOuExternos",ui->checkBox_recursos_externos->isChecked());
     s.setValue("Configuracion/UsarOuPerrera",ui->checkBox_recursos_perrera->isChecked());
     s.setValue("Configuracion/UsarOuCie",ui->checkBox_cie->isChecked());
@@ -920,7 +917,7 @@ void Configuracion::on_pushButton_clicked()
     ui->label_ssh->setText(puertos_buscados());
 }
 
-void Configuracion::on_pushButton_2_clicked()
+void Configuracion::on_pB_tablasDB_clicked()
 {
     BaseDatos *basedatos = new BaseDatos;
     basedatos->show();

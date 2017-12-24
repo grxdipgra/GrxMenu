@@ -1,11 +1,13 @@
 #ifndef CONFIGURACION_H
 #define CONFIGURACION_H
 
+#include <QtGlobal>
 #include <QDialog>
 #include <QSettings>
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QDialogButtonBox>
+#include "simplecrypt.h"
 
 namespace Ui {
 class Configuracion;
@@ -17,6 +19,9 @@ class Configuracion : public QDialog
 
 public:
     explicit Configuracion(QWidget *parent = 0);
+
+
+
     QString cual_es_home();
     QString cual_es_ini();
     QString cual_es_tecnico();
@@ -159,10 +164,10 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_pB_tablasDB_clicked();
 
 private:
-
+ SimpleCrypt *cifra = new SimpleCrypt(Q_UINT64_C(0x0c2ad4a4acb9f023)); //lo usamos para cifrar las claves
     QString home_usuario;
     QString Tecnico;
     QString Correo;
@@ -234,8 +239,6 @@ private:
     bool UsarOuCpd;
     bool UsarOuAyuntamientos;
     QString lineEdit_OU;
-
-
 
 
 
