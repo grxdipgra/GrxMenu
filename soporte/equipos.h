@@ -2,19 +2,17 @@
 #define EQUIPOS_H
 #include "nmap_xml.h"
 #include <QWidget>
-
-/*
- * #include "KDSoapClient/KDSoapJob.h"
-#include "KDSoapClient/KDSoap.h"
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include "KDSoapClient/KDSoapClientInterface.h"
-#include "KDSoapClient/KDSoapMessage.h"
-#include "KDSoapClient/KDSoapValue.h"
-#include "KDSoapClient/KDSoapPendingCallWatcher.h"
-#include "KDSoapClient/KDSoapNamespaceManager.h"
-#include "KDSoapClient/KDSoapGlobal.h"
-*/
+#include <QCoreApplication>
+#include <QtCore/QUrl>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkCookie>
+#include <QHttpPart>
+#include <QDebug>
+#include "configuracion/configuracion.h"
 namespace Ui {
 class Equipos;
 }
@@ -27,7 +25,7 @@ public:
     explicit Equipos(Host *host,QWidget *parent = 0);
     QList <QString> host_ports_open(Host *host);
     ~Equipos();
-
+ void resultado(QNetworkReply * reply);
 private slots:
 
     int puerto_libre();
@@ -57,11 +55,16 @@ private slots:
     void botonesActivos(QString puertos);
 
     void desactivaBotones();
+
     void on_pB_update_clicked();
 
     void on_pB_creaIncidencia_clicked();
 
     void on_pB_ISL_clicked();
+
+    QString glpi_Login();
+
+
 
 private:
     Ui::Equipos *ui;

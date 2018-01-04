@@ -5,7 +5,8 @@
 #include <QProcess>
 #include <QTcpServer>
 #include <QDesktopServices>
-#include "configuracion/configuracion.h"
+
+
 
 QString host_ports_open_string(Host *host){
     QString lista;
@@ -216,15 +217,61 @@ void Equipos::on_pB_update_clicked()
 
 }
 
+void Equipos::resultado(QNetworkReply *){
+
+}
+
+QString Equipos::glpi_Login(){
+    QNetworkAccessManager mgr;
+    QByteArray datos;
+    datos.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?> "
+                 "<SOAP-ENV:Envelope "
+                     "xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "
+                     "xmlns:ns1=\"http://192.168.1.133/glpi/plugins/webservices/soap.php\" "
+                     "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
+                     "xmlns:ns2=\"http://xml.apache.org/xml-soap\" "
+                     "xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" "
+                     "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"> "
+                     "<SOAP-ENV:Body> "
+                         "<ns1:genericExecute> "
+                             "<params "
+                                 "xsi:type=\"ns2:Map\"> "
+                                 "<item> <key xsi:type=\"xsd:string\">method</key> <value xsi:type=\"xsd:string\">glpi.doLogin</value> </item>"
+                                 "<item> <key xsi:type=\"xsd:string\">login_name</key><value xsi:type=\"xsd:string\">glpi</value></item>"
+                                 "<item> <key xsi:type=\"xsd:string\">login_password</key><value xsi:type=\"xsd:string\">glpi</value></item>"
+                                 "</params> "
+                             "</ns1:genericExecute> "
+                         "</SOAP-ENV:Body> "
+                     "</SOAP-ENV:Envelope> "
+                 );
+
+
+    QNetworkRequest req( QUrl( QString("http://192.168.1.133/glpi/plugins/webservices/soap.php") ) );
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml; charset=utf-8 ");
+    req.setHeader(QNetworkRequest::UserAgentHeader, "PHP-SOAP");
+    req.setRawHeader("Host","192.168.1.133");
+    req.setRawHeader("SOAPAction","\"http://192.168.1.133/glpi/plugins/webservices/soap.php#genericExecute\"");
+    QByteArray postDataSize = QByteArray::number(datos.size());
+    req.setHeader(QNetworkRequest::ContentLengthHeader, postDataSize);
+    QNetworkReply *reply = mgr.post(req,datos);
+    connect(&mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(resultado(QNetworkReply* reply)));
+    //QVariant cookieVar = reply->header(QNetworkRequest::CookieHeader);
+
+    /*if (cookieVar.isValid()) {
+        QList<QNetworkCookie> cookies = cookieVar.value<QList<QNetworkCookie> >();
+        foreach (QNetworkCookie cookie, cookies) {
+             //qDebug()<<"jjjj"<< cookie<< reply->readAll();
+            // do whatever you want here
+        }
+    }
+    */
+
+}
+
 void Equipos::on_pB_creaIncidencia_clicked()
 {
-/*const QString endPoint = QLatin1String("http://192.168.1.138/glpi/plugins/webservices/soap.php");
-const QString messageNamespace =  QLatin1String("http://192.168.1.138/glpi/plugins/webservices/");
-KDSoapClientInterface client(endPoint,messageNamespace);
-KDSoapMessage message;
-message.addArgument (QLatin1String("glpi.listUser"),23);
-KDSoapMessage response = client.call(QLatin1String("glpi.listUser"),message);
-*/
+   glpi_Login();
 }
 
 void Equipos::on_pB_ISL_clicked()
