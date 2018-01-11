@@ -33,10 +33,10 @@ Configuracion::Configuracion(QWidget *parent) :
 
 
     //Esto es para crear menus de boton secundario
-    ui->pB_tablasDB->setContextMenuPolicy(Qt::CustomContextMenu); //popup_menu boton secundario para tablas
-    ui->Btn_Kerberos->setContextMenuPolicy(Qt::CustomContextMenu);//popup_menu boton secundario para kerberos
-    connect(ui->pB_tablasDB, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
-    connect(ui->Btn_Kerberos, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
+   //ui->pB_tablasDB->setContextMenuPolicy(Qt::CustomContextMenu); //popup_menu boton secundario para tablas
+   // ui->Btn_Kerberos->setContextMenuPolicy(Qt::CustomContextMenu);//popup_menu boton secundario para kerberos
+   // connect(ui->pB_tablasDB, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
+   // connect(ui->Btn_Kerberos, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
 
 }
 

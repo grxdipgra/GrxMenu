@@ -322,7 +322,7 @@ void Soporte::on_pB_listin_clicked()
 
 void Soporte::on_Btn_Glpi_clicked()
 {
-    //QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/glpi/front/central.php?active_entity="+QString::number(glpi)));
-    //QDesktopServices::openUrl(QUrl("https://glpi.dipgra.es/glpi/plugins/webservices/soap.php"));
+    QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/glpi/front/central.php?active_entity="+QString::number(glpi)));
+
 }
 

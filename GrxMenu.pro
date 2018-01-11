@@ -59,7 +59,7 @@ FORMS    += \
     usuarios/form_usuarios.ui
 
 INCLUDEPATH +=/lib
-LIBS += -lssh2 -lldap
+LIBS += -lssh2 -lldap -lcrypto -lssl -lsqlite3
 
 RESOURCES += \
     iconos.qrc

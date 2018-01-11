@@ -17,19 +17,51 @@ form_usuarios::form_usuarios(QWidget *parent) :
 {
     ui->setupUi(this);
 
+//------------------SQLITE
 
-    // rellenamos el combobox con todos los usuarios del dominio de las OU que se usan
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(":memory:");
+    if (!db.open()) {
+        QMessageBox::critical(nullptr, QObject::tr("No he podido crear la DB"),
+        QObject::tr("No ha sido posible crear la base de datos temporal de SQLITE.\n"
+                    "Comprueba que tengas instaladas las librerias de SQLITE"), QMessageBox::Cancel);
+        return;
+    }
+
+
+        QSqlQuery query;
+        query.exec("create table ldap (id int primary key,"
+               "usuario varchar(20),"
+               "nombre varchar (100), "
+               "cambio_clave varchar(10),"
+               "clave_caducada varchar(10),"
+               "correo varchar(100),"
+               "creada varchar(10),"
+               "estado varchar(10),"
+               "fecha_correo varchar(10),"
+               "intentos varchar(2),"
+               "logon varchar(6),"
+               "modificacion_cuenta varchar(10),"
+               "telefono varchar(10),"
+               "ultimo_login varchar(10),"
+               "descripcion varchar(100) )");
+
+
+
+
+//-------------------
+   // rellenamos el combobox con todos los usuarios del dominio de las OU que se usan
 
     // variables para CONSULTA LDAP --------------------------------------------------------------------------
     LDAPMessage *resul_consul, *entry;
     BerElement *ber;
     // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
     int  num_entradas  = 0;
-    // dn guarda el DN name string the los objetos devueltos por la consulta
+    // dn guarda el DN name string de los objetos devueltos por la consulta
     char *dn            = "";
     // atributo guarda el nombre de los atributos de los objetos devueltos
     char *atributo     = "";
-    // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
+    // values es un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
     char **values;
     char *attrs[]       = {NULL};
     // variables para CONSULTA LDAP --------------------------------------------------------------------------
@@ -40,6 +72,7 @@ form_usuarios::form_usuarios(QWidget *parent) :
         // lo usamos para ir guardando los resultados de las consultas, ordenarlo y luego se lo pasamos al combo
         QStringList a;
         QStringList b;
+        int id_tmp=0;
 
         if (carga_OU()){ //Si hay unidades organizativas realizamos las búsquedas
         int i=0;
@@ -51,57 +84,198 @@ form_usuarios::form_usuarios(QWidget *parent) :
             // Devuelve el numero de objetos encontrados durante la busqueda
             num_entradas = ldap_count_entries(ldap, resul_consul);
             if ( num_entradas == 0 ) {
-               QMessageBox::critical(this, "Ldap Error", "LDAP no ha devuelto ningun resultado\nRevise la configuracion de ldap", QMessageBox::Ok);
+               QMessageBox::critical(this, "Ldap Error", "LDAP no ha devuelto ningun resultado\nRevise la configuracion de ldap o la consulta", QMessageBox::Ok);
             }
             else {
-               printf("LDAP search returned %d objects.\n", num_entradas);
+               printf("La búsqueda LDAP ha devuelto %d objectos.\n", num_entradas);
 
+               // recorremos todos los objetos (entry) devueltos por la consulta
+               // cada entry tiene atributos
+               for ( entry = ldap_first_entry(ldap, resul_consul); entry != NULL; entry = ldap_next_entry(ldap, entry))
+               {
 
-                // recorremos todos los objetos (entry) devueltos por la consulta
-                // cada entry tiene atributos
-                for ( entry = ldap_first_entry(ldap, resul_consul); entry != NULL; entry = ldap_next_entry(ldap, entry))
-                {
-
-                    // Imprimimos la cadena DN del objeto
+                    // Capturamos la cadena DN del objeto
                     dn = ldap_get_dn(ldap, entry);
-                    //printf("Found Object: %s\n", dn);
+                    //limpiamos el struct entrada
+                    limpia_entrada();
 
                     // recorremos todos los atributos de cada entry
                     for ( atributo = ldap_first_attribute(ldap, entry, &ber);atributo != NULL;
                          atributo = ldap_next_attribute(ldap, entry, ber))
                     {
 
+
+
                         if (QString::fromStdString(atributo)=="sAMAccountName"){
                             if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-                                // recorreomos todos los valores devueltos por este atributo
+                                // recorremos todos los valores devueltos por este atributo
                                 for (i = 0; values[i] != NULL; i++) {
-                                    a<<QString::fromStdString(values[i]).toUpper();
-                                    //en usuario_basedn guardamos usuario$base_dn para consultar el dn (UO y dominio) del usuario en memoria
-                                    usuario_basedn<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                   entrada.usuario=values[i];
+                                   //a<<QString::fromStdString(values[i]).toUpper();
+                                   // printf("a: %s\n", values[i]);
+                                   //en usuario_basedn guardamos usuario$base_dn para consultar el dn (UO y dominio) del usuario en memoria
+                                   //usuario_basedn<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
 
                                 }
                                 ldap_value_free(values);
                             }
                         }
                         if (QString::fromStdString(atributo)=="cn"){
-                 if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-                     //ldap_sort_values(ldap,values,LDAP_SORT_AV_CMP_PROC("a","x"));
-                   // recorreomos todos los valores devueltos por este atributo
-                   for (i = 0; values[i] != NULL; i++) {
-                        b<<QString::fromStdString(values[i]).toUpper();
-                        usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
-                     // print each value of a attribute here
-                     //printf("%s: %s\n", atributo, values[i] );
-                   }
-                   ldap_value_free(values);
-                 }
-              }
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.nombre=values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="lastLogonTimestamp"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.ultimo_login = values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="logonCount"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.ultimo_login =values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="lockoutTime"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.estado =values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="badPasswordTime"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.caduca_clave = values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="accountExpires"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.caduca_cuenta = values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="pwdLastSet"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.cambio_clave = values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="whenCreated"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.creada = values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+                        if (QString::fromStdString(atributo)=="msExchWhenMailboxCreated"){
+                            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                                // recorremos todos los valores devueltos por este atributo
+                                for (i = 0; values[i] != NULL; i++) {
+                                    entrada.fecha_correo = values[i];
+
+
+                                    //b<<QString::fromStdString(values[i]).toUpper();
+                                    //usuario_basedn2<<QString::fromStdString(values[i]).toUpper() + "$" + qstr;
+                                    // print each value of a attribute here
+                                    //printf("%s: %s\n", atributo, values[i] );
+                                }
+                                ldap_value_free(values);
+                            }
+                        }
+
+
+
+
+
                     }
                     ldap_memfree(dn);
-                }
-                ldap_msgfree(resul_consul);
+                    qDebug()<<entrada.usuario;
+                    qDebug()<<entrada.nombre;
+                    qDebug()<<entrada.creada;
+                    qDebug()<<entrada.caduca_clave;
+                    qDebug()<<entrada.correo;
+                    qDebug()<<entrada.estado;
+                    qDebug()<<entrada.intentos;
+
+                    //query.exec("insert into ldap values(\""+id_tmp.+"\", 'Danny', 'Young')");
+               }
+               ldap_msgfree(resul_consul);
             }
         }
+
 
         //ordenamos la lista
         qSort(usuario_basedn);//ordenamos el QStringList
@@ -115,6 +289,26 @@ form_usuarios::form_usuarios(QWidget *parent) :
     }
     }
 }
+
+void form_usuarios::limpia_entrada(){
+    entrada.cambio_clave="";
+    entrada.clave="";
+    entrada.correo="";
+    entrada.creada="";
+    entrada.descripcion="";
+    entrada.estado="";
+    entrada.fecha_correo="";
+    entrada.id_entry=0;
+    entrada.intentos=0;
+    entrada.logon=0;
+    entrada.modificacion_cuenta="";
+    entrada.nombre="";
+    entrada.telefono="";
+    entrada.ultimo_login="";
+    entrada.usuario="";
+
+}
+
 
 form_usuarios::~form_usuarios()
 {
@@ -161,10 +355,9 @@ bool form_usuarios::conecta_oldap() {
 
     // STEP 1: Establecer la conexión LDAP y fijar preferencias de la sesión ***************************************
      Qstr="ldap://" + QString::fromStdString(ldap_host) + ":" + QString::number(ldap_port);
-     if(ldap_initialize(&ldap, Qstr.toLocal8Bit()))
-     {
-     ui->label_estado->setText(QString ("No ha sido posible conectarse al servidor %1 en el puerto %2...revise la configuración").arg(ldap_host).arg(ldap_port));
-     return false;
+     if(ldap_initialize(&ldap, Qstr.toLocal8Bit())) {
+        ui->label_estado->setText(QString ("No ha sido posible conectarse al servidor %1 en el puerto %2...revise la configuración").arg(ldap_host).arg(ldap_port));
+        return false;
      }
      ui->label_estado->setText(QString ("Conectado al servidor %1 en el puerto %2...").arg(ldap_host).arg(ldap_port));
 

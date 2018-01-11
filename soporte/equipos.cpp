@@ -5,8 +5,8 @@
 #include <QProcess>
 #include <QTcpServer>
 #include <QDesktopServices>
-
-
+#include "configuracion.h"
+#include <QEventLoop>
 
 QString host_ports_open_string(Host *host){
     QString lista;
@@ -30,7 +30,7 @@ Equipos::Equipos(Host *host, QWidget *parent) :
     host_tmp=host;//Guardamos para toda la clase el valor de host en variable global
     QString puertos;
     ip=host->address.addr;
-    QString puertos_abiertos= host_ports_open_string(host);
+    QString puertos_abiertos = host_ports_open_string(host);
     ui->setupUi(this);
     botonesActivos(puertos_abiertos);
     ui->lineEdit_ip->setText(ip);
@@ -217,61 +217,70 @@ void Equipos::on_pB_update_clicked()
 
 }
 
-void Equipos::resultado(QNetworkReply *){
-
+void Equipos::resultado(QNetworkReply *reply){
+qDebug()<<reply->readAll();
 }
 
-QString Equipos::glpi_Login(){
+void Equipos::autenticando(QNetworkReply *aReply,QAuthenticator *aAuthenticator)
+{
+    Configuracion *config = new Configuracion();
+    aAuthenticator->setUser(config->cual_es_tecnico());
+    aAuthenticator->setPassword(config->cual_es_clave());
+    qDebug()<<"se ha necesitado clave";
+    delete config;
+}
+
+
+QString Equipos::glpi_Login(QByteArray glpi){
     QNetworkAccessManager mgr;
     QByteArray datos;
-    datos.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?> "
+    datos.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                  "<SOAP-ENV:Envelope "
                      "xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "
-                     "xmlns:ns1=\"http://192.168.1.133/glpi/plugins/webservices/soap.php\" "
+                     "xmlns:ns1=\"https://glpi.dipgra.es/glpi/plugins/webservices/soap.php\" "
                      "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
                      "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
                      "xmlns:ns2=\"http://xml.apache.org/xml-soap\" "
                      "xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" "
-                     "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"> "
-                     "<SOAP-ENV:Body> "
-                         "<ns1:genericExecute> "
-                             "<params "
-                                 "xsi:type=\"ns2:Map\"> "
-                                 "<item> <key xsi:type=\"xsd:string\">method</key> <value xsi:type=\"xsd:string\">glpi.doLogin</value> </item>"
-                                 "<item> <key xsi:type=\"xsd:string\">login_name</key><value xsi:type=\"xsd:string\">glpi</value></item>"
-                                 "<item> <key xsi:type=\"xsd:string\">login_password</key><value xsi:type=\"xsd:string\">glpi</value></item>"
-                                 "</params> "
-                             "</ns1:genericExecute> "
-                         "</SOAP-ENV:Body> "
-                     "</SOAP-ENV:Envelope> "
+                     "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                     "<SOAP-ENV:Body>"
+                         "<ns1:genericExecute>"
+                             "<params xsi:type=\"ns2:Map\">"
+                                 "<item><key xsi:type=\"xsd:string\">method</key><value xsi:type=\"xsd:string\">glpi.doLogin</value></item>"
+                                 "<item><key xsi:type=\"xsd:string\">login_name</key><value xsi:type=\"xsd:string\">prueba</value></item>"
+                                 "<item><key xsi:type=\"xsd:string\">login_password</key><value xsi:type=\"xsd:string\">password</value></item>"
+                                 "</params>"
+                             "</ns1:genericExecute>"
+                         "</SOAP-ENV:Body>"
+                     "</SOAP-ENV:Envelope>"
                  );
 
 
-    QNetworkRequest req( QUrl( QString("http://192.168.1.133/glpi/plugins/webservices/soap.php") ) );
+    QNetworkRequest req( QUrl( QString("https://glpi.dipgra.es/glpi/plugins/webservices/soap.php") ) );
+
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml; charset=utf-8 ");
     req.setHeader(QNetworkRequest::UserAgentHeader, "PHP-SOAP");
-    req.setRawHeader("Host","192.168.1.133");
-    req.setRawHeader("SOAPAction","\"http://192.168.1.133/glpi/plugins/webservices/soap.php#genericExecute\"");
+    req.setRawHeader("Host","https://glpi.dipgra.es/glpi");
+    req.setRawHeader("SOAPAction","\"https://glpi.dipgra.es/glpi/plugins/webservices/soap.php#genericExecute\"");
     QByteArray postDataSize = QByteArray::number(datos.size());
     req.setHeader(QNetworkRequest::ContentLengthHeader, postDataSize);
+
+
     QNetworkReply *reply = mgr.post(req,datos);
-    connect(&mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(resultado(QNetworkReply* reply)));
-    //QVariant cookieVar = reply->header(QNetworkRequest::CookieHeader);
-
-    /*if (cookieVar.isValid()) {
-        QList<QNetworkCookie> cookies = cookieVar.value<QList<QNetworkCookie> >();
-        foreach (QNetworkCookie cookie, cookies) {
-             //qDebug()<<"jjjj"<< cookie<< reply->readAll();
-            // do whatever you want here
-        }
-    }
-    */
-
-}
+    connect (&mgr, SIGNAL (authenticationRequired(QNetworkReply *,QAuthenticator *)),this,SLOT(autenticando(QNetworkReply *,QAuthenticator *)) );
+    QEventLoop loop;
+    connect(&mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(resultado(QNetworkReply*)));
+    loop.exec();
+ }
 
 void Equipos::on_pB_creaIncidencia_clicked()
 {
-   glpi_Login();
+    Configuracion *config = new Configuracion();
+    QByteArray tmp;
+    tmp.append(config->cual_es_glpi());
+    glpi_Login(tmp);
+    delete config;
+
 }
 
 void Equipos::on_pB_ISL_clicked()

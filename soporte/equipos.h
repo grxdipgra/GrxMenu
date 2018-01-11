@@ -13,6 +13,7 @@
 #include <QHttpPart>
 #include <QDebug>
 #include "configuracion/configuracion.h"
+#include <QAuthenticator>
 namespace Ui {
 class Equipos;
 }
@@ -25,8 +26,9 @@ public:
     explicit Equipos(Host *host,QWidget *parent = 0);
     QList <QString> host_ports_open(Host *host);
     ~Equipos();
- void resultado(QNetworkReply * reply);
+
 private slots:
+    void autenticando(QNetworkReply *aReply,QAuthenticator *aAuthenticator);
 
     int puerto_libre();
 
@@ -62,9 +64,9 @@ private slots:
 
     void on_pB_ISL_clicked();
 
-    QString glpi_Login();
+    QString glpi_Login(QByteArray glpi);
 
-
+    void resultado(QNetworkReply *reply);
 
 private:
     Ui::Equipos *ui;

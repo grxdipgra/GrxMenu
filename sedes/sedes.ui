@@ -171,8 +171,8 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
            <widget class="QGroupBox" name="groupBox_localizacion">
@@ -6521,17 +6521,17 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Light">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>255</red>
-                 <green>255</green>
+                 <red>213</red>
+                 <green>234</green>
                  <blue>255</blue>
                 </color>
                </brush>
@@ -6539,27 +6539,27 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Midlight">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>220</red>
-                 <green>222</green>
-                 <blue>218</blue>
+                 <red>149</red>
+                 <green>202</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Dark">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>93</red>
-                 <green>94</green>
-                 <blue>91</blue>
+                 <red>42</red>
+                 <green>85</green>
+                 <blue>127</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Mid">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>124</red>
-                 <green>126</green>
-                 <blue>121</blue>
+                 <red>56</red>
+                 <green>113</green>
+                 <blue>170</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6576,8 +6576,8 @@ p, li { white-space: pre-wrap; }
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
                  <red>255</red>
-                 <green>255</green>
-                 <blue>255</blue>
+                 <green>180</green>
+                 <blue>248</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6593,8 +6593,8 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>255</red>
-                 <green>255</green>
+                 <red>242</red>
+                 <green>193</green>
                  <blue>255</blue>
                 </color>
                </brush>
@@ -6602,9 +6602,9 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6617,12 +6617,21 @@ p, li { white-space: pre-wrap; }
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="HighlightedText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>212</red>
+                 <green>241</green>
+                 <blue>230</blue>
+                </color>
+               </brush>
+              </colorrole>
               <colorrole role="AlternateBase">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>220</red>
-                 <green>222</green>
-                 <blue>218</blue>
+                 <red>170</red>
+                 <green>212</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6658,17 +6667,17 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Light">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>255</red>
-                 <green>255</green>
+                 <red>213</red>
+                 <green>234</green>
                  <blue>255</blue>
                 </color>
                </brush>
@@ -6676,27 +6685,27 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Midlight">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>220</red>
-                 <green>222</green>
-                 <blue>218</blue>
+                 <red>149</red>
+                 <green>202</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Dark">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>93</red>
-                 <green>94</green>
-                 <blue>91</blue>
+                 <red>42</red>
+                 <green>85</green>
+                 <blue>127</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Mid">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>124</red>
-                 <green>126</green>
-                 <blue>121</blue>
+                 <red>56</red>
+                 <green>113</green>
+                 <blue>170</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6713,8 +6722,8 @@ p, li { white-space: pre-wrap; }
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
                  <red>255</red>
-                 <green>255</green>
-                 <blue>255</blue>
+                 <green>180</green>
+                 <blue>248</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6730,8 +6739,8 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>255</red>
-                 <green>255</green>
+                 <red>242</red>
+                 <green>193</green>
                  <blue>255</blue>
                 </color>
                </brush>
@@ -6739,9 +6748,9 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6754,12 +6763,21 @@ p, li { white-space: pre-wrap; }
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="HighlightedText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>212</red>
+                 <green>241</green>
+                 <blue>230</blue>
+                </color>
+               </brush>
+              </colorrole>
               <colorrole role="AlternateBase">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>220</red>
-                 <green>222</green>
-                 <blue>218</blue>
+                 <red>170</red>
+                 <green>212</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6786,26 +6804,26 @@ p, li { white-space: pre-wrap; }
               <colorrole role="WindowText">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>93</red>
-                 <green>94</green>
-                 <blue>91</blue>
+                 <red>42</red>
+                 <green>85</green>
+                 <blue>127</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Button">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Light">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>255</red>
-                 <green>255</green>
+                 <red>213</red>
+                 <green>234</green>
                  <blue>255</blue>
                 </color>
                </brush>
@@ -6813,36 +6831,36 @@ p, li { white-space: pre-wrap; }
               <colorrole role="Midlight">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>220</red>
-                 <green>222</green>
-                 <blue>218</blue>
+                 <red>149</red>
+                 <green>202</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Dark">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>93</red>
-                 <green>94</green>
-                 <blue>91</blue>
+                 <red>42</red>
+                 <green>85</green>
+                 <blue>127</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Mid">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>124</red>
-                 <green>126</green>
-                 <blue>121</blue>
+                 <red>56</red>
+                 <green>113</green>
+                 <blue>170</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Text">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>93</red>
-                 <green>94</green>
-                 <blue>91</blue>
+                 <red>42</red>
+                 <green>85</green>
+                 <blue>127</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6850,35 +6868,35 @@ p, li { white-space: pre-wrap; }
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
                  <red>255</red>
-                 <green>255</green>
-                 <blue>255</blue>
+                 <green>180</green>
+                 <blue>248</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="ButtonText">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>93</red>
-                 <green>94</green>
-                 <blue>91</blue>
+                 <red>42</red>
+                 <green>85</green>
+                 <blue>127</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Base">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
               <colorrole role="Window">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6891,12 +6909,21 @@ p, li { white-space: pre-wrap; }
                 </color>
                </brush>
               </colorrole>
+              <colorrole role="HighlightedText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>212</red>
+                 <green>241</green>
+                 <blue>230</blue>
+                </color>
+               </brush>
+              </colorrole>
               <colorrole role="AlternateBase">
                <brush brushstyle="SolidPattern">
                 <color alpha="255">
-                 <red>186</red>
-                 <green>189</green>
-                 <blue>182</blue>
+                 <red>85</red>
+                 <green>170</green>
+                 <blue>255</blue>
                 </color>
                </brush>
               </colorrole>
@@ -6927,135 +6954,160 @@ p, li { white-space: pre-wrap; }
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QGridLayout" name="gridLayout_9">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QPushButton" name="pB_web">
-                  <property name="text">
-                   <string>web</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pB_sede_2">
-                  <property name="text">
-                   <string>Sede E.</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pB_tablon_2">
-                  <property name="text">
-                   <string>Tablón</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pB_portalTransparencia_2">
-                  <property name="text">
-                   <string>Portal Trans.</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_web">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">border-width:4px</string>
-                  </property>
-                  <property name="inputMethodHints">
-                   <set>Qt::ImhUrlCharactersOnly</set>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_sede_2">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="inputMethodHints">
-                   <set>Qt::ImhUrlCharactersOnly</set>
-                  </property>
-                  <property name="maxLength">
-                   <number>128</number>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_tablon_2">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"> border-width: 2px;</string>
-                  </property>
-                  <property name="inputMethodHints">
-                   <set>Qt::ImhUrlCharactersOnly</set>
-                  </property>
-                  <property name="maxLength">
-                   <number>256</number>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_portal_transparencia_2">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
-                  </property>
-                  <property name="inputMethodHints">
-                   <set>Qt::ImhUrlCharactersOnly</set>
-                  </property>
-                  <property name="maxLength">
-                   <number>256</number>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
+           <widget class="QWidget" name="">
+            <property name="geometry">
+             <rect>
+              <x>11</x>
+              <y>11</y>
+              <width>611</width>
+              <height>119</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QPushButton" name="pB_web">
+                 <property name="text">
+                  <string>web</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pB_sede_2">
+                 <property name="text">
+                  <string>Sede E.</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pB_tablon_2">
+                 <property name="text">
+                  <string>Tablón</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pB_portalTransparencia_2">
+                 <property name="text">
+                  <string>Portal Trans.</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <property name="spacing">
+                <number>1</number>
+               </property>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_4">
+                 <item row="0" column="0">
+                  <widget class="QLineEdit" name="lineEdit_web">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:4px;</string>
+                   </property>
+                   <property name="inputMethodHints">
+                    <set>Qt::ImhUrlCharactersOnly</set>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_5">
+                 <item row="0" column="0">
+                  <widget class="QLineEdit" name="lineEdit_sede_2">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:4px;</string>
+                   </property>
+                   <property name="inputMethodHints">
+                    <set>Qt::ImhUrlCharactersOnly</set>
+                   </property>
+                   <property name="maxLength">
+                    <number>128</number>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_6">
+                 <item row="0" column="0">
+                  <widget class="QLineEdit" name="lineEdit_tablon_2">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:4px;</string>
+                   </property>
+                   <property name="inputMethodHints">
+                    <set>Qt::ImhUrlCharactersOnly</set>
+                   </property>
+                   <property name="maxLength">
+                    <number>256</number>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_9">
+                 <item row="0" column="0">
+                  <widget class="QLineEdit" name="lineEdit_portal_transparencia_2">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:4px;</string>
+                   </property>
+                   <property name="inputMethodHints">
+                    <set>Qt::ImhUrlCharactersOnly</set>
+                   </property>
+                   <property name="maxLength">
+                    <number>256</number>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
           <widget class="QFrame" name="frame_programas">
            <property name="geometry">

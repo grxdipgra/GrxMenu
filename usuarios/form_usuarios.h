@@ -20,6 +20,10 @@
 
 #include "ui_form_usuarios.h"
 #include "configuracion/configuracion.h"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+
 
 namespace Ui {
 class form_usuarios;
@@ -53,6 +57,8 @@ private slots:
 
     void on_boton_desbloquear_clicked();
 
+    void limpia_entrada();
+
     bool carga_OU();
 
     LDAPMessage * consulta_oldap(char *filtro, char *attrs[], int attrsonly, const char * base_dn, int scope);
@@ -73,7 +79,26 @@ private:
     QStringList usuario_basedn;
     QStringList usuario_basedn2;
     QString DN; //guardamos la cadena dn del objeto actual
+    struct entry{
+        int id_entry;
+        char *usuario;
+        char *nombre;
+        char *cambio_clave;
+        char *clave;
+        char *correo;
+        char *creada;
+        char *estado;
+        char *fecha_correo;
+        int intentos;
+        int logon;
+        char *modificacion_cuenta;
+        char *telefono;
+        char *ultimo_login;
+        char *descripcion;
+        char *caduca_clave;
+        char *caduca_cuenta;
 
+    }entrada;
 
 
 
