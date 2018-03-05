@@ -189,6 +189,13 @@ QString  Configuracion::cual_es_usuario_ldap(){
     return Usuario_ldap;
 }
 
+QString  Configuracion::cual_es_usuario_logado(){
+    QString name = qgetenv("USER");
+    if (name.isEmpty())
+        name = qgetenv("USERNAME");
+    return name;
+}
+
 QString  Configuracion::cual_es_clave_ldap(){
     return Clave_ldap;
 }

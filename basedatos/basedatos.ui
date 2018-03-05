@@ -33,7 +33,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tablas">
           <property name="currentIndex">
-           <number>10</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="municipio">
            <attribute name="title">
@@ -186,7 +186,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="iconos.qrc">
+                <iconset>
                  <normaloff>:/imagenes/iconos/botonera/sql.svg</normaloff>:/imagenes/iconos/botonera/sql.svg</iconset>
                </property>
                <property name="iconSize">
@@ -286,8 +286,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="iconos.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

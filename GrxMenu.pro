@@ -45,7 +45,8 @@ HEADERS  += \
     usuarios/hilousuarios.h \
     usuarios/form_usuarios.h \
     usuarios/ldap.h \
-    configuracion/simplecrypt.h
+    configuracion/simplecrypt.h \
+    lib/lib.h
 
 FORMS    += \
     botonera/botonera.ui \
@@ -58,7 +59,7 @@ FORMS    += \
     mame/mame.ui \
     usuarios/form_usuarios.ui
 
-INCLUDEPATH +=/lib
+INCLUDEPATH +=/lib /usr/lib/x86_64-linux-gnu/
 LIBS += -lssh2 -lldap -lcrypto -lssl -lsqlite3
 
 RESOURCES += \

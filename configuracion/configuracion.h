@@ -23,6 +23,8 @@ public:
 
 
     QString cual_es_home();
+    QString cual_es_ruta_grxmenu_config();
+    QString cual_es_path();
     QString cual_es_ini();
     QString cual_es_tecnico();
     QString cual_es_clave();
@@ -52,7 +54,7 @@ public:
     QString cual_es_clave_cifrado();
     QString cual_es_clave_remoto();
     QString cual_es_proxychains();
-
+    QString cual_es_usuario_logado();
     QString puertos_buscados();
 
     bool es_rdesktop();
@@ -188,6 +190,8 @@ private:
     QString UserName;
     QString PuertoDB;
     QString PasswordDB;
+    QString Path;
+    QString RutaConfigGrxmenu;
     bool UsarSSH;
     //QString UsarUsuarios;
     bool UsarUsuarios;

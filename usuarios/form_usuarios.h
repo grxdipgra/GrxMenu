@@ -23,7 +23,7 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
-
+#include <QSqlQueryModel>
 
 namespace Ui {
 class form_usuarios;
@@ -49,8 +49,6 @@ private slots:
 
     int num_entradas_oldap(LDAPMessage *resul_consul);
 
-    void rellena(QString consulta, QString base_DN);
-
     void on_comboBox_usuarios_activated(const QString &arg1);
 
     void on_comboBox_nombres_activated(const QString &arg1);
@@ -61,7 +59,19 @@ private slots:
 
     bool carga_OU();
 
+    void carga_datos_usuario(int tipo, QString filtro);
+
     LDAPMessage * consulta_oldap(char *filtro, char *attrs[], int attrsonly, const char * base_dn, int scope);
+
+    void on_boton_renovar_clicked();
+
+    void actualizar_usuarios();
+
+    void on_boton_actualiza_usuarios_clicked();
+
+    void actualiza_usuario();
+
+    void on_boton_actualiza_usuario_clicked();
 
 private:
     Ui::form_usuarios *ui;
@@ -81,23 +91,23 @@ private:
     QString DN; //guardamos la cadena dn del objeto actual
     struct entry{
         int id_entry;
-        char *usuario;
-        char *nombre;
-        char *cambio_clave;
-        char *clave;
-        char *correo;
-        char *creada;
-        char *estado;
-        char *fecha_correo;
+       QString usuario;
+        QString nombre;
+        QString cambio_clave;
+        QString clave;//no hace falta no se guarda en la BD
+        QString correo;
+        QString creada;
+        QString estado;
+        QString fecha_correo;
         int intentos;
         int logon;
-        char *modificacion_cuenta;
-        char *telefono;
-        char *ultimo_login;
-        char *descripcion;
-        char *caduca_clave;
-        char *caduca_cuenta;
-
+        QString modificacion_cuenta;
+        QString telefono;
+        QString ultimo_login;
+        QString descripcion;
+        QString caduca_clave;
+        QString caduca_cuenta;
+        QString dn;
     }entrada;
 
 

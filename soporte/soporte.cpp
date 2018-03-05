@@ -106,27 +106,27 @@ void Soporte::on_cb_sede_activated(const QString &nombre)
     consultar.prepare(QString("select * from nodo where nombre = :nombre"));
     consultar.bindValue(":nombre", nombre);
     if (consultar.exec() and consultar.first()){
-            idNodo = consultar.value(1).toString();
-            ui->lineEdit_ip->setText(consultar.value(21).toString());
-            ui->lineEdit_adsl->setText(consultar.value(19).toString());
-            ui->lineEdit_n_adm->setText(consultar.value(20).toString());
-            ui->lineEdit_direccion->setText(consultar.value(5).toString());
-            ui->lineEdit_numero->setText(consultar.value(6).toString());
-            ui->lineEdit_servicio->setText(consultar.value(23).toString());
-            ui->lineEdit_caudal->setText(consultar.value(24).toString());
-            ui->lineEdit_extension->setText(consultar.value(15).toString());
+            idNodo = consultar.value(NUM_COL_NODO_IDPOBLACION).toString();
+            ui->lineEdit_ip->setText(consultar.value(NUM_COL_NODO_IPLINEA).toString());
+            ui->lineEdit_adsl->setText(consultar.value(NUM_COL_NODO_ADSLLINEA).toString());
+            ui->lineEdit_n_adm->setText(consultar.value(NUM_COL_NODO_NUMADMINISTRATIVO).toString());
+            ui->lineEdit_direccion->setText(consultar.value(NUM_COL_NODO_NOMBREDIRECCION).toString());
+            ui->lineEdit_numero->setText(consultar.value(NUM_COL_NODO_NUMERODIRECCION).toString());
+            ui->lineEdit_servicio->setText(consultar.value(NUM_COL_NODO_SERVICIOLINEA).toString());
+            ui->lineEdit_caudal->setText(consultar.value(NUM_COL_NODO_EQUIPAMIENTO).toString());
+            ui->lineEdit_extension->setText(consultar.value(NUM_COL_NODO_EXTENSION).toString());
 
             consultar_telefono.prepare(QString("select * from telefononodo where idNodo =:idNodo"));
             consultar_telefono.bindValue(":idNodo",idNodo);
 
             if (consultar_telefono.exec() and consultar_telefono.first()){
-                ui->lineEdit_telefono->setText(consultar_telefono.value(1).toString());
+                ui->lineEdit_telefono->setText(consultar_telefono.value(NUM_COL_TELEFONO_TELEFONO).toString());
             }
             consultar_poblacion.prepare(QString("select * from poblacion where id =:idPoblacion"));
-            consultar_poblacion.bindValue(":idPoblacion", consultar.value(1).toString());
+            consultar_poblacion.bindValue(":idPoblacion", consultar.value(NUM_COL_NODO_IDPOBLACION).toString());
 
             if (consultar_poblacion.exec() and consultar_poblacion.first()){
-                idMunicipio = consultar_poblacion.value(1).toString();
+                idMunicipio = consultar_poblacion.value(NUM_COL_POBLACION_IDMUNICIPIO).toString();
 
                 consultar_municipio.prepare(QString("select * from municipio where id = :idMunicipio"));
                 consultar_municipio.bindValue(":idMunicipio",idMunicipio);
@@ -139,17 +139,17 @@ void Soporte::on_cb_sede_activated(const QString &nombre)
 
             if (consultar_aplicaciones.exec())
                     if (consultar_aplicaciones.first()){
-                        atalaya = consultar_aplicaciones.value(1).toInt();
-                        glpi = consultar_aplicaciones.value(2).toInt();
-                        ocs = consultar_aplicaciones.value(3).toInt();
+                        atalaya = consultar_aplicaciones.value(NUM_COL_APLICACIONES_ATALAYA).toInt();
+                        glpi = consultar_aplicaciones.value(NUM_COL_APLICACIONES_GLPI).toInt();
+                        ocs = consultar_aplicaciones.value(NUM_COL_APLICACIONES_OCS).toInt();
                     }
             consultar_centro.prepare(QString("select * from centro where id =:idCentro"));
             consultar_centro.bindValue(":idCentro", consultar.value(2).toString());
 
             if (consultar_centro.exec() and consultar_centro.first()){
-                idCentro = consultar_centro.value(1).toString();
-                ui->lineEdit_centro->setText(consultar_centro.value(1).toString());
-                ui->lineEdit_telefono_centro->setText(consultar_centro.value(3).toString());
+                idCentro = consultar_centro.value(NUM_COL_CENTRO_NOMBRE).toString();
+                ui->lineEdit_centro->setText(consultar_centro.value(NUM_COL_CENTRO_NOMBRE).toString());
+                ui->lineEdit_telefono_centro->setText(consultar_centro.value(NUM_COL_CENTRO_TELEFONO).toString());
             }
    } else
           qDebug()<<"Error No se ha podido realizar la consulta "<< consultar.lastError();

@@ -37,7 +37,7 @@ struct variables{
     unsigned int local_listenport;
     QString remote_desthost;
     QString databasename;
-    QString hostname_DB;
+    QString hostname_D
     unsigned int remote_destport;
     bool usar_ssh;
 }datos;
@@ -176,12 +176,12 @@ return -1;
 }
 
 bool Botonera::basedatos(){
-    db.setDatabaseName(datos.databasename);
+   /* db.setDatabaseName(datos.databasename);
     db.setHostName("127.0.0.1");
     db.setUserName(datos.username_DB);
     db.setPassword(datos.password_DB);
     db.setPort(datos.local_listenport);
-
+    */
     if (!db.open()){
         ui->label_DB->setText("Cerrado");
         ui->actionSedes->setDisabled(true);
@@ -248,9 +248,12 @@ void Botonera::muestraBotones(){
 
 bool Botonera::cargaVariables(){
 
-    db = QSqlDatabase::addDatabase("QMYSQL");
+    //db = QSqlDatabase::addDatabase("QMYSQL");
+    db=QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("/home/alberto/pru.sqlite");
     Configuracion *configuracion = new Configuracion;
-    home = qgetenv("HOME");
+    //home = qgetenv("HOME");
+    home = configuracion->cual_es_home();
     GrxMenu = home + "/.grxconf.ini";
     path =qgetenv("PATH");
     if (!fileExists(GrxMenu)){
@@ -258,6 +261,19 @@ bool Botonera::cargaVariables(){
         on_actionConfigurar_triggered();
         return false;
     }
+    if (!db.open()){
+        ui->label_DB->setText("Cerrado");
+        ui->actionSedes->setDisabled(true);
+        ui->actionSoporte->setDisabled(true);
+        return false;
+    }
+    else  {
+        ui->label_DB->setText("Conectado");
+        ui->actionSedes->setEnabled(true);
+        ui->actionSoporte->setEnabled(true);
+        }
+
+    /*
     datos.keyfile1=configuracion->cual_es_keyfile_publica();
     datos.keyfile2=configuracion->cual_es_keyfile_privada();
     datos.username_ssh=configuracion->cual_es_usuarioSSH();
@@ -315,29 +331,22 @@ bool Botonera::cargaVariables(){
         ui->actionSoporte->setDisabled(true);
     }
     }
-
+*/
     //Muestra la ip
     foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
         if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost))
             ui->label_ip->setText(address.toString());
     }
-    //Muestra el usuario del sistema con el que nos hemos logado
-    QString name = qgetenv("USER");
-    if (name.isEmpty())
-        name = qgetenv("USERNAME");
-    ui->label_username->setText(name);
 
 delete configuracion;
-delete nmap;
+//delete nmap;
 return true;
 }
 
 void Botonera::barraEstado(){
-    QString name = qgetenv("USER");
-    if (name.isEmpty())
-        name = qgetenv("USERNAME");
+    Configuracion *configuracion = new Configuracion;
     QLabel *bienvenido = new QLabel("Bienvenido ");
-    QLabel *nombre = new QLabel(name);
+    QLabel *nombre = new QLabel(configuracion->cual_es_usuario_logado());
     QLabel *KB = new QLabel("Ticket Kerberos");
     QLabel *DB = new QLabel("Base de Datos");
     QLabel *ipdir = new QLabel("Direccion IP");
@@ -354,6 +363,7 @@ void Botonera::barraEstado(){
     ui->statusBar->addWidget(DB);
     ui->statusBar->addWidget(ui->label_DB);
     ui->statusBar->addWidget(ui->pb_reconectaDB);
+    ui->statusBar->addWidget(ipdir);
     ui->statusBar->addWidget(ui->label_ip);
 }
 

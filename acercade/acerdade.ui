@@ -563,7 +563,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="iconos.qrc">:/imagenes/iconos/AcercaDe/GNU_and_Tux.svg</pixmap>
+    <pixmap resource="../iconos.qrc">:/imagenes/iconos/AcercaDe/GNU_and_Tux.svg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -572,10 +572,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>229</x>
+     <x>270</x>
      <y>110</y>
      <width>217</width>
-     <height>121</height>
+     <height>151</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -627,7 +627,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Versión 11/17</string>
+         <string>Versión 1.16/18</string>
         </property>
        </widget>
       </item>
@@ -768,7 +768,7 @@
        </palette>
       </property>
       <property name="text">
-       <string>Serafín </string>
+       <string>Serafín Díaz García</string>
       </property>
      </widget>
     </item>
@@ -812,7 +812,14 @@
        </palette>
       </property>
       <property name="text">
-       <string>Carlos Rivera de los Rivera</string>
+       <string>Carlos Rivera de los Rivera y tal</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Jose Francisco Rodriguez Haro</string>
       </property>
      </widget>
     </item>
@@ -820,7 +827,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="iconos.qrc"/>
+  <include location="../iconos.qrc"/>
  </resources>
  <connections>
   <connection>

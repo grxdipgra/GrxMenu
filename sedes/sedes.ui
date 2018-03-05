@@ -28,39 +28,54 @@
      <height>921</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QVBoxLayout" name="verticalLayout_general">
     <item>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_top">
+      <property name="spacing">
+       <number>10</number>
+      </property>
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_top_nodo">
         <property name="text">
          <string>Nodo</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_top_ip">
         <property name="text">
          <string>IP</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QLabel" name="label_35">
+       <widget class="QLabel" name="label_top_telefono">
         <property name="text">
          <string>TLF.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
         </property>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QLabel" name="label_34">
+       <widget class="QLabel" name="label_top_extension">
         <property name="text">
          <string>Extensión</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QComboBox" name="comboBox_NODO">
+       <widget class="QComboBox" name="comboBox_top_nodo">
         <property name="minimumSize">
          <size>
           <width>250</width>
@@ -78,7 +93,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="comboBox_IP">
+       <widget class="QComboBox" name="comboBox_top_ip">
         <property name="minimumSize">
          <size>
           <width>180</width>
@@ -99,7 +114,7 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QComboBox" name="comboBox_TLF">
+       <widget class="QComboBox" name="comboBox_top_telefono">
         <property name="font">
          <font>
           <pointsize>16</pointsize>
@@ -111,7 +126,7 @@
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QComboBox" name="comboBox_extension">
+       <widget class="QComboBox" name="comboBox_top_extension">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -139,19 +154,19 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_secciones">
        <attribute name="title">
         <string>Ver Secciones</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">
-         <widget class="QTabWidget" name="tabWidget_2">
+         <widget class="QTabWidget" name="tabWidget_secciones">
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="Nodo">
+          <widget class="QWidget" name="seccion_nodo">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -171,11 +186,11 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
-           <widget class="QGroupBox" name="groupBox_localizacion">
+           <widget class="QGroupBox" name="groupBox_nodo_localizacion">
             <property name="geometry">
              <rect>
               <x>20</x>
@@ -210,12 +225,15 @@ p, li { white-space: pre-wrap; }
               <number>10</number>
              </property>
              <item>
-              <layout class="QGridLayout" name="gridLayout_localizacion_1">
-               <property name="spacing">
+              <layout class="QGridLayout" name="gridLayout_nodo_localizacion_1">
+               <property name="horizontalSpacing">
                 <number>10</number>
                </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_poblacion">
+                <widget class="QLineEdit" name="lineEdit_nodo_poblacion">
                  <property name="maxLength">
                   <number>64</number>
                  </property>
@@ -225,14 +243,17 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_30">
+                <widget class="QLabel" name="label_nodo_poblacion">
                  <property name="text">
                   <string>Población</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QLineEdit" name="lineEdit_municipio">
+                <widget class="QLineEdit" name="lineEdit_nodo_municipio">
                  <property name="maxLength">
                   <number>64</number>
                  </property>
@@ -242,21 +263,27 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_10">
+                <widget class="QLabel" name="label_nodo_municipio">
                  <property name="text">
                   <string>Municipio</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="2">
-                <widget class="QLabel" name="label_9">
+                <widget class="QLabel" name="label_nodo_cp">
                  <property name="text">
                   <string>Código Postal</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="1" column="2">
-                <widget class="QLineEdit" name="lineEdit_cp">
+                <widget class="QLineEdit" name="lineEdit_nodo_cp">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -280,26 +307,35 @@ p, li { white-space: pre-wrap; }
               </layout>
              </item>
              <item>
-              <layout class="QGridLayout" name="gridLayout_localizacion_2" columnstretch="0,0">
-               <property name="spacing">
+              <layout class="QGridLayout" name="gridLayout_nodo_localizacion_2" columnstretch="0,0">
+               <property name="horizontalSpacing">
                 <number>10</number>
                </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_5">
+                <widget class="QLabel" name="label_nodo_direccion">
                  <property name="text">
                   <string>Dirección</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_3">
+                <widget class="QLabel" name="label_nodo_tipoVia">
                  <property name="text">
                   <string>Tipo vía</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QLineEdit" name="lineEdit_via">
+                <widget class="QLineEdit" name="lineEdit_nodo_tipoVia">
                  <property name="maximumSize">
                   <size>
                    <width>150</width>
@@ -318,7 +354,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_direccion">
+                <widget class="QLineEdit" name="lineEdit_nodo_direccion">
                  <property name="maxLength">
                   <number>64</number>
                  </property>
@@ -330,7 +366,7 @@ p, li { white-space: pre-wrap; }
               </layout>
              </item>
              <item>
-              <layout class="QGridLayout" name="gridLayout_localizacion_3" columnstretch="0,0,0,0,0">
+              <layout class="QGridLayout" name="gridLayout_nodo_localizacion_3" columnstretch="0,0,0,0,0">
                <property name="sizeConstraint">
                 <enum>QLayout::SetMinimumSize</enum>
                </property>
@@ -340,46 +376,64 @@ p, li { white-space: pre-wrap; }
                <property name="rightMargin">
                 <number>220</number>
                </property>
-               <property name="spacing">
+               <property name="horizontalSpacing">
                 <number>10</number>
                </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
                <item row="0" column="3">
-                <widget class="QLabel" name="label_8">
+                <widget class="QLabel" name="label_nodo_piso">
                  <property name="text">
                   <string>Piso</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="4">
-                <widget class="QLabel" name="label_7">
+                <widget class="QLabel" name="label_nodo_puerta">
                  <property name="text">
                   <string>Puerta</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_4">
+                <widget class="QLabel" name="label_nodo_numero">
                  <property name="text">
                   <string>Número</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_6">
+                <widget class="QLabel" name="label_nodo_letra">
                  <property name="text">
                   <string>Letra</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="2">
-                <widget class="QLabel" name="label_15">
+                <widget class="QLabel" name="label_nodo_escalera">
                  <property name="text">
                   <string>Escalera</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QLineEdit" name="lineEdit_numero">
+                <widget class="QLineEdit" name="lineEdit_nodo_numero">
                  <property name="maximumSize">
                   <size>
                    <width>60</width>
@@ -401,7 +455,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_letra">
+                <widget class="QLineEdit" name="lineEdit_nodo_letra">
                  <property name="maximumSize">
                   <size>
                    <width>60</width>
@@ -420,7 +474,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="2">
-                <widget class="QLineEdit" name="lineEdit_escalera">
+                <widget class="QLineEdit" name="lineEdit_nodo_escalera">
                  <property name="maximumSize">
                   <size>
                    <width>60</width>
@@ -436,7 +490,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="3">
-                <widget class="QLineEdit" name="lineEdit_piso">
+                <widget class="QLineEdit" name="lineEdit_nodo_piso">
                  <property name="maximumSize">
                   <size>
                    <width>60</width>
@@ -458,7 +512,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="4">
-                <widget class="QLineEdit" name="lineEdit_puerta">
+                <widget class="QLineEdit" name="lineEdit_nodo_puerta">
                  <property name="maximumSize">
                   <size>
                    <width>60</width>
@@ -482,11 +536,20 @@ p, li { white-space: pre-wrap; }
               </layout>
              </item>
              <item>
-              <layout class="QGridLayout" name="gridLayout_localizacion_4">
+              <layout class="QGridLayout" name="gridLayout_nodo_localizacion_4">
+               <property name="horizontalSpacing">
+                <number>10</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_18">
+                <widget class="QLabel" name="label_nodo_longitud">
                  <property name="text">
                   <string>Longitud</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
@@ -510,9 +573,12 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_17">
+                <widget class="QLabel" name="label_nodo_latitud">
                  <property name="text">
                   <string>Latitud</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
@@ -536,7 +602,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="2">
-                <widget class="QPushButton" name="pB_googleMaps_2">
+                <widget class="QPushButton" name="pB_nodo_googleMaps">
                  <property name="text">
                   <string>Ver en Google Maps</string>
                  </property>
@@ -546,13 +612,13 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </widget>
-           <widget class="QGroupBox" name="groupBox">
+           <widget class="QGroupBox" name="groupBox_nodo_contacto">
             <property name="geometry">
              <rect>
               <x>20</x>
-              <y>290</y>
-              <width>601</width>
-              <height>201</height>
+              <y>300</y>
+              <width>600</width>
+              <height>160</height>
              </rect>
             </property>
             <property name="title">
@@ -575,108 +641,29 @@ p, li { white-space: pre-wrap; }
               <number>10</number>
              </property>
              <item>
-              <layout class="QGridLayout" name="gridLayout_contacto_1">
+              <layout class="QGridLayout" name="gridLayout_nodo_contacto">
                <property name="rightMargin">
-                <number>30</number>
+                <number>80</number>
                </property>
                <property name="spacing">
                 <number>10</number>
                </property>
-               <item row="0" column="1">
-                <widget class="QComboBox" name="comboBox_email">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>400</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="inputMethodHints">
-                  <set>Qt::ImhEmailCharactersOnly</set>
-                 </property>
-                 <property name="editable">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_nodo_web">
-                 <property name="maximumSize">
-                  <size>
-                   <width>400</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="maxLength">
-                  <number>128</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_16">
-                 <property name="text">
-                  <string>Email</string>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="0">
-                <widget class="QLabel" name="label_41">
-                 <property name="text">
-                  <string>Web</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="2">
-                <widget class="QPushButton" name="pB_nodo_web">
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>web</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QGridLayout" name="gridLayout_contacto_2">
-               <property name="rightMargin">
-                <number>280</number>
-               </property>
-               <property name="spacing">
-                <number>10</number>
-               </property>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_14">
-                 <property name="text">
-                  <string>Fax</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_12">
+                <widget class="QLabel" name="label_nodo_telefonos">
                  <property name="text">
                   <string>Teléfonos</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_13">
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_nodo_extension">
                  <property name="text">
                   <string>Extensión</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
-                <widget class="QComboBox" name="comboBox_telefonos">
+               <item row="1" column="1">
+                <widget class="QComboBox" name="comboBox_nodo_telefonos">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -694,8 +681,8 @@ p, li { white-space: pre-wrap; }
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_extension">
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="lineEdit_nodo_extension">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -722,8 +709,8 @@ p, li { white-space: pre-wrap; }
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="lineEdit_fax">
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="lineEdit_nodo_fax">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -753,11 +740,47 @@ p, li { white-space: pre-wrap; }
                  </property>
                 </widget>
                </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_nodo_fax">
+                 <property name="text">
+                  <string>Fax</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_nodo_email">
+                 <property name="text">
+                  <string>Emails</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="comboBox_nodo_emails">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>400</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="inputMethodHints">
+                  <set>Qt::ImhEmailCharactersOnly</set>
+                 </property>
+                 <property name="editable">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>
            </widget>
-           <widget class="QFrame" name="frame_mapa_2">
+           <widget class="QFrame" name="frame_nodo_mapa">
             <property name="geometry">
              <rect>
               <x>680</x>
@@ -798,7 +821,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </widget>
-           <widget class="QLabel" name="label_11">
+           <widget class="QLabel" name="label_nodo_consola">
             <property name="geometry">
              <rect>
               <x>680</x>
@@ -811,12 +834,190 @@ p, li { white-space: pre-wrap; }
              <string>Consola</string>
             </property>
            </widget>
+           <widget class="QGroupBox" name="groupBox_nodo_enlaces">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>470</y>
+              <width>600</width>
+              <height>200</height>
+             </rect>
+            </property>
+            <property name="title">
+             <string>Enlaces</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_nodo_enlaces">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="lineEdit_nodo_sede">
+                 <property name="maximumSize">
+                  <size>
+                   <width>480</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="inputMethodHints">
+                  <set>Qt::ImhUrlCharactersOnly</set>
+                 </property>
+                 <property name="maxLength">
+                  <number>128</number>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QPushButton" name="pB_nodo_tablon">
+                 <property name="text">
+                  <string>Tablón</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="lineEdit_nodo_tablon">
+                 <property name="maximumSize">
+                  <size>
+                   <width>480</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="inputMethodHints">
+                  <set>Qt::ImhUrlCharactersOnly</set>
+                 </property>
+                 <property name="maxLength">
+                  <number>256</number>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="pB_nodo_web">
+                 <property name="text">
+                  <string>Web</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QPushButton" name="pB_nodo_portalTransparencia">
+                 <property name="text">
+                  <string>Portal Trans.</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="lineEdit_nodo_portalTransparencia">
+                 <property name="maximumSize">
+                  <size>
+                   <width>480</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="inputMethodHints">
+                  <set>Qt::ImhUrlCharactersOnly</set>
+                 </property>
+                 <property name="maxLength">
+                  <number>256</number>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QPushButton" name="pB_nodo_sede">
+                 <property name="text">
+                  <string>Sede E.</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="lineEdit_nodo_web">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>480</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="inputMethodHints">
+                  <set>Qt::ImhUrlCharactersOnly</set>
+                 </property>
+                 <property name="maxLength">
+                  <number>128</number>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QPushButton" name="pB_nodo_wikipedia">
+                 <property name="text">
+                  <string>Wikipedia</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QCheckBox" name="checkBox_nodo_esAyuntamiento">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="geometry">
+             <rect>
+              <x>680</x>
+              <y>490</y>
+              <width>131</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>es ayuntamiento</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
           </widget>
-          <widget class="QWidget" name="Municipio">
+          <widget class="QWidget" name="seccion_municipio">
            <attribute name="title">
             <string>Municipio</string>
            </attribute>
-           <widget class="QFrame" name="frame_mapa">
+           <widget class="QFrame" name="frame_municipio_mapa">
             <property name="geometry">
              <rect>
               <x>680</x>
@@ -857,11 +1058,11 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </widget>
-           <widget class="QGroupBox" name="groupBox_2">
+           <widget class="QGroupBox" name="groupBox_municipio_datos_extra">
             <property name="geometry">
              <rect>
               <x>20</x>
-              <y>110</y>
+              <y>150</y>
               <width>348</width>
               <height>91</height>
              </rect>
@@ -871,36 +1072,51 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_11">
              <item>
-              <layout class="QGridLayout" name="gridLayout_datos_extra">
+              <layout class="QGridLayout" name="gridLayout_municipio_datos_extra">
                <property name="rightMargin">
                 <number>0</number>
                </property>
-               <property name="spacing">
+               <property name="horizontalSpacing">
                 <number>10</number>
                </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
                <item row="0" column="2">
-                <widget class="QLabel" name="label_altitud">
+                <widget class="QLabel" name="label_municipio_altitud">
                  <property name="text">
                   <string> Altitud (m)</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_habitantes">
+                <widget class="QLabel" name="label_municipio_habitantes">
                  <property name="text">
                   <string>Habitantes</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_superficie">
+                <widget class="QLabel" name="label_municipio_superficie">
                  <property name="text">
-                  <string>Superficie (km)</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Superficie (km&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="textFormat">
+                  <enum>Qt::RichText</enum>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QLineEdit" name="lineEdit_habitantes">
+                <widget class="QLineEdit" name="lineEdit_municipio_habitantes">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -925,7 +1141,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_superficie">
+                <widget class="QLineEdit" name="lineEdit_municipio_superficie">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -950,7 +1166,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="2">
-                <widget class="QLineEdit" name="lineEdit_altitud">
+                <widget class="QLineEdit" name="lineEdit_municipio_altitud">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -981,11 +1197,11 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </widget>
-           <widget class="QGroupBox" name="groupBox_3">
+           <widget class="QGroupBox" name="groupBox_municipio_datos_identificacion">
             <property name="geometry">
              <rect>
               <x>20</x>
-              <y>20</y>
+              <y>60</y>
               <width>348</width>
               <height>91</height>
              </rect>
@@ -995,15 +1211,18 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <item>
-              <layout class="QGridLayout" name="gridLayout_datos_identificacion">
+              <layout class="QGridLayout" name="gridLayout_municipio_datos_identificacion">
                <property name="rightMargin">
                 <number>0</number>
                </property>
-               <property name="spacing">
+               <property name="horizontalSpacing">
                 <number>10</number>
                </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_DIR3">
+                <widget class="QLabel" name="label_municipio_DIR3">
                  <property name="maximumSize">
                   <size>
                    <width>40</width>
@@ -1013,10 +1232,13 @@ p, li { white-space: pre-wrap; }
                  <property name="text">
                   <string>DIR3</string>
                  </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                 </property>
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_CIF">
+                <widget class="QLabel" name="label_municipio_CIF">
                  <property name="maximumSize">
                   <size>
                    <width>40</width>
@@ -1026,10 +1248,13 @@ p, li { white-space: pre-wrap; }
                  <property name="text">
                   <string>CIF</string>
                  </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                 </property>
                 </widget>
                </item>
                <item row="0" column="2">
-                <widget class="QLabel" name="label_INE">
+                <widget class="QLabel" name="label_municipio_INE">
                  <property name="maximumSize">
                   <size>
                    <width>40</width>
@@ -1039,10 +1264,13 @@ p, li { white-space: pre-wrap; }
                  <property name="text">
                   <string>INE</string>
                  </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                 </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QLineEdit" name="lineEdit_cif">
+                <widget class="QLineEdit" name="lineEdit_municipio_cif">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1064,7 +1292,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_dir3">
+                <widget class="QLineEdit" name="lineEdit_municipio_dir3">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1086,7 +1314,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="1" column="2">
-                <widget class="QLineEdit" name="lineEdit_ine">
+                <widget class="QLineEdit" name="lineEdit_municipio_ine">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1117,11 +1345,11 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </widget>
-           <widget class="QGroupBox" name="groupBox_4">
+           <widget class="QGroupBox" name="groupBox_municipio_agrupaciones">
             <property name="geometry">
              <rect>
               <x>20</x>
-              <y>200</y>
+              <y>240</y>
               <width>521</width>
               <height>91</height>
              </rect>
@@ -1131,29 +1359,38 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
-              <layout class="QGridLayout" name="gridLayout_agrupaciones">
-               <property name="spacing">
+              <layout class="QGridLayout" name="gridLayout_municipio_agrupaciones">
+               <property name="horizontalSpacing">
                 <number>10</number>
                </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_26">
+                <widget class="QLabel" name="label_municipio_comarca">
                  <property name="text">
                   <string>Comarca</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="label_25">
+                <widget class="QLabel" name="label_municipio_mancomunidad">
                  <property name="text">
-                  <string>Mancomunidad</string>
+                  <string>Mancomunidades</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QComboBox" name="comboBox_mancomunidad"/>
+                <widget class="QComboBox" name="comboBox_municipio_mancomunidad"/>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lineEdit_comarca">
+                <widget class="QLineEdit" name="lineEdit_municipio_comarca">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1169,7 +1406,7 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </widget>
-           <widget class="QGroupBox" name="groupBox_5">
+           <widget class="QGroupBox" name="groupBox_municipio_localizacion">
             <property name="geometry">
              <rect>
               <x>680</x>
@@ -1183,7 +1420,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <layout class="QGridLayout" name="gridLayout_localizacion">
+              <layout class="QGridLayout" name="gridLayout_municipio_localizacion">
                <property name="spacing">
                 <number>10</number>
                </property>
@@ -1252,7 +1489,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QPushButton" name="pB_googleMaps_3">
+                <widget class="QPushButton" name="pB_municipio_googleMaps">
                  <property name="text">
                   <string>Ver en Google Maps</string>
                  </property>
@@ -1321,13 +1558,13 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QGroupBox" name="groupBox_6">
+           <widget class="QGroupBox" name="groupBox_municipio_enlaces">
             <property name="geometry">
              <rect>
               <x>20</x>
-              <y>290</y>
+              <y>330</y>
               <width>521</width>
-              <height>191</height>
+              <height>101</height>
              </rect>
             </property>
             <property name="title">
@@ -1335,104 +1572,11 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
-              <layout class="QGridLayout" name="gridLayout_3">
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="lineEdit_sede">
-                 <property name="maximumSize">
-                  <size>
-                   <width>400</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="inputMethodHints">
-                  <set>Qt::ImhUrlCharactersOnly</set>
-                 </property>
-                 <property name="maxLength">
-                  <number>128</number>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QPushButton" name="pB_tablon">
+              <layout class="QGridLayout" name="gridLayout_municipio_enlaces">
+               <item row="0" column="0">
+                <widget class="QPushButton" name="pB_municipio_wikipedia">
                  <property name="text">
-                  <string>Tablón</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="lineEdit_tablon">
-                 <property name="maximumSize">
-                  <size>
-                   <width>400</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="inputMethodHints">
-                  <set>Qt::ImhUrlCharactersOnly</set>
-                 </property>
-                 <property name="maxLength">
-                  <number>256</number>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QPushButton" name="pB_municipio_web">
-                 <property name="text">
-                  <string>web</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QPushButton" name="pB_portalTransparencia">
-                 <property name="text">
-                  <string>Portal Trans.</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QLineEdit" name="lineEdit_portal_transparencia">
-                 <property name="maximumSize">
-                  <size>
-                   <width>400</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="inputMethodHints">
-                  <set>Qt::ImhUrlCharactersOnly</set>
-                 </property>
-                 <property name="maxLength">
-                  <number>256</number>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QPushButton" name="pB_sede">
-                 <property name="text">
-                  <string>Sede E.</string>
+                  <string>Wikipedia</string>
                  </property>
                 </widget>
                </item>
@@ -1463,10 +1607,10 @@ p, li { white-space: pre-wrap; }
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0">
-                <widget class="QPushButton" name="pB_wikipedia">
+               <item row="1" column="0">
+                <widget class="QPushButton" name="pB_municipio_web">
                  <property name="text">
-                  <string>Wikipedia</string>
+                  <string>Web</string>
                  </property>
                 </widget>
                </item>
@@ -1474,8 +1618,28 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </widget>
+           <widget class="QLabel" name="label_municipio_nombre">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>20</y>
+              <width>321</width>
+              <height>30</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Nombre del municipio</string>
+            </property>
+           </widget>
           </widget>
-          <widget class="QWidget" name="Programas">
+          <widget class="QWidget" name="Concertaciones">
            <attribute name="title">
             <string>Concertaciones</string>
            </attribute>
@@ -1488,7 +1652,7 @@ p, li { white-space: pre-wrap; }
               <height>321</height>
              </rect>
             </property>
-            <layout class="QGridLayout" name="gridLayout_programas" rowstretch="0,0,0,0,0,0,0,0,0,0" columnstretch="0,0" rowminimumheight="0,0,0,0,0,0,0,0,0,0">
+            <layout class="QGridLayout" name="gridLayout_concertaciones" rowstretch="0,0,0,0,0,0,0,0,0,0" columnstretch="0,0" rowminimumheight="0,0,0,0,0,0,0,0,0,0">
              <property name="sizeConstraint">
               <enum>QLayout::SetDefaultConstraint</enum>
              </property>
@@ -1499,7 +1663,7 @@ p, li { white-space: pre-wrap; }
               <number>10</number>
              </property>
              <item row="0" column="0">
-              <widget class="QLabel" name="label_programa_165">
+              <widget class="QLabel" name="label_concertaciones_programa_165">
                <property name="font">
                 <font>
                  <pointsize>12</pointsize>
@@ -1513,7 +1677,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QLabel" name="label_programa_168">
+              <widget class="QLabel" name="label_concertaciones_programa_168">
                <property name="font">
                 <font>
                  <pointsize>12</pointsize>
@@ -1527,7 +1691,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="label_programa_166">
+              <widget class="QLabel" name="label_concertaciones_programa_166">
                <property name="font">
                 <font>
                  <pointsize>12</pointsize>
@@ -1541,7 +1705,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="4" column="0">
-              <widget class="QCheckBox" name="checkBox_suscripcion">
+              <widget class="QCheckBox" name="checkBox_concertaciones_suscripcion">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -1675,7 +1839,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QCheckBox" name="checkBox_gestion_municipal">
+              <widget class="QCheckBox" name="checkBox_concertaciones_gestion_municipal">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -1809,7 +1973,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBox_portal_web">
+              <widget class="QCheckBox" name="checkBox_concertaciones_portal_web">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -1973,7 +2137,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="9" column="1">
-              <widget class="QCheckBox" name="checkBox_siapol">
+              <widget class="QCheckBox" name="checkBox_concertaciones_siapol">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2104,7 +2268,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="6" column="0">
-              <widget class="QLabel" name="label_programa_167">
+              <widget class="QLabel" name="label_concertaciones_programa_167">
                <property name="font">
                 <font>
                  <pointsize>12</pointsize>
@@ -2118,7 +2282,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="8" column="1">
-              <widget class="QCheckBox" name="checkBox_epol_movil">
+              <widget class="QCheckBox" name="checkBox_concertaciones_epol_movil">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2252,7 +2416,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QCheckBox" name="checkBox_correo">
+              <widget class="QCheckBox" name="checkBox_concertaciones_correo">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2386,7 +2550,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="5" column="0">
-              <widget class="QCheckBox" name="checkBox_perfil_contratante">
+              <widget class="QCheckBox" name="checkBox_concertaciones_perfil_contratante">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2520,7 +2684,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QCheckBox" name="checkBox_gestion_economica">
+              <widget class="QCheckBox" name="checkBox_concertaciones_gestion_economica">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2654,7 +2818,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QCheckBox" name="checkBox_basedatos_juridica">
+              <widget class="QCheckBox" name="checkBox_concertaciones_basedatos_juridica">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2788,7 +2952,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QCheckBox" name="checkBox_soporte">
+              <widget class="QCheckBox" name="checkBox_concertaciones_soporte">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2922,7 +3086,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="7" column="1">
-              <widget class="QCheckBox" name="checkBox_epol">
+              <widget class="QCheckBox" name="checkBox_concertaciones_epol">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -3056,7 +3220,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item row="7" column="0">
-              <widget class="QCheckBox" name="checkBox_sede_electronica">
+              <widget class="QCheckBox" name="checkBox_concertaciones_sede_electronica">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -3200,9 +3364,9 @@ p, li { white-space: pre-wrap; }
               <height>31</height>
              </rect>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_31">
+            <layout class="QHBoxLayout" name="horizontalLayout_concertaciones_anio">
              <item>
-              <widget class="QLabel" name="label_44">
+              <widget class="QLabel" name="label_concertaciones_anio">
                <property name="font">
                 <font>
                  <weight>75</weight>
@@ -3215,7 +3379,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_anio">
+              <widget class="QComboBox" name="comboBox_concertaciones_anio">
                <property name="font">
                 <font>
                  <pointsize>12</pointsize>
@@ -3249,16 +3413,41 @@ p, li { white-space: pre-wrap; }
             <string>Línea</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_7">
-            <item row="0" column="0">
-             <layout class="QGridLayout" name="gridLayout_linea">
-              <property name="sizeConstraint">
-               <enum>QLayout::SetDefaultConstraint</enum>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="pB_linea_router">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>400</width>
+                <height>248</height>
+               </size>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default">
+               <bool>true</bool>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <layout class="QGridLayout" name="gridLayout_linea">
               <property name="spacing">
                <number>10</number>
               </property>
               <item row="2" column="0">
-               <widget class="QLabel" name="label_ip_cifrado">
+               <widget class="QLabel" name="label_linea_ip_cifrado">
                 <property name="text">
                  <string>IP de Cifrado</string>
                 </property>
@@ -3300,28 +3489,28 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="label_servicio">
+               <widget class="QLabel" name="label_linea_servicio">
                 <property name="text">
                  <string>Servicio</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLabel" name="label_caudal">
+               <widget class="QLabel" name="label_linea_caudal">
                 <property name="text">
                  <string>Caudal</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="0">
-               <widget class="QLabel" name="label_adsl">
+               <widget class="QLabel" name="label_linea_adsl">
                 <property name="text">
                  <string>Adsl</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="label_num_administrativo">
+               <widget class="QLabel" name="label_linea_num_administrativo">
                 <property name="text">
                  <string>Nº Administrativo</string>
                 </property>
@@ -3419,14 +3608,14 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="label_equipo">
+               <widget class="QLabel" name="label_linea_equipo">
                 <property name="text">
                  <string>Equipo</string>
                 </property>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QLabel" name="label_num_serie">
+               <widget class="QLabel" name="label_linea_num_serie">
                 <property name="text">
                  <string>Nº Serie</string>
                 </property>
@@ -3447,41 +3636,13 @@ p, li { white-space: pre-wrap; }
               </item>
              </layout>
             </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="pB_linea_router">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>400</width>
-                <height>248</height>
-               </size>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-              <property name="default">
-               <bool>true</bool>
-              </property>
-              <property name="flat">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tab_todo">
        <attribute name="title">
         <string>Ver Todo</string>
        </attribute>
@@ -4004,7 +4165,7 @@ p, li { white-space: pre-wrap; }
                       <number>1</number>
                      </property>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_adsl">
+                      <widget class="QLineEdit" name="lineEdit_todo_linea_adsl">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -4036,7 +4197,7 @@ p, li { white-space: pre-wrap; }
                       <number>1</number>
                      </property>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_n_adm">
+                      <widget class="QLineEdit" name="lineEdit_todo_linea_n_adm">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -4068,7 +4229,7 @@ p, li { white-space: pre-wrap; }
                       <number>1</number>
                      </property>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_ip_cifrado">
+                      <widget class="QLineEdit" name="lineEdit_todo_linea_ip_cifrado">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -4110,7 +4271,7 @@ p, li { white-space: pre-wrap; }
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <widget class="QPushButton" name="pB_router">
+                   <widget class="QPushButton" name="pB_todo_linea_router">
                     <property name="geometry">
                      <rect>
                       <x>2</x>
@@ -4147,7 +4308,7 @@ p, li { white-space: pre-wrap; }
                     <number>1</number>
                    </property>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_servicio">
+                    <widget class="QLineEdit" name="lineEdit_todo_linea_servicio">
                      <property name="maxLength">
                       <number>64</number>
                      </property>
@@ -4164,7 +4325,7 @@ p, li { white-space: pre-wrap; }
                     <number>1</number>
                    </property>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_caudal">
+                    <widget class="QLineEdit" name="lineEdit_todo_linea_caudal">
                      <property name="maxLength">
                       <number>64</number>
                      </property>
@@ -4180,7 +4341,7 @@ p, li { white-space: pre-wrap; }
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_17">
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_equipamiento">
+                      <widget class="QLineEdit" name="lineEdit_todo_linea_equipamiento">
                        <property name="maxLength">
                         <number>128</number>
                        </property>
@@ -4197,7 +4358,7 @@ p, li { white-space: pre-wrap; }
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_21">
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_numeroSerieRouter">
+                      <widget class="QLineEdit" name="lineEdit_todo_linea_numeroSerieRouter">
                        <property name="alignment">
                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                        </property>
@@ -4785,7 +4946,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
-              <widget class="QLineEdit" name="lineEdit_cp_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_cp">
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
                </property>
@@ -4801,7 +4962,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_municipio_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_municipio">
                <property name="maxLength">
                 <number>64</number>
                </property>
@@ -4811,7 +4972,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_latitud">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_latitud">
                <property name="maxLength">
                 <number>12</number>
                </property>
@@ -4824,7 +4985,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_longitud">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_longitud">
                <property name="maxLength">
                 <number>12</number>
                </property>
@@ -4849,7 +5010,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
              <item>
-              <widget class="QLineEdit" name="lineEdit_numero_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_numero">
                <property name="inputMask">
                 <string/>
                </property>
@@ -4865,7 +5026,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_letra_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_letra">
                <property name="inputMask">
                 <string>A</string>
                </property>
@@ -4878,7 +5039,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_escalera_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_escalera">
                <property name="maxLength">
                 <number>3</number>
                </property>
@@ -4888,7 +5049,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_piso_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_piso">
                <property name="inputMask">
                 <string/>
                </property>
@@ -4904,7 +5065,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_puerta_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_puerta">
                <property name="inputMask">
                 <string/>
                </property>
@@ -4932,7 +5093,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item>
-              <widget class="QLineEdit" name="lineEdit_direccion_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_direccion">
                <property name="maxLength">
                 <number>64</number>
                </property>
@@ -4954,7 +5115,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <item>
-              <widget class="QLineEdit" name="lineEdit_via_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_tipoVia">
                <property name="inputMask">
                 <string/>
                </property>
@@ -5427,7 +5588,7 @@ p, li { white-space: pre-wrap; }
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <widget class="QPushButton" name="pB_mapa_2">
+            <widget class="QPushButton" name="pB_todo_nodo_mapa">
              <property name="geometry">
               <rect>
                <x>0</x>
@@ -5475,7 +5636,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_habitantes_2">
+                  <widget class="QLineEdit" name="lineEdit_todo_municipio_habitantes">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -5506,12 +5667,15 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <widget class="QLabel" name="label_43">
                    <property name="text">
-                    <string>Superficie (km)</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Superficie (km&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="textFormat">
+                    <enum>Qt::RichText</enum>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_superficie_2">
+                  <widget class="QLineEdit" name="lineEdit_todo_municipio_superficie">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -5547,7 +5711,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_altitud_2">
+                  <widget class="QLineEdit" name="lineEdit_todo_municipio_altitud">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -5592,7 +5756,7 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_latitud_municipio">
+                    <widget class="QLineEdit" name="lineEdit_todo_municipio_latitud">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                        <horstretch>0</horstretch>
@@ -5628,7 +5792,7 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_longitud_municipio">
+                    <widget class="QLineEdit" name="lineEdit_todo_municipio_longitud">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                        <horstretch>0</horstretch>
@@ -5659,14 +5823,14 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QVBoxLayout" name="verticalLayout_27">
                  <item>
-                  <widget class="QPushButton" name="pB_wikipedia_2">
+                  <widget class="QPushButton" name="pB_todo_nodo_wikipedia">
                    <property name="text">
                     <string>Wikipedia</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pB_googleMaps">
+                  <widget class="QPushButton" name="pB_todo_nodo_googleMaps">
                    <property name="text">
                     <string>Google Maps</string>
                    </property>
@@ -6133,7 +6297,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_cif_2">
+              <widget class="QLineEdit" name="lineEdit_todo_municipio_cif">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -6175,7 +6339,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_dir3_2">
+              <widget class="QLineEdit" name="lineEdit_todo_municipio_dir3">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -6217,7 +6381,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_ine_2">
+              <widget class="QLineEdit" name="lineEdit_todo_municipio_ine">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -6272,7 +6436,7 @@ p, li { white-space: pre-wrap; }
              </rect>
             </property>
             <property name="text">
-             <string>Mancomunidad</string>
+             <string>Mancomunidades</string>
             </property>
            </widget>
            <widget class="QLabel" name="label_52">
@@ -6299,10 +6463,10 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QComboBox" name="comboBox_mancomunidad_2"/>
+              <widget class="QComboBox" name="comboBox_todo_municipio_mancomunidad"/>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_comarca_2">
+              <widget class="QLineEdit" name="lineEdit_todo_municipio_comarca">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -6381,7 +6545,7 @@ p, li { white-space: pre-wrap; }
              </rect>
             </property>
             <property name="text">
-             <string>Email</string>
+             <string>Emails</string>
             </property>
            </widget>
            <widget class="QWidget" name="layoutWidget_7">
@@ -6395,7 +6559,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
-              <widget class="QComboBox" name="comboBox_telefonos_2">
+              <widget class="QComboBox" name="comboBox_todo_nodo_telefonos">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -6414,7 +6578,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_extension_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_extension">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -6442,7 +6606,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_fax_2">
+              <widget class="QLineEdit" name="lineEdit_todo_nodo_fax">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -6485,7 +6649,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_17">
              <item>
-              <widget class="QComboBox" name="comboBox_email_2">
+              <widget class="QComboBox" name="comboBox_todo_nodo_emails">
                <property name="inputMethodHints">
                 <set>Qt::ImhEmailCharactersOnly</set>
                </property>
@@ -6954,7 +7118,7 @@ p, li { white-space: pre-wrap; }
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>11</x>
@@ -6970,28 +7134,28 @@ p, li { white-space: pre-wrap; }
                 <number>0</number>
                </property>
                <item>
-                <widget class="QPushButton" name="pB_web">
+                <widget class="QPushButton" name="pB_todo_nodo_web">
                  <property name="text">
-                  <string>web</string>
+                  <string>Web</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pB_sede_2">
+                <widget class="QPushButton" name="pB_todo_nodo_sede">
                  <property name="text">
                   <string>Sede E.</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pB_tablon_2">
+                <widget class="QPushButton" name="pB_todo_nodo_tablon">
                  <property name="text">
                   <string>Tablón</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pB_portalTransparencia_2">
+                <widget class="QPushButton" name="pB_todo_nodo_portalTransparencia">
                  <property name="text">
                   <string>Portal Trans.</string>
                  </property>
@@ -7007,7 +7171,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QGridLayout" name="gridLayout_4">
                  <item row="0" column="0">
-                  <widget class="QLineEdit" name="lineEdit_web">
+                  <widget class="QLineEdit" name="lineEdit_todo_nodo_web">
                    <property name="enabled">
                     <bool>true</bool>
                    </property>
@@ -7032,7 +7196,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QGridLayout" name="gridLayout_5">
                  <item row="0" column="0">
-                  <widget class="QLineEdit" name="lineEdit_sede_2">
+                  <widget class="QLineEdit" name="lineEdit_todo_nodo_sede">
                    <property name="font">
                     <font>
                      <pointsize>11</pointsize>
@@ -7057,7 +7221,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QGridLayout" name="gridLayout_6">
                  <item row="0" column="0">
-                  <widget class="QLineEdit" name="lineEdit_tablon_2">
+                  <widget class="QLineEdit" name="lineEdit_todo_nodo_tablon">
                    <property name="font">
                     <font>
                      <pointsize>11</pointsize>
@@ -7082,7 +7246,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QGridLayout" name="gridLayout_9">
                  <item row="0" column="0">
-                  <widget class="QLineEdit" name="lineEdit_portal_transparencia_2">
+                  <widget class="QLineEdit" name="lineEdit_todo_nodo_portalTransparencia">
                    <property name="font">
                     <font>
                      <pointsize>11</pointsize>
@@ -7759,7 +7923,7 @@ p, li { white-space: pre-wrap; }
              <enum>Qt::Vertical</enum>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_portal_web_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_portal_web">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -7929,7 +8093,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_correo_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_correo">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -8069,7 +8233,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_basedatos_juridica_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_basedatos_juridica">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -8209,7 +8373,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_suscripcion_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_suscripcion">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -8349,7 +8513,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_perfil_contratante_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_perfil_contratante">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -8486,7 +8650,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_gestion_municipal_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_gestion_municipal">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -8626,7 +8790,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_gestion_economica_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_gestion_economica">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -8766,7 +8930,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_soporte_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_soporte">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -8906,7 +9070,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_sede_electronica_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_sede_electronica">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -9046,7 +9210,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_epol_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_epol">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -9186,7 +9350,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_epol_movil_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_epol_movil">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -9326,7 +9490,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QCheckBox" name="checkBox_siapol_2">
+           <widget class="QCheckBox" name="checkBox_todo_concertaciones_siapol">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -9482,7 +9646,7 @@ p, li { white-space: pre-wrap; }
              <string>Año</string>
             </property>
            </widget>
-           <widget class="QComboBox" name="comboBox_anio_2">
+           <widget class="QComboBox" name="comboBox_todo_concertaciones_anio">
             <property name="geometry">
              <rect>
               <x>470</x>
@@ -9955,7 +10119,7 @@ p, li { white-space: pre-wrap; }
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <widget class="QPushButton" name="pB_mancomunidad">
+                <widget class="QPushButton" name="pB_todo_municipio_mancomunidad">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -9999,7 +10163,7 @@ p, li { white-space: pre-wrap; }
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <widget class="QPushButton" name="pB_comarca">
+                <widget class="QPushButton" name="pB_todo_municipio_comarca">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -10043,7 +10207,7 @@ p, li { white-space: pre-wrap; }
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <widget class="QPushButton" name="pB_escudo_2">
+                <widget class="QPushButton" name="pB_todo_municipio_escudo">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
@@ -10514,7 +10678,7 @@ p, li { white-space: pre-wrap; }
                 <property name="frameShadow">
                  <enum>QFrame::Sunken</enum>
                 </property>
-                <widget class="QPushButton" name="pB_bandera_2">
+                <widget class="QPushButton" name="pB_todo_municipio_bandera">
                  <property name="geometry">
                   <rect>
                    <x>0</x>

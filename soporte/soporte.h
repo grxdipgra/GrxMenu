@@ -1,5 +1,8 @@
 #ifndef SOPORTE_H
 #define SOPORTE_H
+
+
+#include "lib/lib.h"
 #include <QDialog>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
