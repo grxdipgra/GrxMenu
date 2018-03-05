@@ -1,6 +1,7 @@
 #ifndef LIB_H
 #define LIB_H
 
+<<<<<<< HEAD
 
 #define NUM_COL_MUNICIPIO_ID 0
 #define NUM_COL_MUNICIPIO_IDCOMARCA 1
@@ -106,4 +107,6 @@
 
 
 
+=======
+>>>>>>> 2b5953f7c7896716d4216ab596ad872bc5a1a996
 #endif // LIB_H
