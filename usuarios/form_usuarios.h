@@ -73,6 +73,9 @@ private slots:
 
     void on_boton_actualiza_usuario_clicked();
 
+    void rellena_entrada(LDAPMessage *entry);
+
+
 private:
     Ui::form_usuarios *ui;
 
@@ -109,6 +112,7 @@ private:
         QString caduca_cuenta;
         QString dn;
     }entrada;
+
 
 
 

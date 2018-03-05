@@ -37,7 +37,7 @@ struct variables{
     unsigned int local_listenport;
     QString remote_desthost;
     QString databasename;
-    QString hostname_D
+    //QString hostname_D
     unsigned int remote_destport;
     bool usar_ssh;
 }datos;
