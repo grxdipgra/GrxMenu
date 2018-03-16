@@ -90,5 +90,7 @@
         <file>imagenes/iconos/soporte/Linux_pc.png</file>
         <file>imagenes/iconos/soporte/Desconocido_pc.png</file>
         <file>imagenes/iconos/botonera/mame.png</file>
+        <file>imagenes/iconos/usuarios/actualiza_usuario.png</file>
+        <file>imagenes/iconos/usuarios/actualiza_usuarios.png</file>
     </qresource>
 </RCC>

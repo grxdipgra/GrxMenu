@@ -5,7 +5,7 @@
 #include <QProcess>
 #include <QTcpServer>
 #include <QDesktopServices>
-#include "configuracion.h"
+#include "configuracion/configuracion.h"
 #include <QEventLoop>
 
 QString host_ports_open_string(Host *host){

@@ -1,6 +1,6 @@
 ﻿#include "form_usuarios.h"
 #include "ui_botonera.h"
-#include "botonera.h"
+#include "botonera/botonera.h"
 #include "configuracion/configuracion.h"
 #include <QFileInfo>
 //#include <QThread>
