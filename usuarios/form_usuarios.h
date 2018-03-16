@@ -92,6 +92,7 @@ private:
     QStringList usuario_basedn;
     QStringList usuario_basedn2;
     QString DN; //guardamos la cadena dn del objeto actual
+
     struct entry{
         int id_entry;
        QString usuario;
@@ -113,9 +114,13 @@ private:
         QString dn;
     }entrada;
 
-
-
-
+    struct group{
+        int id_usuario;
+        int id_grupo;
+        QString usuario;
+        QString nombre;
+    }grupos;
+    QVector<group> vec_grupos;
 
 };
 

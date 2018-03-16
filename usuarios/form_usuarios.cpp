@@ -3,11 +3,13 @@
 #include "botonera.h"
 #include "configuracion/configuracion.h"
 #include <QFileInfo>
-#include <QThread>
+//#include <QThread>
+#include <QProgressDialog>
+
 
  LDAP *ldap;
  QSqlDatabase bd;
-
+ int id_usuario;
 
 //convierte QString a char *
 char* form_usuarios::convierte(QString dato){
@@ -76,6 +78,17 @@ bool existe;
 // COMENTADO           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (!existe){
     //qDebug()<<"crea";
+    int pb_cont = 0;
+
+    //Dialogo de espera...
+    QApplication::processEvents();
+    QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 100, this);
+    pb.setWindowModality(Qt::WindowModal);
+    //d.setLabelText("HOLAAAAA");
+    //d.setMaximum(50);
+    pb.setCancelButton(0);
+    pb.setValue(pb_cont);
+    pb.show();
 
     /*QDialog *newdialog = new QDialog(this);
     QThread *mipolla = new QThread;
@@ -102,6 +115,10 @@ if (!existe){
                "ultimo_login varchar(50),"
                "descripcion varchar(250),"
                "dn varchar(250))");
+        consulta->exec("create table grupos (id_grupo int,"
+               "id_usuario int,"
+               "grupo varchar (100),"
+               "usuario varchar(100))");
 
 //-------------------
    // rellenamos el combobox con todos los usuarios del dominio de las OU que se usan
@@ -130,8 +147,17 @@ if (!existe){
 
         if (carga_OU()){ //Si hay unidades organizativas realizamos las búsquedas
         int i=0;
+        pb.setMaximum(OU.count()+1);
+
         //recorremos todo OU
         foreach (const QString &qstr, OU) {
+
+            pb_cont=pb_cont+1;
+            pb.setLabelText("Cargando base de datos de usuarios . . .\n"+ qstr);
+            pb.setValue(pb_cont);
+            //QCoreApplication::processEvents();
+            QApplication::processEvents();
+            //qDebug()<<qstr;
 
             //Botonera::ui->progressBar->setFormat("Buscando lo que sea..." + QString::number(10) + "%");
 
@@ -170,8 +196,18 @@ if (!existe){
                                "'"+entrada.ultimo_login+"', "
                                "'"+entrada.descripcion+"' ,"
                                "'"+entrada.dn+"')");
-                    id_tmp=id_tmp+1;
 
+                    for (int j = 0; j < vec_grupos.size(); ++j) {
+                        //vec_grupos[j].usuario=entrada.usuario;
+
+                        //insertamos los grupos del usuario en la base de datos
+                        consulta->exec( "insert into grupos values(" + QString::number(j) + ", "
+                                   "" + QString::number(id_tmp) + ", "
+                                   "'"+vec_grupos[j].nombre+ "', "
+                                   "'"+vec_grupos[j].usuario+"')");
+                    }
+
+                    id_tmp=id_tmp+1;
                     //qDebug()<<entrada.nombre;
 
                }//no
@@ -187,6 +223,7 @@ if (!existe){
     //ldap_unbind_s(ldap);
 
     }
+
 
     //COMENTADO  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
@@ -289,7 +326,6 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
     int userAccountControl,i;
 
 
-
             // Capturamos la cadena DN del objeto
             dn = ldap_get_dn(ldap, entry);
             //limpiamos el struct entrada
@@ -302,6 +338,8 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
 
                 //entrada.dn=qstr;
                 entrada.dn=QString::fromStdString(dn);
+
+
 
                 //usuario
                 if (QString::fromStdString(atributo)=="sAMAccountName"){
@@ -484,9 +522,32 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                     }
                 }
 
+                //grupos
+                if (QString::fromStdString(atributo)=="memberOf"){
+                    vec_grupos.clear();
+                    if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                      for (i = 0; values[i] != NULL; i++) {
+
+                          //qDebug()<< usuario;
+                          //qDebug()<< QString::fromStdString(values[i]).toUpper();
+                          //grupos.usuario=entrada.usuario;
+                          grupos.nombre=QString::fromStdString(values[i]).toUpper();
+                          vec_grupos.push_back(grupos);
+                      }
+                      //qDebug()<<vec_grupos.count();
+                      ldap_value_free(values);
+                    }
+                }
+
             }
 
             ldap_memfree(dn);
+
+            //rellenamos aquí el Samaccountname del usuario en cada grupo porque se resuelve despues del Memberof
+            for (int j = 0; j < vec_grupos.size(); ++j) {
+                vec_grupos[j].usuario=entrada.usuario;
+                //qDebug()<<vec_grupos[j].usuario;
+            }
 
 
             //INICIO_______ si la clave caduca rellenamos el campo CLAVE CADUCA***********************************************************************************
@@ -683,9 +744,11 @@ void form_usuarios::clear_text(){
 // tipo=0->filtro por usuario, tipo=1->filtro por nombre
 void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
 
-//QSqlQuery consultar;
-QSqlQuery* consultar = new QSqlQuery(bd);
+    //QSqlQuery consultar;
 
+    QSqlQuery* consultar = new QSqlQuery(bd);
+
+    //qDebug()<<"entra";
     //QString resultado;
     if (tipo==0)
         consultar->prepare(QString("select * from ldap where usuario = :usuario"));
@@ -695,7 +758,7 @@ QSqlQuery* consultar = new QSqlQuery(bd);
     //consultar.bindValue(":usuario", ui->comboBox_usuarios->currentText());
     consultar->bindValue(":usuario", filtro);
     if (consultar->exec() and consultar->first()){
-            //idNodo = consultar.value(1).toString();
+            id_usuario=consultar->value(0).toInt();
             ui->comboBox_usuarios->setCurrentText(consultar->value(1).toString());//usuario
             ui->comboBox_nombres->setCurrentText(consultar->value(2).toString());//nombre
             ui->text_cuenta_caduca->setText(consultar->value(3).toString());
@@ -712,8 +775,27 @@ QSqlQuery* consultar = new QSqlQuery(bd);
             ui->text_ulti_login->setText(consultar->value(14).toString());
             ui->label_descripcion->setText(consultar->value(15).toString());
             DN=consultar->value(16).toString();
-
     }
+
+
+    //QSqlQuery* consulta1 = new QSqlQuery(bd);
+    QString sql;
+    QSqlQueryModel *model = new QSqlQueryModel();
+    //instr(X,Y)
+
+    //consultamos los grupos del usuario y enseñamos solo la parte del nombre del grupo de la cadena dn
+    sql = "select substr(grupo,4,instr(grupo,',')-4) from grupos where id_usuario=" + QString::number(id_usuario);
+    consultar->prepare(sql);
+    if(!consultar->exec()){
+        qDebug() <<"Error en la consulta: "<< consultar->lastError();
+    }else{
+        //qDebug() <<"Consulta realizada con exito: "<<consultar->lastQuery();
+        model->setQuery(*consultar);
+        ui->listView_grupos->setModel(model);
+        //on_comboBox_usuarios_activated(ui->comboBox_usuarios->itemText(0));
+    }
+
+
 
     if (ui->text_estado->text()=="Activa"){
         ui->text_estado->setStyleSheet("color: rgb(11, 97, 29)");
@@ -752,6 +834,8 @@ void form_usuarios::actualizar_usuarios(){
     QSqlQuery* consulta = new QSqlQuery(bd);
 
     consulta->exec("delete from ldap");
+    consulta->exec("delete from grupos");
+
 
    // rellenamos el combobox con todos los usuarios del dominio de las OU que se usan
 
@@ -770,6 +854,20 @@ void form_usuarios::actualizar_usuarios(){
     //    // variables para CONSULTA LDAP --------------------------------------------------------------------------
 
 
+        int pb_cont = 0;
+
+        //Dialogo de espera...
+        QCoreApplication::processEvents();
+        QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 10, this);
+        pb.setWindowModality(Qt::WindowModal);
+        //d.setLabelText("HOLAAAAA");
+        //d.setMaximum(50);
+        pb.setCancelButton(0);
+        pb.setValue(pb_cont);
+        pb.show();
+        QApplication::processEvents();
+
+
     if (conecta_oldap()){
 
         // lo usamos para ir guardando los resultados de las consultas, ordenarlo y luego se lo pasamos al combo
@@ -777,8 +875,17 @@ void form_usuarios::actualizar_usuarios(){
 
         if (carga_OU()){ //Si hay unidades organizativas realizamos las búsquedas
         int i=0;
+
+        pb.setMaximum(OU.count());
+
         //recorremos todo OU
         foreach (const QString &qstr, OU) {
+
+            pb_cont=pb_cont+1;
+            pb.setLabelText("Cargando base de datos de usuarios . . .\n"+ qstr);
+            pb.setValue(pb_cont);
+            //QCoreApplication::processEvents();
+            QApplication::processEvents();
 
             resul_consul=consulta_oldap("(&(!(objectclass=computer))(objectClass=user))", attrs, 0, qstr.toLocal8Bit(),LDAP_SCOPE_SUBTREE);
 
@@ -816,6 +923,17 @@ void form_usuarios::actualizar_usuarios(){
                                "'"+entrada.ultimo_login+"', "
                                "'"+entrada.descripcion+"' ,"
                                "'"+entrada.dn+"')");
+
+                    for (int j = 0; j < vec_grupos.size(); ++j) {
+                        //vec_grupos[j].usuario=entrada.usuario;
+
+                        //insertamos los grupos del usuario en la base de datos
+                        consulta->exec( "insert into grupos values(" + QString::number(j) + ", "
+                                   "" + QString::number(id_tmp) + ", "
+                                   "'"+vec_grupos[j].nombre+ "', "
+                                   "'"+vec_grupos[j].usuario+"')");
+                    }
+
                     id_tmp=id_tmp+1;
 
                     //qDebug()<<entrada.nombre;
@@ -864,8 +982,7 @@ void form_usuarios::actualiza_usuario(){
 
     if (conecta_oldap()){
 
-        // lo usamos para ir guardando los resultados de las consultas, ordenarlo y luego se lo pasamos al combo
-        int id_tmp=0;
+        //int id_tmp=0;
 
         //if (carga_OU()){ //Si hay unidades organizativas realizamos las búsquedas
         int i=0;
@@ -908,7 +1025,22 @@ void form_usuarios::actualiza_usuario(){
                                "ultimo_login='"+entrada.ultimo_login+"', "
                                "descripcion='"+entrada.descripcion+"' ,"
                                "dn='"+entrada.dn+"' where usuario='"+ui->comboBox_usuarios->currentText()+"'");
-                    id_tmp=id_tmp+1;
+
+                    //eliminar los grupos del usuario
+                    consulta->exec("delete from grupos where id_usuario=" + QString::number(id_usuario));
+
+                    //actualizar los grupos del usuario
+                    for (int j = 0; j < vec_grupos.size(); ++j) {
+                        //vec_grupos[j].usuario=entrada.usuario;
+
+                        //insertamos los grupos del usuario en la base de datos
+                        consulta->exec( "insert into grupos values(" + QString::number(j) + ", "
+                                   "" + QString::number(id_usuario) + ", "
+                                   "'"+vec_grupos[j].nombre+ "', "
+                                   "'"+vec_grupos[j].usuario+"')");
+                    }
+
+                    //id_tmp=id_tmp+1;
 
                     //qDebug()<<entrada.estado;
                }
@@ -918,7 +1050,6 @@ void form_usuarios::actualiza_usuario(){
     }
 
     carga_datos_usuario(0, ui->comboBox_usuarios->currentText());
-
 
 }
 
