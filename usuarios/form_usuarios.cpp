@@ -6,6 +6,7 @@
 //#include <QThread>
 #include <QProgressDialog>
 
+//falta comprobar cuando los usuarios se desbloquean por tiempo
 
  LDAP *ldap;
  QSqlDatabase bd;
@@ -257,21 +258,24 @@ if (!existe){
 }
 
 void form_usuarios::limpia_entrada(){
+    entrada.id_entry=0;
+    entrada.usuario="";
+    entrada.nombre="";
     entrada.cambio_clave="";
     entrada.clave="";
     entrada.correo="";
     entrada.creada="";
-    entrada.descripcion="";
     entrada.estado="";
     entrada.fecha_correo="";
-    entrada.id_entry=0;
     entrada.intentos=0;
     entrada.logon=0;
     entrada.modificacion_cuenta="";
-    entrada.nombre="";
     entrada.telefono="";
     entrada.ultimo_login="";
-    entrada.usuario="";
+    entrada.descripcion="";
+    entrada.caduca_clave="";
+    entrada.caduca_cuenta="";
+    entrada.dn="";
 
 }
 
@@ -328,8 +332,9 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
 
             // Capturamos la cadena DN del objeto
             dn = ldap_get_dn(ldap, entry);
-            //limpiamos el struct entrada
+            //limpiamos el struct entrada y vector grupos
             limpia_entrada();
+            vec_grupos.clear();
 
             // recorremos todos los atributos de cada entry
             for ( atributo = ldap_first_attribute(ldap, entry, &ber);atributo != NULL;
@@ -1024,7 +1029,8 @@ void form_usuarios::actualiza_usuario(){
                                "telefono='"+entrada.telefono+"', "
                                "ultimo_login='"+entrada.ultimo_login+"', "
                                "descripcion='"+entrada.descripcion+"' ,"
-                               "dn='"+entrada.dn+"' where usuario='"+ui->comboBox_usuarios->currentText()+"'");
+                               "dn='"+entrada.dn+"' where id = " + QString::number(id_usuario) + "" );
+                               //"dn='"+entrada.dn+"' where usuario like '"+ui->comboBox_usuarios->currentText()+"'");
 
                     //eliminar los grupos del usuario
                     consulta->exec("delete from grupos where id_usuario=" + QString::number(id_usuario));
