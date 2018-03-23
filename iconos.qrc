@@ -92,5 +92,6 @@
         <file>imagenes/iconos/botonera/mame.png</file>
         <file>imagenes/iconos/usuarios/actualiza_usuario.png</file>
         <file>imagenes/iconos/usuarios/actualiza_usuarios.png</file>
+        <file>imagenes/iconos/basedatos/csv.png</file>
     </qresource>
 </RCC>

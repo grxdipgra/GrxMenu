@@ -42,6 +42,8 @@ private slots:
     void on_pB_sql_clicked();
     void on_comboBox_consulta_activated(const QString &arg1);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::BaseDatos *ui;
 };

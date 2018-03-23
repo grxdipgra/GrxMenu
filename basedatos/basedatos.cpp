@@ -2,8 +2,9 @@
 #include "ui_basedatos.h"
 #include <QStandardItemModel>
 #include <QTreeView>
-
-
+#include <QDebug>
+#include <QFile>
+#include <QFileDialog>
 BaseDatos::BaseDatos(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::BaseDatos)
@@ -327,7 +328,8 @@ void BaseDatos::on_pB_sql_clicked() {
         ui->tableView_consulta->setModel(model_consulta);
         ui->tableView_consulta->resizeColumnsToContents();
         ui->tableView_consulta->resizeRowsToContents();
-    }
+
+}
 }
 
 void BaseDatos::on_comboBox_consulta_activated(const QString &arg1) {
@@ -357,4 +359,41 @@ void BaseDatos::on_comboBox_consulta_activated(const QString &arg1) {
         }
      }
 }
+
+
+void BaseDatos::on_pushButton_clicked()
+{
+
+    QString textData;
+    model_consulta=ui->tableView_consulta->model();
+    int rows = model_consulta->rowCount();
+    int columns = model_consulta->columnCount();
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+
+                textData += model_consulta->data(model_consulta->index(i,j)).toString();
+                textData += ", " ;     // para .csv
+        }
+        textData += "\n";             // (opcional)
+    }
+
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Exportar fichero a csv"),
+                               "./select.csv",
+                               tr("CSV (*.csv)"));
+
+
+    QFile csvFile(fileName);
+    if(csvFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        QTextStream out(&csvFile);
+        out << textData;
+
+        csvFile.close();
+    } //else
+      //  QMessageBox::critical(this, "Sql Error", "Error en la consulta: \n" + query_consulta->lastError().text(), QMessageBox::Ok);
+
+
+}
+
 

@@ -25,15 +25,15 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1100</width>
-         <height>650</height>
+         <width>1104</width>
+         <height>642</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
          <widget class="QTabWidget" name="tablas">
           <property name="currentIndex">
-           <number>2</number>
+           <number>10</number>
           </property>
           <widget class="QWidget" name="municipio">
            <attribute name="title">
@@ -61,7 +61,14 @@
            </attribute>
            <layout class="QGridLayout" name="gridLayout_11">
             <item row="0" column="0">
-             <widget class="QTableView" name="tableView_nodo"/>
+             <widget class="QTableView" name="tableView_nodo">
+              <property name="dragEnabled">
+               <bool>true</bool>
+              </property>
+              <property name="dragDropMode">
+               <enum>QAbstractItemView::DragDrop</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -176,17 +183,17 @@
               <widget class="QPushButton" name="pB_sql">
                <property name="geometry">
                 <rect>
-                 <x>1010</x>
-                 <y>3</y>
-                 <width>41</width>
-                 <height>35</height>
+                 <x>990</x>
+                 <y>5</y>
+                 <width>31</width>
+                 <height>31</height>
                 </rect>
                </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../iconos.qrc">
                  <normaloff>:/imagenes/iconos/botonera/sql.svg</normaloff>:/imagenes/iconos/botonera/sql.svg</iconset>
                </property>
                <property name="iconSize">
@@ -201,7 +208,7 @@
                 <rect>
                  <x>110</x>
                  <y>5</y>
-                 <width>891</width>
+                 <width>861</width>
                  <height>31</height>
                 </rect>
                </property>
@@ -259,6 +266,29 @@
                 </property>
                </item>
               </widget>
+              <widget class="QPushButton" name="pushButton">
+               <property name="geometry">
+                <rect>
+                 <x>1030</x>
+                 <y>5</y>
+                 <width>31</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../iconos.qrc">
+                 <normaloff>:/imagenes/iconos/basedatos/csv.png</normaloff>:/imagenes/iconos/basedatos/csv.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
              </widget>
             </item>
             <item row="1" column="0">
@@ -280,12 +310,14 @@
      <x>0</x>
      <y>0</y>
      <width>1120</width>
-     <height>19</height>
+     <height>30</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../iconos.qrc"/>
+ </resources>
  <connections/>
 </ui>
