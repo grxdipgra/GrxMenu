@@ -388,130 +388,17 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>325</y>
-     <width>517</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QPushButton" name="Btn_Buscar">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Escanear</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Btn_Ping">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Ping</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Btn_Incidencia">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Incidencia</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Btn_Mtr">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>mtr</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Btn_Atalaya">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>SolarWinds</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Btn_Glpi">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>GLPI</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QLabel" name="Estado">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>330</y>
+     <x>740</x>
+     <y>20</y>
      <width>41</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
     <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Btn_Limpiar">
-   <property name="geometry">
-    <rect>
-     <x>700</x>
-     <y>334</y>
-     <width>80</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Limpiar</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../iconos.qrc">
-     <normaloff>:/imagenes/iconos/soporte/escoba.svg</normaloff>:/imagenes/iconos/soporte/escoba.svg</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>30</width>
-     <height>30</height>
-    </size>
    </property>
   </widget>
   <widget class="QFrame" name="frame_2">
@@ -840,8 +727,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>809</width>
-      <height>419</height>
+      <width>807</width>
+      <height>417</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -878,26 +765,176 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>330</y>
+     <width>811</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QComboBox" name="cb_escaner">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>45</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;T1 - Muy intensa, pero muy lenta&lt;/p&gt;&lt;p&gt;T2 - Intensiva y lenta&lt;/p&gt;&lt;p&gt;T3 - Por defecto, intermedia&lt;/p&gt;&lt;p&gt;T4 - Rapida, puede haber perdida de equipos&lt;/p&gt;&lt;p&gt;T5 - Muy rápida, es muy probable que se pierdan equipos&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="currentText">
+         <string>T3</string>
+        </property>
+        <property name="currentIndex">
+         <number>2</number>
+        </property>
+        <property name="maxVisibleItems">
+         <number>5</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>T1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>T2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>T3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>T4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>T5</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Btn_Buscar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Escanear</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Ping">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Ping</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Incidencia">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Incidencia</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Mtr">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>mtr</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Atalaya">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>SolarWinds</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Glpi">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>GLPI</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Btn_Limpiar">
+      <property name="text">
+       <string>Limpiar</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../iconos.qrc">
+        <normaloff>:/imagenes/iconos/soporte/escoba.svg</normaloff>:/imagenes/iconos/soporte/escoba.svg</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources>
   <include location="../iconos.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>lineEdit_ip</sender>
-   <signal>returnPressed()</signal>
-   <receiver>Btn_Buscar</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>235</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>66</x>
-     <y>301</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

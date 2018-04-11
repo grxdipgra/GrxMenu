@@ -140,7 +140,7 @@ QString NMap::nmap_args(){
 
 bool NMap::nmap_is_open_port (QString ip, QString port){
     int i,j,num_equipos,num_port;
-    num_equipos = nmap_num_host_up();
+    num_equipos = nmapscan.host.count();
     for (i=0;i<num_equipos;i++){
         num_port = nmapscan.host[i].ports.port.count();
         for (j=0;j<num_port;j++){

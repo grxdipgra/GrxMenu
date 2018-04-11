@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui  widgets sql network
-
+CONFIG += debug
 TARGET = GrxMenu
 TEMPLATE = app
 CONFIG += c++11

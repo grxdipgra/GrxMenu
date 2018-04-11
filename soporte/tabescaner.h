@@ -14,7 +14,7 @@ public:
     explicit tabEscaner(NMapScan *nmapscan,QWidget *parent = nullptr);
     NMapScan *nmapscan;
     QList<Host> host_encontrados;
-    int lineas = 6;// Numero de líneas de botones que se mostrarán
+    int lineas = 5;// Numero de líneas de botones que se mostrarán
 signals:
 
 public slots:

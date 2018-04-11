@@ -165,7 +165,25 @@ void Soporte::ejecuta_nmap()
 {
     Configuracion configuracion;
     QThread *hilo =new QThread();
-    ejecutaHilo *hebra = new ejecutaHilo(ui->lineEdit_ip->text(),"-vvv -p"+configuracion.puertos_buscados());
+    QString opciones;
+    switch (ui->cb_escaner->currentIndex()){
+        case 0:
+            opciones = "-T1 -vvv -p"+configuracion.puertos_buscados();
+            break;
+        case 1:
+            opciones = "-T2 -vvv -p"+configuracion.puertos_buscados();
+            break;
+        case 2:
+            opciones = "--max-retries 10 --min-parallelism 50 -T3 -vvv -p"+configuracion.puertos_buscados();
+            break;
+        case 3:
+            opciones = "--max-retries 5 --min-parallelism 50 -T4 -vvv -p"+configuracion.puertos_buscados();
+            break;
+        case 4:
+            opciones = "--max-retries 5 --min-parallelism 50 -T5 -vvv -p"+configuracion.puertos_buscados();
+            break;
+    }
+    ejecutaHilo *hebra = new ejecutaHilo(ui->lineEdit_ip->text(),opciones);
     ui->TextoSalida->appendPlainText("Realizando escaneo para la ip:  "+ui->lineEdit_ip->text());
     hebra->moveToThread(hilo);
     qRegisterMetaType<QList<NMapScan>>("QList<NMapScan>");
@@ -184,7 +202,7 @@ void Soporte::resultados(QList<NMapScan> res){
     NMap *nmap =new NMap(nmapscan);
     ui->TextoSalida->appendPlainText("Equipos Buscados: "+QString::number(nmap->nmap_num_host_find()));
     ui->TextoSalida->appendPlainText("Equipos Encontrados: "+QString::number(nmap->nmap_num_host_up()));
-    ui->TextoSalida->appendPlainText("Tiempo tardado: "+nmap->nmap_time_elapsed()+" Segundos");
+    ui->TextoSalida->appendPlainText("Tiempo tardado en realizar la búsqueda: "+nmap->nmap_time_elapsed()+" Segundos");
     ui->tabWidget->insertTab(1,new tabEscaner(&nmapscan),nmap->nmap_arg_find());
     connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 }

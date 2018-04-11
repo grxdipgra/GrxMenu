@@ -12,9 +12,9 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
-CFLAGS        = -fpermissive -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -fpermissive -O2 -std=gnu++0x -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+CFLAGS        = -fpermissive -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -fpermissive -g -std=gnu++0x -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I/lib -I/usr/lib/x86_64-linux-gnu -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtSql -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
 QMAKE         = /usr/lib/x86_64-linux-gnu/qt5/bin/qmake
 DEL_FILE      = rm -f
@@ -35,7 +35,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = GrxMenu1.0.0
 DISTDIR = /home/alberto/GrxMenu/.tmp/GrxMenu1.0.0
 LINK          = g++
-LFLAGS        = -fpermissive -Wl,-O1
+LFLAGS        = -fpermissive
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lssh2 -lldap -lcrypto -lssl -lsqlite3 -lQt5Widgets -lQt5Gui -lQt5Sql -lQt5Network -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
