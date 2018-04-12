@@ -102,6 +102,7 @@
 
 
 #define RUTA_IMAGENES "/usr/share/grx/asistencia/imagenes/"
-
+#include <QString>
+bool fileExists(QString path);
 
 #endif // LIB_H

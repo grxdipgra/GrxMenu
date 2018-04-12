@@ -81,7 +81,7 @@ QList <QString> NMap::host_ports_open(Host host){
            lista.append(host.ports.port.at(i).portid);
     return lista;
 }
-/****************host_ports_open****************************
+/****************host_ports_open_string****************************
  * Devuelve los puerto abiertos del host pasado por parametro en un QString
  * *******************************************************/
 
@@ -94,14 +94,25 @@ QString NMap::host_ports_open_string(Host *host){
     return lista;
 }
 
-/****************host_ports_open****************************
- * Devuelve los puerto abiertos del host pasado por parametro
- * *******************************************************/
 
 
-int NMap::host_ports_open_int(Host &host){
-    return host.ports.port.count();
+/******************************host_ports_open_int*******************************
+ * Devuelve el número de puertos abiertos del equipos pasado por parametro
+ * ***************************************************************************/
+
+
+int NMap::host_ports_open_int(QString ip){
+    int puertos = 0;
+    int num_equipos;
+    num_equipos = nmap_num_host_up();
+    for (int i=0;i<num_equipos;i++)
+        if ((nmapscan.host[i].address.addr)==ip)
+            for (int j=0;j<nmapscan.host[i].ports.port.count();j++)
+                if (nmapscan.host[i].ports.port[j].state.state=="open")
+                    puertos++;
+return puertos;
 }
+
 
 /******************************nmap_num_host_up********************************
  * Devuelve el número de equipos encendidos
@@ -174,11 +185,17 @@ QList <Host> NMap::nmap_hosts_up_QList(){
     QList <Host> lista;
     int num_equipos;
     num_equipos = nmapscan.host.count();
-    for (int i=0;i<num_equipos;i++)
-        if (nmapscan.host.at(i).status.state=="up")
+    for (int i=0;i<num_equipos;i++){
+
+        if (((nmapscan.host.at(i).status.state=="up")&&(host_ports_open_int(nmapscan.host.at(i).address.addr))))
             lista.append(nmapscan.host[i]);
+    }
 return lista;
 }
+
+
+
+
 
 
 /************************nmap_port_open***************************************
@@ -220,7 +237,7 @@ bool NMap::is_linux (QString ip){
  * Devuelve true si el equipo tiene el puerto rpc abierto
  * *************************************************************************/
 bool NMap::is_win (QString ip){
-    if ((nmap_is_open_port(ip,"139")) && (nmap_is_open_port(ip,"445")))
+    if ((nmap_is_open_port(ip,"139")) || (nmap_is_open_port(ip,"445")))
          return true;
 return false;
 }

@@ -2,7 +2,6 @@
 #include "ui_botonera.h"
 #include <QNetworkInterface>
 #include <QDesktopServices>
-#include <QFileInfo>
 #include "qdebug.h"
 #include "soporte/soporte.h"
 #include "sedes/sedes.h"
@@ -14,14 +13,8 @@
 #include "mame/mame.h"
 #include "usuarios/form_usuarios.h"
 #include "basedatos/basedatos.h"
+#include "lib/lib.h"
 
-// Esta funcion comprueba que el archivo pasado por parametro
-// exista y no sea un directorio
-
-bool fileExists(QString path) {
-    QFileInfo check_file(path);
-    return (check_file.exists() && check_file.isFile());
-}
 
 // En este struct vamos a guardar los datos de conexion ssh y DB
 struct variables{
@@ -250,7 +243,7 @@ bool Botonera::cargaVariables(){
 
     //db = QSqlDatabase::addDatabase("QMYSQL");
     db=QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/alberto/pru.sqlite");
+    db.setDatabaseName("/home/alberto/.grx/grx.sqlite");
     Configuracion *configuracion = new Configuracion;
     //home = qgetenv("HOME");
     home = configuracion->cual_es_home();

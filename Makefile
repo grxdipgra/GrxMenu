@@ -63,7 +63,8 @@ SOURCES       = main.cpp \
 		mame/mame.cpp \
 		usuarios/hilousuarios.cpp \
 		usuarios/form_usuarios.cpp \
-		configuracion/simplecrypt.cpp qrc_iconos.cpp \
+		configuracion/simplecrypt.cpp \
+		lib/lib.cpp qrc_iconos.cpp \
 		moc_botonera.cpp \
 		moc_configuracion.cpp \
 		moc_sedes.cpp \
@@ -93,6 +94,7 @@ OBJECTS       = main.o \
 		hilousuarios.o \
 		form_usuarios.o \
 		simplecrypt.o \
+		lib.o \
 		qrc_iconos.o \
 		moc_botonera.o \
 		moc_configuracion.o \
@@ -201,7 +203,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		mame/mame.cpp \
 		usuarios/hilousuarios.cpp \
 		usuarios/form_usuarios.cpp \
-		configuracion/simplecrypt.cpp
+		configuracion/simplecrypt.cpp \
+		lib/lib.cpp
 QMAKE_TARGET  = GrxMenu
 DESTDIR       = 
 TARGET        = GrxMenu
@@ -370,7 +373,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents iconos.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents botonera/botonera.h configuracion/configuracion.h soporte/nmap_xml.h sedes/sedes.h soporte/soporte.h soporte/equipos.h tunel.h soporte/ejecutahilo.h soporte/tabescaner.h basedatos/basedatos.h acercade/acerdade.h mame/mame.h usuarios/hilousuarios.h usuarios/form_usuarios.h usuarios/ldap.h configuracion/simplecrypt.h lib/lib.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp botonera/botonera.cpp configuracion/configuracion.cpp soporte/nmap_xml.cpp sedes/sedes.cpp soporte/soporte.cpp soporte/equipos.cpp tunel.cpp soporte/ejecutahilo.cpp soporte/tabescaner.cpp basedatos/basedatos.cpp acercade/acerdade.cpp mame/mame.cpp usuarios/hilousuarios.cpp usuarios/form_usuarios.cpp configuracion/simplecrypt.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp botonera/botonera.cpp configuracion/configuracion.cpp soporte/nmap_xml.cpp sedes/sedes.cpp soporte/soporte.cpp soporte/equipos.cpp tunel.cpp soporte/ejecutahilo.cpp soporte/tabescaner.cpp basedatos/basedatos.cpp acercade/acerdade.cpp mame/mame.cpp usuarios/hilousuarios.cpp usuarios/form_usuarios.cpp configuracion/simplecrypt.cpp lib/lib.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents botonera/botonera.ui configuracion/configuracion.ui sedes/sedes.ui soporte/soporte.ui soporte/equipos.ui basedatos/basedatos.ui acercade/acerdade.ui mame/mame.ui usuarios/form_usuarios.ui $(DISTDIR)/
 
 
@@ -711,6 +714,9 @@ form_usuarios.o: usuarios/form_usuarios.cpp usuarios/form_usuarios.h \
 
 simplecrypt.o: configuracion/simplecrypt.cpp configuracion/simplecrypt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simplecrypt.o configuracion/simplecrypt.cpp
+
+lib.o: lib/lib.cpp lib/lib.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lib.o lib/lib.cpp
 
 qrc_iconos.o: qrc_iconos.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_iconos.o qrc_iconos.cpp

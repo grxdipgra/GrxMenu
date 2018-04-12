@@ -217,7 +217,7 @@ virtual ~NMap();
     int what_is_int(QString ip);
     QList<QString> host_ports_open(Host host);
     QString host_ports_open_string(Host *host); //Puertos abiertos
-    int host_ports_open_int(Host &host); //Numero de puerto abiertos del host
+    int host_ports_open_int(QString ip); //Numero de puerto abiertos del host
 
 private:
     NMapScan nmapscan;

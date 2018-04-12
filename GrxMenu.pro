@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     mame/mame.cpp \
     usuarios/hilousuarios.cpp \
     usuarios/form_usuarios.cpp \
-    configuracion/simplecrypt.cpp
+    configuracion/simplecrypt.cpp \
+    lib/lib.cpp
 
 HEADERS  += \
     botonera/botonera.h \

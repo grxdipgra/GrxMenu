@@ -168,19 +168,19 @@ void Soporte::ejecuta_nmap()
     QString opciones;
     switch (ui->cb_escaner->currentIndex()){
         case 0:
-            opciones = "-T1 -vvv -p"+configuracion.puertos_buscados();
+            opciones = "-T1 -vvv -Pn -p"+configuracion.puertos_buscados();
             break;
         case 1:
-            opciones = "-T2 -vvv -p"+configuracion.puertos_buscados();
+            opciones = "-T2 -vvv  -Pn -p"+configuracion.puertos_buscados();
             break;
         case 2:
-            opciones = "--max-retries 10 --min-parallelism 50 -T3 -vvv -p"+configuracion.puertos_buscados();
+            opciones = "--max-retries 10 --min-parallelism 50 -T3 -vvv -Pn -p"+configuracion.puertos_buscados();
             break;
         case 3:
-            opciones = "--max-retries 5 --min-parallelism 50 -T4 -vvv -p"+configuracion.puertos_buscados();
+            opciones = "--max-retries 5 --min-parallelism 50 -T4 -vvv -Pn -p"+configuracion.puertos_buscados();
             break;
         case 4:
-            opciones = "--max-retries 5 --min-parallelism 50 -T5 -vvv -p"+configuracion.puertos_buscados();
+            opciones = "--max-retries 5 --min-parallelism 50 -T5 -vvv -Pn -p"+configuracion.puertos_buscados();
             break;
     }
     ejecutaHilo *hebra = new ejecutaHilo(ui->lineEdit_ip->text(),opciones);
