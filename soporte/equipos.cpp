@@ -156,7 +156,7 @@ void Equipos::on_pB_ssh_clicked()
 {
     Configuracion config;
     QProcess process;
-    process.startDetached("x-terminal-emulator -e ssh "+config.cual_es_tecnico()+"@"+ip);
+    process.startDetached("x-terminal-emulator -e ssh -p "+config.cual_es_puerto()+" "+config.cual_es_tecnico()+"@"+ip);
 }
 
 void Equipos::on_pB_systemconfig_clicked()
