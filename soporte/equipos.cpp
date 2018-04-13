@@ -130,7 +130,7 @@ void Equipos::on_pB_carpeta_clicked()
     Configuracion config;
     dir.setAutoRemove(false);
     if (dir.isValid()) {
-       process.startDetached("sshfs -p "+config.cual_es_puerto()+" -o reconnect -C -o workaround=all "+config.cual_es_tecnico()+"@"+ip+":/home/administrador "+dir.path());
+       process.startDetached("sshfs -p "+config.cual_es_puerto()+" -o reconnect -C -o workaround=all "+config.cual_es_usuario_remoto()+"@"+ip+":/home/administrador "+dir.path());
        process.startDetached("xdg-open "+dir.path());
     }
 
@@ -156,21 +156,21 @@ void Equipos::on_pB_ssh_clicked()
 {
     Configuracion config;
     QProcess process;
-    process.startDetached("x-terminal-emulator -e ssh -p "+config.cual_es_puerto()+" "+config.cual_es_tecnico()+"@"+ip);
+    process.startDetached("x-terminal-emulator -e ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip);
 }
 
 void Equipos::on_pB_systemconfig_clicked()
 {
     Configuracion config;
     QProcess process;
-    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_tecnico()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/systemsettings5 ");
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/systemsettings5 ");
 }
 
 void Equipos::on_pB_networkManager_clicked()
 {
     Configuracion config;
     QProcess process;
-    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_tecnico()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kde5-nm-connection-editor ");
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kde5-nm-connection-editor ");
 }
 
 void Equipos::on_pB_cups_clicked()
@@ -209,7 +209,7 @@ void Equipos::on_pushButton_12_clicked()
 {
     Configuracion config;
     QProcess process;
-    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_tecnico()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/lxtask ");
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/lxtask ");
 }
 
 void Equipos::on_pB_update_clicked()

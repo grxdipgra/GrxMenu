@@ -183,11 +183,11 @@ return lista;
 
 QList <Host> NMap::nmap_hosts_up_QList(){
     QList <Host> lista;
-    int num_equipos;
+    int num_equipos,tmp;
     num_equipos = nmapscan.host.count();
     for (int i=0;i<num_equipos;i++){
-
-        if (((nmapscan.host.at(i).status.state=="up")&&(host_ports_open_int(nmapscan.host.at(i).address.addr))))
+        tmp = host_ports_open_int(nmapscan.host.at(i).address.addr);
+        if ((nmapscan.host.at(i).status.state=="up")&&(((host_ports_open_int(nmapscan.host.at(i).address.addr)) || is_router(nmapscan.host.at(i).address.addr))))
             lista.append(nmapscan.host[i]);
     }
 return lista;

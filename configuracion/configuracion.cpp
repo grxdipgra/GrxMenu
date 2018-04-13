@@ -101,7 +101,7 @@ void Configuracion::mascara_ip(){
 void Configuracion::valoresPorDefecto(){
 
     home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
-    QSettings s(home_usuario+".grxconf.ini", QSettings::IniFormat);
+    QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
     QString name = qgetenv("USER");
     if (name.isEmpty())
         name = qgetenv("USERNAME");
@@ -205,7 +205,7 @@ QString  Configuracion::cual_es_home(){
 }
 
 QString  Configuracion::cual_es_ini(){
-    return home_usuario+".grxconf.ini";
+    return home_usuario+".grx/.grxconf.ini";
 }
 
 QString  Configuracion::cual_es_tecnico(){
@@ -520,7 +520,7 @@ void Configuracion::carga_configuracion()
     //Carga de los valores de las variables de configuracion
     //Usamos Qsettings para leer los valores de las variables de un archivo .ini
     home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
-    QSettings s(home_usuario+".grxconf.ini", QSettings::IniFormat);
+    QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
     Tecnico = s.value("Configuracion/Tecnico").toString();
     //Clave = s.value("Configuracion/Clave").toString());
     Clave = cifra->decryptToString( s.value("Configuracion/Clave").toString());
@@ -724,7 +724,7 @@ void Configuracion::on_buttonBox_accepted()
 {
     //Usamos Qsettings para guardar los valores de las variables en un archivo .ini
     QString home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
-    QSettings s(home_usuario+".grxconf.ini", QSettings::IniFormat);
+    QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
     s.setValue("Configuracion/Tecnico", ui->tecnico->text());
     s.setValue("Configuracion/Clave", cifra->encryptToString(ui->clave->text()));
     s.setValue("Configuracion/ServidorAD", ui->servidor->text());

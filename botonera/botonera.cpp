@@ -30,7 +30,6 @@ struct variables{
     unsigned int local_listenport;
     QString remote_desthost;
     QString databasename;
-    //QString hostname_D
     unsigned int remote_destport;
     bool usar_ssh;
 }datos;
@@ -177,12 +176,10 @@ bool Botonera::basedatos(){
     */
     if (!db.open()){
         ui->label_DB->setText("Cerrado");
-        ui->actionSedes->setDisabled(true);
-        ui->actionSoporte->setDisabled(true);
+
     }else{
         ui->label_DB->setText("Conectada");
-        ui->actionSedes->setEnabled(true);
-        ui->actionSoporte->setEnabled(true);
+
         return true;
     }
 
@@ -240,14 +237,13 @@ void Botonera::muestraBotones(){
 }
 
 bool Botonera::cargaVariables(){
-
+    Configuracion *configuracion = new Configuracion;
     //db = QSqlDatabase::addDatabase("QMYSQL");
     db=QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/alberto/.grx/grx.sqlite");
-    Configuracion *configuracion = new Configuracion;
-    //home = qgetenv("HOME");
     home = configuracion->cual_es_home();
-    GrxMenu = home + "/.grxconf.ini";
+    QString rutaDB = home + "/.grx/grx.sqlite";
+    db.setDatabaseName(rutaDB);
+    GrxMenu = home + "/.grx/.grxconf.ini";
     path =qgetenv("PATH");
     if (!fileExists(GrxMenu)){
         QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
@@ -256,15 +252,11 @@ bool Botonera::cargaVariables(){
     }
     if (!db.open()){
         ui->label_DB->setText("Cerrado");
-        ui->actionSedes->setDisabled(true);
-        ui->actionSoporte->setDisabled(true);
         return false;
     }
     else  {
         ui->label_DB->setText("Conectado");
-        ui->actionSedes->setEnabled(true);
-        ui->actionSoporte->setEnabled(true);
-        }
+    }
 
     /*
     datos.keyfile1=configuracion->cual_es_keyfile_publica();
