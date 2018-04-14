@@ -117,6 +117,25 @@ void BaseDatos::cabeceras() {
     model_aplicacion->setHeaderData(1, Qt::Horizontal, QObject::tr("atalaya"));
     model_aplicacion->setHeaderData(2, Qt::Horizontal, QObject::tr("glpi"));
     model_aplicacion->setHeaderData(3, Qt::Horizontal, QObject::tr("osc"));
+
+/*    model_ldap->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
+    model_ldap->setHeaderData(1, Qt::Horizontal, QObject::tr("usuario"));
+    model_ldap->setHeaderData(2, Qt::Horizontal, QObject::tr("nombre"));
+    model_ldap->setHeaderData(3, Qt::Horizontal, QObject::tr("cuenta_caduca"));
+    model_ldap->setHeaderData(4, Qt::Horizontal, QObject::tr("cambio_clave"));
+    model_ldap->setHeaderData(5, Qt::Horizontal, QObject::tr("clave_caducada"));
+    model_ldap->setHeaderData(6, Qt::Horizontal, QObject::tr("correo"));
+    model_ldap->setHeaderData(7, Qt::Horizontal, QObject::tr("creada"));
+    model_ldap->setHeaderData(8, Qt::Horizontal, QObject::tr("estado"));
+    model_ldap->setHeaderData(9, Qt::Horizontal, QObject::tr("fecha_correo"));
+    model_ldap->setHeaderData(10, Qt::Horizontal, QObject::tr("intentos"));
+    model_ldap->setHeaderData(11, Qt::Horizontal, QObject::tr("logon"));
+    model_ldap->setHeaderData(12, Qt::Horizontal, QObject::tr("modificacion_cuenta"));
+    model_ldap->setHeaderData(13, Qt::Horizontal, QObject::tr("telefono"));
+    model_ldap->setHeaderData(14, Qt::Horizontal, QObject::tr("ultimo_login"));
+    model_ldap->setHeaderData(15, Qt::Horizontal, QObject::tr("descripcion"));
+    model_ldap->setHeaderData(16, Qt::Horizontal, QObject::tr("dn"));
+*/
 }
 
 void BaseDatos::inicia() {
@@ -200,6 +219,14 @@ void BaseDatos::inicia() {
     ui->tableView_mancomunidad->setSortingEnabled(true);
     ui->tableView_mancomunidad->sortByColumn(0, Qt::AscendingOrder);
 
+   /* model_ldap->setTable("ldap");
+    model_ldap->select();
+    ui->tableView_usuarios->setModel(model_ldap);
+    ui->tableView_usuarios->resizeColumnsToContents();
+    ui->tableView_usuarios->resizeRowsToContents();
+    ui->tableView_usuarios->setSortingEnabled(true);
+    ui->tableView_usuarios->sortByColumn(0, Qt::AscendingOrder);
+*/
     sql[0] = "";
 
     sql[1] =    "SELECT n.nombre as Nodo, "
@@ -360,8 +387,7 @@ void BaseDatos::on_comboBox_consulta_activated(const QString &arg1) {
      }
 }
 
-
-void BaseDatos::on_pushButton_clicked()
+void BaseDatos::on_pB_csv_clicked()
 {
 
     QString textData;
@@ -390,10 +416,6 @@ void BaseDatos::on_pushButton_clicked()
         out << textData;
 
         csvFile.close();
-    } //else
-      //  QMessageBox::critical(this, "Sql Error", "Error en la consulta: \n" + query_consulta->lastError().text(), QMessageBox::Ok);
-
+    }
 
 }
-
-

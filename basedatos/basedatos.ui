@@ -142,6 +142,16 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="usuarios">
+           <attribute name="title">
+            <string>usuarios</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_14">
+            <item row="0" column="0">
+             <widget class="QTableView" name="tableView_usuarios"/>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="Consulta">
            <attribute name="title">
             <string>Consulta SQL</string>
@@ -266,7 +276,7 @@
                 </property>
                </item>
               </widget>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="pB_csv">
                <property name="geometry">
                 <rect>
                  <x>1030</x>

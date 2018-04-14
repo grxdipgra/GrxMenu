@@ -24,6 +24,7 @@ public:
     explicit BaseDatos(QWidget *parent = 0);
     ~BaseDatos();
     QSqlQueryModel *model_consulta = new QSqlQueryModel();
+    QSqlTableModel *model_ldap = new QSqlQueryModel();
     QSqlTableModel *model_municipio = new QSqlTableModel();
     QSqlTableModel *model_nodo = new QSqlTableModel();
     QSqlTableModel *model_poblacion = new QSqlTableModel();
@@ -41,8 +42,7 @@ private slots:
     void inicia();
     void on_pB_sql_clicked();
     void on_comboBox_consulta_activated(const QString &arg1);
-
-    void on_pushButton_clicked();
+    void on_pB_csv_clicked();
 
 private:
     Ui::BaseDatos *ui;

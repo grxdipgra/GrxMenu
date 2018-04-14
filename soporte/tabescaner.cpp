@@ -24,7 +24,7 @@ tabEscaner::tabEscaner(NMapScan *scan,QWidget *parent) : QWidget(parent)
     for (int i=0;i < encontrados.count();i++){
        columna = (i / lineas);//Para mostrar las filas y columnas
        fila = (i % lineas);
-       auto button = new QPushButton(encontrados.at(i).address.addr+"\n"+encontrados.at(i).hostnames.hostname.name);
+       auto button = new QPushButton(encontrados.at(i).address.addr+"\n"+nmap->host_ports_open_string2(encontrados.at(i).address.addr));
        gridlayout->addWidget(button,fila,columna);
 
        switch (nmap->what_is_int(encontrados.at(i).address.addr)) {
