@@ -24,7 +24,7 @@ public:
     explicit BaseDatos(QWidget *parent = 0);
     ~BaseDatos();
     QSqlQueryModel *model_consulta = new QSqlQueryModel();
-    QSqlTableModel *model_ldap = new QSqlQueryModel();
+    QSqlTableModel *model_ldap = new QSqlTableModel();
     QSqlTableModel *model_municipio = new QSqlTableModel();
     QSqlTableModel *model_nodo = new QSqlTableModel();
     QSqlTableModel *model_poblacion = new QSqlTableModel();

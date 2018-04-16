@@ -41,8 +41,6 @@ private slots:
 
     void form_usuarios::clear_text();
 
-    char* form_usuarios::convierte(QString dato);
-
     bool conecta_oldap();
 
     void desconecta_oldap();
@@ -95,7 +93,7 @@ private:
 
     struct entry{
         int id_entry;
-       QString usuario;
+        QString usuario;
         QString nombre;
         QString cambio_clave;
         QString clave;//no hace falta no se guarda en la BD

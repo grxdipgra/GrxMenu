@@ -21,7 +21,7 @@ class Botonera : public QMainWindow
     Q_OBJECT
 
 public:
-    QSqlDatabase db;
+    QSqlDatabase db_sqlite,db_mysql;
     explicit Botonera(QWidget *parent = 0);
     ~Botonera();
     QString path,home,user,GrxMenu;
@@ -63,8 +63,6 @@ private slots:
     bool creaConexion();
 
     void barraEstado();
-
-    char* convierte(QString dato);
 
     bool basedatos();
 

@@ -158,15 +158,6 @@ void Botonera::on_actionSoporte_triggered()
     soporte->show();
 }
 
-// Esta funcion busca un puerto tcp libre en el sistema
-// Devuelve -1 si no ha podido encontrarlo
-unsigned int puerto_libre(){
-    QTcpServer server;
-    if(server.listen(QHostAddress::Any, 0))
-           return server.serverPort();
-return -1;
-}
-
 bool Botonera::basedatos(){
    /* db.setDatabaseName(datos.databasename);
     db.setHostName("127.0.0.1");
@@ -174,7 +165,7 @@ bool Botonera::basedatos(){
     db.setPassword(datos.password_DB);
     db.setPort(datos.local_listenport);
     */
-    if (!db.open()){
+    if (!db_sqlite.open()){
         ui->label_DB->setText("Cerrado");
 
     }else{
@@ -184,14 +175,6 @@ bool Botonera::basedatos(){
     }
 
 return false;
-}
-
-char* Botonera::convierte(QString dato){ //metodo auxiliar que convierte QString a char* para las funciones de C
-    char* cstr;
-    std::string fname = dato.toStdString();
-    cstr = new char [fname.size()+1];
-    strcpy( cstr, fname.c_str() );
-    return cstr;
 }
 
 bool Botonera::creaConexion()
@@ -238,26 +221,36 @@ void Botonera::muestraBotones(){
 
 bool Botonera::cargaVariables(){
     Configuracion *configuracion = new Configuracion;
-    //db = QSqlDatabase::addDatabase("QMYSQL");
-    db=QSqlDatabase::addDatabase("QSQLITE");
+
+    db_mysql = QSqlDatabase::addDatabase("QMYSQL");
+    db_sqlite=QSqlDatabase::addDatabase("QSQLITE");
+    QSqlQuery* consulta = new QSqlQuery(db_sqlite);
     home = configuracion->cual_es_home();
-    QString rutaDB = home + "/.grx/grx.sqlite";
-    db.setDatabaseName(rutaDB);
     GrxMenu = home + "/.grx/.grxconf.ini";
-    path =qgetenv("PATH");
+    QString rutaDB = home + "/.grx/grx.sqlite";
+//    QString aplicaciones = "CREATE TABLE 'aplicacion' ('idNodo'	mediumint(6) NOT NULL,'atalaya'	smallint(4) DEFAULT NULL,'glpi'	smallint(4) DEFAULT NULL,'ocs'	smallint(4) DEFAULT NULL, PRIMARY KEY(idNodo), FOREIGN KEY('idNodo') REFERENCES 'nodo' ( 'id' )";
+    //QString aplicaciones = query.exec("create table person (id int primary key, firstname varchar(20), lastname varchar(20))");
+
     if (!fileExists(GrxMenu)){
         QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
         on_actionConfigurar_triggered();
         return false;
     }
-    if (!db.open()){
-        ui->label_DB->setText("Cerrado");
-        return false;
-    }
-    else  {
-        ui->label_DB->setText("Conectado");
-    }
 
+    if (!fileExists(rutaDB)){
+        QMessageBox::critical(this, "Crear Base de Datos", "No hay una base de datos\nVamos a crearla",QMessageBox::Ok);
+
+        db_sqlite.setDatabaseName(rutaDB);
+        if (!db_sqlite.open()){
+            ui->label_DB->setText("Cerrado");
+            return false;
+        }
+        else  {
+            ui->label_DB->setText("Conectado");
+
+            consulta->exec("create table person (id int primary key, firstname varchar(20), lastname varchar(20))");
+
+        }
     /*
     datos.keyfile1=configuracion->cual_es_keyfile_publica();
     datos.keyfile2=configuracion->cual_es_keyfile_privada();
@@ -317,6 +310,7 @@ bool Botonera::cargaVariables(){
     }
     }
 */
+
     //Muestra la ip
     foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
         if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost))
@@ -324,8 +318,8 @@ bool Botonera::cargaVariables(){
     }
 
 delete configuracion;
-//delete nmap;
 return true;
+}
 }
 
 void Botonera::barraEstado(){

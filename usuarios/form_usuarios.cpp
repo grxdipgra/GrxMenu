@@ -5,28 +5,15 @@
 #include <QFileInfo>
 //#include <QThread>
 #include <QProgressDialog>
-
+#include "lib/lib.h"
 //falta comprobar cuando los usuarios se desbloquean por tiempo
 
  LDAP *ldap;
  QSqlDatabase bd;
  int id_usuario;
 
-//convierte QString a char *
-char* form_usuarios::convierte(QString dato){
-    char* cstr;
-    std::string fname = dato.toStdString();
-    cstr = new char [fname.size()+1];
-    strcpy( cstr, fname.c_str() );
-    return cstr;
-}
 
-bool fileExite(QString path) {
-    QFileInfo check_file(path);
-    return (check_file.exists() && check_file.isFile());
-}
-
-form_usuarios::form_usuarios(QWidget *parent) :
+ form_usuarios::form_usuarios(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::form_usuarios)
 {
@@ -37,11 +24,10 @@ form_usuarios::form_usuarios(QWidget *parent) :
 bool existe;
 
     Configuracion *configuracion = new Configuracion;
-    //QString home = configuracion->cual_es_home();
     QString rutaDB = configuracion->cual_es_home() + "/.grx/grx.sqlite";
 
     //comprobamos si existe la BD
-    if (!fileExite(rutaDB)){
+    if (!fileExists(rutaDB)){
         QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado la base de datos\nSe va a crear la base de datos de usuarios, esto llevara unos segundos...espere",QMessageBox::Ok);
         //Creamos la base de datos
         existe=false;
@@ -50,13 +36,9 @@ bool existe;
         existe=true;
     }
 
-    //qDebug()<<"antes de addDatabase";
-
-    //bd1 = QSqlDatabase::addDatabase("QSQLITE","ldapdb");
     //No es necesario hacer addDatabase puesto que ya se ha creado la conexión en Botonera::cargaVariables()
     //solo es necesario definir
     bd = QSqlDatabase::database();
-    //qDebug()<<"despues de addDatabase";
     bd.setDatabaseName(rutaDB);
 
     if (!bd.open()) {
@@ -65,39 +47,22 @@ bool existe;
                     "Comprueba que tengas instaladas las librerias de SQLITE"), QMessageBox::Cancel);
         return;
     }
-    //qDebug()<<"OPEN";
 
-//    QString pwdLastSet;
-//    QString temp, basedn1;
-//    QDateTime fecha;
-//    int userAccountControl;
-
-    //QSqlQuery query;
     QSqlQuery* consulta = new QSqlQuery(bd);
 
 
 // COMENTADO           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (!existe){
-    //qDebug()<<"crea";
+
     int pb_cont = 0;
 
     //Dialogo de espera...
     QApplication::processEvents();
     QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 100, this);
     pb.setWindowModality(Qt::WindowModal);
-    //d.setLabelText("HOLAAAAA");
-    //d.setMaximum(50);
     pb.setCancelButton(0);
     pb.setValue(pb_cont);
     pb.show();
-
-    /*QDialog *newdialog = new QDialog(this);
-    QThread *mipolla = new QThread;
-    newdialog->moveToThread(mipolla);
-    newdialog->setModal(false);
-    newdialog->exec();
-
-    qDebug()<<"paso";*/
         consulta->exec("drop table if exists ldap");
         consulta->exec("create table ldap (id int primary key,"
                "usuario varchar(100),"
@@ -672,7 +637,7 @@ int form_usuarios::num_entradas_oldap(LDAPMessage *resul_consul){
 
 LDAPMessage * form_usuarios::consulta_oldap(char *filtro, char *attrs[], int attrsonly, const char * base_dn, int scope){
 
-    /*
+
     //*******************************************************************************************************************
     // El filtro de busqueda, "(objectClass=*)" devuelve todos los objetos. /
     // Windows puede devolver 1000 objetos en una busqueda. Si se sebrepasa devuelve "Size limit exceeded"
@@ -688,7 +653,7 @@ LDAPMessage * form_usuarios::consulta_oldap(char *filtro, char *attrs[], int att
 
     // Devolver solo nombres de atributos (1), o devolver nombre y valores (0)
     //int  attrsonly      = 0;
-    */
+
     int  result;
     LDAPMessage *answer;
 
