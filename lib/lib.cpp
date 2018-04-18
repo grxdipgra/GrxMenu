@@ -8,6 +8,12 @@ bool fileExists(QString path) {
     QFileInfo check_file(path);
     return (check_file.exists() && check_file.isFile());
 }
+bool dirExists(QString path) {
+    QFileInfo check_file(path);
+    return (check_file.exists() && check_file.isDir());
+}
+
+
 char* convierte(QString dato){
     char* cstr;
     std::string fname = dato.toStdString();

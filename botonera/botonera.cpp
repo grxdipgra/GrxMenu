@@ -41,8 +41,9 @@ Botonera::Botonera(QWidget *parent) :
 {
     QSqlDatabase db = QSqlDatabase::database();
     ui->setupUi(this);
-    muestraBotones();
     cargaVariables();
+    muestraBotones();
+
     barraEstado();
 // popup en construccion
     this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -231,8 +232,11 @@ bool Botonera::cargaVariables(){
 //    QString aplicaciones = "CREATE TABLE 'aplicacion' ('idNodo'	mediumint(6) NOT NULL,'atalaya'	smallint(4) DEFAULT NULL,'glpi'	smallint(4) DEFAULT NULL,'ocs'	smallint(4) DEFAULT NULL, PRIMARY KEY(idNodo), FOREIGN KEY('idNodo') REFERENCES 'nodo' ( 'id' )";
     //QString aplicaciones = query.exec("create table person (id int primary key, firstname varchar(20), lastname varchar(20))");
 
+    if (!dirExists(home+".grx"))
+       QDir().mkdir(home+".grx");
+
     if (!fileExists(GrxMenu)){
-        QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
+        QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nSe han puesto los datos por defecto, revíselos\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
         on_actionConfigurar_triggered();
         return false;
     }
