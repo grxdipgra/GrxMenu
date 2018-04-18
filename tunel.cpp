@@ -1,16 +1,15 @@
-#include "tunel.h"
-
+#include "tunel.h"#include "lib/lib.h"
 Tunel::Tunel(){
 }
 Tunel::~Tunel(){
 }
 
-unsigned int Tunel::puerto_libre(){
+/*unsigned int Tunel::puerto_libre(){
     QTcpServer server;
     if(server.listen(QHostAddress::Any, 0))
            return server.serverPort();
 }
-
+*/
 char* Tunel::convierte(QString dato){
     char *c = dato.toStdString().c_str();
     return c;

@@ -10,7 +10,7 @@
 
 #include "configuracion/configuracion.h"
 #include "acercade/acerdade.h"
-
+#include "tunel.h"
 
 namespace Ui {
 class Botonera;
@@ -71,6 +71,10 @@ private slots:
     void on_actionAcerca_de_triggered();
 
     void on_actionMame_triggered();
+
+    bool crearDB(QString rutaDB);
+
+    bool actualizaDB(QString rutaDB);
 
 private:
     Ui::Botonera *ui;

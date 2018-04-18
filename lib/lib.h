@@ -106,4 +106,6 @@
 bool fileExists(QString path);
 bool dirExists(QString path);
 char* convierte(QString dato);
+unsigned int puerto_libre();
+
 #endif // LIB_H

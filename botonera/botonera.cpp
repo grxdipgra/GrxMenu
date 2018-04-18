@@ -160,13 +160,13 @@ void Botonera::on_actionSoporte_triggered()
 }
 
 bool Botonera::basedatos(){
-   /* db.setDatabaseName(datos.databasename);
-    db.setHostName("127.0.0.1");
-    db.setUserName(datos.username_DB);
-    db.setPassword(datos.password_DB);
-    db.setPort(datos.local_listenport);
-    */
-    if (!db_sqlite.open()){
+    db_mysql.setDatabaseName(datos.databasename);
+    db_mysql.setHostName("127.0.0.1");
+    db_mysql.setUserName(datos.username_DB);
+    db_mysql.setPassword(datos.password_DB);
+    db_mysql.setPort(datos.local_listenport);
+
+    if (!db_mysql.open()){
         ui->label_DB->setText("Cerrado");
 
     }else{
@@ -220,59 +220,218 @@ void Botonera::muestraBotones(){
     ui->mainToolBar->show();
 }
 
-bool Botonera::cargaVariables(){
+
+bool Botonera::crearDB(QString rutaDB){
+
+
+    QSqlDatabase db = QSqlDatabase::database();
+    db.setDatabaseName(rutaDB);
+    db.open();
+    QSqlQuery query;
+
+    QString aplicacion = "CREATE TABLE aplicacion "
+                           "(idNodo	mediumint(6) NOT NULL,"
+                           "atalaya	smallint(4) DEFAULT NULL,"
+                           "glpi smallint(4) DEFAULT NULL,"
+                           "ocs	smallint(4) DEFAULT NULL,"
+                           "PRIMARY KEY(idNodo),"
+                           "FOREIGN KEY(idNodo) REFERENCES nodo ( id ))";
+
+    QString centro =    "CREATE TABLE centro "
+                        "(id smallint(3) NOT NULL,"
+                        "nombre	varchar(32) NOT NULL,"
+                        "direccion	varchar(64) DEFAULT NULL,"
+                        "telefono	varchar(16) DEFAULT NULL,"
+                        "PRIMARY KEY(id))";
+
+
+    QString comarca = "CREATE TABLE comarca "
+                      "(id smallint(2) NOT NULL,"
+                      "nombre	varchar(64) NOT NULL,"
+                      "nombreId	varchar(64) NOT NULL,"
+                      "PRIMARY KEY(id))";
+
+
+    QString diafestivopoblacion = "CREATE TABLE diafestivopoblacion "
+                                    "(idPoblacion	smallint(3) NOT NULL,"
+                                    "diaFestivo	date NOT NULL,"
+                                    "descripcion	varchar(32) NOT NULL,"
+                                    "PRIMARY KEY(idPoblacion,diaFestivo),"
+                                    "FOREIGN KEY(idPoblacion) REFERENCES poblacion (id))";
+
+    QString emailnodo = "CREATE TABLE emailnodo"
+                        "(idNodo	mediumint(6) NOT NULL,"
+                        "email	varchar(128) NOT NULL,"
+                        "PRIMARY KEY(idNodo,email),"
+                        "FOREIGN KEY(idNodo) REFERENCES nodo (id))";
+
+    QString mancomunidad =  "CREATE TABLE mancomunidad"
+                            "(id	smallint(2) NOT NULL,"
+                            "nombre	varchar(64) NOT NULL,"
+                            "nombreId	varchar(64) NOT NULL,"
+                            "PRIMARY KEY(id))";
+
+    QString mancomunidadmunicipio = "CREATE TABLE mancomunidadmunicipio "
+                                    "idMancomunidad	smallint(2) NOT NULL,"
+                                    "idMunicipio	smallint(3) NOT NULL,"
+                                    "PRIMARY KEY(idMancomunidad,idMunicipio),"
+                                    "FOREIGN KEY(idMancomunidad) REFERENCES mancomunidad (id),"
+                                    "FOREIGN KEY(idMunicipio) REFERENCES municipio (id))";
+
+
+    QString municipio = "CREATE TABLE municipio "
+                        "(id	smallint(3) NOT NULL,"
+                "idComarca	smallint(2) DEFAULT NULL,"
+                "nombre	varchar(64) NOT NULL,"
+                "nombreId	varchar(64) NOT NULL,"
+                "CIF	char(9) DEFAULT NULL,"
+                "codigoDIR3	char(9) DEFAULT NULL,"
+                "codigoINE	mediumint(6) DEFAULT NULL,"
+                "numeroHabitantes	mediumint(8) DEFAULT NULL,"
+                "superficie	decimal(6,3) DEFAULT NULL,"
+                "altitud	smallint(4) DEFAULT NULL,"
+                "latitud	varchar(12) DEFAULT NULL,"
+                "longitud	varchar(12) DEFAULT NULL,"
+                "urlBandera	varchar(256) DEFAULT NULL,"
+                "urlEscudo	varchar(256) DEFAULT NULL,"
+                "web	varchar(128) DEFAULT NULL,"
+                "siglasPartidoPolitico	varchar(16) DEFAULT NULL,"
+                "nombrePartidoPolitico	varchar(64) DEFAULT NULL,"
+                "nombreAlcalde	varchar(128) DEFAULT NULL,"
+                "fechaPosesion	date DEFAULT NULL,"
+                "PRIMARY KEY(id),"
+                "FOREIGN KEY(idComarca) REFERENCES comarca (id))";
+
+    QString nodo = "CREATE TABLE nodo "
+                "(id	mediumint(6) NOT NULL,"
+                "idPoblacion	smallint(3) NOT NULL,"
+                "idCentro	smallint(3) DEFAULT NULL,"
+                "nombre	varchar(128) NOT NULL,"
+                "tipoVia	varchar(16) DEFAULT NULL,"
+                "nombreVia	varchar(64) DEFAULT NULL,"
+                "numeroDireccion	varchar(3) DEFAULT NULL,"
+                "letraDireccion	char(1) DEFAULT NULL,"
+                "escaleraDireccion	varchar(3) DEFAULT NULL,"
+                "pisoDireccion	varchar(3) DEFAULT NULL,"
+                "puertaDireccion	varchar(3) DEFAULT NULL,"
+                "codigoPostal	char(5) DEFAULT NULL,"
+                "latitud	varchar(12) DEFAULT NULL,"
+                "longitud	varchar(12) DEFAULT NULL,"
+                "contacto	varchar(128) DEFAULT NULL,"
+                "extension	varchar(5) DEFAULT NULL,"
+                "fax	varchar(16) DEFAULT NULL,"
+                "web	varchar(128) DEFAULT NULL,"
+                "sede	varchar(128) DEFAULT NULL,"
+                "tablon	varchar(128) DEFAULT NULL,"
+                "portalTransparencia	varchar(128) DEFAULT NULL,"
+                "adslLinea	varchar(16) DEFAULT NULL,"
+                "numAdministrativoLinea	varchar(16) DEFAULT NULL,"
+                "ipLinea	varchar(16) DEFAULT NULL,"
+                "ipCifradoLinea	varchar(16) DEFAULT NULL,"
+                "servicioLinea	varchar(64) DEFAULT NULL,"
+                "caudalLinea	varchar(64) DEFAULT NULL,"
+                "equipamientoLinea	varchar(128) DEFAULT NULL,"
+                "numeroSerieRouter	varchar(16) DEFAULT NULL,"
+                "esAyuntamiento	tinyint(1) DEFAULT '0'',"
+                "PRIMARY KEY(id),"
+                "FOREIGN KEY(idPoblacion) REFERENCES poblacion (id),"
+                "FOREIGN KEY(idCentro) REFERENCES centro (id))";
+
+
+    QString poblacion = "CREATE TABLE poblacion "
+                "(id	smallint(3) NOT NULL,"
+                "idMunicipio	smallint(3) NOT NULL,"
+                "idEla	smallint(3) DEFAULT NULL,"
+                "nombre	varchar(64) NOT NULL,"
+                "nombreId	varchar(64) NOT NULL,"
+                "PRIMARY KEY(id),"
+                "FOREIGN KEY(idMunicipio) REFERENCES municipio (id),"
+                "FOREIGN KEY(idEla) REFERENCES municipio (id))";
+
+
+    QString programa = "CREATE TABLE programa"
+                "(idNodo	mediumint(6) NOT NULL,"
+                "anio	varchar(5) NOT NULL DEFAULT 'xx/yy',"
+                "portalWeb	tinyint(1) NOT NULL DEFAULT '0',"
+                "email	tinyint(1) NOT NULL DEFAULT '0',"
+                "baseDatosJuridica	tinyint(1) NOT NULL DEFAULT '0',"
+                "suscripcionDominio	tinyint(1) NOT NULL DEFAULT '0',"
+                "perfilContratante	tinyint(1) NOT NULL DEFAULT '0',"
+                "gestionMunicipal	tinyint(1) NOT NULL DEFAULT '0',"
+                "gestionEconomica	tinyint(1) NOT NULL DEFAULT '0',"
+                "soporte	tinyint(1) NOT NULL DEFAULT '0',"
+                "sedeElectronica	tinyint(1) NOT NULL DEFAULT '0',"
+                "epol	tinyint(1) NOT NULL DEFAULT '0',"
+                "epolMovil	tinyint(1) NOT NULL DEFAULT '0',"
+                "siapol	tinyint(1) NOT NULL DEFAULT '0',"
+                "PRIMARY KEY(idNodo,anio),"
+                "FOREIGN KEY(idNodo) REFERENCES nodo (id))";
+
+    QString telefononodo = "CREATE TABLE telefononodo "
+                        "(idNodo	mediumint(6) NOT NULL,"
+                        "telefono	varchar(16) NOT NULL,"
+                        "PRIMARY KEY(idNodo,telefono),"
+                        "FOREIGN KEY(idNodo) REFERENCES nodo (id))";
+
+    QString ldap = "CREATE TABLE ldap (id int primary key,"
+           "usuario varchar(100),"
+           "nombre varchar (100),"
+           "cuenta_caduca varchar(50),"
+           "cambio_clave varchar(50),"
+           "clave_caducada varchar(50),"
+           "correo varchar(100),"
+           "creada varchar(50),"
+           "estado varchar(25),"
+           "fecha_correo varchar(50),"
+           "intentos int,"
+           "logon int,"
+           "modificacion_cuenta varchar(50),"
+           "telefono varchar(50),"
+           "ultimo_login varchar(50),"
+           "descripcion varchar(250),"
+           "dn varchar(250))";
+
+    QString grupos = "CREATE TABLE grupos (id_grupo int,"
+           "id_usuario int,"
+           "grupo varchar (100),"
+           "usuario varchar(100))";
+
+
+    query.exec("DROP TABLE IF EXISTS aplicacion,centro,comarca, diafestivopoblacion, emailnodo, mancomunidad, mancomunidadmunicipio, municipio, nodo, poblacion, programa, telefononodo, ldap, grupos");
+    query.exec(aplicacion);
+    query.exec(centro);
+    query.exec(comarca);
+    query.exec(diafestivopoblacion);
+    query.exec(emailnodo);
+    query.exec(mancomunidad);
+    query.exec(mancomunidadmunicipio);
+    query.exec(municipio);
+    query.exec(nodo);
+    query.exec(poblacion);
+    query.exec(programa);
+    query.exec(telefononodo);
+    query.exec(ldap);
+    query.exec(grupos);
+
+    actualizaDB(rutaDB);
+
+   return true;
+
+}
+
+
+bool Botonera::actualizaDB(QString rutaDB) {
     Configuracion *configuracion = new Configuracion;
-
     db_mysql = QSqlDatabase::addDatabase("QMYSQL");
-    db_sqlite=QSqlDatabase::addDatabase("QSQLITE");
-    QSqlQuery* consulta = new QSqlQuery(db_sqlite);
-    home = configuracion->cual_es_home();
-    GrxMenu = home + "/.grx/.grxconf.ini";
-    QString rutaDB = home + "/.grx/grx.sqlite";
-//    QString aplicaciones = "CREATE TABLE 'aplicacion' ('idNodo'	mediumint(6) NOT NULL,'atalaya'	smallint(4) DEFAULT NULL,'glpi'	smallint(4) DEFAULT NULL,'ocs'	smallint(4) DEFAULT NULL, PRIMARY KEY(idNodo), FOREIGN KEY('idNodo') REFERENCES 'nodo' ( 'id' )";
-    //QString aplicaciones = query.exec("create table person (id int primary key, firstname varchar(20), lastname varchar(20))");
-
-    if (!dirExists(home+".grx"))
-       QDir().mkdir(home+".grx");
-
-    if (!fileExists(GrxMenu)){
-        QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nSe han puesto los datos por defecto, revíselos\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
-        on_actionConfigurar_triggered();
-        return false;
-    }
-
-    if (!fileExists(rutaDB)){
-        QMessageBox::critical(this, "Crear Base de Datos", "No hay una base de datos\nVamos a crearla",QMessageBox::Ok);
-
-        db_sqlite.setDatabaseName(rutaDB);
-        if (!db_sqlite.open()){
-            ui->label_DB->setText("Cerrado");
-            return false;
-        }
-        else  {
-            ui->label_DB->setText("Conectado");
-
-            consulta->exec("create table person (id int primary key, firstname varchar(20), lastname varchar(20))");
-
-        }
-    /*
-    datos.keyfile1=configuracion->cual_es_keyfile_publica();
-    datos.keyfile2=configuracion->cual_es_keyfile_privada();
+    db_sqlite = QSqlDatabase::database();
+    QSqlQuery query_mysql;
     datos.username_ssh=configuracion->cual_es_usuarioSSH();
     datos.password_ssh=configuracion->cual_es_password_ssh();
     datos.username_DB=configuracion->cual_es_usernameDB();
     datos.password_DB=configuracion->cual_es_passwordDB();
-    datos.hostname_DB=configuracion->cual_es_hostnameDB();
     datos.local_listenip="127.0.0.1";
-
-     if (configuracion->usarSSH()){
-         datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
-         datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
-     }
-     else{
-         datos.remote_port=configuracion->cual_es_PuertoDB().toInt();
-         datos.server_ip="127.0.0.1";
-     }
+    datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
+    datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
     datos.remote_desthost="127.0.0.1";
     datos.databasename=configuracion->cual_es_DataBaseName();
 
@@ -280,42 +439,75 @@ bool Botonera::cargaVariables(){
     if (datos.remote_port!=0){
         nmap->nmap_run_scan(QString::number(datos.remote_port),datos.server_ip);
         if (nmap->nmap_is_open_port(datos.server_ip, QString::number(datos.remote_port))){
-        if (configuracion->usarSSH()){ //Tenemos seleccionado usar tunel ssh
-                datos.local_listenport=puerto_libre();
-                datos.usar_ssh=true;
-                db.setPort(datos.local_listenport);
-                creaConexion();
+        //Tenemos seleccionado usar tunel ssh
+            datos.local_listenport=puerto_libre();
+            datos.usar_ssh=true;
+            db_mysql.setPort(datos.local_listenport);
+            creaConexion();
+            if (db_mysql.open()){
+                query_mysql.exec("select * from nodo");
+                  while (query_mysql.next())
+                 {
+                     qDebug()<< query_mysql.value(0).toString();
+              }
+                 }
+
         }
-        else{
-                datos.local_listenport=configuracion->cual_es_PuertoDB().toInt();
-                datos.usar_ssh=false;
-                db.setDatabaseName(datos.databasename);
-                db.setHostName("127.0.0.1");
-                db.setUserName(datos.username_DB);
-                db.setPassword(datos.password_DB);
-                db.setPort(datos.local_listenport);
-                if (!db.open()){
-                    ui->label_DB->setText("Cerrado");
-                    ui->actionSedes->setDisabled(true);
-                    ui->actionSoporte->setDisabled(true);
-                    return false;
-                }
-                else  {
-                    ui->label_DB->setText("Conectado");
-                    ui->actionSedes->setEnabled(true);
-                    ui->actionSoporte->setEnabled(true);
-                    }
-                }
-    }
-        else{
+     }
+     else{
         ui->statusBar->messageChanged("Puerto Cerrado");
         ui->actionSedes->setDisabled(true);
         ui->actionSoporte->setDisabled(true);
     }
+
+    db_mysql.close();
+    delete configuracion;
+}
+
+
+
+bool Botonera::cargaVariables(){
+
+    Configuracion *configuracion = new Configuracion;
+    home = configuracion->cual_es_home();
+    GrxMenu = home + ".grx/.grxconf.ini";
+    QString rutaDB = home + ".grx/grx.sqlite";
+
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(rutaDB);
+    QSqlQuery query;
+
+    if (!fileExists(rutaDB)){
+        QMessageBox::critical(this, "Crear Base de Datos", "No hay una base de datos\nVamos a crearla",QMessageBox::Ok);
+        crearDB(rutaDB);
     }
-*/
+
+
+    if (!dirExists(home+".grx"))
+       QDir().mkdir(home+".grx");
+
+
+    if (!fileExists(GrxMenu)){
+        QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nSe han puesto los datos por defecto, revíselos\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
+        on_actionConfigurar_triggered();
+        return false;
+    }
+
+
+
+    if (!db_sqlite.open()){
+                ui->label_DB->setText("Cerrado");
+                return false;
+            }
+            else
+                ui->label_DB->setText("Conectado");
+
+
+
 
     //Muestra la ip
+
     foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
         if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost))
             ui->label_ip->setText(address.toString());
@@ -323,7 +515,7 @@ bool Botonera::cargaVariables(){
 
 delete configuracion;
 return true;
-}
+
 }
 
 void Botonera::barraEstado(){
