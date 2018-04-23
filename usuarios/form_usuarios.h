@@ -73,6 +73,8 @@ private slots:
 
     void rellena_entrada(LDAPMessage *entry);
 
+    void rellena_dominio();
+
 
 private:
     Ui::form_usuarios *ui;
@@ -119,6 +121,15 @@ private:
         QString nombre;
     }grupos;
     QVector<group> vec_grupos;
+
+    struct domain{
+        // inicializamos a -1 como marca de que no se ha consultado aun los datos del dominio en LDAP
+        int intentos_fallidos=-1;// lockoutThreshold -> num de intentos fallidos para el bloqueo
+        QString vigencia_clave;// maxPwdAge -> duracion de vigencia de contraseña
+        QString tiempo_bloqueo;// lockoutDuration -> duración de bloqueo de usuario
+    }dominio;
+
+
 
 };
 

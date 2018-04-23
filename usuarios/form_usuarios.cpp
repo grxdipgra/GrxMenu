@@ -8,7 +8,7 @@
 #include "lib/lib.h"
 //falta comprobar cuando los usuarios se desbloquean por tiempo
 
- LDAP *ldap;
+ LDAP *ldap, *ldap_d;
  QSqlDatabase bd;
  int id_usuario;
 
@@ -72,7 +72,7 @@ if (!existe){
                "clave_caducada varchar(50),"
                "correo varchar(100),"
                "creada varchar(50),"
-               "estado varchar(25),"
+               "estado varchar(50),"
                "fecha_correo varchar(50),"
                "intentos int,"
                "logon int,"
@@ -81,6 +81,8 @@ if (!existe){
                "ultimo_login varchar(50),"
                "descripcion varchar(250),"
                "dn varchar(250))");
+
+        consulta->exec("drop table if exists grupos");
         consulta->exec("create table grupos (id_grupo int,"
                "id_usuario int,"
                "grupo varchar (100),"
@@ -272,6 +274,99 @@ bool form_usuarios::carga_OU(){
 return true;
 }
 
+//introduce los datos en la estructura dominio desde ldap
+void form_usuarios::rellena_dominio(){
+
+    QString temp, basedn;
+    QDateTime fecha;
+    int i;
+
+    // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
+    LDAPMessage *resul_consul, *entry;
+    BerElement *ber;
+    // Guardamos lo que devuelve entries_found que es el numero entradas encontradas para una consulta LDAP
+    int  num_entradas  = 0;
+    // dn guarda el DN name string the los objetos devueltos por la consulta
+    char *dn           = "";
+    // atributo guarda el nombre de los atributos de los objetos devueltos
+    char *atributo     = "";
+    // values is un array para guardar los valores de cada atributo, de los atributos de los objetos devueltos
+    char **values;
+    char *attrs[]= {NULL};
+    // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
+
+    if (conecta_oldap()){
+
+        QString Qstr="(&(objectClass=domain))";
+        basedn="DC=grx";
+
+        //qDebug()<<"AQUI 1";
+        resul_consul=consulta_oldap(convierte(Qstr), attrs, 0, basedn.toLocal8Bit(),LDAP_SCOPE_BASE);
+
+        //dn = ldap_get_dn(ldap, entry);
+
+        //qDebug()<<"AQUI 2";
+
+        // para mostrar todos los atributos del dominio
+         // poner antes --->  char *attrs[]= {NULL};
+        qDebug()<<"_________________________________________________________________________________________";
+        entry = ldap_first_entry(ldap, resul_consul);
+        for ( atributo = ldap_first_attribute(ldap, entry, &ber);atributo != NULL;
+             atributo = ldap_next_attribute(ldap, entry, ber))
+        {
+
+            /*//visualizamos todos los valores
+            if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+              for (i = 0; values[i] != NULL; i++) {
+                  qDebug()<<QString::fromStdString(atributo) << " --> " << QString::fromStdString(values[i]);
+              }
+            }*/
+
+            //usuario
+            if (QString::fromStdString(atributo)=="lockoutThreshold"){
+                if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                  for (i = 0; values[i] != NULL; i++) {
+                       //qDebug()<< QString::fromStdString(values[i]);
+                       dominio.intentos_fallidos=QString::fromStdString(values[i]).toInt();
+                  }
+                  ldap_value_free(values);
+                }
+            }
+
+            //usuario
+            if (QString::fromStdString(atributo)=="maxPwdAge"){
+                if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                  for (i = 0; values[i] != NULL; i++) {
+                       //qDebug()<< QString::fromStdString(values[i]).toUpper();
+                       dominio.vigencia_clave=QString::fromStdString(values[i]).toUpper();
+                  }
+                  ldap_value_free(values);
+                }
+            }
+
+            //usuario
+            if (QString::fromStdString(atributo)=="lockoutDuration"){
+                if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                  for (i = 0; values[i] != NULL; i++) {
+                      //qDebug()<< QString::fromStdString(values[i]).toUpper();
+                      dominio.tiempo_bloqueo=QString::fromStdString(values[i]).toUpper();
+                  }
+                  ldap_value_free(values);
+                }
+            }
+
+        }
+
+        //ldap_memfree(dn);
+        //ldap_msgfree(resul_consul);
+    }
+
+    //qDebug()<<"AQUI 3";
+
+    //FIN____ si la clave caduca rellenamos el campo CLAVE CADUCA*************************************************************************************
+}
+
+
 //introduce los datos en la estructura entrada desde ldap
 void form_usuarios::rellena_entrada(LDAPMessage *entry){
 
@@ -291,8 +386,17 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
 
     QString pwdLastSet;
     QString temp, basedn1;
-    QDateTime fecha;
+    QDateTime fecha, ahora;
     int userAccountControl,i;
+
+
+            //Rellenamos la estructura dominio si no está rellena ya
+            if (dominio.intentos_fallidos==-1){
+                rellena_dominio();
+            }
+            /*else{
+                qDebug()<<"YA ESTA RELLENO!!!!";
+            }*/
 
 
             // Capturamos la cadena DN del objeto
@@ -405,8 +509,21 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                               //ui->text_estado->setStyleSheet("color: rgb(11, 97, 29)");
                           }
                           else{
-                              entrada.estado = "Bloqueada";
-                              //ui->text_estado->setStyleSheet("color: rgb(164, 0, 0)");
+                              // if (lockoutTime(usuario) + lockoutDuration(dominio) < fecha actual and (badPwdCount=3))
+                              // la contraseña está desbloqueada por tiempo
+                              temp=QString::number(QString::fromStdString(values[i]).toLongLong()-dominio.tiempo_bloqueo.toLongLong());
+                              fecha.setMSecsSinceEpoch((temp.toLongLong()/10000)-11644473600000);
+                              QDateTime ahora = QDateTime::currentDateTime();
+                              //qDebug()<<fecha.toString("dd-MM-yyyy  hh:mm");
+                              //pwdLastSet.toLongLong()-dominio.vigencia_clave.toLongLong()
+                              if (fecha<ahora){
+                                //qDebug()<<"*************la contraseña está desbloqueada por tiempo***************";
+                                entrada.estado = "Desbloqueado automático";
+                              }
+                              else{
+                                  entrada.estado = "Bloqueada hasta " + fecha.toString("hh:mm"); //+ " del " + fecha.toString("dd-MM-yyyy");
+                              }
+
                           }
                       }
                       ldap_value_free(values);
@@ -513,6 +630,15 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
 
             ldap_memfree(dn);
 
+            //INICIO_______ si la clave caduca rellenamos el campo CLAVE CADUCA***********************************************************************************
+            // no se puede poner dentro del for que recorre los atributos porque pwdLastSet
+            // se resuelve despues de userAccountControl y no funciona
+            if (userAccountControl==0) {
+                temp=QString::number(pwdLastSet.toLongLong()-dominio.vigencia_clave.toLongLong());
+                fecha.setMSecsSinceEpoch((temp.toLongLong()/10000)-11644473600000);
+                entrada.caduca_clave = fecha.toString("dd-MM-yyyy  hh:mm");
+            }
+
             //rellenamos aquí el Samaccountname del usuario en cada grupo porque se resuelve despues del Memberof
             for (int j = 0; j < vec_grupos.size(); ++j) {
                 vec_grupos[j].usuario=entrada.usuario;
@@ -523,8 +649,7 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
             //INICIO_______ si la clave caduca rellenamos el campo CLAVE CADUCA***********************************************************************************
             // no se puede poner dentro del for que recorre los atributos porque pwdLastSet
             // se resuelve despues de userAccountControl y no funciona
-            if (userAccountControl==0) {
-
+            /*if (userAccountControl==0) {
                 // variables para CONSULTA LDAP ------------------------------------------------------------------------------------------------
                 LDAPMessage *resul_consul1, *entry1;
                 BerElement *ber1;
@@ -541,8 +666,25 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
 
                 QString Qstr="(&(objectClass=domain))";
                 basedn1="DC=grx";
-                resul_consul1=consulta_oldap(convierte(Qstr), attrs1, 0, basedn1.toLocal8Bit(),LDAP_SCOPE_BASE);
+                resul_consul1=consulta_oldap(convierte(Qstr), attrs1, 0, basedn1.toLocal8Bit(),LDAP_SCOPE_BASE);*/
+
+                /*// para mostrar todos los atributos del dominio
+                 // poner antes --->  char *attrs1[]= {NULL};
+                qDebug()<<"_________________________________________________________________________________________";
                 entry1 = ldap_first_entry(ldap, resul_consul1);
+                for ( atributo1 = ldap_first_attribute(ldap, entry1, &ber1);atributo1 != NULL;
+                     atributo1 = ldap_next_attribute(ldap, entry1, ber1))
+                {
+                    //visualizamos todos los valores
+                    if ((values1 = ldap_get_values(ldap, entry1, atributo1)) != NULL) {
+                      for (i = 0; values[i] != NULL; i++) {
+                          qDebug()<<QString::fromStdString(atributo1) << " --> " << QString::fromStdString(values1[i]);
+                      }
+                      //ldap_value_free(values);
+                    }
+                }*/
+
+                /*entry1 = ldap_first_entry(ldap, resul_consul1);
                 dn1 = ldap_get_dn(ldap, entry1);
                 atributo1 = ldap_first_attribute(ldap, entry1, &ber1);
                 if ((values1 = ldap_get_values(ldap, entry1, atributo1)) != NULL) {
@@ -552,16 +694,20 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                     entrada.caduca_clave = fecha.toString("dd-MM-yyyy  hh:mm");
                 }
 
+                // if (lockoutTime(usuario) + lockoutDuration(dominio) < fecha actual and (badPwdCount=3))
+                // la contraseña está desbloqueada por tiempo
+
                 ldap_value_free(values1);
                 ldap_memfree(dn1);
                 ldap_msgfree(resul_consul1);
                 //FIN____ si la clave caduca rellenamos el campo CLAVE CADUCA*************************************************************************************
-            }
+            }*/
        //}
 
        //ldap_msgfree(resul_consul);
     //}
 
+    //}
 }
 
 bool form_usuarios::conecta_oldap() {
@@ -766,12 +912,11 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
     }
 
 
-
-    if (ui->text_estado->text()=="Activa"){
-        ui->text_estado->setStyleSheet("color: rgb(11, 97, 29)");
+    if (ui->text_estado->text().contains("Bloqueada hasta")){
+        ui->text_estado->setStyleSheet("color: rgb(164, 0, 0)");
     }
     else{
-        ui->text_estado->setStyleSheet("color: rgb(164, 0, 0)");
+        ui->text_estado->setStyleSheet("color: rgb(11, 97, 29)");
     }
 
     QDateTime caduca = QDateTime::fromString(ui->text_clave_caduca->text(),"dd-MM-yyyy  hh:mm");
