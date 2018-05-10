@@ -23,7 +23,6 @@ Soporte::Soporte(QWidget *parent) :
     ui(new Ui::Soporte)
 {
     ui->setupUi(this);
-
     ui->tabWidget->setMovable(false); //Evitamos que se puedan quitar los tab
     ui->tabWidget->setTabsClosable(true); //Ponemos un icono de cierre en los tab
     mascaraIP(); //Ponemos las máscaras a las ip introducidas
@@ -34,6 +33,7 @@ Soporte::Soporte(QWidget *parent) :
 void Soporte::cargaSedes(){
     //Cargamos las sedes en el combobox
        //QSqlQueryModel *model = new QSqlQueryModel();
+       QSqlDatabase db = QSqlDatabase::database();
        QString sql;
        sql = "select NOMBRE,ipLinea from nodo";
        QSqlQuery* query = new QSqlQuery(db);
@@ -111,6 +111,7 @@ void Soporte::on_cb_sede_activated(const QString &nombre)
             ui->lineEdit_adsl->setText(consultar.value(NUM_COL_NODO_ADSLLINEA).toString());
             ui->lineEdit_n_adm->setText(consultar.value(NUM_COL_NODO_NUMADMINISTRATIVO).toString());
             ui->lineEdit_direccion->setText(consultar.value(NUM_COL_NODO_NOMBREDIRECCION).toString());
+            ui->lineEdit_direccion_tipo->setText(consultar.value(NUM_COL_NODO_TIPOVIA).toString());
             ui->lineEdit_numero->setText(consultar.value(NUM_COL_NODO_NUMERODIRECCION).toString());
             ui->lineEdit_servicio->setText(consultar.value(NUM_COL_NODO_SERVICIOLINEA).toString());
             ui->lineEdit_caudal->setText(consultar.value(NUM_COL_NODO_EQUIPAMIENTO).toString());
@@ -263,10 +264,10 @@ void Soporte::on_Btn_Incidencia_clicked(){
     Configuracion *configuracion = new Configuracion;
     QString para,asunto,cuerpo;
     para= configuracion->cual_es_para();
-    asunto= configuracion->cual_es_asunto().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
-                                            ,ui->lineEdit_ip->text(),ui->lineEdit_servicio->text(),ui->lineEdit_caudal->text(),ui->lineEdit_numero->text());
-    cuerpo= configuracion->cual_es_cuerpo().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
-                                            ,ui->lineEdit_ip->text(),ui->lineEdit_servicio->text(),ui->lineEdit_caudal->text(),ui->lineEdit_numero->text());
+    asunto= configuracion->cual_es_asunto().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion_tipo->text()+" "+ui->lineEdit_direccion->text()+" "+ui->lineEdit_numero->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
+                                            ,ui->lineEdit_ip->text(),ui->lineEdit_servicio->text(),ui->lineEdit_caudal->text(),ui->lineEdit_telefono->text(),ui->lineEdit_direccion_tipo->text());
+    cuerpo= configuracion->cual_es_cuerpo().arg(ui->cb_sede->currentText(),ui->lineEdit_direccion_tipo->text()+" "+ui->lineEdit_direccion->text()+" "+ui->lineEdit_numero->text(),ui->lineEdit_adsl->text(),ui->lineEdit_n_adm->text()
+                                            ,ui->lineEdit_ip->text(),ui->lineEdit_servicio->text(),ui->lineEdit_caudal->text(),ui->lineEdit_telefono->text());
 
     QDesktopServices::openUrl(QUrl("mailto:"+para+"?subject="+asunto+"&body="+cuerpo, QUrl::TolerantMode));
 }

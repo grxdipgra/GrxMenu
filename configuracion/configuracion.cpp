@@ -156,9 +156,16 @@ void Configuracion::valoresPorDefecto(){
     ClaveRemoto = "";
     Rdesktop = "";
     Resolucion = "1024x768";
-    Para = "Pon aqui los destinatarios";
-    Asunto = "Pon aqui el asunto";
-    Cuerpo = "Escribe aqui el cuerpo del mensaje.";
+    Para = "ie2.cg22@telefonica.com; op.cg22@telefonica.com; marialeticia.larapalomino@telefonica.com; jtoro@dipgra.es; miguel@dipgra.es";
+    Asunto = "Problemas de conexión en %1";
+    Cuerpo = "Buenos días."
+             "Nos llaman desde %1 y nos comentan que no tienen conexión."
+             "Hemos comprobado que efectivamente no llegamos a su router."
+             "Haced el favor de echarle un vistazo:"
+             "+------------------------------------------------------------------+"
+             "|  %1	|  %2  |   %4	|   %5	|   %6	|   %7	|   %9    |"
+             "+------------------------------------------------------------------+"
+             "Gracias de antemano y saludos cordiales.";
 
     PuertosBuscados_ssh="true";
     PuertosBuscados_portPrinter="true";

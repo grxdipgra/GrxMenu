@@ -483,10 +483,8 @@ bool Botonera::cargaVariables(){
         crearDB(rutaDB);
     }
 
-
     if (!dirExists(home+".grx"))
        QDir().mkdir(home+".grx");
-
 
     if (!fileExists(GrxMenu)){
         QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nSe han puesto los datos por defecto, revíselos\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
@@ -494,17 +492,12 @@ bool Botonera::cargaVariables(){
         return false;
     }
 
-
-
     if (!db_sqlite.open()){
                 ui->label_DB->setText("Cerrado");
                 return false;
             }
             else
                 ui->label_DB->setText("Conectado");
-
-
-
 
     //Muestra la ip
 
