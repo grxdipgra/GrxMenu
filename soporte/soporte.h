@@ -88,6 +88,8 @@ private slots:
 
    void cargaSedes();
 
+   void on_pB_linphone_clicked();
+
 private:
     Ui::Soporte *ui;
     QSqlDatabase db;

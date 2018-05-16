@@ -410,25 +410,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="Estado">
-   <property name="geometry">
-    <rect>
-     <x>740</x>
-     <y>20</y>
-     <width>41</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QFrame" name="frame_2">
    <property name="geometry">
     <rect>
      <x>130</x>
      <y>10</y>
-     <width>571</width>
+     <width>621</width>
      <height>61</height>
     </rect>
    </property>
@@ -731,6 +718,35 @@
      </size>
     </property>
    </widget>
+   <widget class="QPushButton" name="pB_linphone">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>10</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realiza llamada al teléfono del centro&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../iconos.qrc">
+      <normaloff>:/imagenes/iconos/soporte/linphone.png</normaloff>:/imagenes/iconos/soporte/linphone.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+   </widget>
   </widget>
   <widget class="QScrollArea" name="scrollArea">
    <property name="geometry">
@@ -749,8 +765,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>809</width>
-      <height>419</height>
+      <width>807</width>
+      <height>417</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -953,6 +969,19 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="Estado">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>20</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources>

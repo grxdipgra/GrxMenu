@@ -345,3 +345,9 @@ void Soporte::on_Btn_Glpi_clicked()
 
 }
 
+
+void Soporte::on_pB_linphone_clicked()
+{
+    QProcess *linphone = new QProcess;
+    linphone->startDetached("linphone -c "+ ui->lineEdit_telefono->text());
+}

@@ -93,5 +93,6 @@
         <file>imagenes/iconos/usuarios/actualiza_usuario.png</file>
         <file>imagenes/iconos/usuarios/actualiza_usuarios.png</file>
         <file>imagenes/iconos/basedatos/csv.png</file>
+        <file>imagenes/iconos/soporte/linphone.png</file>
     </qresource>
 </RCC>
