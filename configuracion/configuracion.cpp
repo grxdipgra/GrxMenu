@@ -936,3 +936,8 @@ void Configuracion::on_pB_tablasDB_clicked()
     BaseDatos *basedatos = new BaseDatos;
     basedatos->show();
 }
+
+void Configuracion::on_pB_actualiza_DB_clicked()
+{
+
+}

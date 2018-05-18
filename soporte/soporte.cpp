@@ -32,8 +32,7 @@ Soporte::Soporte(QWidget *parent) :
 
 void Soporte::cargaSedes(){
     //Cargamos las sedes en el combobox
-       //QSqlQueryModel *model = new QSqlQueryModel();
-       QSqlDatabase db = QSqlDatabase::database();
+       QSqlDatabase db = QSqlDatabase::database("sqlite");
        QString sql;
        sql = "select NOMBRE,ipLinea from nodo";
        QSqlQuery* query = new QSqlQuery(db);

@@ -168,6 +168,8 @@ private slots:
 
     void on_pB_tablasDB_clicked();
 
+    void on_pB_actualiza_DB_clicked();
+
 private:
  SimpleCrypt *cifra = new SimpleCrypt(Q_UINT64_C(0x0c2ad4a4acb9f023)); //lo usamos para cifrar las claves
     QString home_usuario;

@@ -39,7 +39,6 @@ Botonera::Botonera(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Botonera)
 {
-    QSqlDatabase db = QSqlDatabase::database();
     ui->setupUi(this);
     cargaVariables();
     muestraBotones();
@@ -284,8 +283,6 @@ bool Botonera::crearDB(QString rutaDB){
                 "idComarca	smallint(2) DEFAULT NULL,"
                 "nombre	varchar(64) NOT NULL,"
                 "nombreId	varchar(64) NOT NULL,"
-                "CIF	char(9) DEFAULT NULL,"
-                "codigoDIR3	char(9) DEFAULT NULL,"
                 "codigoINE	mediumint(6) DEFAULT NULL,"
                 "numeroHabitantes	mediumint(8) DEFAULT NULL,"
                 "superficie	decimal(6,3) DEFAULT NULL,"
@@ -307,6 +304,8 @@ bool Botonera::crearDB(QString rutaDB){
                 "idPoblacion	smallint(3) NOT NULL,"
                 "idCentro	smallint(3) DEFAULT NULL,"
                 "nombre	varchar(128) NOT NULL,"
+                "CIF	char(9) DEFAULT NULL,"
+                "codigoDIR3	char(9) DEFAULT NULL,"
                 "tipoVia	varchar(16) DEFAULT NULL,"
                 "nombreVia	varchar(64) DEFAULT NULL,"
                 "numeroDireccion	varchar(3) DEFAULT NULL,"
@@ -422,8 +421,6 @@ bool Botonera::crearDB(QString rutaDB){
 
 bool Botonera::actualizaDB(QString rutaDB) {
     Configuracion *configuracion = new Configuracion;
-    db_mysql = QSqlDatabase::addDatabase("QMYSQL");
-    db_sqlite = QSqlDatabase::database();
     QSqlQuery query_mysql;
     datos.username_ssh=configuracion->cual_es_usuarioSSH();
     datos.password_ssh=configuracion->cual_es_password_ssh();
@@ -449,8 +446,8 @@ bool Botonera::actualizaDB(QString rutaDB) {
                   while (query_mysql.next())
                  {
                      qDebug()<< query_mysql.value(0).toString();
-              }
                  }
+            }
 
         }
      }
@@ -471,16 +468,21 @@ bool Botonera::cargaVariables(){
     Configuracion *configuracion = new Configuracion;
     home = configuracion->cual_es_home();
     GrxMenu = home + ".grx/.grxconf.ini";
-    QString rutaDB = home + ".grx/grx.sqlite";
+    QString rutaDB_sqlite = home + ".grx/grx.sqlite";
+    QString rutaDB_mysql = "asismun";
+
+    db_sqlite = QSqlDatabase::addDatabase("QSQLITE","sqlite");
+    db_sqlite.setDatabaseName(rutaDB_sqlite);
+    QSqlQuery query_sqlite;
+
+    db_mysql = QSqlDatabase::addDatabase("QMYSQL","mysql");
+    db_mysql.setDatabaseName(rutaDB_mysql);
+    QSqlQuery query_mysql;
 
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(rutaDB);
-    QSqlQuery query;
-
-    if (!fileExists(rutaDB)){
+    if (!fileExists(rutaDB_sqlite)){
         QMessageBox::critical(this, "Crear Base de Datos", "No hay una base de datos\nVamos a crearla",QMessageBox::Ok);
-        crearDB(rutaDB);
+        crearDB(rutaDB_sqlite);
     }
 
     if (!dirExists(home+".grx"))
