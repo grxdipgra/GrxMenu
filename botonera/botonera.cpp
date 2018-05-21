@@ -417,7 +417,7 @@ bool Botonera::crearDB(QString rutaDB){
                           "programa, telefononodo, ldap, grupos";
 
     //query.exec(drop_tablas);
-    query.exec(aplicacion);
+   /* query.exec(aplicacion);
     query.exec(centro);
     query.exec(comarca);
     query.exec(diafestivopoblacion);
@@ -431,7 +431,7 @@ bool Botonera::crearDB(QString rutaDB){
     query.exec(telefononodo);
     query.exec(ldap);
     query.exec(grupos);
-
+*/
  return true;
 
 }
@@ -452,6 +452,37 @@ bool Botonera::actualizaDB(QString rutaDB) {
 
     for (int i=0;i<=num_tablas;i++ ){
         nombre_tabla = tablas.at(i);
+
+        // get table schema
+        if (!srcQuery.exec(QString("SHOW CREATE TABLE %1").arg(nombre_tabla)))
+            return false;
+
+        QString tableCreateStr;
+
+        while(srcQuery.next())
+          tableCreateStr=srcQuery.value(1).toString();
+
+        tableCreateStr.remove(QRegExp("[\\n\\t\\r]"));
+        tableCreateStr.remove("ENGINE=InnoDB");
+        tableCreateStr.remove("CHARSET=utf8");
+        tableCreateStr.remove("CONSTRAINT");
+        tableCreateStr.remove("FK_aplicacion_nodo");
+        tableCreateStr.replace("`","");
+        int pos = tableCreateStr.lastIndexOf(QChar(' '));
+        tableCreateStr=tableCreateStr.left(pos);
+        pos = tableCreateStr.lastIndexOf(QChar(' '));
+
+        // drop destTable if exists
+        if (!destQuery.exec(QString("DROP TABLE IF EXISTS %1").arg(nombre_tabla)))
+             return false;
+
+        // create new one
+        if (!destQuery.exec(tableCreateStr.left(pos))){
+            QMessageBox::critical(this, "C",destQuery.lastQuery() ,QMessageBox::Ok);
+            return false;
+}
+
+
         // Copiamos las todas las entradas
         if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
           QMessageBox::critical(this, "Crear Base de Datos", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
