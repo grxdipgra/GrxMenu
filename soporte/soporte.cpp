@@ -79,6 +79,7 @@ int Soporte::valida_ip(const QString &ip){
 return false;
 }
 
+//Cambia el color del linedit ip si la ip no es valida
 void Soporte::on_lineEdit_ip_textChanged(const QString &ip)
 {
     if(valida_ip(ip))
@@ -87,19 +88,26 @@ void Soporte::on_lineEdit_ip_textChanged(const QString &ip)
         ui->lineEdit_ip->setStyleSheet("color:red");
 }
 
+
 void Soporte::on_cb_sede_activated(const QString &nombre)
 {
-    QSqlQuery consultar;
-    QSqlQuery consultar_telefono;
-    QSqlQuery consultar_email;
-    QSqlQuery consultar_poblacion;
-    QSqlQuery consultar_municipio;
-    QSqlQuery consultar_centro;
-    QSqlQuery consultar_aplicaciones;
+    db_sqlite = QSqlDatabase::database("sqlite");
+    if (!db_sqlite.open()){
+                return;
+    }
+
+    QSqlQuery consultar(db_sqlite);
+    QSqlQuery consultar_telefono(db_sqlite);
+    QSqlQuery consultar_email(db_sqlite);
+    QSqlQuery consultar_poblacion(db_sqlite);
+    QSqlQuery consultar_municipio(db_sqlite);
+    QSqlQuery consultar_centro(db_sqlite);
+    QSqlQuery consultar_aplicaciones(db_sqlite);
 
     QString idNodo;
     QString idMunicipio;
     QString idCentro;
+
 
     //QString resultado;
     consultar.prepare(QString("select * from nodo where nombre = :nombre"));

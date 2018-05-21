@@ -26,7 +26,7 @@ class Sedes : public QWidget {
         ~Sedes();
         QSqlQueryModel *model = new QSqlQueryModel();
         QSqlQueryModel *model_tlf = new QSqlQueryModel();
-
+        QSqlDatabase db_sqlite;
     private slots:
 
         void mascaraIP();

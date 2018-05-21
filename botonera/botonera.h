@@ -24,7 +24,7 @@ public:
     QSqlDatabase db_sqlite,db_mysql;
     explicit Botonera(QWidget *parent = 0);
     ~Botonera();
-    QString path,home,user,GrxMenu;
+    QString path,home,user,grxconf_ini;
 
 private slots:
 
@@ -75,6 +75,8 @@ private slots:
     bool crearDB(QString rutaDB);
 
     bool actualizaDB(QString rutaDB);
+
+    void on_pb_reconectaDB_clicked();
 
 private:
     Ui::Botonera *ui;

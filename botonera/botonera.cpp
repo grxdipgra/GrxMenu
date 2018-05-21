@@ -2,7 +2,8 @@
 #include "ui_botonera.h"
 #include <QNetworkInterface>
 #include <QDesktopServices>
-#include "qdebug.h"
+#include <QSqlRecord>
+#include <QDebug>
 #include "soporte/soporte.h"
 #include "sedes/sedes.h"
 #include "configuracion/configuracion.h"
@@ -14,7 +15,7 @@
 #include "usuarios/form_usuarios.h"
 #include "basedatos/basedatos.h"
 #include "lib/lib.h"
-
+#include <QDateTime>
 
 // En este struct vamos a guardar los datos de conexion ssh y DB
 struct variables{
@@ -42,8 +43,8 @@ Botonera::Botonera(QWidget *parent) :
     ui->setupUi(this);
     cargaVariables();
     muestraBotones();
-
     barraEstado();
+
 // popup en construccion
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
@@ -222,11 +223,22 @@ void Botonera::muestraBotones(){
 
 bool Botonera::crearDB(QString rutaDB){
 
+//Borra el archivo de bak si existe y si existe la DB le cambia el nombre a .bak
+    QString rutaDB_bak;
+    rutaDB_bak=rutaDB+".bak";
+    if (fileExists(rutaDB)){
+        if (fileExists(rutaDB_bak)) {
+            QFile file_bak(rutaDB_bak);
+            file_bak.remove();
+        }
+        QFile file(rutaDB);
+        file.rename(rutaDB,rutaDB_bak);
+    }
 
-    QSqlDatabase db = QSqlDatabase::database();
-    db.setDatabaseName(rutaDB);
-    db.open();
-    QSqlQuery query;
+    db_sqlite = QSqlDatabase::database("sqlite");
+    db_sqlite.setDatabaseName(rutaDB);
+    db_sqlite.open();
+    QSqlQuery query(db_sqlite);
 
     QString aplicacion = "CREATE TABLE aplicacion "
                            "(idNodo	mediumint(6) NOT NULL,"
@@ -261,6 +273,9 @@ bool Botonera::crearDB(QString rutaDB){
     QString emailnodo = "CREATE TABLE emailnodo"
                         "(idNodo	mediumint(6) NOT NULL,"
                         "email	varchar(128) NOT NULL,"
+                        "tipo   varchar (64) NOT NULL,"
+                        "prioridad tinyint(1) NOT NULL,"
+                        "notas varchar (64),"
                         "PRIMARY KEY(idNodo,email),"
                         "FOREIGN KEY(idNodo) REFERENCES nodo (id))";
 
@@ -396,7 +411,12 @@ bool Botonera::crearDB(QString rutaDB){
            "usuario varchar(100))";
 
 
-    query.exec("DROP TABLE IF EXISTS aplicacion,centro,comarca, diafestivopoblacion, emailnodo, mancomunidad, mancomunidadmunicipio, municipio, nodo, poblacion, programa, telefononodo, ldap, grupos");
+    QString drop_tablas = "DROP TABLE IF EXISTS aplicacion,centro,comarca,"
+                          "diafestivopoblacion, emailnodo, mancomunidad,"
+                          "mancomunidadmunicipio, municipio, nodo, poblacion,"
+                          "programa, telefononodo, ldap, grupos";
+
+    //query.exec(drop_tablas);
     query.exec(aplicacion);
     query.exec(centro);
     query.exec(comarca);
@@ -412,87 +432,98 @@ bool Botonera::crearDB(QString rutaDB){
     query.exec(ldap);
     query.exec(grupos);
 
-    actualizaDB(rutaDB);
-
-   return true;
+ return true;
 
 }
-
 
 bool Botonera::actualizaDB(QString rutaDB) {
-    Configuracion *configuracion = new Configuracion;
-    QSqlQuery query_mysql;
-    datos.username_ssh=configuracion->cual_es_usuarioSSH();
-    datos.password_ssh=configuracion->cual_es_password_ssh();
-    datos.username_DB=configuracion->cual_es_usernameDB();
-    datos.password_DB=configuracion->cual_es_passwordDB();
-    datos.local_listenip="127.0.0.1";
-    datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
-    datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
-    datos.remote_desthost="127.0.0.1";
-    datos.databasename=configuracion->cual_es_DataBaseName();
 
-    NMap* nmap = new NMap();
-    if (datos.remote_port!=0){
-        nmap->nmap_run_scan(QString::number(datos.remote_port),datos.server_ip);
-        if (nmap->nmap_is_open_port(datos.server_ip, QString::number(datos.remote_port))){
-        //Tenemos seleccionado usar tunel ssh
-            datos.local_listenport=puerto_libre();
-            datos.usar_ssh=true;
-            db_mysql.setPort(datos.local_listenport);
-            creaConexion();
-            if (db_mysql.open()){
-                query_mysql.exec("select * from nodo");
-                  while (query_mysql.next())
-                 {
-                     qDebug()<< query_mysql.value(0).toString();
-                 }
+    int num_tablas;
+    QString nombre_tabla;
+
+    //Si no puedo abrir la DB mysql o no puedo crear la DB de sqlite salimos
+    if ((!db_mysql.open())||(!crearDB(rutaDB))){
+     return false;
+    }
+    QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
+    num_tablas = tablas.count(); //Numero de tablas
+    QSqlQuery srcQuery(db_mysql); //DB source
+    QSqlQuery destQuery(db_sqlite); //DB destino
+
+    for (int i=0;i<=num_tablas;i++ ){
+        nombre_tabla = tablas.at(i);
+        // Copiamos las todas las entradas
+        if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
+          QMessageBox::critical(this, "Crear Base de Datos", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
+
+        while (srcQuery.next()) {
+            QSqlRecord record=srcQuery.record();
+            QStringList names;
+            QStringList placeholders;
+            QList<QVariant > values;
+
+            for (int i = 0; i < record.count(); ++i) {
+                names << record.fieldName(i);
+                placeholders << ":" + record.fieldName(i);
+                QVariant value=srcQuery.value(i);
+                if (value.type() == QVariant::String)
+                    values << "\"" + value.toString() + "\"";
+                else
+                    values << value;
             }
 
-        }
-     }
-     else{
-        ui->statusBar->messageChanged("Puerto Cerrado");
-        ui->actionSedes->setDisabled(true);
-        ui->actionSoporte->setDisabled(true);
+            // Construimos una consulta
+            QString queryStr;
+            queryStr.append("INSERT INTO " + nombre_tabla);
+            queryStr.append(" (" + names.join(", ") + ") ");
+            queryStr.append(" VALUES (" + placeholders.join(", ") + ");");
+            destQuery.prepare(queryStr);
+            foreach(QVariant value, values)
+                destQuery.addBindValue(value);
+            QSqlError error;
+            if (!destQuery.exec()){
+                error = destQuery.lastError();
+                QMessageBox::critical(this, "Crear Base de Datos", "No hemos podido consultar "+destQuery.lastQuery()+error.text(),QMessageBox::Ok);
+
+            }
     }
 
-    db_mysql.close();
-    delete configuracion;
 }
 
+return true;
 
+
+}
 
 bool Botonera::cargaVariables(){
 
     Configuracion *configuracion = new Configuracion;
     home = configuracion->cual_es_home();
-    GrxMenu = home + ".grx/.grxconf.ini";
+    grxconf_ini = home + ".grx/.grxconf.ini";
     QString rutaDB_sqlite = home + ".grx/grx.sqlite";
     QString rutaDB_mysql = "asismun";
 
     db_sqlite = QSqlDatabase::addDatabase("QSQLITE","sqlite");
     db_sqlite.setDatabaseName(rutaDB_sqlite);
-    QSqlQuery query_sqlite;
 
     db_mysql = QSqlDatabase::addDatabase("QMYSQL","mysql");
+    db_mysql.setHostName("localhost");
+    db_mysql.setDatabaseName("asismun");
+    db_mysql.setUserName(configuracion->cual_es_usernameDB());
+    db_mysql.setPassword(configuracion->cual_es_passwordDB());
     db_mysql.setDatabaseName(rutaDB_mysql);
-    QSqlQuery query_mysql;
-
-
-    if (!fileExists(rutaDB_sqlite)){
-        QMessageBox::critical(this, "Crear Base de Datos", "No hay una base de datos\nVamos a crearla",QMessageBox::Ok);
-        crearDB(rutaDB_sqlite);
-    }
 
     if (!dirExists(home+".grx"))
        QDir().mkdir(home+".grx");
 
-    if (!fileExists(GrxMenu)){
+    if (!fileExists(grxconf_ini)){
         QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado el archivo de configuración\nSe han puesto los datos por defecto, revíselos\nDebe configurar la aplicación y guardar los cambios",QMessageBox::Ok);
         on_actionConfigurar_triggered();
         return false;
     }
+
+    actualizaDB(rutaDB_sqlite);
+
 
     if (!db_sqlite.open()){
                 ui->label_DB->setText("Cerrado");
@@ -548,3 +579,61 @@ void Botonera::on_actionMame_triggered()
     Mame *juego = new Mame;
     juego->show();
 }
+
+void Botonera::on_pb_reconectaDB_clicked()
+{
+   actualizaDB("/home/alberto/.grx/grx.sqlite");
+}
+
+
+
+
+//Configuracion *configuracion = new Configuracion;
+//QSqlQuery query_mysql(db_mysql);
+//QSqlQuery query_sqlite(db_sqlite);
+//datos.username_ssh=configuracion->cual_es_usuarioSSH();
+//datos.password_ssh=configuracion->cual_es_password_ssh();
+//datos.username_DB=configuracion->cual_es_usernameDB();
+//datos.password_DB=configuracion->cual_es_passwordDB();
+//datos.local_listenip="127.0.0.1";
+//datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
+//datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
+//datos.remote_desthost="127.0.0.1";
+//datos.databasename=configuracion->cual_es_DataBaseName();
+
+//query_mysql.exec("select * from nodo");
+//while (query_mysql.next()) {
+//    if (query_mysql.isValid())
+
+//}
+
+
+
+/*
+    NMap* nmap = new NMap();
+    if (datos.remote_port!=0){
+        nmap->nmap_run_scan(QString::number(datos.remote_port),datos.server_ip);
+        if (nmap->nmap_is_open_port(datos.server_ip, QString::number(datos.remote_port))){
+        //Tenemos seleccionado usar tunel ssh
+            datos.local_listenport=puerto_libre();
+            datos.usar_ssh=true;
+            db_mysql.setPort(datos.local_listenport);
+            creaConexion();
+            if (db_mysql.open()){
+                query_mysql.exec("select * from nodo");
+                  while (query_mysql.next())
+                 {
+                     qDebug()<< query_mysql.value(0).toString();
+                 }
+            }
+
+        }
+     }
+     else{
+        ui->statusBar->messageChanged("Puerto Cerrado");
+        ui->actionSedes->setDisabled(true);
+        ui->actionSoporte->setDisabled(true);
+    }
+*/
+  //  db_mysql.close();
+    //delete configuracion;

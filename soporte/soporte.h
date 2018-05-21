@@ -24,7 +24,9 @@ class Soporte : public QDialog
 public:
     explicit Soporte(QWidget *parent = 0);
     ~Soporte();
+    QSqlDatabase db_sqlite,db_mysql;
     QSqlQueryModel *model = new QSqlQueryModel();
+    QString path,home,user,grxconf_ini;
 private slots:
     void on_lineEdit_ip_textChanged(const QString &arg1);
 

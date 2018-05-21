@@ -139,9 +139,9 @@ void Sedes::clear_comboBox() {
 
 void Sedes::cargaCombo() {
     Configuracion *configuracion = new Configuracion();
-    QSqlDatabase db = QSqlDatabase::database();
-    QSqlQuery* query = new QSqlQuery(db);
-    QSqlQuery* query_tlf = new QSqlQuery(db);
+    db_sqlite = QSqlDatabase::database("sqlite");
+    QSqlQuery* query = new QSqlQuery(db_sqlite);
+    QSqlQuery* query_tlf = new QSqlQuery(db_sqlite);
     QString sql;
     QString sql_tlf;
 
@@ -188,12 +188,12 @@ void Sedes::cargaCombo() {
 
 
 void Sedes::consultaNodo(const QString &nombre) {
-    QSqlQuery consultar_nodo;
-    QSqlQuery consultar_telefono;
-    QSqlQuery consultar_email;
-    QSqlQuery consultar_poblacion;
-    QSqlQuery consultar_municipio;
-    QSqlQuery consultar_ela;
+    QSqlQuery consultar_nodo(db_sqlite);
+    QSqlQuery consultar_telefono(db_sqlite);
+    QSqlQuery consultar_email(db_sqlite);
+    QSqlQuery consultar_poblacion(db_sqlite);
+    QSqlQuery consultar_municipio(db_sqlite);
+    QSqlQuery consultar_ela(db_sqlite);
     QString anio_programa;
     QString idEla;
     QString nombreEla;
@@ -355,11 +355,11 @@ void Sedes::consultaNodo(const QString &nombre) {
                             ui->lineEdit_todo_nodo_municipio->setText(nombreEla);
                         }
 
-                        ui->lineEdit_municipio_cif->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
-                        ui->lineEdit_todo_municipio_cif->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
+                        //ui->lineEdit_municipio_cif->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
+                        //ui->lineEdit_todo_municipio_cif->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
 
-                        ui->lineEdit_municipio_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
-                        ui->lineEdit_todo_municipio_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
+                        //ui->lineEdit_municipio_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
+                        //ui->lineEdit_todo_municipio_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
 
                         ui->lineEdit_municipio_ine->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGOINE).toString());
                         ui->lineEdit_todo_municipio_ine->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGOINE).toString());
@@ -434,7 +434,7 @@ void Sedes::consultaNodo(const QString &nombre) {
 
 
 void Sedes::consultaComarca(int id_comarca) {
-    QSqlQuery consultar_comarca;
+    QSqlQuery consultar_comarca(db_sqlite);
 
     consultar_comarca.prepare(QString("SELECT nombre FROM comarca WHERE id = :idComarca"));
     consultar_comarca.bindValue(":idComarca", id_comarca);
@@ -455,7 +455,7 @@ void Sedes::consultaComarca(int id_comarca) {
 
 
 void Sedes::consultaMancomunidades(int id_municipio) {
-    QSqlQuery consultar_mancomunidad;
+    QSqlQuery consultar_mancomunidad(db_sqlite);
     QString sql;
 
     sql = "SELECT nombre FROM mancomunidad man "
@@ -486,7 +486,7 @@ void Sedes::consultaMancomunidades(int id_municipio) {
 
 
 void Sedes::consultaPrograma(int id_nodo, const QString &anio) {
-    QSqlQuery consultar_programa;
+    QSqlQuery consultar_programa(db_sqlite);
 
     consultar_programa.prepare(QString("SELECT * FROM programa WHERE idNodo =:id_nodo and anio =:anio"));
     consultar_programa.bindValue(":id_nodo", id_nodo);
