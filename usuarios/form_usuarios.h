@@ -80,11 +80,12 @@ private:
     Ui::form_usuarios *ui;
 
     //fijamos maximo numero de resultados devueltos
-    int max_result=999;
+    int max_result=1000;
 
 
     // lista de Unidades Organizativas que se van a ir consultando
     QStringList OU;
+    QStringList subUO;
 
     // aqui guardamos el par usuario basedn separado por $ para que podamos saber en que UO está el usuario
     // y no tengamos que buscar en el dominio grx entero

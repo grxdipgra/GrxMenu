@@ -12,6 +12,9 @@
  QSqlDatabase bd;
  int id_usuario;
 
+// QSqlQueryModel *model = new QSqlQueryModel();
+
+
 
  form_usuarios::form_usuarios(QWidget *parent) :
     QWidget(parent),
@@ -38,7 +41,7 @@ bool existe;
 
     //No es necesario hacer addDatabase puesto que ya se ha creado la conexión en Botonera::cargaVariables()
     //solo es necesario definir
-    bd = QSqlDatabase::database("sqlite");
+    bd = QSqlDatabase::database();
     bd.setDatabaseName(rutaDB);
 
     if (!bd.open()) {
@@ -257,8 +260,14 @@ bool form_usuarios::carga_OU(){
      Configuracion * configuracion=new Configuracion;
      if (configuracion->usar_ou_externos())
          OU<<"OU=Recursos Centros Externos,DC=grx";
+
      if (configuracion->usar_ou_perrera())
-        OU<<"OU=Recursos Perrera,DC=grx";
+        //OU<<"OU=Recursos Perrera,DC=grx";
+         if (dominio.intentos_fallidos==-1)
+             rellena_dominio();
+        for (int i = 0; i < subUO.size(); ++i)
+             OU << subUO.at(i).toLocal8Bit().constData();
+
      if (configuracion->usar_ou_cie())
         OU<<"OU=Recursos CIE,DC=grx";
      if (configuracion->usar_ou_cpd())
@@ -268,6 +277,9 @@ bool form_usuarios::carga_OU(){
      if (!configuracion->lineEdit_OU_vacio())
         OU << convierte(configuracion->lineEdit_OU_datos());
      delete configuracion;
+
+     /*for (int i = 0; i < OU.size(); ++i)
+             qDebug() << OU.at(i).toLocal8Bit().constData();*/
 
      if (OU.isEmpty())
          return false;
@@ -364,6 +376,54 @@ void form_usuarios::rellena_dominio(){
     //qDebug()<<"AQUI 3";
 
     //FIN____ si la clave caduca rellenamos el campo CLAVE CADUCA*************************************************************************************
+
+
+
+    //Cojemos todas las Unidades organizativas de "Perrera" para consultar los usuarios en cada una
+    if (conecta_oldap()){
+
+        QString Qstr="(&(objectClass=organizationalUnit))";
+        basedn="OU=Recursos Perrera,DC=grx";
+
+        //qDebug()<<"AQUI 1";
+        resul_consul=consulta_oldap(convierte(Qstr), attrs, 0, basedn.toLocal8Bit(),LDAP_SCOPE_ONELEVEL);
+
+        //dn = ldap_get_dn(ldap, entry);
+
+        //qDebug()<<"AQUI 2";
+
+        // para mostrar todos los atributos del dominio
+         // poner antes --->  char *attrs[]= {NULL};
+        qDebug()<<"_________________________________________________________________________________________";
+        for ( entry = ldap_first_entry(ldap, resul_consul); entry != NULL; entry = ldap_next_entry(ldap, entry)){
+            //entry = ldap_first_entry(ldap, resul_consul);
+            for ( atributo = ldap_first_attribute(ldap, entry, &ber);atributo != NULL;
+                 atributo = ldap_next_attribute(ldap, entry, ber))
+            {
+
+                //visualizamos todos los valores
+                if (QString::fromStdString(atributo)=="distinguishedName"){
+                    if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                      for (i = 0; values[i] != NULL; i++) {
+                          subUO.push_back(QString::fromStdString(values[i]));
+                      }
+                    }
+                }
+            }
+        }
+
+        //ldap_memfree(dn);
+        //ldap_msgfree(resul_consul);
+    }
+
+
+        for (int i = 0; i < subUO.size(); ++i)
+                qDebug() << subUO.at(i).toLocal8Bit().constData();
+
+
+
+
+
 }
 
 
@@ -745,6 +805,7 @@ bool form_usuarios::conecta_oldap() {
          ui->label_estado->setText(QString ("Conectado al servidor %1 en el puerto %2 version del cliente LDAPv3 ").arg(ldap_host).arg(ldap_port));
      }
 
+
      result = ldap_set_option(ldap, LDAP_OPT_SIZELIMIT, &max_result );
 
      /* STEP 2: Autentificamos al usuario en el servidor *************************************************************/
@@ -822,7 +883,7 @@ void form_usuarios::on_comboBox_usuarios_activated(const QString &arg1)
     rellena(Qstr, basedn);*/
     carga_datos_usuario(0, arg1);
     //qDebug() << DN.remove(0,DN.indexOf(",OU=")+1);
-;
+
 }
 
 void form_usuarios::on_comboBox_nombres_activated(const QString &arg1)
@@ -975,7 +1036,6 @@ void form_usuarios::actualizar_usuarios(){
         QCoreApplication::processEvents();
         QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 10, this);
         pb.setWindowModality(Qt::WindowModal);
-        //d.setLabelText("HOLAAAAA");
         //d.setMaximum(50);
         pb.setCancelButton(0);
         pb.setValue(pb_cont);
@@ -990,6 +1050,7 @@ void form_usuarios::actualizar_usuarios(){
 
         if (carga_OU()){ //Si hay unidades organizativas realizamos las búsquedas
         int i=0;
+
 
         pb.setMaximum(OU.count());
 
@@ -1006,8 +1067,10 @@ void form_usuarios::actualizar_usuarios(){
 
             // Devuelve el numero de objetos encontrados durante la busqueda
             num_entradas = ldap_count_entries(ldap, resul_consul);
+            //qDebug()<<qstr;
+            //qDebug()<<num_entradas;
             if ( num_entradas == 0 ) {
-               QMessageBox::critical(this, "Ldap Error", "LDAP no ha devuelto ningun resultado\nRevise la configuracion de ldap o la consulta", QMessageBox::Ok);
+               //QMessageBox::critical(this, "Ldap Error", "LDAP no ha devuelto ningun resultado\nRevise la configuracion de ldap o la consulta", QMessageBox::Ok);
             }
             else {
                printf("La búsqueda LDAP ha devuelto %d objectos.\n", num_entradas);
@@ -1018,7 +1081,8 @@ void form_usuarios::actualizar_usuarios(){
                {
 
                    rellena_entrada(entry);
-
+                   /*if (entrada.usuario=="SS_PRUEBAUNO")
+                       qDebug()<<entrada.usuario;*/
 
                     //insertamos los usuarios en la base de datos
                     consulta->exec( "insert into ldap values(" + QString::number(id_tmp) + ", "
@@ -1061,10 +1125,44 @@ void form_usuarios::actualizar_usuarios(){
 
     }
 
+
     carga_datos_usuario(0, ui->comboBox_usuarios->currentText());
 
-}
 
+
+    //ui->comboBox_usuarios->clear();
+    //ui->comboBox_nombres->clear();
+
+
+   /* QString sql;
+    //QSqlQuery* consulta = new QSqlQuery(bd);
+
+    QSqlQueryModel *model = new QSqlQueryModel();
+    sql = "select usuario from ldap order by usuario";
+    consulta->prepare(sql);
+    if(!consulta->exec()){
+        qDebug() <<"Error en la consulta: "<< consulta->lastError();
+    }else{
+        qDebug() <<"Consulta realizada con exito: "<<consulta->lastQuery();
+        model->setQuery(*consulta);
+        ui->comboBox_usuarios->setModel(model);
+        on_comboBox_usuarios_activated(ui->comboBox_usuarios->itemText(0));
+    }
+
+    QSqlQueryModel *model1 = new QSqlQueryModel();
+    sql = "select nombre from ldap order by usuario";
+    consulta->prepare(sql);
+    if(!consulta->exec()){
+        qDebug() <<"Error en la consulta: "<< consulta->lastError();
+    }else{
+        qDebug() <<"Consulta realizada con exito: "<<consulta->lastQuery();
+        model1->setQuery(*consulta);
+        ui->comboBox_nombres->setModel(model1);
+        on_comboBox_nombres_activated(ui->comboBox_nombres->itemText(0));
+    }*/
+
+
+}
 
 
 // Procedimiento para actualizar los campos del formulario
