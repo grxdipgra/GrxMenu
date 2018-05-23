@@ -417,7 +417,7 @@ bool Botonera::crearDB(QString rutaDB){
                           "programa, telefononodo, ldap, grupos";
 
     //query.exec(drop_tablas);
-   /* query.exec(aplicacion);
+    query.exec(aplicacion);
     query.exec(centro);
     query.exec(comarca);
     query.exec(diafestivopoblacion);
@@ -431,7 +431,7 @@ bool Botonera::crearDB(QString rutaDB){
     query.exec(telefononodo);
     query.exec(ldap);
     query.exec(grupos);
-*/
+
  return true;
 
 }
@@ -451,9 +451,10 @@ bool Botonera::actualizaDB(QString rutaDB) {
     QSqlQuery destQuery(db_sqlite); //DB destino
 
     for (int i=0;i<=num_tablas;i++ ){
-        nombre_tabla = tablas.at(i);
+        //nombre_tabla = tablas.at(i);
+        nombre_tabla = "mancomunidadmunicipio";
 
-        // get table schema
+ /*       // get table schema
         if (!srcQuery.exec(QString("SHOW CREATE TABLE %1").arg(nombre_tabla)))
             return false;
 
@@ -482,7 +483,7 @@ bool Botonera::actualizaDB(QString rutaDB) {
             return false;
 }
 
-
+*/
         // Copiamos las todas las entradas
         if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
           QMessageBox::critical(this, "Crear Base de Datos", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
