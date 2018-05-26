@@ -16,6 +16,7 @@
 #include "basedatos/basedatos.h"
 #include "lib/lib.h"
 #include <QDateTime>
+#include <QFileInfo>
 
 // En este struct vamos a guardar los datos de conexion ssh y DB
 struct variables{
@@ -136,7 +137,7 @@ void Botonera::on_actionISL_triggered()
 void Botonera::on_actionConfigurar_triggered()
 {
     Configuracion *configuracion= new Configuracion;
-    configuracion->setFixedSize(780,628);
+    configuracion->setFixedSize(1024,800);
     configuracion->show();
 }
 
@@ -239,6 +240,7 @@ bool Botonera::crearDB(QString rutaDB){
     db_sqlite.setDatabaseName(rutaDB);
     db_sqlite.open();
     QSqlQuery query(db_sqlite);
+    QList<QString> crea_tablas;
 
     QString aplicacion = "CREATE TABLE aplicacion "
                            "(idNodo	mediumint(6) NOT NULL,"
@@ -286,7 +288,7 @@ bool Botonera::crearDB(QString rutaDB){
                             "PRIMARY KEY(id))";
 
     QString mancomunidadmunicipio = "CREATE TABLE mancomunidadmunicipio "
-                                    "idMancomunidad	smallint(2) NOT NULL,"
+                                    "(idMancomunidad	smallint(2) NOT NULL,"
                                     "idMunicipio	smallint(3) NOT NULL,"
                                     "PRIMARY KEY(idMancomunidad,idMunicipio),"
                                     "FOREIGN KEY(idMancomunidad) REFERENCES mancomunidad (id),"
@@ -346,7 +348,7 @@ bool Botonera::crearDB(QString rutaDB){
                 "caudalLinea	varchar(64) DEFAULT NULL,"
                 "equipamientoLinea	varchar(128) DEFAULT NULL,"
                 "numeroSerieRouter	varchar(16) DEFAULT NULL,"
-                "esAyuntamiento	tinyint(1) DEFAULT '0'',"
+                "esAyuntamiento	smallint(1) DEFAULT 0,"
                 "PRIMARY KEY(id),"
                 "FOREIGN KEY(idPoblacion) REFERENCES poblacion (id),"
                 "FOREIGN KEY(idCentro) REFERENCES centro (id))";
@@ -410,35 +412,30 @@ bool Botonera::crearDB(QString rutaDB){
            "grupo varchar (100),"
            "usuario varchar(100))";
 
+    QString sicalwin = "CREATE TABLE sicalwin (idMunicipio smallint(3) NOT NULL,"
+                       "numeroServidores smallint(3) NOT NULL DEFAULT '0',"
+                       "numeroClientes smallint(3) NOT NULL DEFAULT '0')";
 
     QString drop_tablas = "DROP TABLE IF EXISTS aplicacion,centro,comarca,"
                           "diafestivopoblacion, emailnodo, mancomunidad,"
                           "mancomunidadmunicipio, municipio, nodo, poblacion,"
                           "programa, telefononodo, ldap, grupos";
 
-    //query.exec(drop_tablas);
-    query.exec(aplicacion);
-    query.exec(centro);
-    query.exec(comarca);
-    query.exec(diafestivopoblacion);
-    query.exec(emailnodo);
-    query.exec(mancomunidad);
-    query.exec(mancomunidadmunicipio);
-    query.exec(municipio);
-    query.exec(nodo);
-    query.exec(poblacion);
-    query.exec(programa);
-    query.exec(telefononodo);
-    query.exec(ldap);
-    query.exec(grupos);
+    crea_tablas << aplicacion << centro << comarca << diafestivopoblacion << emailnodo << mancomunidad << mancomunidadmunicipio << municipio << nodo << poblacion << programa << telefononodo << ldap << grupos << sicalwin ;
 
- return true;
+    for (int i=0;i<crea_tablas.size() ;i++ ){
+        if (!query.exec(QString(crea_tablas.at(i)))){
+            QMessageBox::critical(this, "DATABASE ERROR", "No hemos podido crear la tabla "+crea_tablas.at(i),QMessageBox::Ok);
+            return false;
+        }
+     }
+
+return true;
 
 }
 
 bool Botonera::actualizaDB(QString rutaDB) {
 
-    int num_tablas;
     QString nombre_tabla;
 
     //Si no puedo abrir la DB mysql o no puedo crear la DB de sqlite salimos
@@ -446,47 +443,15 @@ bool Botonera::actualizaDB(QString rutaDB) {
      return false;
     }
     QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
-    num_tablas = tablas.count(); //Numero de tablas
     QSqlQuery srcQuery(db_mysql); //DB source
     QSqlQuery destQuery(db_sqlite); //DB destino
 
-    for (int i=0;i<=num_tablas;i++ ){
-        //nombre_tabla = tablas.at(i);
-        nombre_tabla = "mancomunidadmunicipio";
 
- /*       // get table schema
-        if (!srcQuery.exec(QString("SHOW CREATE TABLE %1").arg(nombre_tabla)))
-            return false;
-
-        QString tableCreateStr;
-
-        while(srcQuery.next())
-          tableCreateStr=srcQuery.value(1).toString();
-
-        tableCreateStr.remove(QRegExp("[\\n\\t\\r]"));
-        tableCreateStr.remove("ENGINE=InnoDB");
-        tableCreateStr.remove("CHARSET=utf8");
-        tableCreateStr.remove("CONSTRAINT");
-        tableCreateStr.remove("FK_aplicacion_nodo");
-        tableCreateStr.replace("`","");
-        int pos = tableCreateStr.lastIndexOf(QChar(' '));
-        tableCreateStr=tableCreateStr.left(pos);
-        pos = tableCreateStr.lastIndexOf(QChar(' '));
-
-        // drop destTable if exists
-        if (!destQuery.exec(QString("DROP TABLE IF EXISTS %1").arg(nombre_tabla)))
-             return false;
-
-        // create new one
-        if (!destQuery.exec(tableCreateStr.left(pos))){
-            QMessageBox::critical(this, "C",destQuery.lastQuery() ,QMessageBox::Ok);
-            return false;
-}
-
-*/
-        // Copiamos las todas las entradas
+    for (int i=0;i<tablas.size();i++){
+        nombre_tabla = tablas.at(i);
+        // Copiamos todas las entradas
         if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
-          QMessageBox::critical(this, "Crear Base de Datos", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
+          QMessageBox::critical(this, "Select", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
 
         while (srcQuery.next()) {
             QSqlRecord record=srcQuery.record();
@@ -498,10 +463,7 @@ bool Botonera::actualizaDB(QString rutaDB) {
                 names << record.fieldName(i);
                 placeholders << ":" + record.fieldName(i);
                 QVariant value=srcQuery.value(i);
-                if (value.type() == QVariant::String)
-                    values << "\"" + value.toString() + "\"";
-                else
-                    values << value;
+                values << value;
             }
 
             // Construimos una consulta
@@ -515,16 +477,13 @@ bool Botonera::actualizaDB(QString rutaDB) {
             QSqlError error;
             if (!destQuery.exec()){
                 error = destQuery.lastError();
-                QMessageBox::critical(this, "Crear Base de Datos", "No hemos podido consultar "+destQuery.lastQuery()+error.text(),QMessageBox::Ok);
-
+                QMessageBox::critical(this, "Insert", "No hemos podido consultar "+destQuery.lastQuery()+error.text()
+                                      ,QMessageBox::Ok);
             }
     }
-
 }
 
 return true;
-
-
 }
 
 bool Botonera::cargaVariables(){
@@ -532,18 +491,17 @@ bool Botonera::cargaVariables(){
     Configuracion *configuracion = new Configuracion;
     home = configuracion->cual_es_home();
     grxconf_ini = home + ".grx/.grxconf.ini";
-    QString rutaDB_sqlite = home + ".grx/grx.sqlite";
-    QString rutaDB_mysql = "asismun";
+    QString rutaDB_sqlite = configuracion->cual_es_ruta_sqlite();
+    QString rutaDB_mysql = configuracion->cual_es_DataBaseName();;
 
     db_sqlite = QSqlDatabase::addDatabase("QSQLITE","sqlite");
     db_sqlite.setDatabaseName(rutaDB_sqlite);
 
     db_mysql = QSqlDatabase::addDatabase("QMYSQL","mysql");
-    db_mysql.setHostName("localhost");
-    db_mysql.setDatabaseName("asismun");
+    db_mysql.setHostName(configuracion->cual_es_hostnameDB());
+    db_mysql.setDatabaseName(configuracion->cual_es_DataBaseName());
     db_mysql.setUserName(configuracion->cual_es_usernameDB());
     db_mysql.setPassword(configuracion->cual_es_passwordDB());
-    db_mysql.setDatabaseName(rutaDB_mysql);
 
     if (!dirExists(home+".grx"))
        QDir().mkdir(home+".grx");
@@ -553,9 +511,10 @@ bool Botonera::cargaVariables(){
         on_actionConfigurar_triggered();
         return false;
     }
+    if (!fileExists(rutaDB_sqlite)){
 
-    actualizaDB(rutaDB_sqlite);
-
+        actualizaDB(rutaDB_sqlite);
+    }
 
     if (!db_sqlite.open()){
                 ui->label_DB->setText("Cerrado");

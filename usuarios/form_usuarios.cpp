@@ -27,7 +27,7 @@
 bool existe;
 
     Configuracion *configuracion = new Configuracion;
-    QString rutaDB = configuracion->cual_es_home() + "/.grx/grx.sqlite";
+    QString rutaDB = configuracion->cual_es_ruta_sqlite();
 
     //comprobamos si existe la BD
     if (!fileExists(rutaDB)){

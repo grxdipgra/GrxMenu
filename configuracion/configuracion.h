@@ -56,6 +56,7 @@ public:
     QString cual_es_proxychains();
     QString cual_es_usuario_logado();
     QString puertos_buscados();
+    QString cual_es_ruta_sqlite();
 
     bool es_rdesktop();
     bool usarSSH();
@@ -194,6 +195,7 @@ private:
     QString PasswordDB;
     QString Path;
     QString RutaConfigGrxmenu;
+    QString RutaSqlite;
     bool UsarSSH;
     //QString UsarUsuarios;
     bool UsarUsuarios;

@@ -20,6 +20,7 @@ class BaseDatos : public QMainWindow
     Q_OBJECT
 
 public:
+    QSqlDatabase db_sqlite,db_mysql;
     QString sql[10];
     explicit BaseDatos(QWidget *parent = 0);
     ~BaseDatos();

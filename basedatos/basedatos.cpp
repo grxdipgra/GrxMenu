@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
+#include "configuracion/configuracion.h"
+
 BaseDatos::BaseDatos(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::BaseDatos)
@@ -139,6 +141,7 @@ void BaseDatos::cabeceras() {
 }
 
 void BaseDatos::inicia() {
+
     model_municipio->setTable("municipio");
     model_municipio->select();
     ui->tableView_municipio->setModel(model_municipio);
@@ -342,8 +345,13 @@ void BaseDatos::inicia() {
 }
 
 void BaseDatos::on_pB_sql_clicked() {
-    QSqlDatabase db = QSqlDatabase::database();
-    QSqlQuery* query_consulta = new QSqlQuery(db);
+    Configuracion *configuracion= new Configuracion;
+    QString rutaDB_sqlite = configuracion->cual_es_ruta_sqlite();
+    db_sqlite = QSqlDatabase::database("sqlite");
+    if (!db_sqlite.open()){
+        qDebug()<<"DB no abierta";
+    }
+    QSqlQuery* query_consulta = new QSqlQuery(db_sqlite);
     QString sql_consulta = ui->comboBox_consulta->currentText();
     query_consulta->prepare(sql_consulta);
 

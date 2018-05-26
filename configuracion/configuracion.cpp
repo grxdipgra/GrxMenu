@@ -102,6 +102,7 @@ void Configuracion::valoresPorDefecto(){
 
     home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
+    RutaSqlite = home_usuario+".grx/grx.sqlite";
     QString name = qgetenv("USER");
     if (name.isEmpty())
         name = qgetenv("USERNAME");
@@ -277,6 +278,10 @@ QString  Configuracion::cual_es_usuarioSSH(){
 
 QString  Configuracion::cual_es_password_ssh(){
     return ClaveSSH;
+}
+
+QString Configuracion::cual_es_ruta_sqlite(){
+    return home_usuario + ".grx/grx.sqlite";
 }
 
 int  Configuracion::cual_es_puerto_remoto_ssh(){
@@ -528,6 +533,7 @@ void Configuracion::carga_configuracion()
     //Usamos Qsettings para leer los valores de las variables de un archivo .ini
     home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
+    RutaSqlite = s.value("Configuracion/RutaSqlite").toString();
     Tecnico = s.value("Configuracion/Tecnico").toString();
     //Clave = s.value("Configuracion/Clave").toString());
     Clave = cifra->decryptToString( s.value("Configuracion/Clave").toString());
@@ -573,6 +579,7 @@ void Configuracion::carga_configuracion()
     ClaveRemoto =cifra->decryptToString( s.value("Configuracion/ClaveRemoto").toString());
     Rdesktop = s.value("Configuracion/Rdesktop").toBool();
     Resolucion = s.value("Configuracion/Resolucion").toString();
+
     //Correo de incidencias
     Para = s.value("Configuracion/Para").toString();
     Asunto = s.value("Configuracion/Asunto").toString();
@@ -632,6 +639,7 @@ void Configuracion::carga_editLine(){
         deshabilitaProxyChains();
     }
 
+
     ui->checkBox_Usuarios->setChecked(usuarios_up());
     ui->checkBox_Soporte->setChecked(soporte_up());
     ui->checkBox_Sedes->setChecked(sedes_up());
@@ -659,7 +667,7 @@ void Configuracion::carga_editLine(){
     ui->checkBox_ayuntamientos->setChecked(UsarOuAyuntamientos);
     ui->lineEdit_OU->setText(lineEdit_OU);
 
-
+    ui->RutaSqlite->setText(RutaSqlite);
     ui->tecnico->setText(Tecnico);
     ui->clave->setText(Clave);
     ui->servidor->setText(ServidorAD);
@@ -732,6 +740,7 @@ void Configuracion::on_buttonBox_accepted()
     //Usamos Qsettings para guardar los valores de las variables en un archivo .ini
     QString home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
+    s.setValue("Configuracion/RutaSqlite", ui->RutaSqlite->text());
     s.setValue("Configuracion/Tecnico", ui->tecnico->text());
     s.setValue("Configuracion/Clave", cifra->encryptToString(ui->clave->text()));
     s.setValue("Configuracion/ServidorAD", ui->servidor->text());
