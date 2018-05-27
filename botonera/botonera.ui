@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1128</width>
-    <height>412</height>
+    <width>1080</width>
+    <height>176</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>60</y>
+      <x>0</x>
+      <y>0</y>
       <width>821</width>
       <height>29</height>
      </rect>
@@ -137,8 +137,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1128</width>
-     <height>19</height>
+     <width>1080</width>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuNuevo">
@@ -222,7 +222,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/usuarios.png</normaloff>:/imagenes/iconos/botonera/usuarios.png</iconset>
    </property>
    <property name="text">
@@ -240,7 +240,7 @@
   </action>
   <action name="actionCronos">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/cronos.png</normaloff>:/imagenes/iconos/botonera/cronos.png</iconset>
    </property>
    <property name="text">
@@ -255,7 +255,7 @@
   </action>
   <action name="actionWebmail">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/WebMail.png</normaloff>:/imagenes/iconos/botonera/WebMail.png</iconset>
    </property>
    <property name="text">
@@ -270,7 +270,7 @@
   </action>
   <action name="actionBeiro">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/beiro_cartera.png</normaloff>:/imagenes/iconos/botonera/beiro_cartera.png</iconset>
    </property>
    <property name="text">
@@ -285,7 +285,7 @@
   </action>
   <action name="actionGlpi">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/glpi.png</normaloff>:/imagenes/iconos/botonera/glpi.png</iconset>
    </property>
    <property name="text">
@@ -300,7 +300,7 @@
   </action>
   <action name="actionOcs">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/ocs.png</normaloff>:/imagenes/iconos/botonera/ocs.png</iconset>
    </property>
    <property name="text">
@@ -315,7 +315,7 @@
   </action>
   <action name="actionActiveDirectory">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/AD.png</normaloff>:/imagenes/iconos/botonera/AD.png</iconset>
    </property>
    <property name="text">
@@ -330,7 +330,7 @@
   </action>
   <action name="actionSalir">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/salida.png</normaloff>:/imagenes/iconos/botonera/salida.png</iconset>
    </property>
    <property name="text">
@@ -345,7 +345,7 @@
   </action>
   <action name="actionNuevo_Men">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/logo.png</normaloff>:/imagenes/iconos/botonera/logo.png</iconset>
    </property>
    <property name="text">
@@ -354,7 +354,7 @@
   </action>
   <action name="actionISL">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/ISL.png</normaloff>:/imagenes/iconos/botonera/ISL.png</iconset>
    </property>
    <property name="text">
@@ -369,7 +369,7 @@
   </action>
   <action name="actionConfigurar">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/update.png</normaloff>:/imagenes/iconos/botonera/update.png</iconset>
    </property>
    <property name="text">
@@ -378,7 +378,7 @@
   </action>
   <action name="actionSoporte">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/equipos.png</normaloff>:/imagenes/iconos/botonera/equipos.png</iconset>
    </property>
    <property name="text">
@@ -390,7 +390,7 @@
   </action>
   <action name="actionSedes">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/300px-Granada_-_Mapa_municipal.svg.png</normaloff>:/imagenes/iconos/botonera/300px-Granada_-_Mapa_municipal.svg.png</iconset>
    </property>
    <property name="text">
@@ -399,7 +399,7 @@
   </action>
   <action name="actionAcerca_de">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/usuario.png</normaloff>:/imagenes/iconos/botonera/usuario.png</iconset>
    </property>
    <property name="text">
@@ -408,7 +408,7 @@
   </action>
   <action name="actionAtalaya">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/atalaya.png</normaloff>:/imagenes/iconos/botonera/atalaya.png</iconset>
    </property>
    <property name="text">
@@ -420,26 +420,26 @@
   </action>
   <action name="actionBorrame">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/soporte/escoba.svg</normaloff>:/imagenes/iconos/soporte/escoba.svg</iconset>
    </property>
    <property name="text">
-    <string>Borrame</string>
+    <string>&amp;Borrame</string>
    </property>
   </action>
   <action name="actionMame">
    <property name="icon">
-    <iconset resource="iconos.qrc">
+    <iconset resource="../iconos.qrc">
      <normaloff>:/imagenes/iconos/botonera/mame.png</normaloff>:/imagenes/iconos/botonera/mame.png</iconset>
    </property>
    <property name="text">
-    <string>Mame</string>
+    <string>&amp;Mame</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="iconos.qrc"/>
+  <include location="../iconos.qrc"/>
  </resources>
  <connections/>
 </ui>

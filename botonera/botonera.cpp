@@ -6,7 +6,6 @@
 #include <QDebug>
 #include "soporte/soporte.h"
 #include "sedes/sedes.h"
-#include "configuracion/configuracion.h"
 #include "soporte/equipos.h"
 #include "tunel.h"
 #include "soporte/nmap_xml.h"
@@ -17,8 +16,9 @@
 #include "lib/lib.h"
 #include <QDateTime>
 #include <QFileInfo>
-
+#include <QProgressDialog>
 // En este struct vamos a guardar los datos de conexion ssh y DB
+
 struct variables{
     QString keyfile1;
     QString keyfile2;
@@ -144,7 +144,6 @@ void Botonera::on_actionConfigurar_triggered()
 void Botonera::on_actionNuevo_Men_triggered()
 {
     Botonera *menu = new Botonera;
-    menu->setFixedSize(1100,135);
     menu->show();
 }
 
@@ -204,21 +203,76 @@ bool Botonera::creaConexion()
 }
 
 void Botonera::muestraBotones(){
-
+    int tamano = 2;
     Configuracion *configuracion = new Configuracion;
 
-    ui->mainToolBar->actions().at(0)->setVisible(configuracion->usuarios_up());
-    ui->mainToolBar->actions().at(1)->setVisible(configuracion->soporte_up());
-    ui->mainToolBar->actions().at(2)->setVisible(configuracion->sedes_up());
-    ui->mainToolBar->actions().at(3)->setVisible(configuracion->cronos_up());
-    ui->mainToolBar->actions().at(4)->setVisible(configuracion->webmail_up());
-    ui->mainToolBar->actions().at(5)->setVisible(configuracion->beiro_up());
-    ui->mainToolBar->actions().at(6)->setVisible(configuracion->glpi_up());
-    ui->mainToolBar->actions().at(7)->setVisible(configuracion->ocs_up());
-    ui->mainToolBar->actions().at(8)->setVisible(configuracion->ts_up());
-    ui->mainToolBar->actions().at(9)->setVisible(configuracion->isl_up());
-    ui->mainToolBar->actions().at(10)->setVisible(configuracion->atalaya_up());
+    if (configuracion->usuarios_up()){
+        ui->mainToolBar->actions().at(0)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(0)->setVisible(false);
+
+
+    if (configuracion->soporte_up()){
+        ui->mainToolBar->actions().at(1)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(1)->setVisible(false);
+
+    if (configuracion->sedes_up()){
+        ui->mainToolBar->actions().at(2)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(2)->setVisible(false);
+
+    if (configuracion->cronos_up()){
+        ui->mainToolBar->actions().at(3)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(3)->setVisible(false);
+
+    if (configuracion->webmail_up()){
+        ui->mainToolBar->actions().at(4)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(4)->setVisible(false);
+
+    if (configuracion->beiro_up()){
+        ui->mainToolBar->actions().at(5)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(5)->setVisible(false);
+    if (configuracion->glpi_up()){
+        ui->mainToolBar->actions().at(6)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(6)->setVisible(false);
+    if (configuracion->ocs_up()){
+        ui->mainToolBar->actions().at(7)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(7)->setVisible(false);
+    if (configuracion->ts_up()){
+        ui->mainToolBar->actions().at(8)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(8)->setVisible(false);
+
+    if (configuracion->isl_up()){
+        ui->mainToolBar->actions().at(9)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(9)->setVisible(false);
+
+    if (configuracion->atalaya_up()){
+        ui->mainToolBar->actions().at(10)->setVisible(true);
+        tamano++;
+    } else
+        ui->mainToolBar->actions().at(10)->setVisible(false);
+
     ui->mainToolBar->show();
+    this->setFixedSize(10+84*tamano,135);
+
 }
 
 
@@ -435,7 +489,7 @@ return true;
 }
 
 bool Botonera::actualizaDB(QString rutaDB) {
-
+    int pb_cont = 1;
     QString nombre_tabla;
 
     //Si no puedo abrir la DB mysql o no puedo crear la DB de sqlite salimos
@@ -446,9 +500,23 @@ bool Botonera::actualizaDB(QString rutaDB) {
     QSqlQuery srcQuery(db_mysql); //DB source
     QSqlQuery destQuery(db_sqlite); //DB destino
 
-
+    QProgressDialog pb("", "", 1, 10, this);
+    pb.setWindowModality(Qt::WindowModal);
+    pb.setCancelButton(0);
     for (int i=0;i<tablas.size();i++){
+        //Dialogo de espera...
         nombre_tabla = tablas.at(i);
+
+
+
+        pb.setValue(1);
+        pb.show();
+        pb.setLabelText("Creando la tabla "+tablas.at(i));
+
+        pb.setValue(pb_cont);
+        //QApplication::processEvents();
+        pb.setValue(i);
+
         // Copiamos todas las entradas
         if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
           QMessageBox::critical(this, "Select", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
@@ -557,6 +625,7 @@ void Botonera::barraEstado(){
     ui->statusBar->addWidget(ui->pb_reconectaDB);
     ui->statusBar->addWidget(ipdir);
     ui->statusBar->addWidget(ui->label_ip);
+    delete configuracion;
 }
 
 void Botonera::on_actionAcerca_de_triggered()
