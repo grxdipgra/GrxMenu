@@ -500,37 +500,34 @@ bool Botonera::actualizaDB(QString rutaDB) {
     QSqlQuery srcQuery(db_mysql); //DB source
     QSqlQuery destQuery(db_sqlite); //DB destino
 
-    QProgressDialog pb("", "", 1, 10, this);
+    QProgressDialog pb("", "", 1, 5000, this);
     pb.setWindowModality(Qt::WindowModal);
     pb.setCancelButton(0);
+    pb.setValue(0);
+    pb.show();
+
     for (int i=0;i<tablas.size();i++){
         //Dialogo de espera...
         nombre_tabla = tablas.at(i);
-
-
-
-        pb.setValue(1);
-        pb.show();
         pb.setLabelText("Creando la tabla "+tablas.at(i));
-
-        pb.setValue(pb_cont);
-        //QApplication::processEvents();
-        pb.setValue(i);
-
-        // Copiamos todas las entradas
+       //QApplication::processEvents();
+       // Copiamos todas las entradas
         if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
           QMessageBox::critical(this, "Select", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
 
         while (srcQuery.next()) {
+            pb_cont++;
+            pb.setValue(pb_cont);
+
             QSqlRecord record=srcQuery.record();
             QStringList names;
             QStringList placeholders;
             QList<QVariant > values;
 
-            for (int i = 0; i < record.count(); ++i) {
-                names << record.fieldName(i);
-                placeholders << ":" + record.fieldName(i);
-                QVariant value=srcQuery.value(i);
+            for (int j = 0; j < record.count(); ++j) {
+                names << record.fieldName(j);
+                placeholders << ":" + record.fieldName(j);
+                QVariant value=srcQuery.value(j);
                 values << value;
             }
 
@@ -549,6 +546,9 @@ bool Botonera::actualizaDB(QString rutaDB) {
                                       ,QMessageBox::Ok);
             }
     }
+        for (int x=pb_cont;x<5000;x++){
+            pb.setValue(x);
+        }
 }
 
 return true;

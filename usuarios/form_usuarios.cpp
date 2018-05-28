@@ -41,8 +41,7 @@ bool existe;
 
     //No es necesario hacer addDatabase puesto que ya se ha creado la conexión en Botonera::cargaVariables()
     //solo es necesario definir
-    bd = QSqlDatabase::database();
-    bd.setDatabaseName(rutaDB);
+    bd = QSqlDatabase::database("sqlite");
 
     if (!bd.open()) {
         QMessageBox::critical(nullptr, QObject::tr("No he podido crear la DB"),

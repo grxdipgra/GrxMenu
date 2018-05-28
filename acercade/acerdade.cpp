@@ -16,6 +16,6 @@ AcerdaDe::~AcerdaDe()
 
 void AcerdaDe::on_pushButton_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/aavidad/GrxMenu/"));
+    QDesktopServices::openUrl(QUrl("https://incidencias.dipgra.es/GrxMenu/grx-asistencia.deb"));
 }
 
