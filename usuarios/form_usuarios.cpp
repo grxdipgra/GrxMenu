@@ -29,6 +29,7 @@ bool existe;
     Configuracion *configuracion = new Configuracion;
     QString rutaDB = configuracion->cual_es_ruta_sqlite();
 
+    /* Esto lo hacemos en botonera
     //comprobamos si existe la BD
     if (!fileExists(rutaDB)){
         QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado la base de datos\nSe va a crear la base de datos de usuarios, esto llevara unos segundos...espere",QMessageBox::Ok);
@@ -38,9 +39,13 @@ bool existe;
     else{
         existe=true;
     }
+    */
+
+    existe=true;
 
     //No es necesario hacer addDatabase puesto que ya se ha creado la conexión en Botonera::cargaVariables()
     //solo es necesario definir
+
     bd = QSqlDatabase::database("sqlite");
 
     if (!bd.open()) {

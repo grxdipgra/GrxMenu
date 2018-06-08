@@ -92,7 +92,7 @@ private slots:
 
    void on_pB_linphone_clicked();
 
-private:
+   private:
     Ui::Soporte *ui;
     QSqlDatabase db;
     QSqlQuery consultar;

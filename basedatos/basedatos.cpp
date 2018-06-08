@@ -363,12 +363,11 @@ void BaseDatos::on_pB_sql_clicked() {
         ui->tableView_consulta->setModel(model_consulta);
         ui->tableView_consulta->resizeColumnsToContents();
         ui->tableView_consulta->resizeRowsToContents();
-
 }
 }
 
 void BaseDatos::on_comboBox_consulta_activated(const QString &arg1) {
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database("sqlite");
     QSqlQuery* query_consulta = new QSqlQuery(db);
     QString sql_consulta;
     int indice = ui->comboBox_consulta->currentIndex();
@@ -405,18 +404,15 @@ void BaseDatos::on_pB_csv_clicked()
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-
                 textData += model_consulta->data(model_consulta->index(i,j)).toString();
                 textData += ", " ;     // para .csv
         }
         textData += "\n";             // (opcional)
     }
 
-
     QString fileName = QFileDialog::getSaveFileName(this, tr("Exportar fichero a csv"),
                                "./select.csv",
                                tr("CSV (*.csv)"));
-
 
     QFile csvFile(fileName);
     if(csvFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {

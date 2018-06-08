@@ -38,7 +38,7 @@ public:
     QString cual_es_hostnameDB();
     QString cual_es_usernameDB();
     QString cual_es_passwordDB();
-    QString cual_es_PuertoDB();
+    int cual_es_PuertoDB();
     QString cual_es_usuario_ssh();
     QString cual_es_password_ssh();
     QString cual_es_servidorSSH();
@@ -191,7 +191,6 @@ private:
     QString DataBaseName;
     QString HostName;
     QString UserName;
-    QString PuertoDB;
     QString PasswordDB;
     QString Path;
     QString RutaConfigGrxmenu;
@@ -212,6 +211,7 @@ private:
     QString ServidorSSH;
     QString UsuarioSSH;
     QString ClaveSSH;
+    int PuertoDB;
     int PuertoRemotoSSH;
     int PuertoLocalSSH;
     QString Password;

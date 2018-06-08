@@ -60,6 +60,7 @@ Botonera::~Botonera()
 void Botonera::test_slot(){ //popup
     qDebug()<<"Prueba";
 }
+
 void Botonera::ctxMenu(const QPoint &pos) { //popup
     QMenu *menu = new QMenu;
     menu->addAction(tr("Test Item"), this, SLOT(test_slot()));
@@ -168,40 +169,44 @@ bool Botonera::basedatos(){
 
     if (!db_mysql.open()){
         ui->label_DB->setText("Cerrado");
-
     }else{
         ui->label_DB->setText("Conectada");
-
         return true;
     }
-
 return false;
 }
 
+//Creamos una conexion ssh con el servidor remoto.
+//Cuando conectamos llamamos a basedatos.
+
 bool Botonera::creaConexion()
 {
+    Configuracion *configuracion = new Configuracion();
     Tunel *tunel = new Tunel;
     QThread *hilo= new QThread;
-    tunel->keyfile1=convierte(datos.keyfile1);
-    tunel->keyfile2=convierte(datos.keyfile2);
-    tunel->username_ssh=convierte(datos.username_ssh);
-    tunel->remote_destport=datos.remote_destport;
-    tunel->local_listenport=datos.local_listenport;
-    tunel->local_listenip="127.0.0.1";
-    tunel->remote_port=datos.remote_port;
-    tunel->remote_desthost=convierte(datos.remote_desthost);
-    tunel->password_ssh=convierte(datos.password_ssh);
-    tunel->server_ip=convierte(datos.server_ip);
-    tunel->remote_destport=3306;//mysql remoto
+    QString remote_desthost,server_ip,username_ssh,password_ssh, local_listenip;
+    unsigned int local_listenport,remote_destport,remote_port;
+    tunel->keyfile1=convierte(configuracion->cual_es_keyfile_privada());
+    tunel->keyfile2=convierte(configuracion->cual_es_keyfile_publica());
+    tunel->username_ssh=convierte(configuracion->cual_es_usuarioSSH());
+    tunel->remote_destport=configuracion->cual_es_PuertoDB();
+    tunel->local_listenport=puerto_libre();
+    tunel->local_listenip=convierte(configuracion->cual_es_puerto_local_ssh());
+    tunel->remote_port=configuracion->cual_es_puerto_remoto_ssh();
+    tunel->remote_desthost=convierte(configuracion->cual_es_servidorSSH());
+    tunel->password_ssh=convierte(configuracion->cual_es_password_ssh());
+    tunel->server_ip=convierte(configuracion->cual_es_servidorSSH());
     tunel->moveToThread(hilo);
     QObject::connect(hilo,&QThread::started, tunel, &Tunel::crea_conexion);
     QObject::connect(tunel,&Tunel::destroyed, hilo, &QThread::quit);
     QObject::connect(tunel,&Tunel::sshConectado, this, &Botonera::basedatos);
     QObject::connect(tunel,&Tunel::sshDesconectado,tunel,&Tunel::cierra_conexion);
+    delete configuracion;
     hilo->start();
     return true;
 }
 
+//Muestra los botones y ajusta el menú al número de botones visibles
 void Botonera::muestraBotones(){
     int tamano = 2;
     Configuracion *configuracion = new Configuracion;
@@ -275,7 +280,6 @@ void Botonera::muestraBotones(){
 
 }
 
-
 bool Botonera::crearDB(QString rutaDB){
 
 //Borra el archivo de bak si existe y si existe la DB le cambia el nombre a .bak
@@ -291,8 +295,13 @@ bool Botonera::crearDB(QString rutaDB){
     }
 
     db_sqlite = QSqlDatabase::database("sqlite");
-    db_sqlite.setDatabaseName(rutaDB);
-    db_sqlite.open();
+    if (!db_sqlite.open()){
+            ui->label_DB->setText("Cerrado");
+            return false;
+        }else{
+            ui->label_DB->setText("Conectada");
+    }
+
     QSqlQuery query(db_sqlite);
     QList<QString> crea_tablas;
 
@@ -493,13 +502,18 @@ bool Botonera::actualizaDB(QString rutaDB) {
     QString nombre_tabla;
 
     //Si no puedo abrir la DB mysql o no puedo crear la DB de sqlite salimos
-    if ((!db_mysql.open())||(!crearDB(rutaDB))){
-     return false;
-    }
+    //if ((!creaConexion())||(!crearDB(rutaDB))){
+
+    //return false;
+    //}
+    crearDB(rutaDB);
+    QSqlDatabase db_mysql = QSqlDatabase::database("mysql");
+    db_mysql.open();
     QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
     QSqlQuery srcQuery(db_mysql); //DB source
     QSqlQuery destQuery(db_sqlite); //DB destino
 
+    //Ventana de progreso
     QProgressDialog pb("", "", 1, 5000, this);
     pb.setWindowModality(Qt::WindowModal);
     pb.setCancelButton(0);
@@ -570,7 +584,9 @@ bool Botonera::cargaVariables(){
     db_mysql.setDatabaseName(configuracion->cual_es_DataBaseName());
     db_mysql.setUserName(configuracion->cual_es_usernameDB());
     db_mysql.setPassword(configuracion->cual_es_passwordDB());
-
+    if (!db_mysql.open()){
+         return false;
+    }
     if (!dirExists(home+".grx"))
        QDir().mkdir(home+".grx");
 
@@ -642,30 +658,11 @@ void Botonera::on_actionMame_triggered()
 
 void Botonera::on_pb_reconectaDB_clicked()
 {
-   actualizaDB("/home/alberto/.grx/grx.sqlite");
+   Configuracion *configuracion = new Configuracion;
+   actualizaDB(configuracion->cual_es_ruta_sqlite());
+   delete configuracion;
 }
 
-
-
-
-//Configuracion *configuracion = new Configuracion;
-//QSqlQuery query_mysql(db_mysql);
-//QSqlQuery query_sqlite(db_sqlite);
-//datos.username_ssh=configuracion->cual_es_usuarioSSH();
-//datos.password_ssh=configuracion->cual_es_password_ssh();
-//datos.username_DB=configuracion->cual_es_usernameDB();
-//datos.password_DB=configuracion->cual_es_passwordDB();
-//datos.local_listenip="127.0.0.1";
-//datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
-//datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
-//datos.remote_desthost="127.0.0.1";
-//datos.databasename=configuracion->cual_es_DataBaseName();
-
-//query_mysql.exec("select * from nodo");
-//while (query_mysql.next()) {
-//    if (query_mysql.isValid())
-
-//}
 
 
 

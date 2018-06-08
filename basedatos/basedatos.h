@@ -24,19 +24,20 @@ public:
     QString sql[10];
     explicit BaseDatos(QWidget *parent = 0);
     ~BaseDatos();
+    QSqlDatabase db = QSqlDatabase::database("sqlite");
     QSqlQueryModel *model_consulta = new QSqlQueryModel();
-    QSqlTableModel *model_ldap = new QSqlTableModel();
-    QSqlTableModel *model_municipio = new QSqlTableModel();
-    QSqlTableModel *model_nodo = new QSqlTableModel();
-    QSqlTableModel *model_poblacion = new QSqlTableModel();
-    QSqlTableModel *model_programa = new QSqlTableModel();
-    QSqlTableModel *model_emailnodo = new QSqlTableModel();
-    QSqlTableModel *model_telefononodo = new QSqlTableModel();
-    QSqlTableModel *model_comarca = new QSqlTableModel();
-    QSqlTableModel *model_mancomunidad = new QSqlTableModel();
-    QSqlTableModel *model_centro = new QSqlTableModel();
-    QSqlTableModel *model_diafestivopoblacion = new QSqlTableModel();
-    QSqlTableModel *model_aplicacion = new QSqlTableModel();
+    QSqlTableModel *model_ldap = new QSqlTableModel(this,db);
+    QSqlTableModel *model_municipio = new QSqlTableModel(this,db);
+    QSqlTableModel *model_nodo = new QSqlTableModel(this,db);
+    QSqlTableModel *model_poblacion = new QSqlTableModel(this,db);
+    QSqlTableModel *model_programa = new QSqlTableModel(this,db);
+    QSqlTableModel *model_emailnodo = new QSqlTableModel(this,db);
+    QSqlTableModel *model_telefononodo = new QSqlTableModel(this,db);
+    QSqlTableModel *model_comarca = new QSqlTableModel(this,db);
+    QSqlTableModel *model_mancomunidad = new QSqlTableModel(this,db);
+    QSqlTableModel *model_centro = new QSqlTableModel(this,db);
+    QSqlTableModel *model_diafestivopoblacion = new QSqlTableModel(this,db);
+    QSqlTableModel *model_aplicacion = new QSqlTableModel(this,db);
 
 private slots:
     void cabeceras();

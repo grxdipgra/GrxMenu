@@ -7,7 +7,6 @@
 #include "QProcess"
 #include "QtDebug"
 #include <QtSql/QSqlDatabase>
-
 #include "configuracion/configuracion.h"
 #include "acercade/acerdade.h"
 #include "tunel.h"
