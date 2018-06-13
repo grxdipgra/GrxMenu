@@ -16,11 +16,9 @@ BaseDatos::BaseDatos(QWidget *parent) :
     cabeceras();
 }
 
-
 BaseDatos::~BaseDatos() {
     delete ui;
 }
-
 
 void BaseDatos::cabeceras() {
     model_municipio->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));

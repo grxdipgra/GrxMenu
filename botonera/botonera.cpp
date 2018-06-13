@@ -502,11 +502,11 @@ bool Botonera::actualizaDB(QString rutaDB) {
     QString nombre_tabla;
 
     //Si no puedo abrir la DB mysql o no puedo crear la DB de sqlite salimos
-    //if ((!creaConexion())||(!crearDB(rutaDB))){
+    if ((!creaConexion())||(!crearDB(rutaDB))){
 
-    //return false;
-    //}
-    crearDB(rutaDB);
+    return false;
+    }
+    //crearDB(rutaDB);
     QSqlDatabase db_mysql = QSqlDatabase::database("mysql");
     db_mysql.open();
     QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB

@@ -109,6 +109,21 @@ void Soporte::on_cb_sede_activated(const QString &nombre)
     QString idCentro;
 
 
+
+    //Limpia los campos
+    ui->lineEdit_ip->setText("");
+    ui->lineEdit_adsl->setText("");
+    ui->lineEdit_n_adm->setText("");
+    ui->lineEdit_direccion->setText("");
+    ui->lineEdit_direccion_tipo->setText("");
+    ui->lineEdit_numero->setText("");
+    ui->lineEdit_servicio->setText("");
+    ui->lineEdit_caudal->setText("");
+    ui->lineEdit_extension->setText("");
+    ui->lineEdit_telefono->setText("");
+    ui->lineEdit_centro->setText("");
+    ui->lineEdit_telefono_centro->setText("");
+
     //QString resultado;
     consultar.prepare(QString("select * from nodo where nombre = :nombre"));
     consultar.bindValue(":nombre", nombre);
