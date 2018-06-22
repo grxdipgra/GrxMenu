@@ -494,15 +494,6 @@ return true;
 
 }
 
-
-
-
-
-
-
-
-
-
 bool Botonera::actualizaDB(QString rutaDB) {
     int pb_cont = 1;
     QString nombre_tabla;
