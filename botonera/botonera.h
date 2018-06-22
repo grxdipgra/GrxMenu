@@ -63,7 +63,7 @@ private slots:
 
     void barraEstado();
 
-    bool basedatos();
+    void basedatos();
 
     void on_actionAtalaya_triggered();
 

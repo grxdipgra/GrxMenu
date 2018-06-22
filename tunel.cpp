@@ -4,38 +4,39 @@ Tunel::Tunel(){
 Tunel::~Tunel(){
 }
 
-/*unsigned int Tunel::puerto_libre(){
-    QTcpServer server;
-    if(server.listen(QHostAddress::Any, 0))
-           return server.serverPort();
-}
-*/
+
 char* Tunel::convierte(QString dato){
     char *c = dato.toStdString().c_str();
     return c;
 }
 
-void Tunel::crea_conexion(){
+int Tunel::crea_conexion(){
 
-    if (this->inicia_libssh2())
+    if (this->inicia_libssh2()){
         QMessageBox::warning(0,"Sql Error", "¡ATENCION!\nNo ha sido posible inicializa libssh\nCompruebe que tiene instalada la libreria\nNo podrá usar el apartado 'Soporte'' ni 'Sedes'",QMessageBox::Ok);
+        return -1;
+    }
     else{
          printf ("Se ha podido inicializar libssh2\n");
-         if ((this->crea_socket()))
-            // QMessageBox::warning(0,"SSH Error", "¡ATENCION!\nNo ha sido posible crear el socket\nNo podrá usar el apartado 'Soporte'' ni 'Sedes'",QMessageBox::Ok);
-             //QMessageBox::warning(this,"Error ", "¡ATENCION!\nNo he podido crear el socket\nCompruebe que tiene acceso a la red y al puerto ssh\no que la ip del servidor es correcta\n",QMessageBox::Ok);
-             qDebug()<<"por aqui";
+         if ((this->crea_socket())){
+            QMessageBox::warning(0,"Error ", "¡ATENCION!\nNo he podido crear el socket\nCompruebe que tiene acceso a la red y al puerto ssh\no que la ip del servidor es correcta\n",QMessageBox::Ok);
+            return -1;
+         }
          else{
              fprintf (stderr, "He podido crear un socket \n");
-             if (this->crea_sesion())
+             if (this->crea_sesion()){
                  fprintf (stderr, "No he podido crear un socket \n");
+                 return -1;
+             }
              else{
                  fprintf (stderr, "He podido mostrar el fingerprint \n");
                  if (this->muestra_fingerprint())
                     fprintf (stderr, "No he podido mostrar el fingerprint \n");
                     else
-                        if (this->autenticacion())
+                        if (this->autenticacion()){
                             fprintf (stderr, "No he podido autenticarme \n");
+                            return -1;
+                        }
                         else{
                             printf("He podido autenticarme\n");
                              if (this->escucha())
@@ -46,6 +47,7 @@ void Tunel::crea_conexion(){
                }
         }
     this->cierra_conexion();
+return 0;
 }
 
 /*
@@ -178,10 +180,9 @@ int Tunel::escucha(){
         if (-1 == listen(listensock, 2))
             return -1;
         printf("Emitiendo señal sshConectado");
-        emit sshConectado(); // Emitimos la señal de esperando conexiones
         fprintf(stderr, "Esperando conexiones TCP en %s:%d...\n",
             inet_ntoa(sin.sin_addr), ntohs(sin.sin_port));
-
+        emit sshConectado(); // Emitimos la señal de esperando conexiones
         forwardsock = accept(listensock, (struct sockaddr *)&sin, &sinlen);
 
         if (forwardsock == -1)
@@ -379,7 +380,7 @@ void Tunel::crea_fordwarding(){
 
         fprintf(stderr, "Esperando conexiones por TCP en %s:%d...\n",
             inet_ntoa(sin.sin_addr), ntohs(sin.sin_port));
-        emit sshConectado();
+        //emit sshConectado();
         printf( "Emitida señal sshConectado()");
         forwardsock = accept(listensock, (struct sockaddr *)&sin, &sinlen);
         if (forwardsock == -1) {
