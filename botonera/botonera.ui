@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
-    <height>176</height>
+    <width>1063</width>
+    <height>158</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,7 +61,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="label_DB">
+        <widget class="QLabel" name="label_mysql_DB">
          <property name="font">
           <font>
            <family>Ubuntu Condensed</family>
@@ -83,7 +83,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Conecta DB</string>
+          <string>Actualiza DB</string>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -91,6 +91,13 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_sqlite_DB">
+       <property name="text">
+        <string>QSlite </string>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -131,14 +138,34 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="label_username_2">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>20</y>
+      <width>198</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu Condensed</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1080</width>
-     <height>28</height>
+     <width>1063</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuNuevo">

@@ -1,4 +1,5 @@
-#include "tunel.h"#include "lib/lib.h"
+#include "tunel.h"
+#include "lib/lib.h"
 Tunel::Tunel(){
 }
 Tunel::~Tunel(){
@@ -284,7 +285,7 @@ int Tunel::cierra_conexion(){
         return 0;
     }
 
-void Tunel::crea_fordwarding(){
+void Tunel::crea_forwarding(){
         printf("Creando tunel\n");
         rc = libssh2_init (0);
         if (rc != 0) {
@@ -340,42 +341,42 @@ void Tunel::crea_fordwarding(){
             if (libssh2_userauth_password(session, username_ssh, password_ssh)) {
 
                 fprintf(stderr, "Autentificacion por password ha fallado.\n");
-                cierra_conexion();
+                return ;
             }
         } else if (auth & AUTH_PUBLICKEY) {
             if (libssh2_userauth_publickey_fromfile(session, username_ssh, keyfile1,keyfile2, password_ssh)) {
                 fprintf(stderr, "\tAuthentication by public key failed!\n");
-                cierra_conexion();
+                return ;
             }
             fprintf(stderr, "\tAuthentication by public key succeeded.\n");
-        } else {
-            fprintf(stderr, "No supported authentication methods found!\n");
-            cierra_conexion();
-        }
+                } else {
+                    fprintf(stderr, "No supported authentication methods found!\n");
+                    return ;
+                }
 
         listensock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
         if (listensock == -1) {
             perror("socket");
-            cierra_conexion();
+            return ;
         }
 
         sin.sin_family = AF_INET;
         sin.sin_port = htons(local_listenport);
         if (INADDR_NONE == (sin.sin_addr.s_addr = inet_addr(local_listenip))) {
             perror("inet_addr");
-            cierra_conexion();
+            return ;
         }
         sockopt = 1;
         setsockopt(listensock, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof(sockopt));
         sinlen=sizeof(sin);
         if (-1 == bind(listensock, (struct sockaddr *)&sin, sinlen)) {
             perror("bind");
-            cierra_conexion();
+            return ;
         }
         if (-1 == listen(listensock, 2)) {
             perror("listen");
             printf( "Error en la conexion");
-            cierra_conexion();
+            return ;
         }
 
         fprintf(stderr, "Esperando conexiones por TCP en %s:%d...\n",
@@ -385,7 +386,7 @@ void Tunel::crea_fordwarding(){
         forwardsock = accept(listensock, (struct sockaddr *)&sin, &sinlen);
         if (forwardsock == -1) {
             perror("aceptar");
-          cierra_conexion();
+            return ;
         }
 
         shost = inet_ntoa(sin.sin_addr);
@@ -399,7 +400,7 @@ void Tunel::crea_fordwarding(){
             fprintf(stderr, "No he podido abrir una conexion direct-tcpip!\n"
                     "(Puede ser un problema del servidor"
                     " Revise los logs para verificarlo.)\n");
-            cierra_conexion();
+            return ;
         }
 
 
@@ -414,16 +415,16 @@ void Tunel::crea_fordwarding(){
             rc = select(forwardsock + 1, &fds, NULL, NULL, &tv);
             if (-1 == rc) {
                 perror("select");
-                cierra_conexion();
+                return ;
             }
             if (rc && FD_ISSET(forwardsock, &fds)) {
                 len = recv(forwardsock, buf, sizeof(buf), 0);
                 if (len < 0) {
                     perror("read");
-                    cierra_conexion();
+                    return ;
                 } else if (0 == len) {
                     fprintf(stderr, "El cliente se ha desconectado de %s:%d\n", shost,sport);
-                    cierra_conexion();
+                    return ;
                 }
                 wr = 0;
                 while(wr < len) {
@@ -434,7 +435,7 @@ void Tunel::crea_fordwarding(){
                     }
                     if (i < 0) {
                         fprintf(stderr, "libssh2_channel_write: %d\n", i);
-                        cierra_conexion();
+                        return ;
                     }
                     wr += i;
                 }
@@ -446,14 +447,14 @@ void Tunel::crea_fordwarding(){
                     break;
                 else if (len < 0) {
                     fprintf(stderr, "libssh2_channel_read: %d", (int)len);
-                    cierra_conexion();
+                    return ;
                 }
                 wr = 0;
                 while (wr < len) {
                     i = send(forwardsock, buf + wr, len - wr, 0);
                     if (i <= 0) {
                         perror("write");
-                        cierra_conexion();
+                        return ;
                     }
                     wr += i;
                 }
@@ -461,7 +462,7 @@ void Tunel::crea_fordwarding(){
 
                     fprintf(stderr, "El cliente se ha desconectado de %s:%d\n\n",
                         remote_desthost, remote_destport);
-                    cierra_conexion();
+                    return ;
                 }
             }
         }

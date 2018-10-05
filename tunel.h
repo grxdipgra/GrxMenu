@@ -83,7 +83,7 @@ public:
      * Hace todo el proceso
      * Usa los datos de arriba
      */
-   void crea_fordwarding();
+   void crea_forwarding();
    int crea_conexion();
 
     /*

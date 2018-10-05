@@ -32,6 +32,7 @@ struct variables{
     unsigned int local_listenport;
     QString remote_desthost;
     QString databasename;
+    QString hostname_DB;
     unsigned int remote_destport;
     bool usar_ssh;
 }datos;
@@ -161,17 +162,15 @@ void Botonera::on_actionSoporte_triggered()
 }
 
 void Botonera::basedatos(){
-    db_mysql = QSqlDatabase::addDatabase("QMYSQL","mysql");
     db_mysql.setDatabaseName(datos.databasename);
-    db_mysql.setHostName("127.0.0.1");
+    db_mysql.setHostName(datos.hostname_DB);
     db_mysql.setUserName(datos.username_DB);
     db_mysql.setPassword(datos.password_DB);
     db_mysql.setPort(datos.local_listenport);
     if (!db_mysql.open()){
-        ui->label_DB->setText("Cerrado");
+        ui->label_mysql_DB->setText("Cerrado");
     }else{
-        ui->label_DB->setText("Conectada");
-        crearDB("/home/alberto/.grx/grx.sqlite");
+        ui->label_mysql_DB->setText("Conectada");
     }
 }
 
@@ -180,7 +179,6 @@ void Botonera::basedatos(){
 
 bool Botonera::creaConexion()
 {
-    Configuracion *configuracion = new Configuracion();
     Tunel *tunel = new Tunel;
     QThread *hilo= new QThread;
     tunel->keyfile1=convierte(datos.keyfile1);
@@ -188,17 +186,17 @@ bool Botonera::creaConexion()
     tunel->username_ssh=convierte(datos.username_ssh);
     tunel->remote_destport=datos.remote_destport;
     tunel->local_listenport=datos.local_listenport;
-    tunel->local_listenip=convierte(datos.local_listenip);
+    tunel->local_listenip="127.0.0.1";
     tunel->remote_port=datos.remote_port;
-    tunel->remote_desthost="127.0.1.1";//convierte(datos.remote_desthost);
+    tunel->remote_desthost=convierte(datos.remote_desthost);
     tunel->password_ssh=convierte(datos.password_ssh);
     tunel->server_ip=convierte(datos.server_ip);
     tunel->remote_destport=3306;//mysql remoto
+    tunel->moveToThread(hilo);
     QObject::connect(hilo,&QThread::started, tunel, &Tunel::crea_conexion);
     QObject::connect(tunel,&Tunel::destroyed, hilo, &QThread::quit);
     QObject::connect(tunel,&Tunel::sshConectado, this, &Botonera::basedatos);
     QObject::connect(tunel,&Tunel::sshDesconectado,tunel,&Tunel::cierra_conexion);
-    delete configuracion;
     hilo->start();
     return true;
 }
@@ -293,10 +291,10 @@ bool Botonera::crearDB(QString rutaDB){
 
     db_sqlite = QSqlDatabase::database("sqlite");
     if (!db_sqlite.open()){
-            ui->label_DB->setText("Cerrado");
+            ui->label_sqlite_DB->setText("Cerrado");
             return false;
         }else{
-            ui->label_DB->setText("Conectada");
+            ui->label_sqlite_DB->setText("Conectada");
     }
 
     QSqlQuery query(db_sqlite);
@@ -340,6 +338,24 @@ bool Botonera::crearDB(QString rutaDB){
                         "notas varchar (64),"
                         "PRIMARY KEY(idNodo,email),"
                         "FOREIGN KEY(idNodo) REFERENCES nodo (id))";
+
+    QString extensiontelefononodo = "CREATE TABLE extensiontelefononodo "
+                                    "(telefono varchar(16) NOT NULL,"
+                                    "numeroExtension tinyint(2) NOT NULL,"
+                                    "nombreExtension varchar(32) NOT NULL,"
+                                    "PRIMARY KEY (telefono,numeroExtension))";
+
+    QString horarionodo = "CREATE TABLE horarionodo "
+                           "(idNodo mediumint(6) NOT NULL,"
+                           "diaSemana tinyint(1) NOT NULL,"
+                           "horaApertura time NOT NULL,"
+                           "horaCierre time NOT NULL,"
+                           "PRIMARY KEY (idNodo,diaSemana,horaApertura))";
+
+
+
+
+
 
     QString mancomunidad =  "CREATE TABLE mancomunidad"
                             "(id	smallint(2) NOT NULL,"
@@ -481,7 +497,7 @@ bool Botonera::crearDB(QString rutaDB){
                           "mancomunidadmunicipio, municipio, nodo, poblacion,"
                           "programa, telefononodo, ldap, grupos";
 
-    crea_tablas << aplicacion << centro << comarca << diafestivopoblacion << emailnodo << mancomunidad << mancomunidadmunicipio << municipio << nodo << poblacion << programa << telefononodo << ldap << grupos << sicalwin ;
+    crea_tablas << aplicacion << centro << comarca << diafestivopoblacion << emailnodo << mancomunidad << mancomunidadmunicipio << municipio << nodo << poblacion << programa << telefononodo << extensiontelefononodo << horarionodo << ldap << grupos << sicalwin ;
 
     for (int i=0;i<crea_tablas.size() ;i++ ){
         if (!query.exec(QString(crea_tablas.at(i)))){
@@ -495,126 +511,86 @@ return true;
 }
 
 bool Botonera::actualizaDB(QString rutaDB) {
-    int pb_cont = 1;
-    QString nombre_tabla;
-    Configuracion *configuracion = new Configuracion;
-    NMap* nmap = new NMap();
-
-    if (!crearDB(rutaDB)){
-        QMessageBox::critical(this, "Error SQLITE", "No hemos podido crear una DB SQLITE, compruebe la configuracion",QMessageBox::Ok);
-        return false;
-    }
-
-    if (configuracion->usarSSH()){ //Tenemos seleccionado usar tunel ssh
-        //Cargamos las variables necesarias para el tunel
-
-        datos.keyfile1=configuracion->cual_es_keyfile_publica();
-        datos.keyfile2=configuracion->cual_es_keyfile_privada();
-        datos.username_ssh=configuracion->cual_es_usuarioSSH();
-        datos.password_ssh=configuracion->cual_es_password_ssh();
-        datos.username_DB=configuracion->cual_es_usernameDB();
-        datos.password_DB=configuracion->cual_es_passwordDB();
-        datos.local_listenip="127.0.0.1";
-        datos.remote_desthost="127.0.0.1";
-        datos.databasename=configuracion->cual_es_DataBaseName();
-        datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
-        datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
-        datos.local_listenport=puerto_libre();
-        datos.usar_ssh=true;
-
-        nmap->nmap_run_scan(QString::number(datos.remote_port),datos.server_ip); //Comprobamos si el puerto del servidor esta abierto
-        if (!nmap->nmap_is_open_port(datos.server_ip, QString::number(datos.remote_port))){
-            QMessageBox::critical(this, "Error", "El servidor "+datos.server_ip+" en el puerto "+QString::number(datos.remote_port)+"esta cerrado, compruebe la configuracion ",QMessageBox::Ok);
-            ui->statusBar->messageChanged("Puerto Cerrado");
-            return false;
-           }
-
-        //Si no puedo crear una conexion ssh salimos
-        if (!creaConexion()){
-            QMessageBox::critical(this, "Error SSH", "No hemos podido crear una conexion SSH con el servidor, compruebe la configuracion ",QMessageBox::Ok);
+        int pb_cont = 1;
+        QString nombre_tabla;
+        Configuracion *configuracion = new Configuracion;
+        QProcess process;
+        NMap* nmap = new NMap();
+        //Comprobamos si tenemos mysql conectada, si no es así no podemos hacer la copia.
+        if (!db_mysql.isOpen()){
+            QMessageBox::critical(this, "Error NO podemos conectar con el servidor mysql", "NO podemos conectar con el servidor mysql en el servidor remoto",QMessageBox::Ok);
             return false;
         }
-    }
-    else {
-        datos.local_listenport=configuracion->cual_es_PuertoDB();
-        datos.usar_ssh=false;
-    }
 
-
-    db_mysql.setHostName(configuracion->cual_es_hostnameDB());
-    db_mysql.setDatabaseName(configuracion->cual_es_DataBaseName());
-    db_mysql.setUserName(configuracion->cual_es_usernameDB());
-    db_mysql.setPassword(configuracion->cual_es_passwordDB());
-    db_mysql.setPort(datos.local_listenport);
-    if (!db_mysql.open()){
-         ui->label_DB->setText("Cerrado");
-         //QMessageBox::critical(this, "Error Mysql", "No hemos podido abrir la DB, compruebe la configuracion ",QMessageBox::Ok);
-         return false;
-    }
-    else{
-         ui->label_DB->setText("Conectado");
-    }
-
-    QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
-    QSqlQuery srcQuery(db_mysql); //DB source
-    QSqlQuery destQuery(db_sqlite); //DB destino
-
-    //Ventana de progreso
-    QProgressDialog pb("", "", 1, 5000, this);
-    pb.setWindowModality(Qt::WindowModal);
-    pb.setCancelButton(0);
-    pb.setValue(0);
-    pb.show();
-
-    for (int i=0;i<tablas.size();i++){
-        //Dialogo de espera...
-        nombre_tabla = tablas.at(i);
-        pb.setLabelText("Creando la tabla "+tablas.at(i));
-       //QApplication::processEvents();
-       // Copiamos todas las entradas
-        if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
-          QMessageBox::critical(this, "Select", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
-
-        while (srcQuery.next()) {
-            pb_cont++;
-            pb.setValue(pb_cont);
-
-            QSqlRecord record=srcQuery.record();
-            QStringList names;
-            QStringList placeholders;
-            QList<QVariant > values;
-
-            for (int j = 0; j < record.count(); ++j) {
-                names << record.fieldName(j);
-                placeholders << ":" + record.fieldName(j);
-                QVariant value=srcQuery.value(j);
-                values << value;
-            }
-
-            // Construimos una consulta
-            QString queryStr;
-            queryStr.append("INSERT INTO " + nombre_tabla);
-            queryStr.append(" (" + names.join(", ") + ") ");
-            queryStr.append(" VALUES (" + placeholders.join(", ") + ");");
-            destQuery.prepare(queryStr);
-            foreach(QVariant value, values)
-                destQuery.addBindValue(value);
-            QSqlError error;
-            if (!destQuery.exec()){
-                error = destQuery.lastError();
-                QMessageBox::critical(this, "Insert", "No hemos podido consultar "+destQuery.lastQuery()+error.text()
-                                      ,QMessageBox::Ok);
-            }
-    }
-        for (int x=pb_cont;x<5000;x++){
-            pb.setValue(x);
+        if (!crearDB(rutaDB)){
+            QMessageBox::critical(this, "Error SQLITE", "No hemos podido crear una DB SQLITE, compruebe la configuracion",QMessageBox::Ok);
+            return false;
         }
-}
-delete configuracion;
-return true;
+
+        QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
+        QSqlQuery srcQuery(db_mysql); //DB source
+        QSqlQuery destQuery(db_sqlite); //DB destino
+
+        //Ventana de progreso
+        QProgressDialog pb("", "", 1, 5000, this);
+        pb.setWindowModality(Qt::WindowModal);
+        pb.setCancelButton(0);
+        pb.setValue(0);
+        pb.show();
+
+        for (int i=0;i<tablas.size();i++){
+            //Dialogo de espera...
+            nombre_tabla = tablas.at(i);
+            pb.setLabelText("Creando la tabla "+tablas.at(i));
+           //QApplication::processEvents();
+           // Copiamos todas las entradas
+            if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
+              QMessageBox::critical(this, "Select", "No hemos podido consultar "+nombre_tabla,QMessageBox::Ok);
+
+            while (srcQuery.next()) {
+                pb_cont++;
+                pb.setValue(pb_cont);
+
+                QSqlRecord record=srcQuery.record();
+                QStringList names;
+                QStringList placeholders;
+                QList<QVariant > values;
+
+                for (int j = 0; j < record.count(); ++j) {
+                    names << record.fieldName(j);
+                    placeholders << ":" + record.fieldName(j);
+                    QVariant value=srcQuery.value(j);
+                    values << value;
+                }
+
+                // Construimos una consulta
+                QString queryStr;
+                queryStr.append("INSERT INTO " + nombre_tabla);
+                queryStr.append(" (" + names.join(", ") + ") ");
+                queryStr.append(" VALUES (" + placeholders.join(", ") + ");");
+                destQuery.prepare(queryStr);
+                foreach(QVariant value, values)
+                    destQuery.addBindValue(value);
+                QSqlError error;
+                if (!destQuery.exec()){
+                    error = destQuery.lastError();
+                    QMessageBox::critical(this, "Insert", "No hemos podido consultar "+destQuery.lastQuery()+error.text()
+                                          ,QMessageBox::Ok);
+                }
+        }
+            for (int x=pb_cont;x<5000;x++){
+                pb.setValue(x);
+            }
+    }
+    delete configuracion;
+    return true;
+
 }
 
 bool Botonera::cargaVariables(){
+    //Creamos los conectores de las base de datos
+    db_mysql = QSqlDatabase::addDatabase("QMYSQL","mysql");
+    db_sqlite = QSqlDatabase::addDatabase("QSQLITE","sqlite");
 
     Configuracion *configuracion = new Configuracion;
     home = configuracion->cual_es_home();
@@ -629,16 +605,74 @@ bool Botonera::cargaVariables(){
         return false;
     }
 
+    //Cargamos en el struct (datos) los datos que le pasaremos a las librerias libssh
+    datos.keyfile1=configuracion->cual_es_keyfile_publica();
+    datos.keyfile2=configuracion->cual_es_keyfile_privada();
+    datos.username_ssh=configuracion->cual_es_usuarioSSH();
+    datos.password_ssh=configuracion->cual_es_password_ssh();
+    datos.username_DB=configuracion->cual_es_usernameDB();
+    datos.password_DB=configuracion->cual_es_passwordDB();
+    datos.hostname_DB=configuracion->cual_es_hostnameDB();
+    datos.local_listenip="127.0.0.1";
+
+    if (configuracion->usarSSH()){
+        datos.remote_port=configuracion->cual_es_puerto_remoto_ssh();
+        datos.server_ip=configuracion->cual_es_servidorSSH().toLatin1().data();
+    }
+    else{
+        datos.remote_port=configuracion->cual_es_PuertoDB();
+        datos.server_ip="127.0.0.1";
+    }
+   datos.remote_desthost="127.0.0.1";
+   datos.databasename=configuracion->cual_es_DataBaseName();
+
+   NMap* nmap = new NMap(); //Comprobamos que el puerto de ssh este abierto en el servidor
+   if (datos.remote_port!=0){
+       nmap->nmap_run_scan(QString::number(datos.remote_port),datos.server_ip); //Escaneamos puertos
+       if (nmap->nmap_is_open_port(datos.server_ip, QString::number(datos.remote_port))){
+       if (configuracion->usarSSH()){ //Tenemos seleccionado usar tunel ssh
+               datos.local_listenport=puerto_libre();
+               datos.usar_ssh=true;
+               db_mysql.setPort(datos.local_listenport);
+               if (!creaConexion()){
+                   QMessageBox::critical(this, "Error SSH", "No hemos podido crear una conexion SSH con el servidor, compruebe la configuracion ",QMessageBox::Ok);
+                   return false;
+               }
+       }
+       else{
+               datos.usar_ssh=false;
+               db_mysql.setDatabaseName(datos.databasename);
+               db_mysql.setHostName("127.0.0.1");
+               db_mysql.setUserName(datos.username_DB);
+               db_mysql.setPassword(datos.password_DB);
+               db_mysql.setPort(configuracion->cual_es_PuertoDB());
+               if (!db_mysql.open()){
+                   ui->label_mysql_DB->setText("Mysql sin conexion");
+                   return false;
+               }
+               else  {
+                   ui->label_mysql_DB->setText("Mysql conectado");
+                   }
+               }
+   }
+       else{
+       ui->statusBar->messageChanged("Puerto Cerrado");
+
+   }
+   }
+
     //Configuramos sqlite y la abrimos
     QString rutaDB_sqlite = configuracion->cual_es_ruta_sqlite();
-    db_sqlite = QSqlDatabase::addDatabase("QSQLITE","sqlite");
     db_sqlite.setDatabaseName(rutaDB_sqlite);
     if (!db_sqlite.open()){
-                ui->label_DB->setText("Cerrado SQLITE");
+        QMessageBox::critical(this, "Error SQLite", "No hemos podido abrir sqlite, compruebe la configuracion ",QMessageBox::Ok);
+                ui->label_sqlite_DB->setText("Cerrado SQLITE");
+                ui->actionSedes->setDisabled(true);
+                ui->actionSoporte->setDisabled(true);
                 return false;
             }
             else
-                ui->label_DB->setText("Conectado SQLITE");
+                ui->label_sqlite_DB->setText("Conectado SQLITE");
 
 
     //Muestra la ip
@@ -671,7 +705,8 @@ void Botonera::barraEstado(){
     ui->statusBar->addWidget(ui->kerberos);
     ui->statusBar->addWidget(ui->pb_kerberos);
     ui->statusBar->addWidget(DB);
-    ui->statusBar->addWidget(ui->label_DB);
+    ui->statusBar->addWidget(ui->label_sqlite_DB);
+    ui->statusBar->addWidget(ui->label_mysql_DB);
     ui->statusBar->addWidget(ui->pb_reconectaDB);
     ui->statusBar->addWidget(ipdir);
     ui->statusBar->addWidget(ui->label_ip);
