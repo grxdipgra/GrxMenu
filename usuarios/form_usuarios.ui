@@ -402,6 +402,19 @@ correo</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_habilitada">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -514,14 +527,14 @@ correo</string>
    </item>
    <item row="0" column="1">
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="boton_actualiza_usuario">
+     <item row="1" column="0">
+      <widget class="QPushButton" name="boton_actualiza_usuarios">
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../iconos.qrc">
-         <normaloff>:/imagenes/iconos/usuarios/actualiza_usuario.png</normaloff>:/imagenes/iconos/usuarios/actualiza_usuario.png</iconset>
+         <normaloff>:/imagenes/iconos/usuarios/actualiza_usuarios.png</normaloff>:/imagenes/iconos/usuarios/actualiza_usuarios.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -531,14 +544,14 @@ correo</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="boton_actualiza_usuarios">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="boton_actualiza_usuario">
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../iconos.qrc">
-         <normaloff>:/imagenes/iconos/usuarios/actualiza_usuarios.png</normaloff>:/imagenes/iconos/usuarios/actualiza_usuarios.png</iconset>
+         <normaloff>:/imagenes/iconos/usuarios/actualiza_usuario.png</normaloff>:/imagenes/iconos/usuarios/actualiza_usuario.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -603,7 +616,6 @@ correo</string>
    </item>
   </layout>
   <zorder></zorder>
-  <zorder>boton_renovar</zorder>
  </widget>
  <resources>
   <include location="../iconos.qrc"/>

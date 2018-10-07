@@ -113,6 +113,7 @@ private:
         QString caduca_clave;
         QString caduca_cuenta;
         QString dn;
+        QString deshabilitada;
     }entrada;
 
     struct group{

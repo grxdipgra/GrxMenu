@@ -41,7 +41,7 @@ bool existe;
     }
     */
 
-    existe=true;
+    existe=false;
 
     //No es necesario hacer addDatabase puesto que ya se ha creado la conexión en Botonera::cargaVariables()
     //solo es necesario definir
@@ -87,7 +87,8 @@ if (!existe){
                "telefono varchar(50),"
                "ultimo_login varchar(50),"
                "descripcion varchar(250),"
-               "dn varchar(250))");
+               "dn varchar(250),"
+               "deshabilitada varchar(50))");
 
         consulta->exec("drop table if exists grupos");
         consulta->exec("create table grupos (id_grupo int,"
@@ -170,7 +171,8 @@ if (!existe){
                                "'"+entrada.telefono+"', "
                                "'"+entrada.ultimo_login+"', "
                                "'"+entrada.descripcion+"' ,"
-                               "'"+entrada.dn+"')");
+                               "'"+entrada.dn+"' ,"
+                               "'"+entrada.deshabilitada+"')");
 
                     for (int j = 0; j < vec_grupos.size(); ++j) {
                         //vec_grupos[j].usuario=entrada.usuario;
@@ -539,7 +541,7 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                       for (i = 0; values[i] != NULL; i++) {
                           if (QString::fromStdString(values[i]).trimmed()!="0"){
                               fecha.setMSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000)-11644473600000);
-                              entrada.ultimo_login = fecha.toString("dd-MM-yyyy hh:mm");
+                              entrada.ultimo_login = fecha.toString("dd-MM-yyyy  hh:mm");
                           }
                           else
                               entrada.ultimo_login = "NUNCA";
@@ -557,7 +559,7 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                               //entrada.caduca_cuenta = "";
                           else {
                               fecha.setMSecsSinceEpoch((QString::fromStdString(values[i]).toLongLong()/10000)-11644473600000);
-                              entrada.caduca_cuenta = fecha.toString("dd-MM-yyyy hh:mm");
+                              entrada.caduca_cuenta = fecha.toString("dd-MM-yyyy  hh:mm");
                           }
                       }
                       ldap_value_free(values);
@@ -661,7 +663,7 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                     if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
                       for (i = 0; values[i] != NULL; i++) {
                           if (QString::fromStdString(values[i])=="66048" || QString::fromStdString(values[i])=="1114624") {
-                              entrada.caduca_clave = "No caduca";
+                              entrada.caduca_clave = "No Caduca";
                               userAccountControl=1;//para usarlo luego
                           }
                           else{
@@ -672,6 +674,23 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                       ldap_value_free(values);
                     }
                 }
+
+                // Cuenta Deshabilitada
+                if (QString::fromStdString(atributo)=="userAccountControl"){
+                    if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
+                        for (i = 0; values[i] != NULL; i++) {
+                            if (QString::fromStdString(values[i])=="512" || QString::fromStdString(values[i])=="66048") {
+                                entrada.deshabilitada = "HABILITADA";
+                            }
+                            else{
+                                entrada.deshabilitada = "DESHABILITADA";
+                            }
+
+                        }
+                      ldap_value_free(values);
+                    }
+                }
+
 
                 //grupos
                 if (QString::fromStdString(atributo)=="memberOf"){
@@ -955,6 +974,7 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
             ui->text_telefono->setText(consultar->value(13).toString());
             ui->text_ulti_login->setText(consultar->value(14).toString());
             ui->label_descripcion->setText(consultar->value(15).toString());
+            ui->label_habilitada->setText("LA CUENTA ESTA "+consultar->value(17).toString());
             DN=consultar->value(16).toString();
     }
 
@@ -984,15 +1004,17 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
         ui->text_estado->setStyleSheet("color: rgb(11, 97, 29)");
     }
 
-    QDateTime caduca = QDateTime::fromString(ui->text_clave_caduca->text(),"dd-MM-yyyy  hh:mm");
+
+    QDateTime caduca;
     //fecha actual:
     QDateTime ahora = QDateTime::currentDateTime();
 
     //qDebug()<<ahora;
 
-    if (ui->text_clave_caduca->text()=="No caduca")
+    if (ui->text_clave_caduca->text()=="No Caduca")
         ui->text_clave_caduca->setStyleSheet("color: rgb(5, 31, 137)");
     else{
+        caduca = QDateTime::fromString(ui->text_clave_caduca->text(),"dd-MM-yyyy  hh:mm");
         if (ahora>caduca){
             ui->text_clave_caduca->setStyleSheet("color: rgb(164, 0, 0)");
         }
@@ -1000,6 +1022,25 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
             ui->text_clave_caduca->setStyleSheet("color: rgb(11, 97, 29)");
         }
     }
+
+
+    if (ui->text_cuenta_caduca->text()=="No Caduca")
+        ui->text_cuenta_caduca->setStyleSheet("color: rgb(5, 31, 137)");
+    else{
+        caduca = QDateTime::fromString(ui->text_cuenta_caduca->text(),"dd-MM-yyyy  hh:mm");
+        if (ahora>caduca){
+            ui->text_cuenta_caduca->setStyleSheet("color: rgb(164, 0, 0)");
+        }
+        else{
+            ui->text_cuenta_caduca->setStyleSheet("color: rgb(11, 97, 29)");
+        }
+    }
+
+    if (ui->label_habilitada->text()=="LA CUENTA ESTA HABILITADA")
+        ui->label_habilitada->setStyleSheet("color: rgb(11, 97, 29)");
+    else
+        ui->label_habilitada->setStyleSheet("color: rgb(164, 0, 0)");
+
 }
 
 // Procedimiento para actualizar la base de datos y los campos del formulario
