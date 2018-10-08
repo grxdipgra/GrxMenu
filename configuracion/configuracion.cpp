@@ -925,7 +925,6 @@ void Configuracion::on_checkBox_proxychains_toggled(bool checked)
         habilitaProxyChains();
     else
         deshabilitaProxyChains();
-
 }
 
 void Configuracion::on_buttonBox_clicked(QAbstractButton *button)

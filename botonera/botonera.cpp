@@ -465,7 +465,7 @@ bool Botonera::crearDB(QString rutaDB){
                         "PRIMARY KEY(idNodo,telefono),"
                         "FOREIGN KEY(idNodo) REFERENCES nodo (id))";
 
-    QString ldap = "CREATE TABLE ldap (id int primary key,"
+   /* QString ldap = "CREATE TABLE ldap (id int primary key,"
            "usuario varchar(100),"
            "nombre varchar (100),"
            "cuenta_caduca varchar(50),"
@@ -482,7 +482,7 @@ bool Botonera::crearDB(QString rutaDB){
            "ultimo_login varchar(50),"
            "descripcion varchar(250),"
            "dn varchar(250))";
-
+*/
     QString grupos = "CREATE TABLE grupos (id_grupo int,"
            "id_usuario int,"
            "grupo varchar (100),"
@@ -495,9 +495,9 @@ bool Botonera::crearDB(QString rutaDB){
     QString drop_tablas = "DROP TABLE IF EXISTS aplicacion,centro,comarca,"
                           "diafestivopoblacion, emailnodo, mancomunidad,"
                           "mancomunidadmunicipio, municipio, nodo, poblacion,"
-                          "programa, telefononodo, ldap, grupos";
+                          "programa, telefononodo, grupos";
 
-    crea_tablas << aplicacion << centro << comarca << diafestivopoblacion << emailnodo << mancomunidad << mancomunidadmunicipio << municipio << nodo << poblacion << programa << telefononodo << extensiontelefononodo << horarionodo << ldap << grupos << sicalwin ;
+    crea_tablas << aplicacion << centro << comarca << diafestivopoblacion << emailnodo << mancomunidad << mancomunidadmunicipio << municipio << nodo << poblacion << programa << telefononodo << extensiontelefononodo << horarionodo << grupos << sicalwin ;
 
     for (int i=0;i<crea_tablas.size() ;i++ ){
         if (!query.exec(QString(crea_tablas.at(i)))){

@@ -117,7 +117,7 @@ void BaseDatos::cabeceras() {
     model_aplicacion->setHeaderData(1, Qt::Horizontal, QObject::tr("atalaya"));
     model_aplicacion->setHeaderData(2, Qt::Horizontal, QObject::tr("glpi"));
     model_aplicacion->setHeaderData(3, Qt::Horizontal, QObject::tr("osc"));
-
+/*
     model_ldap->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
     model_ldap->setHeaderData(1, Qt::Horizontal, QObject::tr("usuario"));
     model_ldap->setHeaderData(2, Qt::Horizontal, QObject::tr("nombre"));
@@ -135,7 +135,7 @@ void BaseDatos::cabeceras() {
     model_ldap->setHeaderData(14, Qt::Horizontal, QObject::tr("ultimo_login"));
     model_ldap->setHeaderData(15, Qt::Horizontal, QObject::tr("descripcion"));
     model_ldap->setHeaderData(16, Qt::Horizontal, QObject::tr("dn"));
-
+*/
 }
 
 void BaseDatos::inicia() {

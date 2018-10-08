@@ -3,7 +3,6 @@
 #include "botonera/botonera.h"
 #include "configuracion/configuracion.h"
 #include <QFileInfo>
-//#include <QThread>
 #include <QProgressDialog>
 #include "lib/lib.h"
 //falta comprobar cuando los usuarios se desbloquean por tiempo
@@ -28,18 +27,6 @@ bool existe;
 
     Configuracion *configuracion = new Configuracion;
     QString rutaDB = configuracion->cual_es_ruta_sqlite();
-
-    /* Esto lo hacemos en botonera
-    //comprobamos si existe la BD
-    if (!fileExists(rutaDB)){
-        QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado la base de datos\nSe va a crear la base de datos de usuarios, esto llevara unos segundos...espere",QMessageBox::Ok);
-        //Creamos la base de datos
-        existe=false;
-    }
-    else{
-        existe=true;
-    }
-    */
 
     existe=false;
 
@@ -979,7 +966,6 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
     }
 
 
-    //QSqlQuery* consulta1 = new QSqlQuery(bd);
     QString sql;
     QSqlQueryModel *model = new QSqlQueryModel();
     //instr(X,Y)
@@ -990,10 +976,8 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
     if(!consultar->exec()){
         qDebug() <<"Error en la consulta: "<< consultar->lastError();
     }else{
-        //qDebug() <<"Consulta realizada con exito: "<<consultar->lastQuery();
         model->setQuery(*consultar);
         ui->listView_grupos->setModel(model);
-        //on_comboBox_usuarios_activated(ui->comboBox_usuarios->itemText(0));
     }
 
 
@@ -1008,8 +992,6 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
     QDateTime caduca;
     //fecha actual:
     QDateTime ahora = QDateTime::currentDateTime();
-
-    //qDebug()<<ahora;
 
     if (ui->text_clave_caduca->text()=="No Caduca")
         ui->text_clave_caduca->setStyleSheet("color: rgb(5, 31, 137)");
@@ -1079,7 +1061,7 @@ void form_usuarios::actualizar_usuarios(){
 
         //Dialogo de espera...
         QCoreApplication::processEvents();
-        QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 10, this);
+        QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 1, this);
         pb.setWindowModality(Qt::WindowModal);
         //d.setMaximum(50);
         pb.setCancelButton(0);
