@@ -23,12 +23,12 @@
 
 //------------------SQLITE
 
-bool existe;
+//bool existe;
 
     Configuracion *configuracion = new Configuracion;
     QString rutaDB = configuracion->cual_es_ruta_sqlite();
 
-    existe=false;
+
 
     //No es necesario hacer addDatabase puesto que ya se ha creado la conexión en Botonera::cargaVariables()
     //solo es necesario definir
@@ -45,9 +45,10 @@ bool existe;
     QSqlQuery* consulta = new QSqlQuery(bd);
 
 
-// COMENTADO           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if (!existe){
 
+// COMENTADO           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//if (!existe){
+if (!consulta->exec("SELECT 1 FROM ldap LIMIT 1")){ //Comprobamos que exista la tabla ldap, si no la crea
     int pb_cont = 0;
 
     //Dialogo de espera...
