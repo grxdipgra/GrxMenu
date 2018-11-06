@@ -3,6 +3,7 @@
 #include "botonera/botonera.h"
 #include "configuracion/configuracion.h"
 #include <QFileInfo>
+//#include <QThread>
 #include <QProgressDialog>
 #include "lib/lib.h"
 //falta comprobar cuando los usuarios se desbloquean por tiempo
@@ -23,12 +24,24 @@
 
 //------------------SQLITE
 
-//bool existe;
+bool existe;
 
     Configuracion *configuracion = new Configuracion;
     QString rutaDB = configuracion->cual_es_ruta_sqlite();
 
+    /* Esto lo hacemos en botonera
+    //comprobamos si existe la BD
+    if (!fileExists(rutaDB)){
+        QMessageBox::critical(this, "Configurar", "Es la primera vez que ejecuta GrxMenu\no se ha borrado la base de datos\nSe va a crear la base de datos de usuarios, esto llevara unos segundos...espere",QMessageBox::Ok);
+        //Creamos la base de datos
+        existe=false;
+    }
+    else{
+        existe=true;
+    }
+    */
 
+    existe=true;
 
     //No es necesario hacer addDatabase puesto que ya se ha creado la conexión en Botonera::cargaVariables()
     //solo es necesario definir
@@ -45,10 +58,9 @@
     QSqlQuery* consulta = new QSqlQuery(bd);
 
 
-
 // COMENTADO           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//if (!existe){
-if (!consulta->exec("SELECT 1 FROM ldap LIMIT 1")){ //Comprobamos que exista la tabla ldap, si no la crea
+if (!existe){
+
     int pb_cont = 0;
 
     //Dialogo de espera...
@@ -76,7 +88,7 @@ if (!consulta->exec("SELECT 1 FROM ldap LIMIT 1")){ //Comprobamos que exista la 
                "ultimo_login varchar(50),"
                "descripcion varchar(250),"
                "dn varchar(250),"
-               "deshabilitada varchar(50))");
+               "useraccountcontrol int)");
 
         consulta->exec("drop table if exists grupos");
         consulta->exec("create table grupos (id_grupo int,"
@@ -160,7 +172,7 @@ if (!consulta->exec("SELECT 1 FROM ldap LIMIT 1")){ //Comprobamos que exista la 
                                "'"+entrada.ultimo_login+"', "
                                "'"+entrada.descripcion+"' ,"
                                "'"+entrada.dn+"' ,"
-                               "'"+entrada.deshabilitada+"')");
+                               "'"+ QString::number(entrada.useraccountcontrol)+"')");
 
                     for (int j = 0; j < vec_grupos.size(); ++j) {
                         //vec_grupos[j].usuario=entrada.usuario;
@@ -240,6 +252,7 @@ void form_usuarios::limpia_entrada(){
     entrada.caduca_clave="";
     entrada.caduca_cuenta="";
     entrada.dn="";
+    entrada.useraccountcontrol=0;
 
 }
 
@@ -413,8 +426,6 @@ void form_usuarios::rellena_dominio(){
 
         for (int i = 0; i < subUO.size(); ++i)
                 qDebug() << subUO.at(i).toLocal8Bit().constData();
-
-
 
 
 
@@ -658,23 +669,9 @@ void form_usuarios::rellena_entrada(LDAPMessage *entry){
                               userAccountControl=0;//para usarlo luego
                           }
 
-                      }
-                      ldap_value_free(values);
-                    }
-                }
-
-                // Cuenta Deshabilitada
-                if (QString::fromStdString(atributo)=="userAccountControl"){
-                    if ((values = ldap_get_values(ldap, entry, atributo)) != NULL) {
-                        for (i = 0; values[i] != NULL; i++) {
-                            if (QString::fromStdString(values[i])=="512" || QString::fromStdString(values[i])=="66048") {
-                                entrada.deshabilitada = "HABILITADA";
-                            }
-                            else{
-                                entrada.deshabilitada = "DESHABILITADA";
-                            }
-
-                        }
+                          //Para el userAccountControl
+                          entrada.useraccountcontrol = QString::fromStdString(values[i]).toInt();
+                       }
                       ldap_value_free(values);
                     }
                 }
@@ -925,6 +922,7 @@ void form_usuarios::clear_text(){
     ui->text_telefono->clear();
     ui->text_ulti_login->clear();
     ui->label_descripcion->clear();
+    ui->label_habilitada->clear();
 
 }
 
@@ -962,11 +960,14 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
             ui->text_telefono->setText(consultar->value(13).toString());
             ui->text_ulti_login->setText(consultar->value(14).toString());
             ui->label_descripcion->setText(consultar->value(15).toString());
-            ui->label_habilitada->setText("LA CUENTA ESTA "+consultar->value(17).toString());
+            //ui->label_habilitada->setText("LA CUENTA ESTA "+consultar->value(17).toString());
+            //((aqui tenemos que poner una variable))
             DN=consultar->value(16).toString();
+            uac=consultar->value(17).toInt();
     }
 
 
+    //QSqlQuery* consulta1 = new QSqlQuery(bd);
     QString sql;
     QSqlQueryModel *model = new QSqlQueryModel();
     //instr(X,Y)
@@ -977,8 +978,10 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
     if(!consultar->exec()){
         qDebug() <<"Error en la consulta: "<< consultar->lastError();
     }else{
+        //qDebug() <<"Consulta realizada con exito: "<<consultar->lastQuery();
         model->setQuery(*consultar);
         ui->listView_grupos->setModel(model);
+        //on_comboBox_usuarios_activated(ui->comboBox_usuarios->itemText(0));
     }
 
 
@@ -993,6 +996,8 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
     QDateTime caduca;
     //fecha actual:
     QDateTime ahora = QDateTime::currentDateTime();
+
+    //qDebug()<<ahora;
 
     if (ui->text_clave_caduca->text()=="No Caduca")
         ui->text_clave_caduca->setStyleSheet("color: rgb(5, 31, 137)");
@@ -1019,10 +1024,25 @@ void form_usuarios::carga_datos_usuario(int tipo, QString filtro){
         }
     }
 
-    if (ui->label_habilitada->text()=="LA CUENTA ESTA HABILITADA")
+
+    if (estado_habilitado(uac)==1){
+        ui->boton_habilitar->setEnabled(true);
         ui->label_habilitada->setStyleSheet("color: rgb(11, 97, 29)");
-    else
-        ui->label_habilitada->setStyleSheet("color: rgb(164, 0, 0)");
+        ui->label_habilitada->setText("LA CUENTA ESTA HABILITADA "); // + QString::number(uac));
+        ui->boton_habilitar->setText("Deshabilitar");
+    }
+    else{
+        if (estado_habilitado(uac)==0){
+            ui->boton_habilitar->setEnabled(true);
+            ui->label_habilitada->setStyleSheet("color: rgb(164, 0, 0)");
+            ui->label_habilitada->setText("LA CUENTA ESTA DESHABILITADA "); // + QString::number(uac));
+            ui->boton_habilitar->setText("Habilitar");
+        }
+        else {
+            ui->label_habilitada->setText(""); // + QString::number(uac));
+            ui->boton_habilitar->setEnabled(false);
+        }
+    }
 
 }
 
@@ -1062,7 +1082,7 @@ void form_usuarios::actualizar_usuarios(){
 
         //Dialogo de espera...
         QCoreApplication::processEvents();
-        QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 1, this);
+        QProgressDialog pb("Creando la base de datos de usuarios . . .", "", 0, 10, this);
         pb.setWindowModality(Qt::WindowModal);
         //d.setMaximum(50);
         pb.setCancelButton(0);
@@ -1129,7 +1149,8 @@ void form_usuarios::actualizar_usuarios(){
                                "'"+entrada.telefono+"', "
                                "'"+entrada.ultimo_login+"', "
                                "'"+entrada.descripcion+"' ,"
-                               "'"+entrada.dn+"')");
+                               "'"+entrada.dn+"' ,"
+                               "'"+ QString::number(entrada.useraccountcontrol) +"')");
 
                     for (int j = 0; j < vec_grupos.size(); ++j) {
                         //vec_grupos[j].usuario=entrada.usuario;
@@ -1265,6 +1286,7 @@ void form_usuarios::actualiza_usuario(){
                                "telefono='"+entrada.telefono+"', "
                                "ultimo_login='"+entrada.ultimo_login+"', "
                                "descripcion='"+entrada.descripcion+"' ,"
+                               "useraccountcontrol="+ QString::number(entrada.useraccountcontrol) +", "
                                "dn='"+entrada.dn+"' where id = " + QString::number(id_usuario) + "" );
                                //"dn='"+entrada.dn+"' where usuario like '"+ui->comboBox_usuarios->currentText()+"'");
 
@@ -1295,13 +1317,31 @@ void form_usuarios::actualiza_usuario(){
 
 }
 
+//devuelve si el usuario está habilitado o no dependiendo del valor del campo useraccountcontrol
+int form_usuarios::estado_habilitado(int valor){
+
+    //o divisores de 8
+    if (valor==512 || valor==528 || valor==544 || valor==560 || valor==640 || valor==66048 || valor==66064 || valor==66080 || valor==131584 || valor==1049088) {
+        return(1);//está habilitado
+    }
+    //o no divisores de 8
+    else{
+        if (valor==514 || valor==530 || valor==546 || valor==562 || valor==642 || valor==66050 || valor==66066 || valor==66082 || valor==131586 || valor==1049090) {
+            return(0);//esta inhabilitado
+        }
+        //indeterminado, estos valores no nos sirven para modificar el valor entra Habil. e Inhabil.
+        else {
+            return(2);//valor no valido para modificar
+        }
+    }
+
+}
 
 void form_usuarios::on_boton_desbloquear_clicked()
 {
     LDAPMod attribute1;
 
      if (conecta_oldap()){
-
 
         char *modificaciones_values[] = { "0", NULL };
         attribute1.mod_type = "lockoutTime";
@@ -1380,6 +1420,53 @@ void form_usuarios::on_boton_renovar_clicked()
     }
 }
 
+//habilita o deshabilita el usuario actual, dependiendo de su estado actual
+void form_usuarios::on_boton_habilitar_clicked()
+{
+
+//hay que recojer el valor que tiene y restarle 2
+
+    LDAPMod attribute1;
+    int valor;
+
+
+    if (estado_habilitado(uac)!=2){
+        qDebug()<<uac;
+
+         if (estado_habilitado(uac)==0)
+            valor=uac-2;
+         else
+            valor=uac+2;
+
+         if (conecta_oldap()){
+
+            char *modificaciones_values[] = {convierte(QString::number(valor)), NULL };
+            attribute1.mod_type = "UserAccountControl";
+            attribute1.mod_op = LDAP_MOD_REPLACE;
+            attribute1.mod_values = modificaciones_values;
+
+            LDAPMod *mods[2];
+            mods[0]=&attribute1;
+            mods[1]=NULL;
+
+            int result=  ldap_modify_ext_s( ldap, convierte(DN), mods,NULL,NULL);
+
+            if ( result == LDAP_SUCCESS )
+                printf("\n\tModified %s's attributes.\n", convierte(DN));
+            else {
+                printf("\n\tFailed to modify %s's attributes. ldap_modify_ext_s: %s.\n",
+                                                          convierte(DN), ldap_err2string(result));
+                //return ();
+            }
+            //ldap_unbind_s(ldap);
+
+            actualiza_usuario();
+
+       }
+    }
+
+}
+
 
 void form_usuarios::on_boton_actualiza_usuarios_clicked()
 {
@@ -1391,3 +1478,4 @@ void form_usuarios::on_boton_actualiza_usuario_clicked()
 {
     actualiza_usuario();
 }
+

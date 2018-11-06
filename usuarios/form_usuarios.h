@@ -75,6 +75,9 @@ private slots:
 
     void rellena_dominio();
 
+    void on_boton_habilitar_clicked();
+
+    int estado_habilitado(int valor);
 
 private:
     Ui::form_usuarios *ui;
@@ -93,6 +96,7 @@ private:
     QStringList usuario_basedn;
     QStringList usuario_basedn2;
     QString DN; //guardamos la cadena dn del objeto actual
+    int uac; //guardamos el valor useraccountcontrol del objeto actual
 
     struct entry{
         int id_entry;
@@ -113,7 +117,7 @@ private:
         QString caduca_clave;
         QString caduca_cuenta;
         QString dn;
-        QString deshabilitada;
+        int useraccountcontrol;
     }entrada;
 
     struct group{
