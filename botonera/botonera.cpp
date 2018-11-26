@@ -4,6 +4,7 @@
 #include <QDesktopServices>
 #include <QSqlRecord>
 #include <QDebug>
+#include "qdebug.h"
 #include "soporte/soporte.h"
 #include "sedes/sedes.h"
 #include "soporte/equipos.h"
@@ -18,6 +19,7 @@
 #include <QFileInfo>
 #include <QSqlField>
 #include <QProgressDialog>
+#include "QSqlField"
 // En este struct vamos a guardar los datos de conexion ssh y DB
 
 struct variables{
@@ -425,6 +427,9 @@ bool Botonera::crearDB(QString rutaDB){
                 "caudalLinea	varchar(64) DEFAULT NULL,"
                 "equipamientoLinea	varchar(128) DEFAULT NULL,"
                 "numeroSerieRouter	varchar(16) DEFAULT NULL,"
+                "dns1 varchar(16) DEFAULT NULL,"
+                "dns2 varchar(16) DEFAULT NULL,"
+                "proxy smallint(1) DEFAULT 0,"
                 "esAyuntamiento	smallint(1) DEFAULT 0,"
                 "PRIMARY KEY(id),"
                 "FOREIGN KEY(idPoblacion) REFERENCES poblacion (id),"
@@ -748,4 +753,31 @@ void Botonera::on_pb_reconectaDB_clicked()
    Configuracion *configuracion = new Configuracion;
    actualizaDB(configuracion->cual_es_ruta_sqlite());
    delete configuracion;
+}
+
+void Botonera::on_pushButton_clicked()
+{
+
+}
+
+void Botonera::on_pb_kerberos_clicked()
+{
+    int g;
+    QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
+    QSqlQuery srcQuery(db_mysql); //DB source
+    QString nombre_tabla;
+    QSqlRecord record;
+    QSqlField field;
+    for (int i=0;i<tablas.size();i++){
+        //Dialogo de espera...
+        nombre_tabla = tablas.at(i);
+        qDebug()<< "Nombre Tabla" << nombre_tabla;
+        g=db_mysql.record(nombre_tabla).count();
+        for (int j=0;j<g;j++){
+            QString nombre = db_mysql.record(nombre_tabla).field(j).name();
+            //QVariant tipo = db_mysql.record(nombre_tabla).field(j).type();
+            int tipoint = db_mysql.record(nombre_tabla).field(j).length();
+            qDebug() << nombre << tipoint << db_mysql.record(nombre_tabla).field(j).type().;
+        }
+    }
 }

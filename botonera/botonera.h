@@ -77,6 +77,10 @@ private slots:
 
     void on_pb_reconectaDB_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_pb_kerberos_clicked();
+
 private:
     Ui::Botonera *ui;
 

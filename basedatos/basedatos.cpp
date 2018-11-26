@@ -76,6 +76,12 @@ void BaseDatos::cabeceras() {
     model_nodo->setHeaderData(23, Qt::Horizontal, QObject::tr("servicioLinea"));
     model_nodo->setHeaderData(24, Qt::Horizontal, QObject::tr("caudalLinea"));
     model_nodo->setHeaderData(25, Qt::Horizontal, QObject::tr("equipamientoLinea"));
+    model_nodo->setHeaderData(26, Qt::Horizontal, QObject::tr("numeroSerieRouter"));
+    model_nodo->setHeaderData(27, Qt::Horizontal, QObject::tr("dns1"));
+    model_nodo->setHeaderData(28, Qt::Horizontal, QObject::tr("dns2"));
+    model_nodo->setHeaderData(29, Qt::Horizontal, QObject::tr("proxy"));
+
+
 
     model_programa->setHeaderData(0, Qt::Horizontal, QObject::tr("idNodo"));
     model_programa->setHeaderData(1, Qt::Horizontal, QObject::tr("anio"));
