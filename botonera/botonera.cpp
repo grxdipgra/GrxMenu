@@ -16,6 +16,7 @@
 #include "lib/lib.h"
 #include <QDateTime>
 #include <QFileInfo>
+#include <QSqlField>
 #include <QProgressDialog>
 // En este struct vamos a guardar los datos de conexion ssh y DB
 
@@ -542,6 +543,23 @@ bool Botonera::actualizaDB(QString rutaDB) {
             //Dialogo de espera...
             nombre_tabla = tablas.at(i);
             pb.setLabelText("Creando la tabla "+tablas.at(i));
+
+
+            /*------------------------------------------------------
+            */
+            int p;
+            QSqlRecord registro;
+            registro = db_mysql.record(tablas.at(i));
+            p = registro.count();
+            registro.fieldName(1);
+            QSqlField campo = registro.field(2);
+            int g = campo.typeID();
+            QVariant tipo = campo.type();
+            QString nombre = campo.name();
+            int tamano = campo.length();
+            QVariant tipo7 =campo.value();
+            /*---------------------------------------
+            */
            //QApplication::processEvents();
            // Copiamos todas las entradas
             if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
