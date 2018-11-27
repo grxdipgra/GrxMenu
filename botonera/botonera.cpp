@@ -20,6 +20,7 @@
 #include <QSqlField>
 #include <QProgressDialog>
 #include "QSqlField"
+#include <QString>
 // En este struct vamos a guardar los datos de conexion ssh y DB
 
 struct variables{
@@ -763,10 +764,14 @@ void Botonera::on_pushButton_clicked()
 void Botonera::on_pb_kerberos_clicked()
 {
     int g;
+    if (db_mysql.open()){  } //comprobar
+    if (db_sqlite.open()){ }
     QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
     QSqlQuery srcQuery(db_mysql); //DB source
+    QSqlQuery dstQuery(db_sqlite); //DB destiono
     QString nombre_tabla;
-    QSqlRecord record;
+    QString prueba, prueba2;
+    //QSqlRecord record;
     QSqlField field;
     for (int i=0;i<tablas.size();i++){
         //Dialogo de espera...
@@ -775,9 +780,13 @@ void Botonera::on_pb_kerberos_clicked()
         g=db_mysql.record(nombre_tabla).count();
         for (int j=0;j<g;j++){
             QString nombre = db_mysql.record(nombre_tabla).field(j).name();
-            //QVariant tipo = db_mysql.record(nombre_tabla).field(j).type();
-            int tipoint = db_mysql.record(nombre_tabla).field(j).length();
-            qDebug() << nombre << tipoint << db_mysql.record(nombre_tabla).field(j).type().;
+            QVariant tipo = db_mysql.record(nombre_tabla).field(j).type();
+            int tamano = db_mysql.record(nombre_tabla).field(j).length();
+            qDebug() << nombre << QString::number(tamano) << db_mysql.record(nombre_tabla).field(j).type();
+            prueba2 = QString::number(tamano);
+            prueba.append(nombre+" ("+QString::number(tamano)+")");
         }
+        dstQuery.prepare(QString("create table %1 (%2)").arg(nombre_tabla).arg(prueba));
+        dstQuery.exec();
     }
 }
