@@ -764,10 +764,11 @@ void Botonera::on_pb_kerberos_clicked()
             QString nombre = db_mysql.record(nombre_tabla).field(j).name();
             QVariant tipo = db_mysql.record(nombre_tabla).field(j).type();
             int tamano = db_mysql.record(nombre_tabla).field(j).length();
-            qDebug() << nombre << QString::number(tamano) << db_mysql.record(nombre_tabla).field(j).type();
+            qDebug() << nombre << QString::number(tamano) << db_mysql.record(nombre_tabla).field(j).typeID();
             prueba2 = QString::number(tamano);
             prueba.append(nombre+" ("+QString::number(tamano)+")");
         }
+        qDebug << prueba;
         dstQuery.prepare(QString("create table %1 (%2)").arg(nombre_tabla).arg(prueba));
         dstQuery.exec();
     }
