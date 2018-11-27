@@ -779,12 +779,16 @@ void Botonera::on_pb_kerberos_clicked()
         qDebug()<< "Nombre Tabla" << nombre_tabla;
         g=db_mysql.record(nombre_tabla).count();
         for (int j=0;j<g;j++){
-            QString nombre = db_mysql.record(nombre_tabla).field(j).name();
+            QString campo = db_mysql.record(nombre_tabla).field(j).name();
             QVariant tipo = db_mysql.record(nombre_tabla).field(j).type();
             int tamano = db_mysql.record(nombre_tabla).field(j).length();
-            qDebug() << nombre << QString::number(tamano) << db_mysql.record(nombre_tabla).field(j).type();
-            prueba2 = QString::number(tamano);
-            prueba.append(nombre+" ("+QString::number(tamano)+")");
+            bool nulo = db_mysql.record(nombre_tabla).field(j).isNull();
+            bool solo_lectura = db_mysql.record(nombre_tabla).field(j).isReadOnly();
+            QVariant valor_defecto = db_mysql.record(nombre_tabla).field(j).defaultValue();
+            int precision = db_mysql.record(nombre_tabla).field(j).precision();
+           // qDebug() << nombre << QString::number(tamano) << QString::number(db_mysql.record(nombre_tabla).field(j).typeID());
+
+            //prueba.append(campo+" "+QVariant(tipo)+QString::number(tamano)+"'");
         }
         dstQuery.prepare(QString("create table %1 (%2)").arg(nombre_tabla).arg(prueba));
         dstQuery.exec();
