@@ -10,6 +10,9 @@
 #include "configuracion/configuracion.h"
 #include "acercade/acerdade.h"
 #include "tunel.h"
+#include <QSystemTrayIcon>
+#include <QAction>
+#include <QCloseEvent>
 
 namespace Ui {
 class Botonera;
@@ -81,8 +84,28 @@ private slots:
 
     void on_pb_kerberos_clicked();
 
+    void crearAcciones();
+
+    void closeEvent(QCloseEvent *event);
+
+    void createTrayIcon();
+
+    void showMessage();
+
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
+    void messageClicked();
+
 private:
     Ui::Botonera *ui;
+
+    QAction *minimizarAcciones;
+    QAction *maximizarAcciones;
+    QAction *restaurarAccion;
+    QAction *salirAccion;
+
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
 
 };
 
