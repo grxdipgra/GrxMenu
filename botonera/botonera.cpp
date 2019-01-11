@@ -51,6 +51,21 @@ Botonera::Botonera(QWidget *parent) :
     muestraBotones();
     barraEstado();
 
+
+// systray
+
+    crearAcciones();
+    createTrayIcon();
+    QIcon icon(":/imagenes/iconos/botonera/logo.png");
+    trayIcon->setIcon(icon);
+
+
+    connect(trayIcon, &QSystemTrayIcon::messageClicked, this, &Botonera::messageClicked);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &Botonera::iconActivated);
+    trayIcon->show();
+
+
+
 // popup en construccion
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
@@ -61,6 +76,85 @@ Botonera::~Botonera()
 {
     delete ui;
 }
+
+
+//---Metodos para crear un systray
+
+void Botonera::crearAcciones()
+{
+    minimizarAcciones = new QAction(tr("Mi&nimizar"), this);
+    connect(minimizarAcciones, &QAction::triggered, this, &QWidget::hide);
+
+    maximizarAcciones = new QAction(tr("Ma&ximizar"), this);
+    connect(maximizarAcciones, &QAction::triggered, this,&Botonera::on_actionUsuarios_triggered);
+
+    restaurarAccion = new QAction(tr("&Restaurar"), this);
+    connect(restaurarAccion, &QAction::triggered, this, &QWidget::showNormal);
+
+    salirAccion = new QAction(tr("&Salir"), this);
+    connect(salirAccion, &QAction::triggered, qApp, &QCoreApplication::quit);
+}
+
+void Botonera::closeEvent(QCloseEvent *event)
+{
+    if (trayIcon->isVisible()) {
+        QMessageBox::information(this, tr("GrxMenu"),
+                                 tr("El programa seguirá corriendo en segundo plano"));
+        hide();
+        event->ignore();
+    }
+}
+
+void Botonera::messageClicked()
+{
+    QMessageBox::information(0, tr("GrxMenu"),
+                             tr("GrxMenu, I already gave what help I could.\n"
+                                "Maybe you should try asking a human?"));
+}
+void Botonera::createTrayIcon()
+{
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(minimizarAcciones);
+    trayIconMenu->addAction(maximizarAcciones);
+    trayIconMenu->addAction(restaurarAccion);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(salirAccion);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+}
+
+void Botonera::showMessage()
+{
+    QSystemTrayIcon::MessageIcon msgIcon = QSystemTrayIcon::MessageIcon();
+
+    //Esto manda un mensaje al tray
+    //trayIcon->showMessage("GrxMenu", "GrxMenu", icon,1000);
+
+}
+
+void Botonera::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::Trigger:
+    case QSystemTrayIcon::DoubleClick:
+        if (this->isHidden()){
+            this->showMaximized();
+        }
+        else{
+            this->hide();
+        }
+
+
+        break;
+    case QSystemTrayIcon::MiddleClick:
+        on_actionAcerca_de_triggered();
+        break;
+    default:
+        ;
+    }
+}
+//-----------------------------------------------------------
 
 void Botonera::test_slot(){ //popup
     qDebug()<<"Prueba";
@@ -190,7 +284,7 @@ bool Botonera::creaConexion()
     tunel->username_ssh=convierte(datos.username_ssh);
     tunel->remote_destport=datos.remote_destport;
     tunel->local_listenport=datos.local_listenport;
-    tunel->local_listenip="127.0.0.1";
+    tunel->local_listenip=qPrintable("127.0.0.1");
     tunel->remote_port=datos.remote_port;
     tunel->remote_desthost=convierte(datos.remote_desthost);
     tunel->password_ssh=convierte(datos.password_ssh);
@@ -763,7 +857,13 @@ void Botonera::on_pushButton_clicked()
 
 void Botonera::on_pb_kerberos_clicked()
 {
-    int g;
+
+}
+
+
+/*
+ *
+ *  int g;
     if (db_mysql.open()){  } //comprobar
     if (db_sqlite.open()){ }
     QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
@@ -793,4 +893,6 @@ void Botonera::on_pb_kerberos_clicked()
         dstQuery.prepare(QString("create table %1 (%2)").arg(nombre_tabla).arg(prueba));
         dstQuery.exec();
     }
-}
+ *
+ *
+ * */
