@@ -97,8 +97,7 @@ void Botonera::crearAcciones()
 void Botonera::closeEvent(QCloseEvent *event)
 {
     if (trayIcon->isVisible()) {
-        QMessageBox::information(this, tr("GrxMenu"),
-                                 tr("El programa seguirá corriendo en segundo plano"));
+        trayIcon->showMessage("GrxMenu", "El programa seguirá corriendo en segundo plano",QSystemTrayIcon::Information,5000);
         hide();
         event->ignore();
     }
@@ -123,7 +122,7 @@ void Botonera::showMessage()
     QSystemTrayIcon::MessageIcon msgIcon = QSystemTrayIcon::MessageIcon();
 
     //Esto manda un mensaje al tray
-    //trayIcon->showMessage("GrxMenu", "GrxMenu", icon,1000);
+    //t
 
 }
 
