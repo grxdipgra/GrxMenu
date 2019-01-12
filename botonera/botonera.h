@@ -94,14 +94,13 @@ private slots:
 
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
-    void messageClicked();
 
 private:
     Ui::Botonera *ui;
 
-    QAction *minimizarAcciones;
-    QAction *maximizarAcciones;
-    QAction *restaurarAccion;
+    QAction *soporteAcciones;
+    QAction *usuariosAcciones;
+    QAction *sedesAcciones;
     QAction *salirAccion;
 
     QSystemTrayIcon *trayIcon;

@@ -58,12 +58,8 @@ Botonera::Botonera(QWidget *parent) :
     createTrayIcon();
     QIcon icon(":/imagenes/iconos/botonera/logo.png");
     trayIcon->setIcon(icon);
-
-
-    connect(trayIcon, &QSystemTrayIcon::messageClicked, this, &Botonera::messageClicked);
     connect(trayIcon, &QSystemTrayIcon::activated, this, &Botonera::iconActivated);
     trayIcon->show();
-
 
 
 // popup en construccion
@@ -82,14 +78,17 @@ Botonera::~Botonera()
 
 void Botonera::crearAcciones()
 {
-    minimizarAcciones = new QAction(tr("Mi&nimizar"), this);
-    connect(minimizarAcciones, &QAction::triggered, this, &QWidget::hide);
+    QIcon iconSoporte(":/imagenes/iconos/botonera/asistencia.png");
+    soporteAcciones = new QAction(iconSoporte,tr("S&oporte"), this);
+    connect(soporteAcciones, &QAction::triggered, this, &Botonera::on_actionSoporte_triggered);
 
-    maximizarAcciones = new QAction(tr("Ma&ximizar"), this);
-    connect(maximizarAcciones, &QAction::triggered, this,&Botonera::on_actionUsuarios_triggered);
+    QIcon iconUsuarios(":/imagenes/iconos/botonera/usuarios.png");
+    usuariosAcciones = new QAction(iconUsuarios,tr("&Usuarios"), this);
+    connect(usuariosAcciones, &QAction::triggered, this,&Botonera::on_actionUsuarios_triggered);
 
-    restaurarAccion = new QAction(tr("&Restaurar"), this);
-    connect(restaurarAccion, &QAction::triggered, this, &QWidget::showNormal);
+    QIcon iconSedes(":/imagenes/iconos/botonera/sedes.png");
+    sedesAcciones = new QAction(iconSedes,tr("S&edes"), this);
+    connect(sedesAcciones, &QAction::triggered, this, &Botonera::on_actionSedes_triggered);
 
     salirAccion = new QAction(tr("&Salir"), this);
     connect(salirAccion, &QAction::triggered, qApp, &QCoreApplication::quit);
@@ -105,23 +104,18 @@ void Botonera::closeEvent(QCloseEvent *event)
     }
 }
 
-void Botonera::messageClicked()
-{
-    QMessageBox::information(0, tr("GrxMenu"),
-                             tr("GrxMenu, I already gave what help I could.\n"
-                                "Maybe you should try asking a human?"));
-}
 void Botonera::createTrayIcon()
 {
     trayIconMenu = new QMenu(this);
-    trayIconMenu->addAction(minimizarAcciones);
-    trayIconMenu->addAction(maximizarAcciones);
-    trayIconMenu->addAction(restaurarAccion);
+    trayIconMenu->addAction(soporteAcciones);
+    trayIconMenu->addAction(usuariosAcciones);
+    trayIconMenu->addAction(sedesAcciones);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(salirAccion);
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setToolTip("Esto es una prueba\nYotra cosa");
 }
 
 void Botonera::showMessage()
@@ -144,8 +138,6 @@ void Botonera::iconActivated(QSystemTrayIcon::ActivationReason reason)
         else{
             this->hide();
         }
-
-
         break;
     case QSystemTrayIcon::MiddleClick:
         on_actionAcerca_de_triggered();
