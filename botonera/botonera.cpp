@@ -20,6 +20,7 @@
 #include <QProgressDialog>
 #include "QSqlField"
 #include <QString>
+#include <QAction>
 // En este struct vamos a guardar los datos de conexion ssh y DB
 
 struct variables{
@@ -50,6 +51,12 @@ Botonera::Botonera(QWidget *parent) :
     muestraBotones();
     barraEstado();
 
+// Ponemos el icono en el systray del sistema
+
+   // connect(trayIcon, &QSystemTrayIcon::messageClicked, this, &Botonera::messageClicked);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &Botonera::iconActivated);
+
+
 // popup en construccion
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
@@ -60,6 +67,68 @@ Botonera::~Botonera()
 {
     delete ui;
 }
+
+void Botonera::closeEvent(QCloseEvent *event)
+{
+    if (trayIcon->isVisible()) {
+        QMessageBox::information(this, tr("Konekta"),
+                                 tr("El programa seguirá corriendo en segundo plano"));
+        hide();
+        event->ignore();
+    }
+}
+
+
+void Botonera::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::Trigger:
+    case QSystemTrayIcon::DoubleClick:
+        showMessage();
+        break;
+    case QSystemTrayIcon::MiddleClick:
+        showMessage();
+        break;
+    default:
+        ;
+    }
+}
+
+void Botonera::showMessage()
+{
+    QIcon icon("./imagenes/iconos/botonera/icono.png");
+    trayIcon->showMessage("GrxMenu", "Esto es una prueba", icon,
+                           10000);
+}
+
+void Botonera::createActions()
+{
+    minimizeAction = new QAction(tr("Mi&nimizar"), this);
+    connect(minimizeAction, &QAction::triggered, this, &QWidget::hide);
+
+    maximizeAction = new QAction(tr("Ma&ximizar"), this);
+    connect(maximizeAction, &QAction::triggered, this, &QWidget::showMaximized);
+
+    restoreAction = new QAction(tr("&Restaurar"), this);
+    connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
+
+    quitAction = new QAction(tr("&Salir"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+}
+
+void Botonera::createTrayIcon()
+{
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(maximizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+}
+
 
 void Botonera::test_slot(){ //popup
     qDebug()<<"Prueba";
@@ -768,7 +837,6 @@ void Botonera::on_pb_kerberos_clicked()
             prueba2 = QString::number(tamano);
             prueba.append(nombre+" ("+QString::number(tamano)+")");
         }
-        qDebug << prueba;
         dstQuery.prepare(QString("create table %1 (%2)").arg(nombre_tabla).arg(prueba));
         dstQuery.exec();
     }
