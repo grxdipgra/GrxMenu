@@ -17,6 +17,7 @@
 #include "lib/lib.h"
 #include <QDateTime>
 #include <QFileInfo>
+#include <QSqlField>
 #include <QProgressDialog>
 #include "QSqlField"
 #include <QString>
@@ -50,11 +51,10 @@ Botonera::Botonera(QWidget *parent) :
     cargaVariables();
     muestraBotones();
     barraEstado();
+//systray
+    crearAcciones();
+    crearTrayIcon();
 
-// Ponemos el icono en el systray del sistema
-
-   // connect(trayIcon, &QSystemTrayIcon::messageClicked, this, &Botonera::messageClicked);
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &Botonera::iconActivated);
 
 
 // popup en construccion
@@ -68,14 +68,51 @@ Botonera::~Botonera()
     delete ui;
 }
 
+
+//---Metodos para crear un systray
+
+void Botonera::crearAcciones()
+{
+    QIcon iconSoporte(":/imagenes/iconos/botonera/asistencia.png");
+    soporteAcciones = new QAction(iconSoporte,tr("S&oporte"), this);
+    connect(soporteAcciones, &QAction::triggered, this, &Botonera::on_actionSoporte_triggered);
+
+    QIcon iconUsuarios(":/imagenes/iconos/botonera/usuarios.png");
+    usuariosAcciones = new QAction(iconUsuarios,tr("&Usuarios"), this);
+    connect(usuariosAcciones, &QAction::triggered, this,&Botonera::on_actionUsuarios_triggered);
+
+    QIcon iconSedes(":/imagenes/iconos/botonera/sedes.png");
+    sedesAcciones = new QAction(iconSedes,tr("S&edes"), this);
+    connect(sedesAcciones, &QAction::triggered, this, &Botonera::on_actionSedes_triggered);
+
+    salirAccion = new QAction(tr("&Salir"), this);
+    connect(salirAccion, &QAction::triggered, qApp, &QCoreApplication::quit);
+}
+
 void Botonera::closeEvent(QCloseEvent *event)
 {
     if (trayIcon->isVisible()) {
-        QMessageBox::information(this, tr("Konekta"),
-                                 tr("El programa seguirá corriendo en segundo plano"));
+        trayIcon->showMessage("GrxMenu", "El programa seguirá corriendo en segundo plano",QSystemTrayIcon::Information,5000);
         hide();
         event->ignore();
     }
+}
+
+void Botonera::crearTrayIcon()
+{
+    QIcon icon(":/imagenes/iconos/botonera/logo.png");
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(soporteAcciones);
+    trayIconMenu->addAction(usuariosAcciones);
+    trayIconMenu->addAction(sedesAcciones);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(salirAccion);
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setToolTip("GrxMenu");
+    trayIcon->setIcon(icon);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &Botonera::iconActivated);
+    trayIcon->show();
 }
 
 
@@ -84,11 +121,18 @@ void Botonera::iconActivated(QSystemTrayIcon::ActivationReason reason)
     switch (reason) {
     case QSystemTrayIcon::Trigger:
     case QSystemTrayIcon::DoubleClick:
-        showMessage();
+        if (this->isHidden()){
+            this->showMaximized();
+        }
+        else{
+            this->hide();
+        }
         break;
     case QSystemTrayIcon::MiddleClick:
         showMessage();
+
         break;
+
     default:
         ;
     }
@@ -100,35 +144,6 @@ void Botonera::showMessage()
     trayIcon->showMessage("GrxMenu", "Esto es una prueba", icon,
                            10000);
 }
-
-void Botonera::createActions()
-{
-    minimizeAction = new QAction(tr("Mi&nimizar"), this);
-    connect(minimizeAction, &QAction::triggered, this, &QWidget::hide);
-
-    maximizeAction = new QAction(tr("Ma&ximizar"), this);
-    connect(maximizeAction, &QAction::triggered, this, &QWidget::showMaximized);
-
-    restoreAction = new QAction(tr("&Restaurar"), this);
-    connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
-
-    quitAction = new QAction(tr("&Salir"), this);
-    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
-}
-
-void Botonera::createTrayIcon()
-{
-    trayIconMenu = new QMenu(this);
-    trayIconMenu->addAction(minimizeAction);
-    trayIconMenu->addAction(maximizeAction);
-    trayIconMenu->addAction(restoreAction);
-    trayIconMenu->addSeparator();
-    trayIconMenu->addAction(quitAction);
-
-    trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setContextMenu(trayIconMenu);
-}
-
 
 void Botonera::test_slot(){ //popup
     qDebug()<<"Prueba";
@@ -258,7 +273,7 @@ bool Botonera::creaConexion()
     tunel->username_ssh=convierte(datos.username_ssh);
     tunel->remote_destport=datos.remote_destport;
     tunel->local_listenport=datos.local_listenport;
-    tunel->local_listenip="127.0.0.1";
+    tunel->local_listenip=qPrintable("127.0.0.1");
     tunel->remote_port=datos.remote_port;
     tunel->remote_desthost=convierte(datos.remote_desthost);
     tunel->password_ssh=convierte(datos.password_ssh);
@@ -617,6 +632,23 @@ bool Botonera::actualizaDB(QString rutaDB) {
             //Dialogo de espera...
             nombre_tabla = tablas.at(i);
             pb.setLabelText("Creando la tabla "+tablas.at(i));
+
+
+            /*------------------------------------------------------
+            */
+            int p;
+            QSqlRecord registro;
+            registro = db_mysql.record(tablas.at(i));
+            p = registro.count();
+            registro.fieldName(1);
+            QSqlField campo = registro.field(2);
+            int g = campo.typeID();
+            QVariant tipo = campo.type();
+            QString nombre = campo.name();
+            int tamano = campo.length();
+            QVariant tipo7 =campo.value();
+            /*---------------------------------------
+            */
            //QApplication::processEvents();
            // Copiamos todas las entradas
             if (!srcQuery.exec(QString("SELECT * FROM %1").arg(nombre_tabla)))
@@ -807,37 +839,9 @@ void Botonera::on_pb_reconectaDB_clicked()
    delete configuracion;
 }
 
-void Botonera::on_pushButton_clicked()
-{
-
-}
 
 void Botonera::on_pb_kerberos_clicked()
 {
-    int g;
-    if (db_mysql.open()){  } //comprobar
-    if (db_sqlite.open()){ }
-    QStringList tablas =  db_mysql.tables(); //Listado de las tablas de la DB
-    QSqlQuery srcQuery(db_mysql); //DB source
-    QSqlQuery dstQuery(db_sqlite); //DB destiono
-    QString nombre_tabla;
-    QString prueba, prueba2;
-    //QSqlRecord record;
-    QSqlField field;
-    for (int i=0;i<tablas.size();i++){
-        //Dialogo de espera...
-        nombre_tabla = tablas.at(i);
-        qDebug()<< "Nombre Tabla" << nombre_tabla;
-        g=db_mysql.record(nombre_tabla).count();
-        for (int j=0;j<g;j++){
-            QString nombre = db_mysql.record(nombre_tabla).field(j).name();
-            QVariant tipo = db_mysql.record(nombre_tabla).field(j).type();
-            int tamano = db_mysql.record(nombre_tabla).field(j).length();
-            qDebug() << nombre << QString::number(tamano) << db_mysql.record(nombre_tabla).field(j).typeID();
-            prueba2 = QString::number(tamano);
-            prueba.append(nombre+" ("+QString::number(tamano)+")");
-        }
-        dstQuery.prepare(QString("create table %1 (%2)").arg(nombre_tabla).arg(prueba));
-        dstQuery.exec();
-    }
+
 }
+

@@ -15,7 +15,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-     Botonera w;
-     w.show();
+    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+        QMessageBox::critical(0, QObject::tr("GrxMenu"),
+                              QObject::tr("No se detecto ningún sistema de iconos en el sistema "));
+        return 1;
+    }
+    QApplication::setQuitOnLastWindowClosed(false);
+    Botonera w;
+    w.show();
     return a.exec();
 }

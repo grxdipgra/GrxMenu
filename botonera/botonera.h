@@ -11,6 +11,7 @@
 #include "acercade/acerdade.h"
 #include "tunel.h"
 #include <QSystemTrayIcon>
+#include <QAction>
 #include <QCloseEvent>
 
 namespace Ui {
@@ -79,19 +80,17 @@ private slots:
 
     void on_pb_reconectaDB_clicked();
 
-    void on_pushButton_clicked();
-
-    void on_pb_kerberos_clicked();
+     void on_pb_kerberos_clicked();
 
     void showMessage();
 
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
+    void crearAcciones();
+
     void closeEvent(QCloseEvent *event);
 
-    void createActions();
-
-    void createTrayIcon();
+    void crearTrayIcon();
 
 private:
     Ui::Botonera *ui;
@@ -103,6 +102,11 @@ private:
     QAction *restoreAction;
     QAction *quitAction;
 
+
+    QAction *soporteAcciones;
+    QAction *usuariosAcciones;
+    QAction *sedesAcciones;
+    QAction *salirAccion;
 
 };
 
