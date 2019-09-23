@@ -8,11 +8,13 @@
 #include "QtDebug"
 #include <QtSql/QSqlDatabase>
 #include "configuracion/configuracion.h"
-#include "acercade/acerdade.h"
+#include "acercade/acercade.h"
 #include "tunel.h"
 #include <QSystemTrayIcon>
 #include <QAction>
 #include <QCloseEvent>
+#include <QSharedMemory>
+
 
 namespace Ui {
 class Botonera;
@@ -27,8 +29,14 @@ public:
     explicit Botonera(QWidget *parent = 0);
     ~Botonera();
     QString path,home,user,grxconf_ini;
+    bool lock();
+    bool conectadoMysql = false;
 
 private slots:
+
+    void compruebaDB();
+
+    void unlock();
 
     void ctxMenu(const QPoint &pos);
 
@@ -60,13 +68,9 @@ private slots:
 
     bool cargaVariables();
 
+    bool cargaDominio();
+
     void muestraBotones();
-
-    bool creaConexion();
-
-    void barraEstado();
-
-    void basedatos();
 
     void on_actionAtalaya_triggered();
 
@@ -74,13 +78,7 @@ private slots:
 
     void on_actionMame_triggered();
 
-    bool crearDB(QString rutaDB);
-
-    bool actualizaDB(QString rutaDB);
-
-    void on_pb_reconectaDB_clicked();
-
-     void on_pb_kerberos_clicked();
+    void on_pb_kerberos_clicked();
 
     void showMessage();
 
@@ -91,6 +89,24 @@ private slots:
     void closeEvent(QCloseEvent *event);
 
     void crearTrayIcon();
+
+    void on_actionactionVeleta_triggered();
+
+    void on_actionBorrame_triggered();
+
+    void on_actionNuevo_Citrix_triggered();
+
+    void on_actionViejo_Citrix_triggered();
+
+    void on_actionOcs_triggered();
+
+    void on_actionLink_triggered();
+
+    void on_actionApp_triggered();
+
+    void on_actionVirtManager_triggered();
+
+    void on_actionMailing_triggered();
 
 private:
     Ui::Botonera *ui;
@@ -108,6 +124,7 @@ private:
     QAction *sedesAcciones;
     QAction *salirAccion;
 
+    QSharedMemory *_singular;
 };
 
 #endif // BOTONERA_H

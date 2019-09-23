@@ -1,5 +1,4 @@
 #include "tabescaner.h"
-#include "equipos.h"
 #include "QPushButton"
 #include "QSignalMapper"
 #include "qdebug.h"
@@ -24,10 +23,12 @@ tabEscaner::tabEscaner(NMapScan *scan,QWidget *parent) : QWidget(parent)
     for (int i=0;i < encontrados.count();i++){
        columna = (i / lineas);//Para mostrar las filas y columnas
        fila = (i % lineas);
-       auto button = new QPushButton(encontrados.at(i).address.addr+"\n"+nmap->host_ports_open_string2(encontrados.at(i).address.addr));
+       //auto button = new QPushButton(encontrados.at(i).address[0].addr+"\n"+nmap->host_ports_open_string2(encontrados.at(i).address[0].addr));
+       QString puertos = nmap->host_ports_open_string2(ipEquipo(&encontrados.at(i)));
+       auto button = new QPushButton(ipEquipo(&encontrados.at(i)) +"\n"+puertos);
        gridlayout->addWidget(button,fila,columna);
 
-       switch (nmap->what_is_int(encontrados.at(i).address.addr)) {
+       switch (nmap->what_is_int(ipEquipo(&encontrados.at(i)))){
            case 3:
                pixmap.load(":imagenes/iconos/soporte/Windows_pc.png");
                break;
@@ -63,3 +64,15 @@ void tabEscaner::equipoLinux(int i)
 
 }
 
+/****************ipEquipo****************************
+ * Devuelve la ip del equipo pasado por parametro
+ * *******************************************************/
+
+QString tabEscaner::ipEquipo(Host *host)
+{
+    int num_equipos=host->address.count();
+    for (int i=0;i<num_equipos;i++)
+        if (host->address[i].addrtype=="ipv4")
+            return host->address[i].addr;
+return "";
+}

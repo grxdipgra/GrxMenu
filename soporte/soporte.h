@@ -12,6 +12,8 @@
 #include "nmap_xml.h"
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
+#include <QWebEngineProfile>
+#include <QWebEngineView>
 #include <QToolBar>
 namespace Ui {
 class Soporte;
@@ -26,8 +28,12 @@ public:
     ~Soporte();
     QSqlDatabase db_sqlite,db_mysql;
     QSqlQueryModel *model = new QSqlQueryModel();
-    QString path,home,user,grxconf_ini;
+    QString path,home,user,grxconf_ini,centro;
+    int id;
 private slots:
+
+    void porcentaje(int porcentaje);
+
     void on_lineEdit_ip_textChanged(const QString &arg1);
 
     void on_cb_sede_activated(const QString &nom);
@@ -58,9 +64,7 @@ private slots:
 
     void on_Btn_Incidencia_clicked();
 
-    void on_Btn_Atalaya_clicked();
-
-   void resultado_html(QNetworkReply* p);
+    void resultado_html(QNetworkReply* p);
 
    void insertaTexto(QString texto);
 
@@ -84,15 +88,26 @@ private slots:
 
    void on_pB_listin_clicked();
 
-   void on_Btn_Glpi_clicked();
-
    void mascaraIP();
 
    void cargaSedes();
 
    void on_pB_linphone_clicked();
 
-   private:
+   void on_actionMuestra_Glpi_triggered();
+
+   void on_actionNueva_Glpi_triggered();
+
+   void on_actionAlerta_Nodos_triggered();
+
+   void on_actionNodos_Caidos_triggered();
+
+   void on_actionEstado_nodo_triggered();
+
+
+   void on_Btn_Rutas_clicked();
+
+private:
     Ui::Soporte *ui;
     QSqlDatabase db;
     QSqlQuery consultar;

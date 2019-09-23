@@ -8,6 +8,11 @@
 #include <QFileDialog>
 #include <QDialogButtonBox>
 #include "simplecrypt.h"
+#include "basedatos/basedatos.h"
+#include <QDate>
+#include <QStandardItemModel>
+#include "usuarios/clase_ldap.h"
+#include "lib/globals.h"
 
 namespace Ui {
 class Configuracion;
@@ -19,8 +24,7 @@ class Configuracion : public QDialog
 
 public:
     explicit Configuracion(QWidget *parent = 0);
-
-
+    ~Configuracion();
 
     QString cual_es_home();
     QString cual_es_ruta_grxmenu_config();
@@ -57,6 +61,7 @@ public:
     QString cual_es_usuario_logado();
     QString puertos_buscados();
     QString cual_es_ruta_sqlite();
+    QDate ultimaActualizacionDB();
 
     bool es_rdesktop();
     bool usarSSH();
@@ -71,7 +76,9 @@ public:
     bool ocs_up();
     bool ts_up();
     bool isl_up();
+    bool veleta_up();
     bool atalaya_up();
+    bool multiples_instancias();
     bool solo_aytos();
     bool puertoSSH();
     bool puertoTelnet();
@@ -88,24 +95,46 @@ public:
     QString cual_es_para();
     QString cual_es_asunto();
     QString cual_es_cuerpo();
+    QString cual_es_para_rutas();
+    QString cual_es_asunto_rutas();
+    QString cual_es_cuerpo_rutas();
 
     //Ldap
     QString  cual_es_servidor_ldap();
     int  cual_es_puerto_ldap();
     QString  cual_es_usuario_ldap();
     QString  cual_es_clave_ldap();
+    QString  cual_es_dominio_ldap();
+
+    bool listaOU_vacio();
+    QStringList listaOU_datos();
+    bool lineEdit_OU_vacio();
+    QString lineEdit_OU_datos();
+    void carga_servidor_ldap(QString Sldap);
+    void  carga_puerto_ldap(int Pldap);
+    void carga_usuario_ldap(QString Uldap);
+    void carga_clave_ldap(QString Cldap);
+    void carga_home(QString home);
+    void carga_dominio_ldap(QString Dldap);
+    void carga_listaOU(QStringList OU);
+    void lineEdit_OU_datos(QString LEOU);
+    void carga_ruta_sqlite(QString ruta);
 
     bool usar_ou_externos();
     bool usar_ou_perrera();
     bool usar_ou_cie();
     bool usar_ou_cpd();
     bool usar_ou_ayuntamientos();
-    bool lineEdit_OU_vacio();
-    QString lineEdit_OU_datos();
-    ~Configuracion();
 
+
+
+    void actualiza_Kerberos();
+    void muestra_Kerberos();
+    void actualizaFechaDB();
+    bool conectadoMysql = false;
 private slots:
 
+    void resultados(QStringList lista);
 
     void ctxMenu(const QPoint &pos);
 
@@ -169,7 +198,16 @@ private slots:
 
     void on_pB_tablasDB_clicked();
 
-    void on_pB_actualiza_DB_clicked();
+
+    void on_boton_recargar_clicked();
+
+    QList<QStandardItem *> creaFila(const QString &first);
+
+    void carga_treeView();
+
+    void on_pB_anadirOU_clicked();
+
+    void on_pB_limpiar_clicked();
 
 private:
  SimpleCrypt *cifra = new SimpleCrypt(Q_UINT64_C(0x0c2ad4a4acb9f023)); //lo usamos para cifrar las claves
@@ -206,11 +244,13 @@ private:
     bool UsarGlpi;
     bool UsarOCS;
     bool UsarTS;
+    bool UsarVeleta;
     bool UsarISL;
     bool UsarAtalaya;
     QString ServidorSSH;
     QString UsuarioSSH;
     QString ClaveSSH;
+    QDate fechaActualizacionDB;
     int PuertoDB;
     int PuertoRemotoSSH;
     int PuertoLocalSSH;
@@ -229,10 +269,13 @@ private:
     QString Para;
     QString Asunto;
     QString Cuerpo;
+    QString Para_Rutas;
+    QString Asunto_Rutas;
+    QString Cuerpo_Rutas;
     bool UsarProxyChains;
     QString ProxyChains;
     bool SoloAytos;
-
+    bool multiplesInstancias;
     bool PuertosBuscados_ssh;
     bool PuertosBuscados_telnet;
     bool PuertosBuscados_web;
@@ -240,22 +283,19 @@ private:
     bool PuertosBuscados_portPrinter;
     bool PuertosBuscados_netbios;
     QString PuertosBuscados_lineEdit;
-
     bool UsarOuExternos;
     bool UsarOuPerrera;
     bool UsarOuCie;
     bool UsarOuCpd;
     bool UsarOuAyuntamientos;
+
+    QStringList ListaOU;
     QString lineEdit_OU;
-
-
-
     QString Servidor_ldap;
     int Puerto_ldap;
     QString Usuario_ldap;
     QString Clave_ldap;
-
-
+    QString Dominio_ldap;
 
     Ui::Configuracion *ui;
 };

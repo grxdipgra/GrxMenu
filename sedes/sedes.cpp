@@ -286,6 +286,15 @@ void Sedes::consultaNodo(const QString &nombre) {
 
         ui->comboBox_top_extension->setCurrentIndex(ui->comboBox_top_extension->findText(consultar_nodo.value(NUM_COL_NODO_EXTENSION).toString()));
 
+        ui->lineEdit_municipio_cif->setText(consultar_nodo.value(NUM_COL_NODO_CIF).toString());
+        ui->lineEdit_todo_municipio_cif->setText(consultar_nodo.value(NUM_COL_NODO_CIF).toString());
+
+        ui->lineEdit_municipio_dir3->setText(consultar_nodo.value(NUM_COL_NODO_CODIGODIR3).toString());
+        ui->lineEdit_todo_municipio_dir3->setText(consultar_nodo.value(NUM_COL_NODO_CODIGODIR3).toString());
+
+
+
+
         modelo_router = consultar_nodo.value(NUM_COL_NODO_EQUIPAMIENTO).toString();
 
         // Cargar datos de programa del año actual
@@ -354,12 +363,6 @@ void Sedes::consultaNodo(const QString &nombre) {
                             ui->lineEdit_nodo_municipio->setText(nombreEla);
                             ui->lineEdit_todo_nodo_municipio->setText(nombreEla);
                         }
-
-                        //ui->lineEdit_municipio_cif->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
-                        //ui->lineEdit_todo_municipio_cif->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CIF).toString());
-
-                        //ui->lineEdit_municipio_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
-                        //ui->lineEdit_todo_municipio_dir3->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGODIR3).toString());
 
                         ui->lineEdit_municipio_ine->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGOINE).toString());
                         ui->lineEdit_todo_municipio_ine->setText(consultar_municipio.value(NUM_COL_MUNICIPIO_CODIGOINE).toString());

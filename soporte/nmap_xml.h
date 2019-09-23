@@ -37,10 +37,6 @@ struct Debugging{
     QString  level;
 };
 
-struct Address{
-    QString addr;
-    QString addrtype;
-};
 
 struct State{
    QString state;
@@ -146,11 +142,18 @@ struct TcpTsSequence{
     QString values;
 };
 
+struct Address{
+    QString addr;
+    QString addrtype;
+    QString vendor;
+};
+
+
 struct Host{
     QString starttime;
     QString endtime;
     Status status;
-    Address address;
+    QList <Address> address;
     Hostnames hostnames;
     Ports ports;
     OS os;
@@ -161,6 +164,7 @@ struct Host{
     IpIdSequence ipidsecuence;
     TcpTsSequence tcptssequence;
 };
+
 
 struct Hosts{
     int up;
@@ -219,6 +223,8 @@ virtual ~NMap();
     QString host_ports_open_string(Host *host); //Puertos abiertos
     QString host_ports_open_string2(QString ip);
     int host_ports_open_int(QString ip); //Numero de puerto abiertos del host
+    QString nmap_mac_host(Host *host);
+    QString nmap_ip_host(Host *host);
 
 private:
     NMapScan nmapscan;

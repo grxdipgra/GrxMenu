@@ -6,138 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1063</width>
-    <height>158</height>
+    <width>600</width>
+    <height>155</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Menu Principal</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>821</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <layout class="QHBoxLayout" name="barra_estado">
-       <item>
-        <widget class="QLabel" name="kerberos">
-         <property name="font">
-          <font>
-           <family>Ubuntu Condensed</family>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pb_kerberos">
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Renovar</string>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label_mysql_DB">
-         <property name="font">
-          <font>
-           <family>Ubuntu Condensed</family>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pb_reconectaDB">
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Actualiza DB</string>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_sqlite_DB">
-       <property name="text">
-        <string>QSlite </string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_username">
-         <property name="font">
-          <font>
-           <family>Ubuntu Condensed</family>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_ip">
-         <property name="font">
-          <font>
-           <family>Ubuntu Condensed</family>
-           <weight>75</weight>
-           <italic>false</italic>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QLabel" name="label_username_2">
     <property name="geometry">
      <rect>
@@ -164,18 +40,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1063</width>
-     <height>19</height>
+     <width>600</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuNuevo">
     <property name="title">
      <string>Archi&amp;vo</string>
     </property>
-    <addaction name="actionNuevo_Men"/>
+    <addaction name="separator"/>
+    <addaction name="actionBorrame"/>
+    <addaction name="actionConfigurar"/>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
-    <addaction name="actionBorrame"/>
    </widget>
    <widget class="QMenu" name="menuAplicaciones">
     <property name="title">
@@ -183,14 +60,11 @@
     </property>
     <addaction name="actionUsuarios"/>
     <addaction name="actionSoporte"/>
-    <addaction name="actionCronos"/>
-    <addaction name="actionWebmail"/>
-    <addaction name="actionBeiro"/>
-    <addaction name="actionGlpi"/>
-    <addaction name="actionOcs"/>
+    <addaction name="actionSedes"/>
+    <addaction name="actionMailing"/>
+    <addaction name="actionVirtManager"/>
     <addaction name="actionActiveDirectory"/>
     <addaction name="actionISL"/>
-    <addaction name="actionConfigurar"/>
    </widget>
    <widget class="QMenu" name="menuAcerca_de">
     <property name="title">
@@ -199,8 +73,19 @@
     <addaction name="actionAcerca_de"/>
     <addaction name="actionMame"/>
    </widget>
+   <widget class="QMenu" name="menuLink_Web">
+    <property name="title">
+     <string>Li&amp;nk Web</string>
+    </property>
+    <addaction name="actionBeiro"/>
+    <addaction name="actionWebmail"/>
+    <addaction name="actionCronos"/>
+    <addaction name="actionGlpi"/>
+    <addaction name="actionOcs"/>
+   </widget>
    <addaction name="menuNuevo"/>
    <addaction name="menuAplicaciones"/>
+   <addaction name="menuLink_Web"/>
    <addaction name="menuAcerca_de"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -209,6 +94,9 @@
      <width>0</width>
      <height>0</height>
     </size>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
    </property>
    <property name="iconSize">
     <size>
@@ -225,16 +113,10 @@
    <addaction name="actionUsuarios"/>
    <addaction name="actionSoporte"/>
    <addaction name="actionSedes"/>
-   <addaction name="actionCronos"/>
-   <addaction name="actionWebmail"/>
-   <addaction name="actionBeiro"/>
-   <addaction name="actionGlpi"/>
-   <addaction name="actionOcs"/>
+   <addaction name="actionLink"/>
+   <addaction name="actionApp"/>
    <addaction name="actionActiveDirectory"/>
-   <addaction name="actionISL"/>
-   <addaction name="actionAtalaya"/>
    <addaction name="actionConfigurar"/>
-   <addaction name="actionSalir"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="font">
@@ -355,21 +237,6 @@
     <string>Ctrl+F7</string>
    </property>
   </action>
-  <action name="actionSalir">
-   <property name="icon">
-    <iconset resource="../iconos.qrc">
-     <normaloff>:/imagenes/iconos/botonera/salida.png</normaloff>:/imagenes/iconos/botonera/salida.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Salir</string>
-   </property>
-   <property name="toolTip">
-    <string>Salir</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+F8</string>
-   </property>
-  </action>
   <action name="actionNuevo_Men">
    <property name="icon">
     <iconset resource="../iconos.qrc">
@@ -421,7 +288,7 @@
      <normaloff>:/imagenes/iconos/botonera/300px-Granada_-_Mapa_municipal.svg.png</normaloff>:/imagenes/iconos/botonera/300px-Granada_-_Mapa_municipal.svg.png</iconset>
    </property>
    <property name="text">
-    <string>Sedes</string>
+    <string>S&amp;edes</string>
    </property>
   </action>
   <action name="actionAcerca_de">
@@ -448,10 +315,10 @@
   <action name="actionBorrame">
    <property name="icon">
     <iconset resource="../iconos.qrc">
-     <normaloff>:/imagenes/iconos/soporte/escoba.svg</normaloff>:/imagenes/iconos/soporte/escoba.svg</iconset>
+     <normaloff>:/imagenes/iconos/botonera/segundo_plano.png</normaloff>:/imagenes/iconos/botonera/segundo_plano.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Borrame</string>
+    <string>&amp;Segundo plano</string>
    </property>
   </action>
   <action name="actionMame">
@@ -461,6 +328,105 @@
    </property>
    <property name="text">
     <string>&amp;Mame</string>
+   </property>
+  </action>
+  <action name="actionactionVeleta">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/veleta.png</normaloff>:/imagenes/iconos/botonera/veleta.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Veleta</string>
+   </property>
+   <property name="toolTip">
+    <string>Veleta</string>
+   </property>
+  </action>
+  <action name="actionSalir">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/salida.png</normaloff>:/imagenes/iconos/botonera/salida.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sa&amp;lir</string>
+   </property>
+   <property name="toolTip">
+    <string>Salir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F8</string>
+   </property>
+  </action>
+  <action name="actionNuevo_Citrix">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/AD.png</normaloff>:/imagenes/iconos/botonera/AD.png</iconset>
+   </property>
+   <property name="text">
+    <string>Nuevo Citrix</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nuevo citrix 10.1.100.71&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionViejo_Citrix">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/AD.png</normaloff>:/imagenes/iconos/botonera/AD.png</iconset>
+   </property>
+   <property name="text">
+    <string>Viejo_Citrix</string>
+   </property>
+   <property name="toolTip">
+    <string>Viejo Citrix</string>
+   </property>
+  </action>
+  <action name="actionLink">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/link.png</normaloff>:/imagenes/iconos/botonera/link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Abrir todos los Link </string>
+   </property>
+   <property name="toolTip">
+    <string>Link</string>
+   </property>
+  </action>
+  <action name="actionApp">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/app.png</normaloff>:/imagenes/iconos/botonera/app.png</iconset>
+   </property>
+   <property name="text">
+    <string>Abrir todas las App</string>
+   </property>
+   <property name="toolTip">
+    <string>App</string>
+   </property>
+  </action>
+  <action name="actionVirtManager">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/botonera/virt-manager-icon.png</normaloff>:/imagenes/iconos/botonera/virt-manager-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>VirtManager</string>
+   </property>
+   <property name="toolTip">
+    <string>Virt-Manager</string>
+   </property>
+  </action>
+  <action name="actionMailing">
+   <property name="icon">
+    <iconset resource="../iconos.qrc">
+     <normaloff>:/imagenes/iconos/basedatos/mailing.png</normaloff>:/imagenes/iconos/basedatos/mailing.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mailing</string>
+   </property>
+   <property name="toolTip">
+    <string>Mailing</string>
    </property>
   </action>
  </widget>

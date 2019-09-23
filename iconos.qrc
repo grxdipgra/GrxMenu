@@ -94,5 +94,15 @@
         <file>imagenes/iconos/usuarios/actualiza_usuarios.png</file>
         <file>imagenes/iconos/basedatos/csv.png</file>
         <file>imagenes/iconos/soporte/linphone.png</file>
+        <file>imagenes/iconos/botonera/veleta.png</file>
+        <file>imagenes/iconos/botonera/segundo_plano.png</file>
+        <file>imagenes/iconos/botonera/link.png</file>
+        <file>imagenes/iconos/botonera/app.png</file>
+        <file>imagenes/iconos/botonera/virt-manager-icon.png</file>
+        <file>imagenes/iconos/basedatos/mailing.png</file>
+        <file>imagenes/iconos/soporte/fortigate.png</file>
+        <file>imagenes/iconos/soporte/memoria.jpeg</file>
+        <file>imagenes/iconos/soporte/impresora.png</file>
+        <file>imagenes/iconos/equipos/fortigate.jpg</file>
     </qresource>
 </RCC>

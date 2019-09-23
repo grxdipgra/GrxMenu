@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1320</width>
-    <height>939</height>
+    <height>950</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,8 +25,11 @@
      <x>0</x>
      <y>10</y>
      <width>1311</width>
-     <height>921</height>
+     <height>931</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::TabFocus</enum>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_general">
     <item>
@@ -36,6 +39,9 @@
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label_top_nodo">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>Nodo</string>
         </property>
@@ -46,6 +52,9 @@
       </item>
       <item row="0" column="1">
        <widget class="QLabel" name="label_top_ip">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>IP</string>
         </property>
@@ -56,6 +65,9 @@
       </item>
       <item row="0" column="2">
        <widget class="QLabel" name="label_top_telefono">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>TLF.</string>
         </property>
@@ -66,6 +78,9 @@
       </item>
       <item row="0" column="3">
        <widget class="QLabel" name="label_top_extension">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>Extensión</string>
         </property>
@@ -87,6 +102,9 @@
           <pointsize>16</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="editable">
          <bool>true</bool>
         </property>
@@ -105,6 +123,9 @@
           <pointsize>16</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
@@ -119,6 +140,9 @@
          <font>
           <pointsize>16</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
         </property>
         <property name="editable">
          <bool>true</bool>
@@ -138,6 +162,9 @@
           <pointsize>16</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
@@ -150,6 +177,9 @@
     </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
@@ -163,8 +193,11 @@
        <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget_secciones">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="seccion_nodo">
            <property name="enabled">
@@ -182,12 +215,15 @@
               <height>161</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
            <widget class="QGroupBox" name="groupBox_nodo_localizacion">
@@ -198,6 +234,9 @@ p, li { white-space: pre-wrap; }
               <width>600</width>
               <height>271</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -234,6 +273,9 @@ p, li { white-space: pre-wrap; }
                </property>
                <item row="1" column="1">
                 <widget class="QLineEdit" name="lineEdit_nodo_poblacion">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="maxLength">
                   <number>64</number>
                  </property>
@@ -244,6 +286,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="label_nodo_poblacion">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Población</string>
                  </property>
@@ -254,6 +299,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="1" column="0">
                 <widget class="QLineEdit" name="lineEdit_nodo_municipio">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="maxLength">
                   <number>64</number>
                  </property>
@@ -264,6 +312,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_nodo_municipio">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Municipio</string>
                  </property>
@@ -274,6 +325,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="2">
                 <widget class="QLabel" name="label_nodo_cp">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Código Postal</string>
                  </property>
@@ -289,6 +343,9 @@ p, li { white-space: pre-wrap; }
                    <width>100</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
@@ -316,6 +373,9 @@ p, li { white-space: pre-wrap; }
                </property>
                <item row="0" column="1">
                 <widget class="QLabel" name="label_nodo_direccion">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Dirección</string>
                  </property>
@@ -326,6 +386,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_nodo_tipoVia">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Tipo vía</string>
                  </property>
@@ -342,6 +405,9 @@ p, li { white-space: pre-wrap; }
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="inputMask">
                   <string/>
                  </property>
@@ -355,6 +421,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="1" column="1">
                 <widget class="QLineEdit" name="lineEdit_nodo_direccion">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="maxLength">
                   <number>64</number>
                  </property>
@@ -384,6 +453,9 @@ p, li { white-space: pre-wrap; }
                </property>
                <item row="0" column="3">
                 <widget class="QLabel" name="label_nodo_piso">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Piso</string>
                  </property>
@@ -394,6 +466,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="4">
                 <widget class="QLabel" name="label_nodo_puerta">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Puerta</string>
                  </property>
@@ -404,6 +479,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_nodo_numero">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Número</string>
                  </property>
@@ -414,6 +492,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="label_nodo_letra">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Letra</string>
                  </property>
@@ -424,6 +505,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="2">
                 <widget class="QLabel" name="label_nodo_escalera">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Escalera</string>
                  </property>
@@ -439,6 +523,9 @@ p, li { white-space: pre-wrap; }
                    <width>60</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="inputMask">
                   <string/>
@@ -462,6 +549,9 @@ p, li { white-space: pre-wrap; }
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="inputMask">
                   <string>A</string>
                  </property>
@@ -481,6 +571,9 @@ p, li { white-space: pre-wrap; }
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="maxLength">
                   <number>3</number>
                  </property>
@@ -496,6 +589,9 @@ p, li { white-space: pre-wrap; }
                    <width>60</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="inputMask">
                   <string/>
@@ -518,6 +614,9 @@ p, li { white-space: pre-wrap; }
                    <width>60</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="inputMask">
                   <string/>
@@ -545,6 +644,9 @@ p, li { white-space: pre-wrap; }
                </property>
                <item row="0" column="1">
                 <widget class="QLabel" name="label_nodo_longitud">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Longitud</string>
                  </property>
@@ -561,6 +663,9 @@ p, li { white-space: pre-wrap; }
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="maxLength">
                   <number>12</number>
                  </property>
@@ -574,6 +679,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_nodo_latitud">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Latitud</string>
                  </property>
@@ -590,6 +698,9 @@ p, li { white-space: pre-wrap; }
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="maxLength">
                   <number>12</number>
                  </property>
@@ -603,6 +714,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="1" column="2">
                 <widget class="QPushButton" name="pB_nodo_googleMaps">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Ver en Google Maps</string>
                  </property>
@@ -620,6 +734,9 @@ p, li { white-space: pre-wrap; }
               <width>600</width>
               <height>160</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="title">
              <string>Contacto</string>
@@ -650,6 +767,9 @@ p, li { white-space: pre-wrap; }
                </property>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_nodo_telefonos">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Teléfonos</string>
                  </property>
@@ -657,6 +777,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="label_nodo_extension">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Extensión</string>
                  </property>
@@ -676,6 +799,9 @@ p, li { white-space: pre-wrap; }
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="editable">
                   <bool>false</bool>
                  </property>
@@ -694,6 +820,9 @@ p, li { white-space: pre-wrap; }
                    <width>75</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="text">
                   <string/>
@@ -723,6 +852,9 @@ p, li { white-space: pre-wrap; }
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
                  </property>
@@ -742,6 +874,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="3" column="0">
                 <widget class="QLabel" name="label_nodo_fax">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Fax</string>
                  </property>
@@ -749,6 +884,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_nodo_email">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Emails</string>
                  </property>
@@ -767,6 +905,9 @@ p, li { white-space: pre-wrap; }
                    <width>400</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="inputMethodHints">
                   <set>Qt::ImhEmailCharactersOnly</set>
@@ -789,6 +930,9 @@ p, li { white-space: pre-wrap; }
               <height>242</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -803,6 +947,9 @@ p, li { white-space: pre-wrap; }
                <width>292</width>
                <height>240</height>
               </rect>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="layoutDirection">
               <enum>Qt::LeftToRight</enum>
@@ -830,6 +977,9 @@ p, li { white-space: pre-wrap; }
               <height>14</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Consola</string>
             </property>
@@ -842,6 +992,9 @@ p, li { white-space: pre-wrap; }
               <width>600</width>
               <height>200</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="title">
              <string>Enlaces</string>
@@ -868,6 +1021,9 @@ p, li { white-space: pre-wrap; }
                    <pointsize>11</pointsize>
                   </font>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="inputMethodHints">
                   <set>Qt::ImhUrlCharactersOnly</set>
                  </property>
@@ -881,6 +1037,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="3" column="0">
                 <widget class="QPushButton" name="pB_nodo_tablon">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Tablón</string>
                  </property>
@@ -899,6 +1058,9 @@ p, li { white-space: pre-wrap; }
                    <pointsize>11</pointsize>
                   </font>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="inputMethodHints">
                   <set>Qt::ImhUrlCharactersOnly</set>
                  </property>
@@ -912,6 +1074,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="1" column="0">
                 <widget class="QPushButton" name="pB_nodo_web">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Web</string>
                  </property>
@@ -919,6 +1084,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="4" column="0">
                 <widget class="QPushButton" name="pB_nodo_portalTransparencia">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Portal Trans.</string>
                  </property>
@@ -937,6 +1105,9 @@ p, li { white-space: pre-wrap; }
                    <pointsize>11</pointsize>
                   </font>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="inputMethodHints">
                   <set>Qt::ImhUrlCharactersOnly</set>
                  </property>
@@ -950,6 +1121,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="2" column="0">
                 <widget class="QPushButton" name="pB_nodo_sede">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Sede E.</string>
                  </property>
@@ -971,6 +1145,9 @@ p, li { white-space: pre-wrap; }
                    <pointsize>11</pointsize>
                   </font>
                  </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="inputMethodHints">
                   <set>Qt::ImhUrlCharactersOnly</set>
                  </property>
@@ -984,6 +1161,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item row="0" column="0">
                 <widget class="QPushButton" name="pB_nodo_wikipedia">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Wikipedia</string>
                  </property>
@@ -1004,6 +1184,9 @@ p, li { white-space: pre-wrap; }
               <width>131</width>
               <height>20</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>es ayuntamiento</string>
@@ -3361,7 +3544,7 @@ p, li { white-space: pre-wrap; }
               <x>20</x>
               <y>20</y>
               <width>121</width>
-              <height>34</height>
+              <height>39</height>
              </rect>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_concertaciones_anio">
@@ -3649,6 +3832,9 @@ p, li { white-space: pre-wrap; }
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
          <widget class="QFrame" name="frame_completo">
+          <property name="focusPolicy">
+           <enum>Qt::TabFocus</enum>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -4079,6 +4265,9 @@ p, li { white-space: pre-wrap; }
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -4091,8 +4280,11 @@ p, li { white-space: pre-wrap; }
               <x>13</x>
               <y>3</y>
               <width>611</width>
-              <height>211</height>
+              <height>221</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_21">
              <item>
@@ -4102,6 +4294,9 @@ p, li { white-space: pre-wrap; }
                </property>
                <item>
                 <widget class="QLabel" name="label_22">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Adsl</string>
                  </property>
@@ -4109,6 +4304,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QLabel" name="label_21">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>N. Administrativo</string>
                  </property>
@@ -4116,6 +4314,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QLabel" name="label_19">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Ip de Cifrado</string>
                  </property>
@@ -4123,6 +4324,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QLabel" name="label_20">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Servicio</string>
                  </property>
@@ -4130,6 +4334,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QLabel" name="label_23">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Caudal</string>
                  </property>
@@ -4137,6 +4344,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QLabel" name="label_24">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Equipo / NºSerie</string>
                  </property>
@@ -4178,6 +4388,9 @@ p, li { white-space: pre-wrap; }
                          <height>16777215</height>
                         </size>
                        </property>
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
                        <property name="maxLength">
                         <number>16</number>
                        </property>
@@ -4209,6 +4422,9 @@ p, li { white-space: pre-wrap; }
                          <width>256</width>
                          <height>16777215</height>
                         </size>
+                       </property>
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
                        </property>
                        <property name="maxLength">
                         <number>16</number>
@@ -4242,6 +4458,9 @@ p, li { white-space: pre-wrap; }
                          <height>16777215</height>
                         </size>
                        </property>
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
                        <property name="maxLength">
                         <number>16</number>
                        </property>
@@ -4265,6 +4484,9 @@ p, li { white-space: pre-wrap; }
                      <height>105</height>
                     </size>
                    </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
@@ -4279,6 +4501,9 @@ p, li { white-space: pre-wrap; }
                       <width>241</width>
                       <height>100</height>
                      </rect>
+                    </property>
+                    <property name="focusPolicy">
+                     <enum>Qt::TabFocus</enum>
                     </property>
                     <property name="text">
                      <string/>
@@ -4309,6 +4534,9 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <item>
                     <widget class="QLineEdit" name="lineEdit_todo_linea_servicio">
+                     <property name="focusPolicy">
+                      <enum>Qt::TabFocus</enum>
+                     </property>
                      <property name="maxLength">
                       <number>64</number>
                      </property>
@@ -4326,6 +4554,9 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <item>
                     <widget class="QLineEdit" name="lineEdit_todo_linea_caudal">
+                     <property name="focusPolicy">
+                      <enum>Qt::TabFocus</enum>
+                     </property>
                      <property name="maxLength">
                       <number>64</number>
                      </property>
@@ -4342,6 +4573,9 @@ p, li { white-space: pre-wrap; }
                     <layout class="QVBoxLayout" name="verticalLayout_17">
                      <item>
                       <widget class="QLineEdit" name="lineEdit_todo_linea_equipamiento">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
                        <property name="maxLength">
                         <number>128</number>
                        </property>
@@ -4359,6 +4593,9 @@ p, li { white-space: pre-wrap; }
                     <layout class="QVBoxLayout" name="verticalLayout_21">
                      <item>
                       <widget class="QLineEdit" name="lineEdit_todo_linea_numeroSerieRouter">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
                        <property name="alignment">
                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                        </property>
@@ -4799,6 +5036,9 @@ p, li { white-space: pre-wrap; }
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -4814,6 +5054,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Piso</string>
             </property>
@@ -4826,6 +5069,9 @@ p, li { white-space: pre-wrap; }
               <width>56</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>C.P.</string>
@@ -4840,6 +5086,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Municipio</string>
             </property>
@@ -4852,6 +5101,9 @@ p, li { white-space: pre-wrap; }
               <width>71</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Latitud</string>
@@ -4866,6 +5118,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Longitud</string>
             </property>
@@ -4878,6 +5133,9 @@ p, li { white-space: pre-wrap; }
               <width>53</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Tipo vía</string>
@@ -4892,6 +5150,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Dirección</string>
             </property>
@@ -4904,6 +5165,9 @@ p, li { white-space: pre-wrap; }
               <width>56</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Número</string>
@@ -4918,6 +5182,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Letra</string>
             </property>
@@ -4930,6 +5197,9 @@ p, li { white-space: pre-wrap; }
               <width>46</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Puerta</string>
@@ -4944,9 +5214,15 @@ p, li { white-space: pre-wrap; }
               <height>34</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_cp">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
                </property>
@@ -4963,6 +5239,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_municipio">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="maxLength">
                 <number>64</number>
                </property>
@@ -4973,6 +5252,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_latitud">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="maxLength">
                 <number>12</number>
                </property>
@@ -4986,6 +5268,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_longitud">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="maxLength">
                 <number>12</number>
                </property>
@@ -5008,9 +5293,15 @@ p, li { white-space: pre-wrap; }
               <height>34</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_numero">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMask">
                 <string/>
                </property>
@@ -5027,6 +5318,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_letra">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMask">
                 <string>A</string>
                </property>
@@ -5040,6 +5334,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_escalera">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="maxLength">
                 <number>3</number>
                </property>
@@ -5050,6 +5347,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_piso">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMask">
                 <string/>
                </property>
@@ -5066,6 +5366,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_puerta">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMask">
                 <string/>
                </property>
@@ -5091,9 +5394,15 @@ p, li { white-space: pre-wrap; }
               <height>34</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_direccion">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="maxLength">
                 <number>64</number>
                </property>
@@ -5113,9 +5422,15 @@ p, li { white-space: pre-wrap; }
               <height>34</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_nodo_tipoVia">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMask">
                 <string/>
                </property>
@@ -5137,6 +5452,9 @@ p, li { white-space: pre-wrap; }
               <width>59</width>
               <height>14</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Escalera</string>
@@ -5567,6 +5885,9 @@ p, li { white-space: pre-wrap; }
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -5582,6 +5903,9 @@ p, li { white-space: pre-wrap; }
               <height>121</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -5596,6 +5920,9 @@ p, li { white-space: pre-wrap; }
                <width>149</width>
                <height>119</height>
               </rect>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
              </property>
              <property name="layoutDirection">
               <enum>Qt::LeftToRight</enum>
@@ -5620,8 +5947,11 @@ p, li { white-space: pre-wrap; }
               <x>11</x>
               <y>11</y>
               <width>431</width>
-              <height>138</height>
+              <height>146</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_16">
              <item>
@@ -5630,6 +5960,9 @@ p, li { white-space: pre-wrap; }
                 <layout class="QVBoxLayout" name="verticalLayout_14">
                  <item>
                   <widget class="QLabel" name="label_42">
+                   <property name="focusPolicy">
+                    <enum>Qt::NoFocus</enum>
+                   </property>
                    <property name="text">
                     <string>Habitantes</string>
                    </property>
@@ -5649,6 +5982,9 @@ p, li { white-space: pre-wrap; }
                      <height>16777215</height>
                     </size>
                    </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
                    <property name="inputMethodHints">
                     <set>Qt::ImhDigitsOnly</set>
                    </property>
@@ -5666,6 +6002,9 @@ p, li { white-space: pre-wrap; }
                 <layout class="QVBoxLayout" name="verticalLayout_15">
                  <item>
                   <widget class="QLabel" name="label_43">
+                   <property name="focusPolicy">
+                    <enum>Qt::NoFocus</enum>
+                   </property>
                    <property name="text">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Superficie (km&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -5688,6 +6027,9 @@ p, li { white-space: pre-wrap; }
                      <height>16777215</height>
                     </size>
                    </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
                    <property name="inputMethodHints">
                     <set>Qt::ImhNone</set>
                    </property>
@@ -5705,6 +6047,9 @@ p, li { white-space: pre-wrap; }
                 <layout class="QVBoxLayout" name="verticalLayout_24">
                  <item>
                   <widget class="QLabel" name="label_45">
+                   <property name="focusPolicy">
+                    <enum>Qt::NoFocus</enum>
+                   </property>
                    <property name="text">
                     <string> Altitud (m)</string>
                    </property>
@@ -5723,6 +6068,9 @@ p, li { white-space: pre-wrap; }
                      <width>120</width>
                      <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="inputMethodHints">
                     <set>Qt::ImhDigitsOnly</set>
@@ -5750,6 +6098,9 @@ p, li { white-space: pre-wrap; }
                   <layout class="QVBoxLayout" name="verticalLayout_25">
                    <item>
                     <widget class="QLabel" name="label_46">
+                     <property name="focusPolicy">
+                      <enum>Qt::NoFocus</enum>
+                     </property>
                      <property name="text">
                       <string>Latitud</string>
                      </property>
@@ -5769,6 +6120,9 @@ p, li { white-space: pre-wrap; }
                        <height>16777215</height>
                       </size>
                      </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::TabFocus</enum>
+                     </property>
                      <property name="maxLength">
                       <number>12</number>
                      </property>
@@ -5786,6 +6140,9 @@ p, li { white-space: pre-wrap; }
                   <layout class="QVBoxLayout" name="verticalLayout_26">
                    <item>
                     <widget class="QLabel" name="label_47">
+                     <property name="focusPolicy">
+                      <enum>Qt::NoFocus</enum>
+                     </property>
                      <property name="text">
                       <string>Longitud</string>
                      </property>
@@ -5804,6 +6161,9 @@ p, li { white-space: pre-wrap; }
                        <width>120</width>
                        <height>16777215</height>
                       </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::TabFocus</enum>
                      </property>
                      <property name="maxLength">
                       <number>12</number>
@@ -5824,6 +6184,9 @@ p, li { white-space: pre-wrap; }
                 <layout class="QVBoxLayout" name="verticalLayout_27">
                  <item>
                   <widget class="QPushButton" name="pB_todo_nodo_wikipedia">
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
                    <property name="text">
                     <string>Wikipedia</string>
                    </property>
@@ -5831,6 +6194,9 @@ p, li { white-space: pre-wrap; }
                  </item>
                  <item>
                   <widget class="QPushButton" name="pB_todo_nodo_googleMaps">
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
                    <property name="text">
                     <string>Google Maps</string>
                    </property>
@@ -6267,6 +6633,9 @@ p, li { white-space: pre-wrap; }
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -6279,8 +6648,11 @@ p, li { white-space: pre-wrap; }
               <x>10</x>
               <y>10</y>
               <width>611</width>
-              <height>32</height>
+              <height>34</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
@@ -6290,6 +6662,9 @@ p, li { white-space: pre-wrap; }
                  <width>40</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
                 <string>CIF</string>
@@ -6310,6 +6685,9 @@ p, li { white-space: pre-wrap; }
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMask">
                 <string>&gt;A9999999A</string>
                </property>
@@ -6320,6 +6698,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="Line" name="line_2">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -6332,6 +6713,9 @@ p, li { white-space: pre-wrap; }
                  <width>40</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
                 <string>DIR3</string>
@@ -6352,6 +6736,9 @@ p, li { white-space: pre-wrap; }
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="maxLength">
                 <number>9</number>
                </property>
@@ -6362,6 +6749,9 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="Line" name="line_3">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -6374,6 +6764,9 @@ p, li { white-space: pre-wrap; }
                  <width>40</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
                 <string>INE</string>
@@ -6393,6 +6786,9 @@ p, li { white-space: pre-wrap; }
                  <width>128</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
@@ -6420,6 +6816,9 @@ p, li { white-space: pre-wrap; }
              <height>71</height>
             </rect>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -6435,6 +6834,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Mancomunidades</string>
             </property>
@@ -6447,6 +6849,9 @@ p, li { white-space: pre-wrap; }
               <width>151</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Comarca</string>
@@ -6461,9 +6866,16 @@ p, li { white-space: pre-wrap; }
               <height>34</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QComboBox" name="comboBox_todo_municipio_mancomunidad"/>
+              <widget class="QComboBox" name="comboBox_todo_municipio_mancomunidad">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_todo_municipio_comarca">
@@ -6472,6 +6884,9 @@ p, li { white-space: pre-wrap; }
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
                <property name="maxLength">
                 <number>64</number>
@@ -6490,6 +6905,9 @@ p, li { white-space: pre-wrap; }
              <height>131</height>
             </rect>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -6505,6 +6923,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Teléfonos</string>
             </property>
@@ -6517,6 +6938,9 @@ p, li { white-space: pre-wrap; }
               <width>71</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Extensión</string>
@@ -6531,6 +6955,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Fax</string>
             </property>
@@ -6544,6 +6971,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Emails</string>
             </property>
@@ -6556,6 +6986,9 @@ p, li { white-space: pre-wrap; }
               <width>601</width>
               <height>34</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
@@ -6571,6 +7004,9 @@ p, li { white-space: pre-wrap; }
                  <width>256</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
                <property name="editable">
                 <bool>false</bool>
@@ -6590,6 +7026,9 @@ p, li { white-space: pre-wrap; }
                  <width>75</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
                <property name="text">
                 <string/>
@@ -6619,6 +7058,9 @@ p, li { white-space: pre-wrap; }
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
                </property>
@@ -6647,9 +7089,15 @@ p, li { white-space: pre-wrap; }
               <height>34</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_17">
              <item>
               <widget class="QComboBox" name="comboBox_todo_nodo_emails">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
                <property name="inputMethodHints">
                 <set>Qt::ImhEmailCharactersOnly</set>
                </property>
@@ -7112,6 +7560,9 @@ p, li { white-space: pre-wrap; }
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -7124,8 +7575,11 @@ p, li { white-space: pre-wrap; }
               <x>11</x>
               <y>11</y>
               <width>611</width>
-              <height>132</height>
+              <height>140</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
@@ -7135,6 +7589,9 @@ p, li { white-space: pre-wrap; }
                </property>
                <item>
                 <widget class="QPushButton" name="pB_todo_nodo_web">
+                 <property name="focusPolicy">
+                  <enum>Qt::TabFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Web</string>
                  </property>
@@ -7142,6 +7599,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QPushButton" name="pB_todo_nodo_sede">
+                 <property name="focusPolicy">
+                  <enum>Qt::TabFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Sede E.</string>
                  </property>
@@ -7149,6 +7609,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QPushButton" name="pB_todo_nodo_tablon">
+                 <property name="focusPolicy">
+                  <enum>Qt::TabFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Tablón</string>
                  </property>
@@ -7156,6 +7619,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QPushButton" name="pB_todo_nodo_portalTransparencia">
+                 <property name="focusPolicy">
+                  <enum>Qt::TabFocus</enum>
+                 </property>
                  <property name="text">
                   <string>Portal Trans.</string>
                  </property>
@@ -7180,6 +7646,9 @@ p, li { white-space: pre-wrap; }
                      <pointsize>11</pointsize>
                     </font>
                    </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">border:4px;</string>
                    </property>
@@ -7201,6 +7670,9 @@ p, li { white-space: pre-wrap; }
                     <font>
                      <pointsize>11</pointsize>
                     </font>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">border:4px;</string>
@@ -7227,6 +7699,9 @@ p, li { white-space: pre-wrap; }
                      <pointsize>11</pointsize>
                     </font>
                    </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">border:4px;</string>
                    </property>
@@ -7251,6 +7726,9 @@ p, li { white-space: pre-wrap; }
                     <font>
                      <pointsize>11</pointsize>
                     </font>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">border:4px;</string>
@@ -7697,6 +8175,9 @@ p, li { white-space: pre-wrap; }
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -7718,6 +8199,9 @@ p, li { white-space: pre-wrap; }
               <bold>true</bold>
              </font>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Nº</string>
             </property>
@@ -7737,6 +8221,9 @@ p, li { white-space: pre-wrap; }
               <bold>true</bold>
              </font>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Programa</string>
             </property>
@@ -7749,6 +8236,9 @@ p, li { white-space: pre-wrap; }
               <width>26</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>165</string>
@@ -7763,6 +8253,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>166</string>
             </property>
@@ -7775,6 +8268,9 @@ p, li { white-space: pre-wrap; }
               <width>26</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="text">
              <string>167</string>
@@ -7789,6 +8285,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>168</string>
             </property>
@@ -7801,6 +8300,9 @@ p, li { white-space: pre-wrap; }
               <width>194</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Servicios Básicos de internet</string>
@@ -7815,6 +8317,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Asistencia en software de gestión municipal</string>
             </property>
@@ -7827,6 +8332,9 @@ p, li { white-space: pre-wrap; }
               <width>182</width>
               <height>17</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="text">
              <string>Sede electrónica municipal</string>
@@ -7841,6 +8349,9 @@ p, li { white-space: pre-wrap; }
               <height>17</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Software gestion Colectivo Policía Local</string>
             </property>
@@ -7853,6 +8364,9 @@ p, li { white-space: pre-wrap; }
               <width>1251</width>
               <height>20</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -7867,6 +8381,9 @@ p, li { white-space: pre-wrap; }
               <height>20</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -7879,6 +8396,9 @@ p, li { white-space: pre-wrap; }
               <width>1251</width>
               <height>20</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -7893,6 +8413,9 @@ p, li { white-space: pre-wrap; }
               <height>20</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -7906,6 +8429,9 @@ p, li { white-space: pre-wrap; }
               <height>311</height>
              </rect>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -7918,6 +8444,9 @@ p, li { white-space: pre-wrap; }
               <width>20</width>
               <height>311</height>
              </rect>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -8081,7 +8610,7 @@ p, li { white-space: pre-wrap; }
              </palette>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="text">
              <string>A. Portal web municipal</string>
@@ -8223,6 +8752,9 @@ p, li { white-space: pre-wrap; }
               </disabled>
              </palette>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>B. Correo electrónico</string>
             </property>
@@ -8362,6 +8894,9 @@ p, li { white-space: pre-wrap; }
                </colorrole>
               </disabled>
              </palette>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="text">
              <string>C. Licencia de acceso a bases de datos jurídicas</string>
@@ -8503,6 +9038,9 @@ p, li { white-space: pre-wrap; }
               </disabled>
              </palette>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>D. Suscripción al dominio reservado del municipio.es</string>
             </property>
@@ -8643,6 +9181,9 @@ p, li { white-space: pre-wrap; }
               </disabled>
              </palette>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>E. Perfil del contratante</string>
             </property>
@@ -8779,6 +9320,9 @@ p, li { white-space: pre-wrap; }
                </colorrole>
               </disabled>
              </palette>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="text">
              <string>A. Gestión propiamente municipal (Población, tributos, registro…)</string>
@@ -8920,6 +9464,9 @@ p, li { white-space: pre-wrap; }
               </disabled>
              </palette>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>B. Gestión económica (SICAL)</string>
             </property>
@@ -9059,6 +9606,9 @@ p, li { white-space: pre-wrap; }
                </colorrole>
               </disabled>
              </palette>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="text">
              <string>C. A.T. y soporte explotación de los anteriores productos</string>
@@ -9200,6 +9750,9 @@ p, li { white-space: pre-wrap; }
               </disabled>
              </palette>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>A. Sede electrónica municipal</string>
             </property>
@@ -9339,6 +9892,9 @@ p, li { white-space: pre-wrap; }
                </colorrole>
               </disabled>
              </palette>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="text">
              <string>A. Programa de Gestión de la Policía Local (ePOL)</string>
@@ -9480,6 +10036,9 @@ p, li { white-space: pre-wrap; }
               </disabled>
              </palette>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>B. ePOL móvil.</string>
             </property>
@@ -9620,6 +10179,9 @@ p, li { white-space: pre-wrap; }
               </disabled>
              </palette>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
             <property name="text">
              <string>C. Acceso SIAPOL (Técnicas y Protocolos de actuación)</string>
             </property>
@@ -9642,6 +10204,9 @@ p, li { white-space: pre-wrap; }
               <bold>true</bold>
              </font>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Año</string>
             </property>
@@ -9656,7 +10221,7 @@ p, li { white-space: pre-wrap; }
              </rect>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::TabFocus</enum>
             </property>
             <item>
              <property name="text">
@@ -10099,6 +10664,9 @@ p, li { white-space: pre-wrap; }
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -10113,6 +10681,9 @@ p, li { white-space: pre-wrap; }
               </property>
               <item>
                <widget class="QFrame" name="frame">
+                <property name="focusPolicy">
+                 <enum>Qt::TabFocus</enum>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -10135,7 +10706,7 @@ p, li { white-space: pre-wrap; }
                   </sizepolicy>
                  </property>
                  <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
+                  <enum>Qt::TabFocus</enum>
                  </property>
                  <property name="toolTip">
                   <string>Mancomunidad</string>
@@ -10157,6 +10728,9 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <widget class="QFrame" name="frame_2">
+                <property name="focusPolicy">
+                 <enum>Qt::TabFocus</enum>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -10179,7 +10753,7 @@ p, li { white-space: pre-wrap; }
                   </sizepolicy>
                  </property>
                  <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
+                  <enum>Qt::TabFocus</enum>
                  </property>
                  <property name="toolTip">
                   <string>Comarca</string>
@@ -10201,6 +10775,9 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <widget class="QFrame" name="frame_3">
+                <property name="focusPolicy">
+                 <enum>Qt::TabFocus</enum>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -10229,7 +10806,7 @@ p, li { white-space: pre-wrap; }
                   </size>
                  </property>
                  <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
+                  <enum>Qt::TabFocus</enum>
                  </property>
                  <property name="toolTip">
                   <string>Escudo</string>
@@ -10672,6 +11249,9 @@ p, li { white-space: pre-wrap; }
                   </disabled>
                  </palette>
                 </property>
+                <property name="focusPolicy">
+                 <enum>Qt::TabFocus</enum>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -10694,7 +11274,7 @@ p, li { white-space: pre-wrap; }
                   </sizepolicy>
                  </property>
                  <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
+                  <enum>Qt::TabFocus</enum>
                  </property>
                  <property name="toolTip">
                   <string>Bandera</string>
@@ -10730,6 +11310,134 @@ p, li { white-space: pre-wrap; }
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>comboBox_top_nodo</tabstop>
+  <tabstop>comboBox_top_ip</tabstop>
+  <tabstop>comboBox_top_telefono</tabstop>
+  <tabstop>comboBox_top_extension</tabstop>
+  <tabstop>lineEdit_todo_nodo_tipoVia</tabstop>
+  <tabstop>lineEdit_todo_nodo_direccion</tabstop>
+  <tabstop>lineEdit_todo_nodo_numero</tabstop>
+  <tabstop>lineEdit_todo_nodo_letra</tabstop>
+  <tabstop>lineEdit_todo_nodo_escalera</tabstop>
+  <tabstop>lineEdit_todo_nodo_piso</tabstop>
+  <tabstop>lineEdit_todo_nodo_puerta</tabstop>
+  <tabstop>lineEdit_todo_nodo_cp</tabstop>
+  <tabstop>lineEdit_todo_nodo_municipio</tabstop>
+  <tabstop>lineEdit_todo_nodo_latitud</tabstop>
+  <tabstop>lineEdit_todo_nodo_longitud</tabstop>
+  <tabstop>comboBox_todo_nodo_telefonos</tabstop>
+  <tabstop>lineEdit_todo_nodo_extension</tabstop>
+  <tabstop>lineEdit_todo_nodo_fax</tabstop>
+  <tabstop>comboBox_todo_nodo_emails</tabstop>
+  <tabstop>comboBox_todo_municipio_mancomunidad</tabstop>
+  <tabstop>lineEdit_todo_municipio_comarca</tabstop>
+  <tabstop>lineEdit_todo_municipio_habitantes</tabstop>
+  <tabstop>lineEdit_todo_municipio_superficie</tabstop>
+  <tabstop>lineEdit_todo_municipio_altitud</tabstop>
+  <tabstop>lineEdit_todo_municipio_latitud</tabstop>
+  <tabstop>lineEdit_todo_municipio_longitud</tabstop>
+  <tabstop>pB_todo_nodo_wikipedia</tabstop>
+  <tabstop>pB_todo_nodo_googleMaps</tabstop>
+  <tabstop>checkBox_todo_concertaciones_correo</tabstop>
+  <tabstop>checkBox_todo_concertaciones_basedatos_juridica</tabstop>
+  <tabstop>checkBox_todo_concertaciones_suscripcion</tabstop>
+  <tabstop>checkBox_todo_concertaciones_perfil_contratante</tabstop>
+  <tabstop>checkBox_todo_concertaciones_gestion_municipal</tabstop>
+  <tabstop>checkBox_todo_concertaciones_gestion_economica</tabstop>
+  <tabstop>checkBox_todo_concertaciones_soporte</tabstop>
+  <tabstop>lineEdit_linea_servicio</tabstop>
+  <tabstop>lineEdit_linea_adsl</tabstop>
+  <tabstop>checkBox_todo_concertaciones_sede_electronica</tabstop>
+  <tabstop>checkBox_todo_concertaciones_epol</tabstop>
+  <tabstop>checkBox_todo_concertaciones_epol_movil</tabstop>
+  <tabstop>checkBox_todo_concertaciones_siapol</tabstop>
+  <tabstop>lineEdit_todo_linea_adsl</tabstop>
+  <tabstop>lineEdit_todo_linea_n_adm</tabstop>
+  <tabstop>lineEdit_todo_linea_ip_cifrado</tabstop>
+  <tabstop>lineEdit_todo_linea_servicio</tabstop>
+  <tabstop>lineEdit_todo_linea_caudal</tabstop>
+  <tabstop>lineEdit_todo_linea_equipamiento</tabstop>
+  <tabstop>lineEdit_todo_municipio_cif</tabstop>
+  <tabstop>lineEdit_todo_municipio_dir3</tabstop>
+  <tabstop>lineEdit_todo_municipio_ine</tabstop>
+  <tabstop>frame</tabstop>
+  <tabstop>frame_2</tabstop>
+  <tabstop>frame_3</tabstop>
+  <tabstop>frame_BanderaEscudos</tabstop>
+  <tabstop>pB_todo_nodo_web</tabstop>
+  <tabstop>pB_todo_nodo_sede</tabstop>
+  <tabstop>pB_todo_nodo_tablon</tabstop>
+  <tabstop>pB_todo_nodo_portalTransparencia</tabstop>
+  <tabstop>lineEdit_todo_nodo_web</tabstop>
+  <tabstop>lineEdit_todo_nodo_sede</tabstop>
+  <tabstop>lineEdit_todo_nodo_tablon</tabstop>
+  <tabstop>lineEdit_todo_nodo_portalTransparencia</tabstop>
+  <tabstop>checkBox_concertaciones_gestion_municipal</tabstop>
+  <tabstop>checkBox_concertaciones_siapol</tabstop>
+  <tabstop>checkBox_concertaciones_epol_movil</tabstop>
+  <tabstop>checkBox_concertaciones_correo</tabstop>
+  <tabstop>checkBox_concertaciones_perfil_contratante</tabstop>
+  <tabstop>pB_todo_linea_router</tabstop>
+  <tabstop>lineEdit_todo_linea_numeroSerieRouter</tabstop>
+  <tabstop>lineEdit_municipio_ine</tabstop>
+  <tabstop>pB_municipio_wikipedia</tabstop>
+  <tabstop>lineEdit_municipio_web</tabstop>
+  <tabstop>lineEdit_municipio_latitud</tabstop>
+  <tabstop>pB_municipio_googleMaps</tabstop>
+  <tabstop>pB_municipio_escudo</tabstop>
+  <tabstop>pB_municipio_bandera</tabstop>
+  <tabstop>pB_municipio_mapa</tabstop>
+  <tabstop>lineEdit_municipio_altitud</tabstop>
+  <tabstop>lineEdit_municipio_cif</tabstop>
+  <tabstop>lineEdit_municipio_dir3</tabstop>
+  <tabstop>lineEdit_municipio_habitantes</tabstop>
+  <tabstop>pB_todo_nodo_mapa</tabstop>
+  <tabstop>pB_municipio_web</tabstop>
+  <tabstop>checkBox_concertaciones_suscripcion</tabstop>
+  <tabstop>checkBox_concertaciones_gestion_economica</tabstop>
+  <tabstop>checkBox_concertaciones_basedatos_juridica</tabstop>
+  <tabstop>checkBox_concertaciones_soporte</tabstop>
+  <tabstop>checkBox_concertaciones_epol</tabstop>
+  <tabstop>checkBox_concertaciones_sede_electronica</tabstop>
+  <tabstop>pB_linea_router</tabstop>
+  <tabstop>lineEdit_linea_caudal</tabstop>
+  <tabstop>lineEdit_linea_equipamiento</tabstop>
+  <tabstop>lineEdit_linea_num_administrativo</tabstop>
+  <tabstop>lineEdit_linea_ip_cifrado</tabstop>
+  <tabstop>lineEdit_linea_numero_serie</tabstop>
+  <tabstop>frame_completo</tabstop>
+  <tabstop>frame_datosRouter</tabstop>
+  <tabstop>frame_router</tabstop>
+  <tabstop>frame_direccion</tabstop>
+  <tabstop>frame_8</tabstop>
+  <tabstop>frame_11</tabstop>
+  <tabstop>frame_CifDirIne</tabstop>
+  <tabstop>line_2</tabstop>
+  <tabstop>line_3</tabstop>
+  <tabstop>frame_macomunidadCormarca</tabstop>
+  <tabstop>frame_telefono</tabstop>
+  <tabstop>frame_9</tabstop>
+  <tabstop>frame_programas</tabstop>
+  <tabstop>label_62</tabstop>
+  <tabstop>label_66</tabstop>
+  <tabstop>line</tabstop>
+  <tabstop>line_4</tabstop>
+  <tabstop>line_5</tabstop>
+  <tabstop>line_8</tabstop>
+  <tabstop>line_9</tabstop>
+  <tabstop>checkBox_todo_concertaciones_portal_web</tabstop>
+  <tabstop>comboBox_todo_concertaciones_anio</tabstop>
+  <tabstop>frame_7</tabstop>
+  <tabstop>comboBox_municipio_mancomunidad</tabstop>
+  <tabstop>pB_todo_municipio_mancomunidad</tabstop>
+  <tabstop>lineEdit_municipio_comarca</tabstop>
+  <tabstop>pB_todo_municipio_comarca</tabstop>
+  <tabstop>lineEdit_municipio_longitud</tabstop>
+  <tabstop>pB_todo_municipio_escudo</tabstop>
+  <tabstop>lineEdit_municipio_superficie</tabstop>
+  <tabstop>pB_todo_municipio_bandera</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

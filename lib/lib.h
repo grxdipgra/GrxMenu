@@ -102,13 +102,21 @@
 #define NUM_COL_APLICACIONES_GLPI 2
 #define NUM_COL_APLICACIONES_OCS 3
 
-
+#define WEB_ATALAYA 0
+#define WEB_GLPI 1
 
 #define RUTA_IMAGENES "/usr/share/grx/asistencia/imagenes/"
 #include <QString>
+#include <QtSql/QSqlDatabase>
+#include <QDateTime>
+
 bool fileExists(QString path);
 bool dirExists(QString path);
 char* convierte(QString dato);
 unsigned int puerto_libre();
+int estado_habilitado(int valor);
+bool es_fecha(QString fecha);
+QString dominio_basedn();
+QString gtime_to_string(QString fecha);
 
 #endif // LIB_H

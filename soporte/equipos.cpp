@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include "configuracion/configuracion.h"
 #include <QEventLoop>
+#include "soporte/usuarios.h"
 
 QString host_ports_open_string(Host *host){
     QString lista;
@@ -27,23 +28,57 @@ Equipos::Equipos(Host *host, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Equipos)
 {
-    host_tmp=host;//Guardamos para toda la clase el valor de host en variable global
-    QString puertos;
-    ip=host->address.addr;
-    QString puertos_abiertos = host_ports_open_string(host);
     ui->setupUi(this);
+
+    ui->tabWidget->setTabsClosable(true);
+    ui->consola->setStyleSheet("color: white; background-color: black;");
+    host_tmp=host;//Guardamos para toda la clase el valor de host en variable global
+    mac=macEquipo(host);
+    ip=ipEquipo(host);
+    version();
+    QString puertos_abiertos = host_ports_open_string(host);
     botonesActivos(puertos_abiertos);
     ui->lineEdit_ip->setText(ip);
+    ui->lineEdit_mac->setText(mac);
     ui->lineEdit_puertos->setText(puertos_abiertos);
     ui->lineEdit_puertosBuscados->setText(QString::number(host->ports.port.count())+": "+host_ports_find(host));
     ui->lineEdit_hostname->setText(host->hostnames.hostname.name);
     ui->lineEdit_status->setText(host->status.state);
-    ui->lineEdit_tipo->setText(host->address.addrtype);
+    ui->lineEdit_8->setText(Version);
 }
 
 Equipos::~Equipos()
 {
     delete ui;
+}
+
+
+/****************ipEquipo****************************
+ * Devuelve la ip del equipo pasado por parametro
+ * *******************************************************/
+
+QString Equipos::ipEquipo(Host *host)
+{
+    int num_equipos=host->address.count();
+    for (int i=0;i<num_equipos;i++)
+        if (host->address[i].addrtype=="ipv4")
+            return host->address[i].addr;
+return "";
+}
+
+
+
+/****************macEquipo****************************
+ * Devuelve los la mac del equipo pasado por parametro
+ * *******************************************************/
+
+QString Equipos::macEquipo(Host *host)
+{
+    int num_equipos=host->address.count();
+    for (int i=0;i<num_equipos;i++)
+        if (host->address[i].addrtype=="mac")
+            return host->address[i].addr;
+return "";
 }
 
 /****************host_ports_open****************************
@@ -59,6 +94,18 @@ QList <QString> Equipos::host_ports_open(Host *host){
 }
 
 void Equipos::desactivaBotones(){
+
+
+    ui->pB_usb->setEnabled(false);
+    ui->pB_proxy->setEnabled(false);
+    ui->pB_devices->setEnabled(false);
+    ui->pB_memoria->setEnabled(false);
+    ui->pB_clock->setEnabled(false);
+    ui->pB_impresora->setEnabled(false);
+    ui->pB_pci->setEnabled(false);
+
+
+
     ui->pB_carpeta->setEnabled(false);
     ui->pB_CUPS->setEnabled(false);
     ui->pB_discos->setEnabled(false);
@@ -81,8 +128,19 @@ void Equipos::desactivaBotones(){
 void Equipos::botonesActivos(QString puertos){
     QStringList lista = puertos.split(" ");
     desactivaBotones();
-    for (int i=0;i<lista.length();i++)
-        if ((lista[i]=="22")||(lista[i]=="8080")){
+    for (int i=0;i<lista.length();i++){
+        if (Version!="Desconocida")
+         {
+
+             ui->pB_update->setEnabled(true);
+             ui->pB_usb->setEnabled(true);
+             ui->pB_proxy->setEnabled(true);
+             ui->pB_devices->setEnabled(true);
+             ui->pB_memoria->setEnabled(true);
+             ui->pB_clock->setEnabled(true);
+             ui->pB_impresora->setEnabled(true);
+             ui->pB_pci->setEnabled(true);
+
              ui->pB_ssh->setEnabled(true);
              ui->pB_carpeta->setEnabled(true);
              ui->pB_CUPS->setEnabled(true);
@@ -93,14 +151,17 @@ void Equipos::botonesActivos(QString puertos){
              ui->pB_equipo->setEnabled(true);
              ui->pB_discos->setEnabled(true);
              ui->pB_procesos->setEnabled(true);
+             ui->pB_usuarios->setEnabled(true);
+             ui->pB_konekta->setEnabled(true);
 
-        }else if (lista[i]=="80"){
+        }
+        if (lista[i]=="80")
              ui->pB_web->setEnabled(true);
-        }else if (lista[i]=="443"){
+        if (lista[i]=="443")
              ui->pB_webssl->setEnabled(true);
-        }else if (lista[i]=="23"){
+        if (lista[i]=="23")
             ui->pB_telnet->setEnabled(true);
-       }
+     }
 
 }
 
@@ -163,16 +224,45 @@ void Equipos::on_pB_systemconfig_clicked()
 {
     Configuracion config;
     QProcess process;
-    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/systemsettings5 ");
+    if (Version == "18.04"){
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/systemsettings5 ");
+    }
+    else if (Version == "14.04"){
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/hardinfo ");
+    }
 }
 
 void Equipos::on_pB_networkManager_clicked()
 {
     Configuracion config;
     QProcess process;
-    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kde5-nm-connection-editor ");
+    if (Version == "18.04"){
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 kcm_networkmanagement.desktop ");
+    }
+    else if (Version == "14.04"){
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/nm-connection-editor ");
+    }
+
 }
 
+void Equipos::version()
+{
+    Configuracion config;
+    QProcess *Ver = new QProcess(this);
+    Ver->start("/usr/bin/version.sh", QStringList() << config.cual_es_usuario_remoto() << ip << config.cual_es_puerto());
+    Ver->waitForFinished();
+    if (Ver->exitCode() == 14 ){
+        Version="14.04";
+    }
+    else if (Ver->exitCode() == 18 )
+    {
+        Version="18.04";
+    }
+    else if (Ver->exitCode() == 1)
+    {
+            Version="Desconocida";
+    }
+}
 void Equipos::on_pB_cups_clicked()
 {
 
@@ -292,4 +382,153 @@ void Equipos::on_pB_ISL_clicked()
     else
         process.startDetached(configuracion->cual_es_isl());
     delete configuracion;
+}
+
+void Equipos::on_pB_procesos_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    if (Version == "18.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/systemmonitor ");
+    else if (Version == "14.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/lxtask ");
+
+}
+
+void Equipos::on_pB_CUPS_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    if (Version == "18.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/systemmonitor ");
+    else if (Version == "14.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/lxtask ");
+}
+
+void Equipos::on_pB_usuarios_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    if (Version == "18.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/lib/x86_64-linux-gnu/libexec/kf5/kdesu -u root -c /usr/bin/kcmshell5 user_manager ");
+    else if (Version == "14.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/users-admin ");
+}
+
+void Equipos::on_pB_proxy_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 proxy ");
+}
+
+void Equipos::on_pB_usb_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 kcmusb ");
+
+
+}
+
+void Equipos::on_pB_pci_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 kcm_pci ");
+}
+
+void Equipos::on_pB_impresora_clicked()
+{
+    Configuracion config;
+    QProcess process;
+
+    if (Version == "18.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 kcm_printer_manager  ");
+    else if (Version == "14.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/python /usr/share/system-config-printer/system-config-printer.py ");
+ }
+
+void Equipos::on_pB_memoria_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 kcm_memory ");
+}
+
+void Equipos::on_pB_devices_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 devinfo ");
+}
+
+void Equipos::on_pB_clock_clicked()
+{
+    Configuracion config;
+    QProcess process;
+
+    if (Version == "18.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/kcmshell5 clock ");
+    else if (Version == "14.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f  /usr/bin/time-admin ");
+
+}
+
+void Equipos::on_pB_captura_clicked()
+{
+    Configuracion config;
+    QProcess process;
+
+    //ruta_local="/tmp/captura-"+nombre+"-"+ip+time.strftime("%H:%M:%S")+time.strftime("%d/%m/%y")+".png"
+   /* DISPLAY='+display+' XAUTHORITY=/home/'+nombre+'/.Xauthority scrot /tmp/captura.png')
+                get (remote_path="/tmp/captura.png",local_path=ruta_local)
+                os.system('xdg-open '+ruta_local+'&')
+
+    */
+
+    process.startDetached('ssh -Y -p'+config.cual_es_puerto()+' '+config.cual_es_usuario_remoto()+'@'+ip+' "/usr/lib/x86_64-linux-gnu/libexec/kf5/kdesu -u root -c DISPLAY=:0.0 XAUTHORITY=/home/pepe/.Xauthority spectacle -f -o /tmp/captura.png"');
+
+}
+
+void Equipos::on_pB_discos_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/partitionmanager ");
+
+
+}
+
+void Equipos::on_pB_equipo_clicked()
+{
+    Configuracion config;
+    QProcess process;
+    process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/hardinfo ");
+
+}
+
+void Equipos::on_pB_instala_clicked()
+{
+
+    Configuracion config;
+    QProcess process;
+    if (Version == "18.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/lib/x86_64-linux-gnu/libexec/kf5/kdesu -u root -c /usr/bin/muon ");
+    else if (Version == "14.04")
+        process.startDetached("ssh -p "+config.cual_es_puerto()+" "+config.cual_es_usuario_remoto()+"@"+ip+" -A -C -X -2 -4 -f /usr/bin/python3 /usr/bin/software-properties-gtk ");
+}
+
+
+void Equipos::closeTab(int indice){
+    if (indice>0)
+        ui->tabWidget->removeTab(indice);
+}
+
+void Equipos::on_pB_usuarios_2_clicked()
+{
+
+    ui->tabWidget->insertTab(ui->tabWidget->count(),new Usuarios(),"nombre");
+    connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
+
 }

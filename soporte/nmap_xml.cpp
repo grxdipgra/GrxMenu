@@ -31,8 +31,6 @@ void NMap::copy_nmapscan(NMapScan &tmp_nmapscan) {
 
 }
 
-
-
 /*******************************nmap_ejecuta_scan*************************************
  * Realiza el escaneo de equipos y puertos pasados por parametro.
  * El resultado lo guarda en reader, que es de tipo QXmlStreamReader
@@ -53,6 +51,32 @@ int NMap::nmap_run_scan(QString opciones, QString equipos){
 
 return process.exitCode();
 }
+
+/******************************nmap_mac_host********************************
+ * Devuelve la mac del host pasado por parametro
+ * ***************************************************************************/
+QString NMap::nmap_mac_host(Host *host){
+    int direcciones;;
+    direcciones = host->address.count();
+    for (int x=0;x<direcciones;x++)
+        if (host->address[x].addrtype=="mac")
+                return host->address[x].addr;
+return NULL;
+}
+
+/******************************nmap_ip_host********************************
+ * Devuelve la ip del host pasado por parametro
+ * ***************************************************************************/
+QString NMap::nmap_ip_host(Host *host){
+    int direcciones;;
+    direcciones = host->address.count();
+    for (int x=0;x<direcciones;x++)
+        if (host->address[x].addrtype=="ipv4")
+                return host->address[x].addr;
+return NULL;
+}
+
+
 
 /******************************nmap_num_host_find********************************
  * Devuelve el número de equipos buscados
@@ -100,19 +124,25 @@ QString NMap::host_ports_open_string(Host *host){
 
 QString NMap::host_ports_open_string2(QString ip){
     QString lista="";
-    int num_equipos;
+    int num_equipos,direcciones;
+    QList <Host> listaEquipos = nmap_hosts_up_QList();
     num_equipos = nmap_num_host_up();
-    for (int i=0;i<num_equipos;i++)
-        if ((nmapscan.host[i].address.addr)==ip) {
-            for (int j=0;j<nmapscan.host[i].ports.port.count();j++)
-                if (nmapscan.host[i].ports.port[j].state.state=="open"){
-                    if (lista.count()!=0)
-                        lista.append(",");
-                    lista.append(nmapscan.host[i].ports.port.at(j).portid);
+    for (int i=0;i<num_equipos;i++){
+        direcciones = listaEquipos[i].address.count();
+        for (int x=0;x<direcciones;x++)
+            if (listaEquipos[i].address[x].addrtype!="mac")
+                if ((listaEquipos[i].address[x].addr)==ip) {
+                    for (int j=0;j<listaEquipos[i].ports.port.count();j++)
+                        if (listaEquipos[i].ports.port[j].state.state=="open"){
+                            if (lista.count()!=0)
+                                lista.append(",");
+                            lista.append(listaEquipos[i].ports.port.at(j).portid);
 
+                        }
+                    return lista;
                 }
-            return lista;
-        }
+     }
+
 return lista;
 
 }
@@ -124,13 +154,17 @@ return lista;
 
 int NMap::host_ports_open_int(QString ip){
     int puertos = 0;
-    int num_equipos;
+    int num_equipos,direcciones;
     num_equipos = nmap_num_host_up();
-    for (int i=0;i<num_equipos;i++)
-        if ((nmapscan.host[i].address.addr)==ip)
-            for (int j=0;j<nmapscan.host[i].ports.port.count();j++)
-                if (nmapscan.host[i].ports.port[j].state.state=="open")
-                    puertos++;
+    for (int i=0;i<num_equipos;i++){
+        direcciones = nmapscan.host[i].address.count();
+        for (int x=0;x<direcciones;x++)
+            if (nmapscan.host[i].address[x].addrtype!="mac")
+                if ((nmapscan.host[i].address[x].addr)==ip)
+                    for (int j=0;j<nmapscan.host[i].ports.port.count();j++)
+                        if (nmapscan.host[i].ports.port[j].state.state=="open")
+                            puertos++;
+     }
 return puertos;
 }
 
@@ -171,15 +205,17 @@ QString NMap::nmap_args(){
  * **************************************************************************/
 
 bool NMap::nmap_is_open_port (QString ip, QString port){
-    int i,j,num_equipos,num_port;
+    int i,j,num_equipos,num_port,direcciones;
     num_equipos = nmapscan.host.count();
     for (i=0;i<num_equipos;i++){
+        direcciones = nmapscan.host[i].address.count();
         num_port = nmapscan.host[i].ports.port.count();
-        for (j=0;j<num_port;j++){
-        if ((nmapscan.host[i].address.addr == ip) && (nmapscan.host[i].ports.port[j].state.state == "open") && (nmapscan.host[i].ports.port[j].portid == port))
-             return true;
-        }
-    }
+        for (int x=0;x<direcciones;x++)
+            for (j=0;j<num_port;j++){
+               if ((nmapscan.host[i].address[x].addrtype != "mac") && (nmapscan.host[i].address[x].addr == ip) && (nmapscan.host[i].ports.port[j].state.state == "open") && (nmapscan.host[i].ports.port[j].portid == port))
+                   return true;
+            }
+     }
 return false;
 }
 
@@ -189,11 +225,15 @@ return false;
 
 QList <QString> NMap::nmap_hosts_up(){
     QList  <QString> lista;
-    int num_equipos;
+    int num_equipos, direcciones;
     num_equipos = nmapscan.host.count();
-    for (int i=0;i<num_equipos;i++)
+    for (int i=0;i<num_equipos;i++){
+        direcciones = nmapscan.host[i].address.count();
         if (nmapscan.host.at(i).status.state=="up")
-            lista.append(nmapscan.host[i].address.addr);
+            for (int x=0;x<direcciones;x++)
+                if (nmapscan.host[i].address[x].addrtype != "mac")
+                    lista.append(nmapscan.host[i].address[x].addr);
+    }
 return lista;
 }
 
@@ -207,7 +247,7 @@ QList <Host> NMap::nmap_hosts_up_QList(){
     int num_equipos;
     num_equipos = nmapscan.host.count();
     for (int i=0;i<num_equipos;i++){
-        if ((nmapscan.host.at(i).status.state=="up")&&(((host_ports_open_int(nmapscan.host.at(i).address.addr)) || is_router(nmapscan.host.at(i).address.addr))))
+        if (nmapscan.host.at(i).status.state=="up")
             lista.append(nmapscan.host[i]);
     }
 return lista;
@@ -219,13 +259,17 @@ return lista;
  * *************************************************************************/
 QList <QString> NMap::nmap_ports_open(QString ip){
     QList  <QString> puertos;
-    int num_equipos;
+    int num_equipos,direcciones;
     num_equipos = nmap_num_host_up();
-    for (int i=0;i<num_equipos;i++)
-        if ((nmapscan.host[i].address.addr)==ip)
-            for (int j=0;j<nmapscan.host[i].ports.port.count();j++)
-                if (nmapscan.host[i].ports.port[j].state.state=="open")
-                    puertos.append(nmapscan.host[i].ports.port[j].portid);
+    for (int i=0;i<num_equipos;i++){
+        direcciones = nmapscan.host[i].address.count();
+        for (int x=0; x < direcciones ;x++)
+            if (nmapscan.host[i].address[x].addr != "mac")
+                if ((nmapscan.host[i].address[x].addr)==ip)
+                    for (int j=0;j<nmapscan.host[i].ports.port.count();j++)
+                        if (nmapscan.host[i].ports.port[j].state.state=="open")
+                            puertos.append(nmapscan.host[i].ports.port[j].portid);
+    }
 return puertos;
 }
 
@@ -247,7 +291,9 @@ bool NMap::nmap_is_host_up (QString ip){
  * Devuelve true si el equipo tiene el puerto 8080 abierto
  * *************************************************************************/
 bool NMap::is_linux (QString ip){
-    return nmap_is_open_port(ip,"8080");
+    if ((nmap_is_open_port(ip,"22") || (nmap_is_open_port(ip,"8080"))))
+        return true;
+return false;
 }
 
 /************************is_win***************************************
@@ -259,7 +305,7 @@ bool NMap::is_win (QString ip){
 return false;
 }
 
-/************************is_linux***************************************
+/************************is_router***************************************
  * Devuelve true si el equipo es un router (lo mas probable)
  * *************************************************************************/
 bool NMap::is_router (QString ip){
@@ -285,10 +331,10 @@ QString NMap::what_is (QString ip){
         return "printer";
     else if (is_router(ip))
                 return "router";
-    else if (is_win(ip))
-                return "win";
     else if (is_linux(ip))
                 return "linux";
+    else if (is_win(ip))
+                return "win";
     else return "desconocido";
 }
 /************************what_is_int***************************************
@@ -299,10 +345,10 @@ int NMap::what_is_int (QString ip){
         return 4;
     else if (is_router(ip))
                 return 1 ;
-    else if (is_win(ip))
-                return 3;
     else if (is_linux(ip))
                 return 2;
+    else if (is_win(ip))
+                return 3;
     else return 0;
 }
 
@@ -344,21 +390,16 @@ void NMap::nmap_nmaprun(){
         QString valor_tributo = attr.value().toString();
         if (atributo == "scanner" )
             nmapscan.nmaprun.scanner = valor_tributo;
-        else
-            if (atributo == "args" )
-                nmapscan.nmaprun.args = valor_tributo;
-            else
-                if (atributo == "start" )
-                    nmapscan.nmaprun.start = valor_tributo;
-                else
-                    if (atributo == "startstr" )
-                        nmapscan.nmaprun.startstr = valor_tributo;
-                    else
-                        if (atributo == "version" )
-                            nmapscan.nmaprun.version = valor_tributo;
-                        else
-                            if (atributo == "xmloutputversion" )
-                                nmapscan.nmaprun.xmloutputversion = valor_tributo;
+        else if (atributo == "args" )
+            nmapscan.nmaprun.args = valor_tributo;
+        else if (atributo == "start" )
+            nmapscan.nmaprun.start = valor_tributo;
+        else if (atributo == "startstr" )
+            nmapscan.nmaprun.startstr = valor_tributo;
+        else if (atributo == "version" )
+            nmapscan.nmaprun.version = valor_tributo;
+        else if (atributo == "xmloutputversion" )
+            nmapscan.nmaprun.xmloutputversion = valor_tributo;
 
     }
 }
@@ -369,15 +410,12 @@ void NMap::nmap_scaninfo() {
         QString valor_tributo = attr.value().toString();
         if (atributo == "numservices" )
             nmapscan.scaninfo.numservices = atributo.toInt();
-        else
-            if (atributo == "protocol" )
-                nmapscan.scaninfo.protocol = valor_tributo;
-            else
-                if (atributo == "services" )
-                    nmapscan.scaninfo.services = valor_tributo;
-                else
-                    if (atributo == "type" )
-                        nmapscan.scaninfo.type = valor_tributo;
+        else if (atributo == "protocol" )
+            nmapscan.scaninfo.protocol = valor_tributo;
+        else if (atributo == "services" )
+            nmapscan.scaninfo.services = valor_tributo;
+        else if (atributo == "type" )
+            nmapscan.scaninfo.type = valor_tributo;
     }
 }
 
@@ -414,16 +452,20 @@ void NMap::nmap_status(Host &host) {
     }
 }
 
+
 void NMap::nmap_address(Host &host) {
-    foreach(const QXmlStreamAttribute &attr, reader.attributes()) {
+    Address direccion;
+       foreach(const QXmlStreamAttribute &attr, reader.attributes()) {
               QString atributo = attr.name().toString();
               QString valor_atributo = attr.value().toString();
               if (atributo == "addr" )
-                    host.address.addr  = valor_atributo;
-              else
-                if (atributo == "addrtype")
-                    host.address.addrtype = valor_atributo;
-    }
+                    direccion.addr  = valor_atributo;
+              else if (atributo == "addrtype")
+                    direccion.addrtype = valor_atributo;
+              else if (atributo == "vendor")
+                    direccion.vendor = valor_atributo;
+        }
+        host.address.append(direccion);
 }
 
 void NMap::nmap_hostnames(Host &host) {

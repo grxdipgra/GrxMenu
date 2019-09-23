@@ -6,163 +6,198 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1120</width>
-    <height>711</height>
+    <width>1098</width>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Tablas de la DB</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="widgetResizable">
-       <bool>true</bool>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>6</x>
+      <y>6</y>
+      <width>1091</width>
+      <height>631</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1087</width>
+       <height>627</height>
+      </rect>
+     </property>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>6</x>
+        <y>6</y>
+        <width>1071</width>
+        <height>611</height>
+       </rect>
       </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>1104</width>
-         <height>642</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QTabWidget" name="tablas">
-          <property name="currentIndex">
-           <number>10</number>
-          </property>
-          <widget class="QWidget" name="municipio">
-           <attribute name="title">
-            <string>municipio</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_13">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_municipio"/>
-            </item>
-           </layout>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string>Actualizar Base de Datos</string>
+           </property>
           </widget>
-          <widget class="QWidget" name="poblacion">
-           <attribute name="title">
-            <string>poblacion</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_12">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_poblacion"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="nodo">
-           <attribute name="title">
-            <string>nodo</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_11">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_nodo">
-              <property name="dragEnabled">
-               <bool>true</bool>
-              </property>
-              <property name="dragDropMode">
-               <enum>QAbstractItemView::DragDrop</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="centro">
-           <attribute name="title">
-            <string>centro</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_10">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_centro"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="aplicaciones">
-           <attribute name="title">
-            <string>aplicaciones</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_9">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_aplicaciones"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="programa">
-           <attribute name="title">
-            <string>programa</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_8">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_programa"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="emailnodo">
-           <attribute name="title">
-            <string>emailnodo</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_7">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_emailnodo"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="telefononodo">
-           <attribute name="title">
-            <string>telefononodo</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_6">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_telefononodo"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="comarca">
-           <attribute name="title">
-            <string>comarca</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_comarca"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="mancomunidad">
-           <attribute name="title">
-            <string>mancomunidad</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_mancomunidad"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="usuarios">
-           <attribute name="title">
-            <string>usuarios</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_14">
-            <item row="0" column="0">
-             <widget class="QTableView" name="tableView_usuarios"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="Consulta">
-           <attribute name="title">
-            <string>Consulta SQL</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="tablas">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="municipio">
+          <attribute name="title">
+           <string>municipio</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_municipio"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="poblacion">
+          <attribute name="title">
+           <string>poblacion</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_poblacion"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="nodo">
+          <attribute name="title">
+           <string>nodo</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_nodo">
+             <property name="dragEnabled">
+              <bool>true</bool>
+             </property>
+             <property name="dragDropMode">
+              <enum>QAbstractItemView::DragDrop</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="centro">
+          <attribute name="title">
+           <string>centro</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_10">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_centro"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="aplicaciones">
+          <attribute name="title">
+           <string>aplicaciones</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_aplicaciones"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="programa">
+          <attribute name="title">
+           <string>programa</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_programa"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="emailnodo">
+          <attribute name="title">
+           <string>emailnodo</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_emailnodo"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="telefononodo">
+          <attribute name="title">
+           <string>telefononodo</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_telefononodo"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="comarca">
+          <attribute name="title">
+           <string>comarca</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_comarca"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="mancomunidad">
+          <attribute name="title">
+           <string>mancomunidad</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_mancomunidad"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="usuarios">
+          <attribute name="title">
+           <string>usuarios</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_14">
+           <item row="0" column="0">
+            <widget class="QTableView" name="tableView_usuarios"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Consulta">
+          <attribute name="title">
+           <string>Consulta SQL</string>
+          </attribute>
+          <widget class="QWidget" name="layoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>6</x>
+             <y>6</y>
+             <width>1051</width>
+             <height>531</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
              <widget class="QFrame" name="frame">
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>40</height>
+                <height>55</height>
                </size>
               </property>
               <property name="font">
@@ -190,136 +225,134 @@
                 <string>Consulta Sql</string>
                </property>
               </widget>
-              <widget class="QPushButton" name="pB_sql">
-               <property name="geometry">
-                <rect>
-                 <x>990</x>
-                 <y>5</y>
-                 <width>31</width>
-                 <height>31</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../iconos.qrc">
-                 <normaloff>:/imagenes/iconos/botonera/sql.svg</normaloff>:/imagenes/iconos/botonera/sql.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>32</width>
-                 <height>32</height>
-                </size>
-               </property>
-              </widget>
-              <widget class="QComboBox" name="comboBox_consulta">
+              <widget class="QWidget" name="layoutWidget">
                <property name="geometry">
                 <rect>
                  <x>110</x>
-                 <y>5</y>
-                 <width>861</width>
-                 <height>31</height>
+                 <y>0</y>
+                 <width>931</width>
+                 <height>52</height>
                 </rect>
                </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de extensiones, teléfonos e email de ayuntamientos</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de datos de programas, mostrando letras identificativas</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de nodos a los que les falta información de contacto (faltan teléfono o dirección)</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de nodos de centros</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de datos de contacto con ayuntamientos.  Datos necesarios para la página de Diputación</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de programas</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de poblaciones por municipios</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de nodos por poblaciones</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Consulta de total de routers por tipo</string>
-                </property>
-               </item>
-              </widget>
-              <widget class="QPushButton" name="pB_csv">
-               <property name="geometry">
-                <rect>
-                 <x>1030</x>
-                 <y>5</y>
-                 <width>31</width>
-                 <height>31</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../iconos.qrc">
-                 <normaloff>:/imagenes/iconos/basedatos/csv.png</normaloff>:/imagenes/iconos/basedatos/csv.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>32</width>
-                 <height>32</height>
-                </size>
-               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QComboBox" name="comboBox_consulta">
+                  <property name="editable">
+                   <bool>true</bool>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de extensiones, teléfonos e email de ayuntamientos</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de datos de programas, mostrando letras identificativas</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de nodos a los que les falta información de contacto (faltan teléfono o dirección)</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de nodos de centros</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de datos de contacto con ayuntamientos.  Datos necesarios para la página de Diputación</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de programas</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de poblaciones por municipios</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de nodos por poblaciones</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Consulta de total de routers por tipo</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                  <item>
+                   <widget class="QPushButton" name="pB_sql">
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../iconos.qrc">
+                      <normaloff>:/imagenes/iconos/botonera/sql.svg</normaloff>:/imagenes/iconos/botonera/sql.svg</iconset>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>32</width>
+                      <height>32</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pB_csv">
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../iconos.qrc">
+                      <normaloff>:/imagenes/iconos/basedatos/csv.png</normaloff>:/imagenes/iconos/basedatos/csv.png</iconset>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>32</width>
+                      <height>32</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
              </widget>
             </item>
-            <item row="1" column="0">
+            <item>
              <widget class="QTableView" name="tableView_consulta"/>
             </item>
            </layout>
           </widget>
          </widget>
-        </item>
-       </layout>
-      </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
-    </item>
-   </layout>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1120</width>
+     <width>1098</width>
      <height>30</height>
     </rect>
    </property>

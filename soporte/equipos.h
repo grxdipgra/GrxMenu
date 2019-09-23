@@ -32,6 +32,12 @@ private slots:
 
     int puerto_libre();
 
+    void version();
+
+    QString ipEquipo(Host *host);
+
+    QString macEquipo(Host *host);
+
     int host_ports_open_int(Host *host);
 
     void on_pB_carpeta_clicked();
@@ -68,10 +74,43 @@ private slots:
 
     void resultado(QNetworkReply *reply);
 
+    void on_pB_procesos_clicked();
+
+    void on_pB_CUPS_clicked();
+
+    void on_pB_usuarios_clicked();
+
+    void on_pB_proxy_clicked();
+
+    void on_pB_usb_clicked();
+
+    void on_pB_pci_clicked();
+
+    void on_pB_impresora_clicked();
+
+    void on_pB_memoria_clicked();
+
+    void on_pB_devices_clicked();
+
+    void on_pB_clock_clicked();
+
+    void on_pB_captura_clicked();
+
+    void on_pB_discos_clicked();
+
+    void on_pB_equipo_clicked();
+
+    void on_pB_instala_clicked();
+
+    void on_pB_usuarios_2_clicked();
+
+    void closeTab(int indice);
+
 private:
     Ui::Equipos *ui;
-    QString ip;
+    QString ip, mac;
     Host *host_tmp;
+    QString Version;
 };
 
 #endif // EQUIPOS_H

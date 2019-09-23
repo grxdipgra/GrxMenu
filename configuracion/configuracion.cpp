@@ -7,13 +7,27 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QSqlQueryModel>
-
-#include "basedatos/basedatos.h"
 #include <QMenu>
+#include "buscarou.h"
+
+void valor(QAbstractItemModel* model,QStringList *lista, QModelIndex parent = QModelIndex()) {
+    for(int r = 0; r < model->rowCount(parent); ++r) {
+        QModelIndex index = model->index(r, 0, parent);
+        QVariant name = model->data(index);
+        if (lista->indexOf(name.toString()) == -1){
+            lista->append(name.toString());
+        }
+        if( model->hasChildren(index) ) {
+            valor(model,lista ,index);
+        }
+    }
+}
+
 Configuracion::Configuracion(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Configuracion)
 {
+
     ui->setupUi(this);
 
     //Vamos a poner en el constructor la máscara para validar la ip introducida
@@ -30,14 +44,17 @@ Configuracion::Configuracion(QWidget *parent) :
 
     //Si le tenemos puestos colores los cargamos
     carga_configuracion_color();
-
-
+    //Muestra en la consola de kerberos el ticket actual
+    muestra_Kerberos();
     //Esto es para crear menus de boton secundario
    //ui->pB_tablasDB->setContextMenuPolicy(Qt::CustomContextMenu); //popup_menu boton secundario para tablas
    // ui->Btn_Kerberos->setContextMenuPolicy(Qt::CustomContextMenu);//popup_menu boton secundario para kerberos
    // connect(ui->pB_tablasDB, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
-   // connect(ui->Btn_Kerberos, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
+    QObject::connect(this,&Configuracion::finished , this, &Configuracion::on_buttonBox_accepted);
+}
 
+QDate Configuracion::ultimaActualizacionDB(){
+     return fechaActualizacionDB;
 }
 
 void Configuracion::help(){
@@ -57,6 +74,7 @@ void Configuracion::ctxMenu(const QPoint &pos) {
 
 Configuracion::~Configuracion()
 {
+
     delete ui;
 }
 
@@ -82,8 +100,6 @@ void Configuracion::mascara_puertos_nmap(){
                      + "\\," + puertoIN+ "\\," + puertoIN+ "\\," + puertoIN + "$");
     QRegExpValidator *puertoValidator = new QRegExpValidator(puertoRegex, this);
     ui->lineEdit_puertos->setValidator(puertoValidator);
-
-
 }
 
 void Configuracion::mascara_ip(){
@@ -102,6 +118,7 @@ void Configuracion::valoresPorDefecto(){
 
     home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
+    fechaActualizacionDB = QDate::currentDate();
     RutaSqlite = home_usuario+".grx/grx.sqlite";
     QString name = qgetenv("USER");
     if (name.isEmpty())
@@ -114,18 +131,18 @@ void Configuracion::valoresPorDefecto(){
     DataBaseName = "asismun";
     HostName = "127.0.0.1";
     PuertoDB = 3306;
-    UserName = "root";
-    PasswordDB = "0";
+    UserName = "usuario-basico";
+    PasswordDB = "dpt.2018GRX";
     UsarSSH = "true";
     UsarProxyChains = "true";
     ProxyChains = "/usr/bin/proxychains";
     ServidorSSH = "10.7.15.193";
     UsuarioSSH =  "gorgojo";
     ClaveSSH = "0";
-    PuertoRemotoSSH = 22;
+    PuertoRemotoSSH = "8080";
     PuertoLocalSSH = "3306";
     ISL = "/opt/ISLOnline/ISLLight/ISLLight";
-    Atalaya = "https://atalaya.grx";
+    Atalaya = "http://atalaya.grx";
     UsarUsuarios = "true";
     UsarSoporte = "true";
     UsarSedes = "true";
@@ -136,8 +153,10 @@ void Configuracion::valoresPorDefecto(){
     UsarOCS = "true";
     UsarTS = "true";
     UsarISL = "true";
+    UsarVeleta = "true";
     UsarAtalaya = "true";
     SoloAytos = "false";
+    multiplesInstancias = "false";
 
     UsarOuExternos = "true";
     UsarOuPerrera  = "true";
@@ -150,17 +169,28 @@ void Configuracion::valoresPorDefecto(){
     Beiro = "http://beiro.grx:55555/portal";
     Cronos = "http://cronos.grx";
     UsuarioRemoto = "administrador";
-    Puerto = 8080;
+    Puerto = "8080";
     Correo = "https://correoweb.dipgra.es/";
     Password = "";
     ClaveCifrado = "";
     ClaveRemoto = "";
-    Rdesktop = "";
+    Rdesktop = "true";
     Resolucion = "1024x768";
     Para = "ie2.cg22@telefonica.com; op.cg22@telefonica.com; marialeticia.larapalomino@telefonica.com; jtoro@dipgra.es; miguel@dipgra.es";
     Asunto = "Problemas de conexión en %1";
     Cuerpo = "Buenos días."
              "Nos llaman desde %1 y nos comentan que no tienen conexión."
+             "Hemos comprobado que efectivamente no llegamos a su router."
+             "Haced el favor de echarle un vistazo:"
+             "+------------------------------------------------------------------+"
+             "|  %1	|  %2  |   %4	|   %5	|   %6	|   %7	|   %9    |"
+             "+------------------------------------------------------------------+"
+             "Gracias de antemano y saludos cordiales.";
+
+    Para_Rutas = "ie2.cg22@telefonica.com; op.cg22@telefonica.com; marialeticia.larapalomino@telefonica.com; jtoro@dipgra.es; miguel@dipgra.es";
+    Asunto_Rutas = "Configuracion del enrutado de la conexion de %1";
+    Cuerpo_Rutas = "Buenos días."
+             "Para configurar la linea de %1 debemos poner las siguientes rutas"
              "Hemos comprobado que efectivamente no llegamos a su router."
              "Haced el favor de echarle un vistazo:"
              "+------------------------------------------------------------------+"
@@ -180,7 +210,11 @@ void Configuracion::valoresPorDefecto(){
     Puerto_ldap=389;
     Usuario_ldap=name;
     Clave_ldap="password";
-
+    Dominio_ldap="grx";
+    //intentamos recuperar el nombre del dominio a partir del nombre de usuario
+    if (name.contains("@",Qt::CaseSensitive)){
+        Dominio_ldap=name.right(name.length()-(name.indexOf("@")+1));
+    }
 
     carga_editLine();
 }
@@ -206,6 +240,68 @@ QString  Configuracion::cual_es_usuario_logado(){
 
 QString  Configuracion::cual_es_clave_ldap(){
     return Clave_ldap;
+}
+
+QString  Configuracion::cual_es_dominio_ldap(){
+    return Dominio_ldap;
+}
+//-------------------------------Serafin
+
+
+bool Configuracion::listaOU_vacio(){
+    return ListaOU.isEmpty();
+}
+
+QStringList Configuracion::listaOU_datos(){
+    return ListaOU;
+}
+
+bool Configuracion::lineEdit_OU_vacio(){
+    return lineEdit_OU.isEmpty();
+}
+
+QString Configuracion::lineEdit_OU_datos(){
+    return lineEdit_OU;
+}
+
+
+void Configuracion::carga_servidor_ldap(QString Sldap){
+    Servidor_ldap=Sldap;
+}
+
+void  Configuracion::carga_puerto_ldap(int Pldap){
+    Puerto_ldap=Pldap;
+}
+
+void Configuracion::carga_usuario_ldap(QString Uldap){
+    Usuario_ldap=Uldap;
+}
+
+void Configuracion::carga_clave_ldap(QString Cldap){
+    Clave_ldap=Cldap;
+}
+
+void Configuracion::carga_home(QString home){
+    home_usuario=home;
+}
+
+void Configuracion::carga_dominio_ldap(QString Dldap){
+    Dominio_ldap=Dldap;
+}
+
+void Configuracion::carga_listaOU(QStringList OU){
+    ListaOU.clear();
+    foreach (const QString &qstr, OU) {
+        ListaOU<<qstr;
+    }
+}
+
+void Configuracion::lineEdit_OU_datos(QString LEOU){
+    lineEdit_OU=LEOU;
+}
+
+void Configuracion::carga_ruta_sqlite(QString ruta){
+    RutaSqlite= ruta;
 }
 
 QString  Configuracion::cual_es_home(){
@@ -352,6 +448,18 @@ QString  Configuracion::cual_es_cuerpo(){
     return Cuerpo;
 }
 
+QString  Configuracion::cual_es_asunto_rutas(){
+    return Asunto_Rutas;
+}
+
+QString  Configuracion::cual_es_cuerpo_rutas(){
+    return Cuerpo_Rutas;
+}
+
+QString  Configuracion::cual_es_para_rutas(){
+    return Para_Rutas;
+}
+
 QString Configuracion::cual_es_proxychains(){
     return ProxyChains;
 }
@@ -383,15 +491,6 @@ bool Configuracion::usar_ou_cpd(){
 bool Configuracion::usar_ou_ayuntamientos(){
     return UsarOuAyuntamientos;
 }
-
-bool Configuracion::lineEdit_OU_vacio(){
-    return ui->lineEdit_OU->text().isEmpty();
-}
-
-QString Configuracion::lineEdit_OU_datos(){
-    return ui->lineEdit_OU->text();
-}
-
 
 bool Configuracion::usuarios_up(){
     return  UsarUsuarios;
@@ -433,6 +532,10 @@ bool Configuracion::isl_up(){
     return UsarISL;
 }
 
+bool Configuracion::veleta_up(){
+    return UsarVeleta;
+}
+
 bool Configuracion::atalaya_up(){
     return UsarAtalaya;
 }
@@ -440,6 +543,11 @@ bool Configuracion::atalaya_up(){
 bool Configuracion::solo_aytos(){
     return SoloAytos;
 }
+
+bool Configuracion::multiples_instancias(){
+    return multiplesInstancias;
+}
+
 
 bool Configuracion::puertoSSH(){
     return PuertosBuscados_ssh;
@@ -475,42 +583,7 @@ QString  Configuracion::cual_es_resolucion(){
 
 QString Configuracion::puertos_buscados(){
     QString tmp="";
-    if (ui->checkBox_SSH->isChecked()){
-        tmp.append("22");
-    }
-
-    if (ui->checkBox_telnet->isChecked()){
-        if (!tmp.isEmpty())
-               tmp.append(",");
-
-        tmp.append("23");
-    }
-
-    if (ui->checkBox_portPrinter ->isChecked()){
-        if (!tmp.isEmpty())
-               tmp.append(",");
-
-        tmp.append("9100");
-    }
-
-    if (ui->checkBox_web->isChecked()){
-        if (!tmp.isEmpty())
-               tmp.append(",");
-
-        tmp.append("80");
-    }
-
-    if (ui->checkBox_webssl->isChecked()){
-        if (!tmp.isEmpty())
-               tmp.append(",");
-        tmp.append("443");
-    }
-
-    if (ui->checkBox_netbios->isChecked()){
-        if (!tmp.isEmpty())
-               tmp.append(",");
-        tmp.append("139");
-    }
+    tmp.append("22,23,80,139,443,8080,9100");
     if (!ui->lineEdit_puertos->text().isEmpty())
         if (!tmp.isEmpty())
            tmp.append(",");
@@ -519,7 +592,7 @@ return tmp;
 }
 
 void Configuracion::carga_configuracion_color(){
-
+    ui->consola_kerberos->setStyleSheet("color: white; background-color: black;");
     ui->fr_linux->setStyleSheet("background-color:"+Fr_linux+";");
     ui->fr_rutas->setStyleSheet("background-color:"+Fr_rutas+";");
     ui->fr_DB->setStyleSheet("background-color:"+Fr_DB+";");
@@ -533,13 +606,14 @@ void Configuracion::carga_configuracion()
     //Usamos Qsettings para leer los valores de las variables de un archivo .ini
     home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
+
+    fechaActualizacionDB = s.value("Configuracion/fechaActualizacionDB").toDate();
     RutaSqlite = s.value("Configuracion/RutaSqlite").toString();
     Tecnico = s.value("Configuracion/Tecnico").toString();
-    //Clave = s.value("Configuracion/Clave").toString());
     Clave = cifra->decryptToString( s.value("Configuracion/Clave").toString());
-    ServidorAD = s.value("Configuracion/ServidorAD").toString();
-    UsuarioAD = s.value("Configuracion/UsuarioAD").toString();
-    ClaveAD = cifra->decryptToString( s.value("Configuracion/ClaveAD").toString());
+    ServidorAD = s.value("Directorio_Activo/ServidorAD").toString();
+    UsuarioAD = s.value("Directorio_Activo/UsuarioAD").toString();
+    ClaveAD = cifra->decryptToString( s.value("Directorio_Activo/ClaveAD").toString());
     DataBaseName = s.value("Configuracion/DataBaseName").toString();
     HostName = s.value("Configuracion/HostName").toString();
     PuertoDB = s.value("Configuracion/PuertoDB").toInt();
@@ -548,74 +622,157 @@ void Configuracion::carga_configuracion()
     UsarSSH = s.value("Configuracion/UsarSSH").toBool();
     UsarProxyChains = s.value("Configuracion/UsarProxyChains").toBool();
     ProxyChains = s.value("Configuracion/ProxyChains").toString();
+    UsuarioRemoto = s.value("Configuracion/UsuarioRemoto").toString();
+    Puerto = s.value("Configuracion/Puerto").toString();
     ServidorSSH = s.value("Configuracion/ServidorSSH").toString();
     UsuarioSSH =  s.value("Configuracion/UsuarioSSH").toString();
     ClaveSSH = cifra->decryptToString(s.value("Configuracion/ClaveSSH").toString());
     PuertoRemotoSSH = s.value("Configuracion/PuertoRemotoSSH").toInt();
     PuertoLocalSSH = s.value("Configuracion/PuertoLocalSSH").toInt();
-    ISL = s.value("Configuracion/ISL").toString();
-    Atalaya = s.value("Configuracion/Atalaya").toString();
-    UsarUsuarios = s.value("Configuracion/UsarUsuarios").toBool();
-    UsarSoporte = s.value("Configuracion/UsarSoporte").toBool();
-    UsarSedes = s.value("Configuracion/UsarSedes").toBool();
-    UsarCronos = s.value("Configuracion/UsarCronos").toBool();
-    UsarWebmail = s.value("Configuracion/UsarWebmail").toBool();
-    UsarBeiro = s.value("Configuracion/UsarBeiro").toBool();
-    UsarGlpi = s.value("Configuracion/UsarGLPI").toBool();
-    UsarOCS = s.value("Configuracion/UsarOCS").toBool();
-    UsarTS = s.value("Configuracion/UsarTS").toBool();
-    UsarISL = s.value("Configuracion/UsarISL").toBool();
-    UsarAtalaya = s.value("Configuracion/UsarAtalaya").toBool();
-    SoloAytos = s.value("Configuracion/SoloAytos").toBool();
-    OCS = s.value("Configuracion/OCS").toString();
-    GLPI = s.value("Configuracion/GLPI").toString();
-    Beiro = s.value("Configuracion/Beiro").toString();
-    Cronos = s.value("Configuracion/Cronos").toString();
-    UsuarioRemoto = s.value("Configuracion/UsuarioRemoto").toString();
-    Puerto = s.value("Configuracion/Puerto").toString();
-    Correo = s.value("Configuracion/Correo").toString();
+    KeyFile_privada = s.value("Configuracion/KeyFile_privada").toString();
+    KeyFile_publica = s.value("Configuracion/KeyFile_publica").toString();
     Password = cifra->decryptToString(s.value("Configuracion/Password").toString());
     ClaveCifrado = cifra->decryptToString(s.value("Configuracion/ClaveCifrado").toString());
     ClaveRemoto =cifra->decryptToString( s.value("Configuracion/ClaveRemoto").toString());
     Rdesktop = s.value("Configuracion/Rdesktop").toBool();
     Resolucion = s.value("Configuracion/Resolucion").toString();
+    SoloAytos = s.value("Configuracion/SoloAytos").toBool();
+    multiplesInstancias = s.value("Configuracion/multiplesInstancias").toBool();
+
+    //Botones mostrados en botonera
+    UsarUsuarios = s.value("Botonera/UsarUsuarios").toBool();
+    UsarSoporte = s.value("Botonera/UsarSoporte").toBool();
+    UsarSedes = s.value("Botonera/UsarSedes").toBool();
+    UsarCronos = s.value("Botonera/UsarCronos").toBool();
+    UsarWebmail = s.value("Botonera/UsarWebmail").toBool();
+    UsarBeiro = s.value("Botonera/UsarBeiro").toBool();
+    UsarGlpi = s.value("Botonera/UsarGLPI").toBool();
+    UsarOCS = s.value("Botonera/UsarOCS").toBool();
+    UsarTS = s.value("Botonera/UsarTS").toBool();
+    UsarVeleta = s.value("Botonera/UsarVeleta").toBool();
+    UsarISL = s.value("Botonera/UsarISL").toBool();
+    UsarAtalaya = s.value("Botonera/UsarAtalaya").toBool();
+
+
+    //Rutas
+    ISL = s.value("Rutas/ISL").toString();
+    Atalaya = s.value("Rutas/Atalaya").toString();
+    OCS = s.value("Rutas/OCS").toString();
+    GLPI = s.value("Rutas/GLPI").toString();
+    Beiro = s.value("Rutas/Beiro").toString();
+    Cronos = s.value("Rutas/Cronos").toString();
+    Correo = s.value("Rutas/Correo").toString();
 
     //Correo de incidencias
-    Para = s.value("Configuracion/Para").toString();
-    Asunto = s.value("Configuracion/Asunto").toString();
-    Cuerpo = s.value("Configuracion/Cuerpo").toString();
-    KeyFile_privada = s.value("Configuracion/KeyFile_privada").toString();
-    KeyFile_publica = s.value("Configuracion/KeyFile_publica").toString();
-    //Colores
-    Fr_linux = s.value("Configuracion/fr_linux").toString();
-    Fr_kerberos = s.value("Configuracion/fr_kerberos").toString();
-    Fr_DB = s.value("Configuracion/fr_DB").toString();
-    Fr_TS = s.value("Configuracion/fr_TS").toString();
-    Fr_rutas = s.value("Configuracion/fr_rutas").toString();
-    //Busqueda por ssh
-    PuertosBuscados_ssh = s.value("Configuracion/PuertosBuscados_ssh").toBool();
-    PuertosBuscados_telnet = s.value("Configuracion/PuertosBuscados_telnet").toBool();
-    PuertosBuscados_web = s.value("Configuracion/PuertosBuscados_web").toBool();
-    PuertosBuscados_webssl = s.value("Configuracion/PuertosBuscados_webssl").toBool();
-    PuertosBuscados_portPrinter = s.value("Configuracion/PuertosBuscados_portPrinter").toBool();
-    PuertosBuscados_netbios = s.value("Configuracion/PuertosBuscados_netbios").toBool();
-    PuertosBuscados_lineEdit = s.value("Configuracion/PuertosBuscados_lineEdit").toString();
-    //LDAP
-    Servidor_ldap = s.value("Configuracion/Servidor_ldap").toString();
-    Puerto_ldap = s.value("Configuracion/Puerto_ldap").toInt();
-    Usuario_ldap = s.value("Configuracion/Usuario_ldap").toString();
-    Clave_ldap = cifra->decryptToString(s.value("Configuracion/Clave_ldap").toString());
+    Para = s.value("Correo/Para").toString();
+    Asunto = s.value("Correo/Asunto").toString();
+    Cuerpo = s.value("Correo/Cuerpo").toString();
 
-    UsarOuExternos = s.value("Configuracion/UsarOuExternos").toBool();
-    UsarOuPerrera = s.value("Configuracion/UsarOuPerrera").toBool();
-    UsarOuCie = s.value("Configuracion/UsarOuCie").toBool();
-    UsarOuCpd = s.value("Configuracion/UsarOuCpd").toBool();
-    UsarOuAyuntamientos = s.value("Configuracion/UsarOuAyuntamientos").toBool();
-    lineEdit_OU = s.value("Configuracion/lineEdit_OU").toString();
+    //Correo de rutas
+    Para_Rutas = s.value("Correo/Para_Rutas").toString();
+    Asunto_Rutas = s.value("Correo/Asunto_Rutas").toString();
+    Cuerpo_Rutas = s.value("Correo/Cuerpo_Rutas").toString();
+
+
+    //Colores
+    Fr_linux = s.value("Colores/fr_linux").toString();
+    Fr_kerberos = s.value("Colores/fr_kerberos").toString();
+    Fr_DB = s.value("Colores/fr_DB").toString();
+    Fr_TS = s.value("Colores/fr_TS").toString();
+    Fr_rutas = s.value("Colores/fr_rutas").toString();
+
+    //Busqueda por nmap
+    PuertosBuscados_ssh = s.value("Nmap/PuertosBuscados_ssh").toBool();
+    PuertosBuscados_telnet = s.value("Nmap/PuertosBuscados_telnet").toBool();
+    PuertosBuscados_web = s.value("Nmap/PuertosBuscados_web").toBool();
+    PuertosBuscados_webssl = s.value("Nmap/PuertosBuscados_webssl").toBool();
+    PuertosBuscados_portPrinter = s.value("Nmap/PuertosBuscados_portPrinter").toBool();
+    PuertosBuscados_netbios = s.value("Nmap/PuertosBuscados_netbios").toBool();
+    PuertosBuscados_lineEdit = s.value("Nmap/PuertosBuscados_lineEdit").toString();
+    //LDAP
+    Servidor_ldap = s.value("ldap/Servidor_ldap").toString();
+    Puerto_ldap = s.value("ldap/Puerto_ldap").toInt();
+    Usuario_ldap = s.value("ldap/Usuario_ldap").toString();
+    Clave_ldap = cifra->decryptToString(s.value("ldap/Clave_ldap").toString());
+    Dominio_ldap=s.value("ldap/Dominio_ldap").toString();
+
+    int numero_ou=s.value("ldap/Numero_OU").toInt();
+
+    if (numero_ou>0)
+        for (int i=1;i<=numero_ou;i++){
+            ListaOU<<s.value("ldap/OU_"+QString::number(i)).toString();
+        }
+    UsarOuAyuntamientos = s.value("ldap/UsarOuAyuntamientos").toBool();
+    lineEdit_OU = s.value("ldap/lineEdit_OU").toString();
+
+/*
+    UsarOuExternos = s.value("ldap/UsarOuExternos").toBool();
+    UsarOuPerrera = s.value("ldap/UsarOuPerrera").toBool();
+    UsarOuCie = s.value("ldap/UsarOuCie").toBool();
+    UsarOuCpd = s.value("ldap/UsarOuCpd").toBool();
+*/
+
+
 
     carga_editLine();
 
 }
+
+
+void Configuracion::carga_treeView(){
+
+//cargamos el treeview de UO
+
+QStandardItemModel *standardModel = new QStandardItemModel;
+
+QList<QStandardItem *> fila;
+typedef QList<QStandardItem *> tipomio;
+QList<tipomio> listas;
+//añadiendo una fila al invisibleRootItem producimos un elemento raiz
+QStandardItem *item = standardModel->invisibleRootItem();
+
+int i=0,j;
+QStringList lista_OU;
+
+QStringList LOU;
+QString dominio=dominio_basedn();
+
+for (int i = 0; i < ListaOU.size(); ++i)
+        LOU << ListaOU.at(i).toLocal8Bit().constData();
+
+foreach (const QString &strou, LOU) {
+
+    lista_OU.insert(i,strou);
+
+    fila =creaFila(strou);
+
+    listas.insert(i,fila);
+
+    bool encontrado=false;
+
+    //recorremos las OU y vemos si quitandole la ultima parte OU=..., de la cadena
+    //es igual a alguna de las que ya hay, si es así se crea como una rama de esta
+    while (strou.remove(0,strou.indexOf(",")+1)!=dominio && !encontrado){
+        for (j=0;j<lista_OU.count();j++){
+            if (strou==lista_OU[j]){
+                listas[j].first()->appendRow(listas[i]);
+                j=lista_OU.count();
+                encontrado=true;
+            }
+         }
+    }
+
+    if (!encontrado)
+        item->appendRow(listas[i]);
+    i++;
+
+}
+
+ui->treeView_OU->setModel(standardModel);
+ui->treeView_OU->expandAll();
+
+}
+
 
 //Este metodo carga todos los valores de los editline guardados en el archivo de configuracion
 // $HOME/.grxconfig
@@ -639,19 +796,8 @@ void Configuracion::carga_editLine(){
         deshabilitaProxyChains();
     }
 
-
-    ui->checkBox_Usuarios->setChecked(usuarios_up());
-    ui->checkBox_Soporte->setChecked(soporte_up());
-    ui->checkBox_Sedes->setChecked(sedes_up());
-    ui->checkBox_Cronos->setChecked(cronos_up());
-    ui->checkBox_Webmail->setChecked(webmail_up());
-    ui->checkBox_Beiro->setChecked(beiro_up());
-    ui->checkBox_GLPI->setChecked(glpi_up());
-    ui->checkBox_OCS->setChecked(ocs_up());
-    ui->checkBox_TS->setChecked(ts_up());
-    ui->checkBox_ISL->setChecked(isl_up());
-    ui->checkBox_Atalaya->setChecked(atalaya_up());
     ui->checkBox_soloAytos->setChecked(solo_aytos());
+    ui->checkBox_multiplesInstancias->setChecked(multiples_instancias());
 
     ui->checkBox_SSH->setChecked(puertoSSH());
     ui->checkBox_telnet->setChecked(puertoTelnet());
@@ -660,13 +806,13 @@ void Configuracion::carga_editLine(){
     ui->checkBox_portPrinter->setChecked(puertoPortPrinter());
     ui->checkBox_netbios->setChecked(puertoNetbios());
 
-    ui->checkBox_recursos_externos->setChecked(UsarOuExternos);
+   /* ui->checkBox_recursos_externos->setChecked(UsarOuExternos);
     ui->checkBox_recursos_perrera->setChecked(UsarOuPerrera);
     ui->checkBox_cie->setChecked(UsarOuCie);
     ui->checkBox_CPD->setChecked(UsarOuCpd);
     ui->checkBox_ayuntamientos->setChecked(UsarOuAyuntamientos);
     ui->lineEdit_OU->setText(lineEdit_OU);
-
+*/
     ui->RutaSqlite->setText(RutaSqlite);
     ui->tecnico->setText(Tecnico);
     ui->clave->setText(Clave);
@@ -696,6 +842,7 @@ void Configuracion::carga_editLine(){
     ui->clave_cifrado->setText(ClaveCifrado);
     ui->clave_remoto->setText(ClaveRemoto);
     ui->cb_resolucion->setCurrentText(Resolucion);
+    ui->asunto_rutas->setText(Asunto_Rutas);
     ui->para->setText(Para);
     ui->asunto->setText(Asunto);
     ui->cuerpo->setText(Cuerpo);
@@ -705,7 +852,10 @@ void Configuracion::carga_editLine(){
     ui->lineEdit_ldap_servidorLdap->setText(Servidor_ldap);
     ui->lineEdit_ldap_puerto->setText(QString::number(Puerto_ldap));
     ui->lineEdit_ldap_usuarioDominio->setText(Usuario_ldap);
+    ui->lineEdit_ldap_Dominio->setText(Dominio_ldap);
     ui->lineEdit_ldap_clave->setText(Clave_ldap);
+    carga_treeView();
+    ui->fechaActualizacionDB->setDate(fechaActualizacionDB);
 }
 
 void Configuracion::habilitaProxyChains(){
@@ -737,20 +887,19 @@ void Configuracion::deshabilitaSSH(){
 
 void Configuracion::on_buttonBox_accepted()
 {
+
     //Usamos Qsettings para guardar los valores de las variables en un archivo .ini
     QString home_usuario = QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory);
     QSettings s(home_usuario+".grx/.grxconf.ini", QSettings::IniFormat);
+    QStringList lista_OU;
+
     s.setValue("Configuracion/RutaSqlite", ui->RutaSqlite->text());
     s.setValue("Configuracion/Tecnico", ui->tecnico->text());
     s.setValue("Configuracion/Clave", cifra->encryptToString(ui->clave->text()));
-    s.setValue("Configuracion/ServidorAD", ui->servidor->text());
-    s.setValue("Configuracion/UsuarioAD", ui->usuario_ad->text());
-    s.setValue("Configuracion/ClaveAD", cifra->encryptToString(ui->clave_ad->text()));
     s.setValue("Configuracion/UsuarioRemoto",ui->usuario_remoto->text());
     s.setValue("Configuracion/Puerto", ui->puerto->text());
-    s.setValue("Configuracion/Correo", ui->correoweb->text());
-    s.setValue("Configuracion/ISL", ui->ISL->text());
-    s.setValue("Configuracion/Atalaya", ui->atalaya->text());
+
+
     s.setValue("Configuracion/DataBaseName",ui->DataBaseName->text());
     s.setValue("Configuracion/HostName", ui->servidor_DB->text());
     s.setValue("Configuracion/UserName", ui->Usuario_DB->text());
@@ -763,63 +912,122 @@ void Configuracion::on_buttonBox_accepted()
     s.setValue("Configuracion/KeyFile_privada", ui->keyfile_privada->text());
     s.setValue("Configuracion/KeyFile_publica", ui->keyfile_publica->text());
     s.setValue("Configuracion/ProxyChains", ui->proxychains->text());
-    s.setValue("Configuracion/OCS", ui->OCS->text());
-    s.setValue("Configuracion/GLPI", ui->GLPI->text());
-    s.setValue("Configuracion/Beiro", ui->beiro->text());
-    s.setValue("Configuracion/Cronos", ui->cronos->text());
     s.setValue("Configuracion/Password", cifra->encryptToString(ui->password->text()));
     s.setValue("Configuracion/ClaveCifrado",cifra->encryptToString(ui->clave_cifrado->text()));
     s.setValue("Configuracion/ClaveRemoto",cifra->encryptToString(ui->clave_remoto->text()));
     s.setValue("Configuracion/Resolucion",ui->cb_resolucion->currentText());
-    s.setValue("Configuracion/fr_linux",Fr_linux);
-    s.setValue("Configuracion/fr_kerberos",Fr_kerberos);
-    s.setValue("Configuracion/fr_DB",Fr_DB);
-    s.setValue("Configuracion/fr_TS",Fr_TS);
-    s.setValue("Configuracion/fr_rutas",Fr_rutas);
     s.setValue("Configuracion/PuertosBuscados_lineEdit",ui->lineEdit_puertos->text());
-    s.setValue("Configuracion/Para",ui->para->text());
-    s.setValue("Configuracion/Asunto",ui->asunto->text());
-    s.setValue("Configuracion/Cuerpo",ui->cuerpo->toPlainText());
     s.setValue("Configuracion/UsarSSH",ui->checkBox_ssh->isChecked());
     s.setValue("Configuracion/UsarProxyChains",ui->checkBox_ssh->isChecked());
-    s.setValue("Configuracion/UsarUsuarios",ui->checkBox_Usuarios->isChecked());
-    s.setValue("Configuracion/UsarSoporte",ui->checkBox_Soporte->isChecked());
-    s.setValue("Configuracion/UsarSedes",ui->checkBox_Sedes->isChecked());
-    s.setValue("Configuracion/UsarCronos",ui->checkBox_Cronos->isChecked());
-    s.setValue("Configuracion/UsarWebmail",ui->checkBox_Webmail->isChecked());
-    s.setValue("Configuracion/UsarBeiro",ui->checkBox_Beiro->isChecked());
-    s.setValue("Configuracion/UsarGLPI",ui->checkBox_GLPI->isChecked());
-    s.setValue("Configuracion/UsarOCS",ui->checkBox_OCS->isChecked());
-    s.setValue("Configuracion/UsarTS",ui->checkBox_TS->isChecked());
-    s.setValue("Configuracion/UsarISL",ui->checkBox_ISL->isChecked());
-    s.setValue("Configuracion/UsarAtalaya",ui->checkBox_Atalaya->isChecked());
-    s.setValue("Configuracion/SoloAytos",ui->checkBox_soloAytos->isChecked());
     s.setValue("Configuracion/Rdesktop",ui->rb_rdesktop->isChecked());
-    s.setValue("Configuracion/PuertosBuscados_ssh",ui->checkBox_SSH->isChecked());
-    s.setValue("Configuracion/PuertosBuscados_telnet",ui->checkBox_telnet->isChecked());
-    s.setValue("Configuracion/PuertosBuscados_web",ui->checkBox_web->isChecked());
-    s.setValue("Configuracion/PuertosBuscados_webssl",ui->checkBox_webssl->isChecked());
-    s.setValue("Configuracion/PuertosBuscados_portPrinter",ui->checkBox_portPrinter->isChecked());
-    s.setValue("Configuracion/PuertosBuscados_netbios",ui->checkBox_netbios->isChecked());
-    s.setValue("Configuracion/Servidor_ldap", ui->lineEdit_ldap_servidorLdap->text());
-    s.setValue("Configuracion/Puerto_ldap", ui->lineEdit_ldap_puerto->text());
-    s.setValue("Configuracion/Usuario_ldap", ui->lineEdit_ldap_usuarioDominio->text());
-    s.setValue("Configuracion/Clave_ldap", cifra->encryptToString(ui->lineEdit_ldap_clave->text()));
-    s.setValue("Configuracion/UsarOuExternos",ui->checkBox_recursos_externos->isChecked());
-    s.setValue("Configuracion/UsarOuPerrera",ui->checkBox_recursos_perrera->isChecked());
-    s.setValue("Configuracion/UsarOuCie",ui->checkBox_cie->isChecked());
-    s.setValue("Configuracion/UsarOuCpd",ui->checkBox_CPD->isChecked());
-    s.setValue("Configuracion/UsarOuAyuntamientos",ui->checkBox_ayuntamientos->isChecked());
-    s.setValue("Configuracion/lineEdit_OU",ui->lineEdit_OU->text());
+    s.setValue("Configuracion/SoloAytos",ui->checkBox_soloAytos->isChecked());
+    s.setValue("Configuracion/multiplesInstancias",ui->checkBox_multiplesInstancias->isChecked());
+
+    s.setValue("Configuracion/fechaActualizacionDB",ui->fechaActualizacionDB->date());
+
+    s.setValue("Directorio_Activo/ServidorAD", ui->servidor->text());
+    s.setValue("Directorio_Activo/UsuarioAD", ui->usuario_ad->text());
+    s.setValue("Directorio_Activo/ClaveAD", cifra->encryptToString(ui->clave_ad->text()));
 
 
+    s.setValue("Rutas/ISL", ui->ISL->text());
+    s.setValue("Rutas/Atalaya", ui->atalaya->text());
+    s.setValue("Rutas/OCS", ui->OCS->text());
+    s.setValue("Rutas/GLPI", ui->GLPI->text());
+    s.setValue("Rutas/Beiro", ui->beiro->text());
+    s.setValue("Rutas/Cronos", ui->cronos->text());
+    s.setValue("Rutas/Correo", ui->correoweb->text());
+
+
+    s.setValue("Colores/fr_linux",Fr_linux);
+    s.setValue("Colores/fr_kerberos",Fr_kerberos);
+    s.setValue("Colores/fr_DB",Fr_DB);
+    s.setValue("Colores/fr_TS",Fr_TS);
+    s.setValue("Colores/fr_rutas",Fr_rutas);
+
+
+    s.setValue("Correo/Para",ui->para->text());
+    s.setValue("Correo/Asunto",ui->asunto->text());
+    s.setValue("Correo/Cuerpo",ui->cuerpo->toPlainText());
+    s.setValue("Correo/Para_Rutas",ui->para_rutas->text());
+    s.setValue("Correo/Asunto_Rutas",ui->asunto_rutas->text());
+    s.setValue("Correo/Cuerpo_Rutas",ui->cuerpo_rutas->toPlainText());
+
+
+    s.setValue("Nmap/PuertosBuscados_ssh",ui->checkBox_SSH->isChecked());
+    s.setValue("Nmap/PuertosBuscados_telnet",ui->checkBox_telnet->isChecked());
+    s.setValue("Nmap/PuertosBuscados_web",ui->checkBox_web->isChecked());
+    s.setValue("Nmap/PuertosBuscados_webssl",ui->checkBox_webssl->isChecked());
+    s.setValue("Nmap/PuertosBuscados_portPrinter",ui->checkBox_portPrinter->isChecked());
+    s.setValue("Nmap/PuertosBuscados_netbios",ui->checkBox_netbios->isChecked());
+
+    s.setValue("ldap/Servidor_ldap", ui->lineEdit_ldap_servidorLdap->text());
+    s.setValue("ldap/Puerto_ldap", ui->lineEdit_ldap_puerto->text());
+    s.setValue("ldap/Usuario_ldap", ui->lineEdit_ldap_usuarioDominio->text());
+    s.setValue("ldap/Clave_ldap", cifra->encryptToString(ui->lineEdit_ldap_clave->text()));
+    s.setValue("ldap/lineEdit_OU",ui->lineEdit_OU->text());
+    s.setValue("ldap/Dominio_ldap", ui->lineEdit_ldap_Dominio->text());
+
+    valor(ui->treeView_OU->model(),&lista_OU);
+
+    s.setValue("ldap/Numero_OU",QString::number(lista_OU.size()));
+    if (lista_OU.size()>0)
+        for (int i = 0; i < lista_OU.size(); i++){
+            s.setValue("ldap/OU_"+QString::number(i+1), lista_OU[i]);
+        }
+    
+
+   /* s.setValue("ldap/UsarOuExternos",ui->checkBox_recursos_externos->isChecked());
+    s.setValue("ldap/UsarOuPerrera",ui->checkBox_recursos_perrera->isChecked());
+    s.setValue("ldap/UsarOuCie",ui->checkBox_cie->isChecked());
+    s.setValue("ldap/UsarOuCpd",ui->checkBox_CPD->isChecked());
+    s.setValue("ldap/UsarOuAyuntamientos",ui->checkBox_ayuntamientos->isChecked());
+
+*/
 }
 
 void Configuracion::on_Btn_Kerberos_clicked()
 {
-    QProcess process;
-    process.startDetached("wbinfo -K", QStringList() << ui->tecnico->text());
+   actualiza_Kerberos();
 }
+
+void Configuracion::actualiza_Kerberos()
+{
+    QProcess *kinit= new QProcess;
+    QProcess *klist= new QProcess;
+    QString ruta_sh = "/bin/sh";
+    QStringList arg_kinit,arg_klist,resultado;
+    arg_kinit << "-c" << "echo "+cual_es_clave()+"| kinit "+cual_es_tecnico();
+    arg_klist << "-c" << "klist";
+    kinit->start(ruta_sh, arg_kinit);
+    kinit->waitForFinished(-1);
+    klist->start(ruta_sh, arg_klist);
+    klist->waitForFinished(-1);
+    QString sh_klist_stdout = klist->readAllStandardOutput();
+    QString sh_klist_stderr = klist->readAllStandardError();
+    QString sh_kinit_stdout = kinit->readAllStandardOutput();
+    QString sh_kinit_stderr = kinit->readAllStandardError();
+    ui->consola_kerberos->appendPlainText(sh_kinit_stdout);
+    ui->consola_kerberos->appendPlainText(sh_klist_stdout);
+    ui->consola_kerberos->appendPlainText(sh_klist_stderr);
+    resultado = sh_kinit_stdout.split('\n',QString::SkipEmptyParts);
+    delete kinit, klist;
+}
+void Configuracion::muestra_Kerberos()
+{
+    QProcess *klist= new QProcess;
+    QString ruta_sh = "/bin/sh";
+    QStringList arg_klist,resultado;
+    arg_klist << "-c" << "klist";
+    klist->start(ruta_sh, arg_klist);
+    klist->waitForFinished(-1);
+    QString sh_klist_stdout = klist->readAllStandardOutput();
+    QString sh_klist_stderr = klist->readAllStandardError();
+    ui->consola_kerberos->appendPlainText(sh_klist_stdout);
+    ui->consola_kerberos->appendPlainText(sh_klist_stderr);
+    delete klist;
+}
+
 
 void Configuracion::on_PB_linux_clicked()
 {
@@ -926,12 +1134,17 @@ void Configuracion::on_checkBox_proxychains_toggled(bool checked)
     else
         deshabilitaProxyChains();
 }
+void Configuracion::actualizaFechaDB(){
+    ui->fechaActualizacionDB->setDate(QDate::currentDate());
+    on_buttonBox_accepted();
+}
+
+
 
 void Configuracion::on_buttonBox_clicked(QAbstractButton *button)
 {
     if (button==ui->buttonBox->button(QDialogButtonBox::RestoreDefaults))
         valoresPorDefecto();
-
 }
 
 void Configuracion::on_pushButton_clicked()
@@ -941,11 +1154,87 @@ void Configuracion::on_pushButton_clicked()
 
 void Configuracion::on_pB_tablasDB_clicked()
 {
-    BaseDatos *basedatos = new BaseDatos;
+    BaseDatos *basedatos = new BaseDatos();
     basedatos->show();
 }
 
-void Configuracion::on_pB_actualiza_DB_clicked()
+//Función para crear una fila del treeview
+QList<QStandardItem *> Configuracion::creaFila(const QString &first)
 {
+    QList<QStandardItem *> rowItems;
+    rowItems << new QStandardItem(first);
+    return rowItems;
+}
 
+
+
+void Configuracion::resultados(QStringList lista){
+
+    QStandardItemModel *standardModel = new QStandardItemModel ;
+    QList<QStandardItem *> fila;
+    typedef QList<QStandardItem *> tipomio;
+    QList<tipomio> listas;
+    //añadiendo una fila al invisibleRootItem producimos un elemento raiz
+    QStandardItem *item = standardModel->invisibleRootItem();
+    int i=0,j;
+    QStringList lista_OU;
+    QStringList LOU;
+    QString dominio=dominio_basedn();
+
+    //Añadimos a lista los item que ya habia en el model si estan repes no lo mete
+    valor(ui->treeView_OU->model(),&lista);
+
+    for (int i = 0; i < lista.size(); ++i){
+            LOU << lista.at(i).toLocal8Bit().constData();
+    }
+
+    foreach (const QString &strou, LOU) {
+        lista_OU.insert(i,strou);
+        fila =creaFila(strou);
+        listas.insert(i,fila);
+        bool encontrado=false;
+        //recorremos las OU y vemos si quitandole la ultima parte OU=..., de la cadena
+        //es igual a alguna de las que ya hay, si es así se crea como una rama de esta
+        while (strou.remove(0,strou.indexOf(",")+1)!=dominio && !encontrado){
+            for (j=0;j<lista_OU.count();j++){
+                if (strou==lista_OU[j]){
+                    listas[j].first()->appendRow(listas[i]);
+                    j=lista_OU.count();
+                    encontrado=true;
+                }
+             }
+        }
+        if (!encontrado)
+            item->appendRow(listas[i]);
+        i++;
+    }
+
+
+    ui->treeView_OU->setModel(standardModel);
+    ui->treeView_OU->expandAll();
+    //activamos multiselección en el arbol
+    ui->treeView_OU->setSelectionMode(3);
+}
+
+
+void Configuracion::on_boton_recargar_clicked(){
+    QStringList lista;
+    BuscarOU *buscarOU = new BuscarOU(cual_es_servidor_ldap(),cual_es_puerto_ldap(),cual_es_usuario_ldap(),cual_es_dominio_ldap() ,cual_es_clave_ldap(),&lista);
+   // connect (buscarOU,SIGNAL(resultadoListo(QStringList)),this,(SLOT(resultados(QStringList))));
+    connect (buscarOU,SIGNAL(botonAceptar(QStringList)),this,(SLOT(resultados(QStringList))));
+    buscarOU->show();
+
+}
+
+void Configuracion::on_pB_anadirOU_clicked()
+{
+    QStandardItemModel *model= ui->treeView_OU->model();
+    QStandardItem *item = model->invisibleRootItem();
+    item->appendRow(new QStandardItem(ui->lineEdit_OU_2->text()));
+}
+
+void Configuracion::on_pB_limpiar_clicked()
+{
+    QStandardItemModel *model= ui->treeView_OU->model();
+    model->clear();
 }

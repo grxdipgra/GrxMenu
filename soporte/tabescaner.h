@@ -7,6 +7,7 @@
 #include "qfileinfo.h"
 #include "QVBoxLayout"
 #include "nmap_xml.h"
+#include "equipos.h"
 class tabEscaner : public QWidget
 {
     Q_OBJECT
@@ -19,6 +20,7 @@ signals:
 
 public slots:
     void equipoLinux(int i);
+    QString ipEquipo(Host *host);
 };
 
 #endif // TABESCANER_H

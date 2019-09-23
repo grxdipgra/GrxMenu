@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui  widgets sql network
+QT       += core gui  widgets sql network webenginewidgets
 CONFIG += debug
 TARGET = GrxMenu
 TEMPLATE = app
@@ -19,16 +19,27 @@ SOURCES += main.cpp \
     sedes/sedes.cpp \
     soporte/soporte.cpp \
     soporte/equipos.cpp \
-    tunel.cpp \
     soporte/ejecutahilo.cpp \
     soporte/tabescaner.cpp \
     basedatos/basedatos.cpp \
-    acercade/acerdade.cpp \
     mame/mame.cpp \
     usuarios/hilousuarios.cpp \
+    usuarios/clase_ldap.cpp \
+    usuarios/usuario.cpp \
+    usuarios/form_grupos.cpp \
     usuarios/form_usuarios.cpp \
     configuracion/simplecrypt.cpp \
-    lib/lib.cpp
+    tunel.cpp \
+    lib/lib.cpp \
+    lib/globals.cpp \
+    soporte/paginaweb.cpp \
+    mailing/mailing.cpp \
+    mailing/sqlquerymodel.cpp \
+    acercade/acercade.cpp \
+    soporte/usuarios.cpp \
+    configuracion/buscarou.cpp
+
+
 
 HEADERS  += \
     botonera/botonera.h \
@@ -37,17 +48,27 @@ HEADERS  += \
     sedes/sedes.h \
     soporte/soporte.h \
     soporte/equipos.h \
-    tunel.h \
     soporte/ejecutahilo.h \
     soporte/tabescaner.h \
     basedatos/basedatos.h \
-    acercade/acerdade.h \
     mame/mame.h \
     usuarios/hilousuarios.h \
     usuarios/form_usuarios.h \
     usuarios/ldap.h \
+    usuarios/clase_ldap.h \
+    usuarios/usuario.h \
+    usuarios/form_grupos.h \
     configuracion/simplecrypt.h \
-    lib/lib.h
+    tunel.h \
+    lib/lib.h \
+    lib/globals.h \
+    soporte/paginaweb.h \
+    mailing/mailing.h \
+    mailing/sqlquerymodel.h \
+    acercade/acercade.h \
+    soporte/usuarios.h \
+    configuracion/buscarou.h
+
 
 FORMS    += \
     botonera/botonera.ui \
@@ -56,9 +77,15 @@ FORMS    += \
     soporte/soporte.ui \
     soporte/equipos.ui \
     basedatos/basedatos.ui \
-    acercade/acerdade.ui \
     mame/mame.ui \
-    usuarios/form_usuarios.ui
+    usuarios/form_usuarios.ui \
+    usuarios/form_grupos.ui \
+    soporte/paginaweb.ui \
+    mailing/mailing.ui \
+    acercade/acercade.ui \
+    soporte/usuarios.ui \
+    configuracion/buscarou.ui
+
 
 INCLUDEPATH +=/lib /usr/lib/x86_64-linux-gnu/
 LIBS += -lssh2 -lldap -lcrypto -lssl -lsqlite3
